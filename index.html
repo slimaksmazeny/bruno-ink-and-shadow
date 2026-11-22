@@ -1290,7 +1290,7 @@
         <div class="brand-text">
           <h1>
             Bruno: Ink &amp; Shadow
-            <span class="version-pill">v0.1.2</span>
+            <span class="version-pill">v0.1.3</span>
           </h1>
           <div class="brand-sub">
             <span>3D Stealth/Parkour (Sly 2) + 2D Plošinovka (UbiArt)</span>
@@ -1397,8 +1397,16 @@
         <div class="changelog-list">
           <div class="changelog-item">
             <div class="changelog-head">
-              <span class="changelog-ver">v0.1.2</span>
+              <span class="changelog-ver">v0.1.3</span>
               <span class="wave-tag">Aktuální verze</span>
+            </div>
+            <p class="changelog-desc">
+              Vytvořena Game Design Bible (<code>DESIGN.md</code>), pojmenována veverka Kiki, schválen vizuální směr (10/11) a uzavřena Vlna 1.
+            </p>
+          </div>
+          <div class="changelog-item older">
+            <div class="changelog-head">
+              <span class="changelog-ver">v0.1.2</span>
             </div>
             <p class="changelog-desc">
               Uzavřen kompletní concept art (11 obrázků včetně loga, originální hole s inkoustovým hrotem, tenisáku, veverky, nepřátel Světa 1 a komára Šídlo); zapsána rozhodnutí z prvních otázek.
@@ -1460,15 +1468,17 @@
     <!-- 4) OTÁZKY -->
     <section id="view-otazky" class="view">
       <div class="decided-box">
-        <h2>✅ Rozhodnuto (v0.1.0 – v0.1.2)</h2>
+        <h2>✅ Rozhodnuto (v0.1.0 – v0.1.3)</h2>
         <ul class="decided-list">
           <li><span class="decided-check">✓</span><span><strong>Hlavní hrdina:</strong> Jezevčík Bruno (kombinace 2 nohy na plížení/boj, 4 nohy na sprint).</span></li>
-          <li><span class="decided-check">✓</span><span><strong>Parťák v uchu &amp; pilotka:</strong> Drzá veverka.</span></li>
+          <li><span class="decided-check">✓</span><span><strong>Parťačka v uchu &amp; pilotka:</strong> Drzá veverka <strong>Kiki</strong>.</span></li>
           <li><span class="decided-check">✓</span><span><strong>Název hry:</strong> Bruno: Ink &amp; Shadow.</span></li>
           <li><span class="decided-check">✓</span><span><strong>Role 2D Rayman pasáží:</strong> Obojí podle levelu (úniky i přechody).</span></li>
           <li><span class="decided-check">✓</span><span><strong>Role Mosquito pasáží:</strong> Most mezi 3 světy.</span></li>
           <li><span class="decided-check">✓</span><span><strong>První hratelný prototyp:</strong> Co nejrychlejší (1 mini 3D ulice + 1 krátký 2D únik).</span></li>
           <li><span class="decided-check">✓</span><span><strong>Originální identita:</strong> Hůl s hrotem plnicího pera, vlastní Zlaté kapky inkoustu, čistý měsíc bez cizích log.</span></li>
+          <li><span class="decided-check">✓</span><span><strong>Tenisák:</strong> Odpalování holí + tajný Zlatý tenisák v každém levelu + idle animace pinkání na čumáku.</span></li>
+          <li><span class="decided-check">✓</span><span><strong>Vizuální styl:</strong> Schválen (10/11; později doplnit jednoduchou ikonu hry).</span></li>
         </ul>
       </div>
 
@@ -1506,27 +1516,27 @@
       "use strict";
 
       const STORAGE_KEY = "bruno_ink_shadow_v1";
-      const APP_VERSION = "v0.1.2";
+      const APP_VERSION = "v0.1.3";
 
       /* ====== DATA DEFINITIONS ====== */
       const WAVES = [
         {
           id: "w1",
-          version: "v0.1.x – teď na řadě",
+          version: "v0.1.x – dokončeno",
           title: "Vlna 1: Příprava, design a vizuální směr",
-          current: true,
+          current: false,
           tasks: [
             { id: "w1_t1", text: "GitHub a plánovač", defaultStatus: "done" },
             { id: "w1_t2", text: "Rozhodnutí o postavách a mechanikách", defaultStatus: "done" },
             { id: "w1_t3", text: "Concept art Bruna, parťáka, zbraní a 1. světa v ChatGPT", defaultStatus: "done" },
-            { id: "w1_t4", text: "Finální kontrola vizuálů & přechod na Godot 4", defaultStatus: "doing" }
+            { id: "w1_t4", text: "Finální kontrola vizuálů & přechod na Godot 4", defaultStatus: "done" }
           ]
         },
         {
           id: "w2",
-          version: "v0.2.x",
+          version: "v0.2.x – teď na řadě",
           title: "Vlna 2: Godot 4 Greybox prototyp",
-          current: false,
+          current: true,
           tasks: [
             { id: "w2_t1", text: "Založení Godot 4 projektu v game/", defaultStatus: "todo" },
             { id: "w2_t2", text: "3D pohyb Bruna + skok + hůl + magnet na modré špičky", defaultStatus: "todo" },
@@ -1652,30 +1662,20 @@
 
       const QUESTIONS = [
         {
-          id: "q_v2_1",
-          text: "Jak pojmenujeme drzou veverku (parťačku)?",
+          id: "q_v3_1",
+          text: "Máš už v počítači nainstalovaný Godot 4?",
           options: [
-            "Kiki",
-            "Roxy",
-            "Líza",
-            "Jiné – napíšu do poznámky"
+            "Ano, mám",
+            "Ještě ne, stáhnu ho"
           ]
         },
         {
-          id: "q_v2_2",
-          text: "Jak zapojíme tenisák do hratelnosti?",
+          id: "q_v3_2",
+          text: "Jak chceš ovládat prototyp při testování?",
           options: [
-            "Odpalování holí na cíle a odlákání hlídek",
-            "Tajný Zlatý tenisák v každém levelu",
-            "Obojí + idle animace pinkání na čumáku"
-          ]
-        },
-        {
-          id: "q_v2_3",
-          text: "Co uděláme jako první krok pro Vlnu 2 (Godot 4)?",
-          options: [
-            "Rovnou založit Godot 4 projekt a 3D+2D pohyb na kostkách",
-            "Nejdřív vytvořit krátkou Game Design Bibli v DESIGN.md"
+            "Klávesnice + myš",
+            "Gamepad (PS/Xbox ovladač)",
+            "Obojí hned od začátku"
           ]
         }
       ];
