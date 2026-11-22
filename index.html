@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bruno: Ink &amp; Shadow — Vývojový plánovač</title>
+  <style>
+    :root {
+      --bg: #10172a;
+      --panel: #18223a;
+      --card: #202c48;
+      --card-hover: #263456;
+      --border: #34446b;
+      --text: #e8ebf3;
+      --muted: #9aa6c4;
+      --gold: #f2c14e;
+      --gold-dim: rgba(242, 193, 78, 0.16);
+      --green: #6fcf8e;
+      --green-dim: rgba(111, 207, 142, 0.16);
+      --blue: #8fb4ff;
+      --blue-dim: rgba(143, 180, 255, 0.16);
+      --orange: #ff9a52;
+      --orange-dim: rgba(255, 154, 82, 0.16);
+      --red: #ef6a5b;
+      --red-dim: rgba(239, 106, 91, 0.18);
+      --radius: 14px;
+      --radius-sm: 9px;
+      --shadow: 0 10px 28px rgba(4, 8, 20, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 45% at 50% -10%, rgba(143, 180, 255, 0.11), transparent 70%),
+        radial-gradient(ellipse 40% 30% at 90% 5%, rgba(242, 193, 78, 0.06), transparent 65%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    a {
+      color: var(--blue);
+    }
+
+    /* Header */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(16, 23, 42, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .brand-emblem {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      filter: drop-shadow(0 4px 10px rgba(242, 193, 78, 0.25));
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .version-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold);
+      background: var(--gold-dim);
+      border: 1px solid rgba(242, 193, 78, 0.45);
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.4px;
+    }
+
+    .brand-sub {
+      margin: 2px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .save-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--green);
+    }
+
+    .save-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-copy-ai {
+      appearance: none;
+      border: 1px solid rgba(242, 193, 78, 0.7);
+      background: linear-gradient(135deg, #f2c14e 0%, #e0a52c 100%);
+      color: #10172a;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(242, 193, 78, 0.25);
+      transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    .btn-copy-ai:hover {
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 22px rgba(242, 193, 78, 0.36);
+    }
+
+    .btn-copy-ai:active {
+      transform: translateY(0);
+    }
+
+    /* Tabs */
+    .nav-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-wrap::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      min-width: max-content;
+    }
+
+    .tab-btn {
+      position: relative;
+      appearance: none;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 12px 15px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+      border-radius: 8px 8px 0 0;
+      text-decoration: none;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(143, 180, 255, 0.06);
+    }
+
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+      background: rgba(242, 193, 78, 0.07);
+    }
+
+    .tab-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--red);
+      color: #fff;
+      line-height: 1;
+    }
+
+    .tab-badge.orange {
+      background: var(--orange);
+      color: #10172a;
+    }
+
+    .tab-badge.hidden {
+      display: none;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 20px 64px;
+    }
+
+    .view {
+      display: none;
+      animation: fadeIn 0.18s ease;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Panels & Cards */
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      margin: 0 0 14px;
+      font-size: 1.08rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title .sub {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    /* Overview Grid */
+    .overview-top {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .ring-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .ring-box {
+      position: relative;
+      width: 148px;
+      height: 148px;
+    }
+
+    .ring-box svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: #2c3b5e;
+      stroke-width: 12;
+    }
+
+    .ring-fg {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 12;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .ring-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ring-pct {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .ring-label {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .ring-meta {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-top: 3px solid var(--border);
+    }
+
+    .kpi-card.done { border-top-color: var(--green); }
+    .kpi-card.doing { border-top-color: var(--blue); }
+    .kpi-card.fix { border-top-color: var(--orange); }
+    .kpi-card.todo { border-top-color: var(--muted); }
+
+    .kpi-val {
+      font-size: 1.85rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .kpi-card.done .kpi-val { color: var(--green); }
+    .kpi-card.doing .kpi-val { color: var(--blue); }
+    .kpi-card.fix .kpi-val { color: var(--orange); }
+    .kpi-card.todo .kpi-val { color: var(--text); }
+
+    .kpi-label {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    /* Progress bars */
+    .prog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .prog-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .prog-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 0.88rem;
+    }
+
+    .prog-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .prog-stat {
+      font-size: 0.8rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .prog-track {
+      width: 100%;
+      height: 9px;
+      background: #121b31;
+      border: 1px solid #2a395c;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .prog-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      transition: width 0.35s ease;
+    }
+
+    .prog-fill.green {
+      background: linear-gradient(90deg, #4cb974, var(--green));
+    }
+
+    /* Changelog */
+    .changelog-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .changelog-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .changelog-ver {
+      font-weight: 800;
+      color: var(--gold);
+      font-size: 0.92rem;
+    }
+
+    .changelog-desc {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    /* Plan Tab */
+    .rules-box {
+      background: linear-gradient(135deg, rgba(242, 193, 78, 0.1), rgba(143, 180, 255, 0.06));
+      border: 1px solid rgba(242, 193, 78, 0.42);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 22px;
+    }
+
+    .rules-box h2 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .rule-pill {
+      background: rgba(16, 23, 42, 0.65);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 0.88rem;
+    }
+
+    .rule-pill strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .rule-pill span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .wave-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .wave-card.current {
+      border-color: rgba(242, 193, 78, 0.55);
+      box-shadow: 0 10px 28px rgba(242, 193, 78, 0.08);
+    }
+
+    .wave-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .wave-title {
+      margin: 0;
+      font-size: 1.04rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .wave-tag {
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background: var(--blue-dim);
+      color: var(--blue);
+      border: 1px solid rgba(143, 180, 255, 0.35);
+    }
+
+    .wave-card.current .wave-tag {
+      background: var(--gold-dim);
+      color: var(--gold);
+      border-color: rgba(242, 193, 78, 0.45);
+    }
+
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .task-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .task-item.done .task-text {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .task-text {
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .status-pill {
+      appearance: none;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 4px 11px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: filter 0.12s ease, transform 0.1s ease;
+    }
+
+    .status-pill:hover {
+      filter: brightness(1.12);
+    }
+
+    .status-pill.done {
+      background: var(--green-dim);
+      color: var(--green);
+      border-color: rgba(111, 207, 142, 0.4);
+    }
+
+    .status-pill.doing {
+      background: var(--blue-dim);
+      color: var(--blue);
+      border-color: rgba(143, 180, 255, 0.45);
+    }
+
+    .status-pill.fix {
+      background: var(--orange-dim);
+      color: var(--orange);
+      border-color: rgba(255, 154, 82, 0.45);
+    }
+
+    .status-pill.todo {
+      background: rgba(154, 166, 196, 0.12);
+      color: var(--muted);
+      border-color: rgba(154, 166, 196, 0.3);
+    }
+
+    /* Visuals Tab */
+    .vis-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .vis-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow);
+    }
+
+    .vis-media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: #0d1324;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .vis-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      cursor: zoom-in;
+      transition: transform 0.25s ease;
+    }
+
+    .vis-media img:hover {
+      transform: scale(1.02);
+    }
+
+    .vis-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 22px;
+      gap: 10px;
+      color: var(--muted);
+      width: 100%;
+      height: 100%;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          rgba(32, 44, 72, 0.35),
+          rgba(32, 44, 72, 0.35) 12px,
+          rgba(16, 23, 42, 0.5) 12px,
+          rgba(16, 23, 42, 0.5) 24px
+        );
+    }
+
+    .vis-placeholder-icon {
+      font-size: 2.3rem;
+      line-height: 1;
+      opacity: 0.9;
+    }
+
+    .vis-placeholder-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .vis-filename {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      color: var(--gold);
+      background: rgba(16, 23, 42, 0.85);
+      border: 1px dashed rgba(242, 193, 78, 0.5);
+      padding: 5px 10px;
+      border-radius: 7px;
+      word-break: break-all;
+    }
+
+    .vis-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .vis-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .vis-path-sub {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .vote-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .vote-btn {
+      flex: 1;
+      min-width: 78px;
+      appearance: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.83rem;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.14s ease;
+    }
+
+    .vote-btn:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+
+    .vote-btn.active-good {
+      background: var(--green-dim);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .vote-btn.active-mid {
+      background: var(--orange-dim);
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .vote-btn.active-bad {
+      background: var(--red-dim);
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .note-input {
+      width: 100%;
+      background: #121a30;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.88rem;
+      padding: 9px 12px;
+      resize: vertical;
+      min-height: 62px;
+      transition: border-color 0.15s ease;
+    }
+
+    .note-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .note-input::placeholder {
+      color: #6b7899;
+    }
+
+    /* Questions Tab */
+    .q-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .q-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .q-card.answered {
+      border-left: 4px solid var(--green);
+    }
+
+    .q-card.unanswered {
+      border-left: 4px solid var(--orange);
+    }
+
+    .q-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .q-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .q-num {
+      color: var(--gold);
+      margin-right: 6px;
+    }
+
+    .q-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 10px;
+    }
+
+    .q-opt {
+      appearance: none;
+      text-align: left;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.14s ease;
+    }
+
+    .q-opt:hover {
+      background: var(--card-hover);
+      border-color: #4a5f91;
+    }
+
+    .q-opt.selected {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .q-radio {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--muted);
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .q-opt.selected .q-radio {
+      border-color: var(--gold);
+    }
+
+    .q-opt.selected .q-radio::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .extra-notes-box {
+      margin-top: 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+
+    .extra-notes-box label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: var(--gold);
+    }
+
+    .extra-notes-box textarea {
+      min-height: 120px;
+    }
+
+    /* Ideas Tab */
+    .ideas-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      appearance: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 7px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.14s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--text);
+      background: var(--card-hover);
+    }
+
+    .filter-btn.active {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .search-input {
+      background: #121a30;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 0.88rem;
+      padding: 8px 15px;
+      min-width: 240px;
+      flex: 1;
+      max-width: 340px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    details.idea-cat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    details.idea-cat summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 15px 18px;
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(32, 44, 72, 0.45);
+      user-select: none;
+    }
+
+    details.idea-cat summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .cat-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cat-chevron {
+      color: var(--muted);
+      transition: transform 0.18s ease;
+      font-size: 0.8rem;
+    }
+
+    details.idea-cat[open] .cat-chevron {
+      transform: rotate(90deg);
+    }
+
+    .cat-count {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 700;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2px 9px;
+      border-radius: 999px;
+    }
+
+    .idea-grid {
+      padding: 14px 16px 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .idea-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      transition: opacity 0.15s ease, border-color 0.15s ease;
+    }
+
+    .idea-card.voted-no {
+      opacity: 0.56;
+      border-style: dashed;
+    }
+
+    .idea-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .idea-title {
+      font-weight: 700;
+      font-size: 0.93rem;
+      color: var(--text);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 36px 20px;
+      color: var(--muted);
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 200;
+      background: #1b2844;
+      color: var(--text);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      max-width: 360px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(8, 12, 24, 0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      cursor: zoom-out;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 90vh;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .overview-top {
+        grid-template-columns: 1fr;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .two-col, .rules-grid, .vis-grid, .idea-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar-inner {
+        padding: 12px 14px;
+      }
+      .btn-copy-ai {
+        width: 100%;
+        justify-content: center;
+      }
+      .header-actions {
+        width: 100%;
+      }
+      main {
+        padding: 16px 14px 48px;
+      }
+      .search-input {
+        max-width: 100%;
+        min-width: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-emblem" aria-hidden="true">
+          <!-- Zlatá šestiúhelníková známka z Brunova černo-červeného obojku -->
+          <svg viewBox="0 0 64 64" width="42" height="42">
+            <polygon points="32,4 57,18 57,46 32,60 7,46 7,18" fill="#18223a" stroke="#f2c14e" stroke-width="4" />
+            <polygon points="32,10 51,21 51,43 32,54 13,43 13,21" fill="rgba(242,193,78,0.14)" stroke="#ef6a5b" stroke-width="2" />
+            <text x="32" y="40" text-anchor="middle" fill="#f2c14e" font-size="24" font-weight="900" font-family="Segoe UI, sans-serif">B</text>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>
+            Bruno: Ink &amp; Shadow
+            <span class="version-pill">v0.1.0</span>
+          </h1>
+          <div class="brand-sub">
+            <span>3D Stealth/Parkour (Sly 2) + 2D Plošinovka (UbiArt)</span>
+            <span class="save-status" id="saveStatus">
+              <span class="save-dot"></span>
+              <span id="saveStatusText">Uloženo lokálně</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button type="button" class="btn-copy-ai" id="copyAiBtn">
+          📋 Zkopírovat odpovědi pro AI
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-wrap">
+      <nav class="tabs" aria-label="Hlavní navigace">
+        <a href="#prehled" class="tab-btn" data-tab="prehled">📊 Přehled</a>
+        <a href="#plan" class="tab-btn" data-tab="plan">🗺️ Plán</a>
+        <a href="#vizualy" class="tab-btn" data-tab="vizualy">
+          🎨 Vizuály
+          <span class="tab-badge hidden" id="badgeVisuals">0</span>
+        </a>
+        <a href="#otazky" class="tab-btn" data-tab="otazky">
+          ❓ Otázky
+          <span class="tab-badge orange hidden" id="badgeQuestions">0</span>
+        </a>
+        <a href="#napady" class="tab-btn" data-tab="napady">💡 Nápady</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1) PŘEHLED -->
+    <section id="view-prehled" class="view">
+      <div class="panel">
+        <div class="panel-title">
+          <span>Celkový pokrok projektu</span>
+          <span class="sub">Počítáno ze všech nápadů, které nemají hlas „Ne“</span>
+        </div>
+        <div class="overview-top">
+          <div class="ring-wrap">
+            <div class="ring-box">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-bg" cx="60" cy="60" r="50"></circle>
+                <circle class="ring-fg" id="overallRing" cx="60" cy="60" r="50"
+                        stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+              </svg>
+              <div class="ring-center">
+                <div class="ring-pct" id="overallPct">0%</div>
+                <div class="ring-label">Hotovo</div>
+              </div>
+            </div>
+            <div class="ring-meta" id="overallMeta">0 / 0 aktivních nápadů</div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-card done">
+              <div class="kpi-val" id="kpiDone">0</div>
+              <div class="kpi-label">✅ Hotovo</div>
+            </div>
+            <div class="kpi-card doing">
+              <div class="kpi-val" id="kpiDoing">0</div>
+              <div class="kpi-label">🔧 Rozpracováno</div>
+            </div>
+            <div class="kpi-card fix">
+              <div class="kpi-val" id="kpiFix">0</div>
+              <div class="kpi-label">🛠️ K opravě</div>
+            </div>
+            <div class="kpi-card todo">
+              <div class="kpi-val" id="kpiTodo">0</div>
+              <div class="kpi-label">📌 Zbývá</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">
+            <span>Pokrok podle vln práce</span>
+            <span class="sub">Z úkolů v záložce Plán</span>
+          </div>
+          <div class="prog-list" id="waveProgressList"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <span>Pokrok podle oblastí hry</span>
+            <span class="sub">Bez nápadů s hlasem „Ne“</span>
+          </div>
+          <div class="prog-list" id="areaProgressList"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <span>📜 Historie verzí (Changelog)</span>
+          <span class="sub">Každý milník jako verze na GitHubu</span>
+        </div>
+        <div class="changelog-item">
+          <div class="changelog-head">
+            <span class="changelog-ver">v0.1.0</span>
+            <span class="wave-tag">Aktuální verze</span>
+          </div>
+          <p class="changelog-desc">
+            Založení GitHub repozitáře, struktury složek (<code>vis/</code>, <code>game/</code>) a interaktivního plánovače.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) PLÁN -->
+    <section id="view-plan" class="view">
+      <div class="rules-box">
+        <h2>🧭 Pravidla projektu</h2>
+        <div class="rules-grid">
+          <div class="rule-pill">
+            <strong>1. Engine: Godot 4</strong>
+            <span>Moderní open-source engine pro 3D stealth i 2D UbiArt plošinovku v jednom projektu.</span>
+          </div>
+          <div class="rule-pill">
+            <strong>2. Nejdřív pohyb, pak grafika</strong>
+            <span>Nejprve vyladíme zábavný pohyb na šedých kostkách (Greybox), až potom přidáme shadery a art.</span>
+          </div>
+          <div class="rule-pill">
+            <strong>3. Verzování na GitHubu</strong>
+            <span>Každá dokončená fáze se zaznamená jako přehledná verze (v0.1.x → v0.5.x+) s jasným cílem.</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="wavesContainer"></div>
+    </section>
+
+    <!-- 3) VIZUÁLY -->
+    <section id="view-vizualy" class="view">
+      <div class="panel" style="padding: 14px 18px; margin-bottom: 18px;">
+        <span style="font-size: 0.88rem; color: var(--muted);">
+          Obrázky ukládej do složky <code style="color: var(--gold);">vis/</code> pod přesným názvem uvedeným na kartě. Jakmile soubor existuje, automaticky se zobrazí. Kliknutím na načtený obrázek ho zvětšíš.
+        </span>
+      </div>
+      <div class="vis-grid" id="visualsGrid"></div>
+    </section>
+
+    <!-- 4) OTÁZKY -->
+    <section id="view-otazky" class="view">
+      <div class="q-list" id="questionsList"></div>
+      <div class="extra-notes-box">
+        <label for="extraNotes">📝 Moje poznámky a nápady navíc</label>
+        <textarea id="extraNotes" class="note-input" placeholder="Sem napiš cokoli dalšího — vlastní nápady na parťáka, názvy, atmosféru, hudbu nebo úpravy..."></textarea>
+      </div>
+    </section>
+
+    <!-- 5) NÁPADY -->
+    <section id="view-napady" class="view">
+      <div class="ideas-toolbar">
+        <div class="filter-pills" id="ideaFilters">
+          <button type="button" class="filter-btn active" data-filter="all">Vše</button>
+          <button type="button" class="filter-btn" data-filter="todo">Zbývá</button>
+          <button type="button" class="filter-btn" data-filter="done">Hotové</button>
+          <button type="button" class="filter-btn" data-filter="unvoted">Nehlasované</button>
+        </div>
+        <input type="search" id="ideaSearch" class="search-input" placeholder="🔍 Hledat nápad..." />
+      </div>
+      <div id="ideasContainer"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="lightbox" id="lightbox">
+    <img id="lightboxImg" src="" alt="Náhled concept artu" />
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE_KEY = "bruno_ink_shadow_v1";
+      const APP_VERSION = "v0.1.0";
+
+      /* ====== DATA DEFINITIONS ====== */
+      const WAVES = [
+        {
+          id: "w1",
+          version: "v0.1.x – teď na řadě",
+          title: "Vlna 1: Příprava, design a vizuální směr",
+          current: true,
+          tasks: [
+            { id: "w1_t1", text: "GitHub a plánovač", defaultStatus: "done" },
+            { id: "w1_t2", text: "Rozhodnutí o postavách a mechanikách", defaultStatus: "doing" },
+            { id: "w1_t3", text: "Concept art Bruna a 1. světa v ChatGPT", defaultStatus: "todo" },
+            { id: "w1_t4", text: "Finální Game Design Bible", defaultStatus: "todo" }
+          ]
+        },
+        {
+          id: "w2",
+          version: "v0.2.x",
+          title: "Vlna 2: Godot 4 Greybox prototyp",
+          current: false,
+          tasks: [
+            { id: "w2_t1", text: "Založení Godot 4 projektu v game/", defaultStatus: "todo" },
+            { id: "w2_t2", text: "3D pohyb Bruna + skok + hůl + magnet na modré špičky", defaultStatus: "todo" },
+            { id: "w2_t3", text: "Plynulý přechod z 3D do 2D běhu", defaultStatus: "todo" },
+            { id: "w2_t4", text: "Základní ušní vrtulník na plachtění", defaultStatus: "todo" }
+          ]
+        },
+        {
+          id: "w3",
+          version: "v0.3.x",
+          title: "Vlna 3: Vizuální test – Sly 2 + UbiArt",
+          current: false,
+          tasks: [
+            { id: "w3_t1", text: "Cel-shading shader s černými obrysy ve 3D", defaultStatus: "todo" },
+            { id: "w3_t2", text: "Vrstvené malované 2D pozadí s parallaxem", defaultStatus: "todo" },
+            { id: "w3_t3", text: "Test kosterní animace Bruna", defaultStatus: "todo" }
+          ]
+        },
+        {
+          id: "w4",
+          version: "v0.4.x",
+          title: "Vlna 4: Vertical Slice – Svět 1 (Zátoka Bublin)",
+          current: false,
+          tasks: [
+            { id: "w4_t1", text: "Menší 3D noční hub", defaultStatus: "todo" },
+            { id: "w4_t2", text: "1 plnohodnotný 3D+2D level", defaultStatus: "todo" },
+            { id: "w4_t3", text: "1 testovací Mosquito pasáž", defaultStatus: "todo" },
+            { id: "w4_t4", text: "Sběratelské lahvičky a Zlaté jiskry", defaultStatus: "todo" }
+          ]
+        },
+        {
+          id: "w5",
+          version: "v0.5.x+",
+          title: "Vlna 5: Svět 2 (Měděný kaňon) & Svět 3 (Inkoustová citadela)",
+          current: false,
+          tasks: [
+            { id: "w5_t1", text: "Rail grinding & Jiskrový výstřel", defaultStatus: "todo" },
+            { id: "w5_t2", text: "Dračí skok & Stínový průnik", defaultStatus: "todo" },
+            { id: "w5_t3", text: "Bossové a finále s Baronem Kaňkou", defaultStatus: "todo" }
+          ]
+        }
+      ];
+
+      const VISUALS = [
+        {
+          id: "vis_bruno",
+          path: "vis/char_bruno_sly2_v01.png",
+          title: "Bruno (hlavní hrdina, Sly 2 styl)",
+          icon: "🐾"
+        },
+        {
+          id: "vis_w1_3d",
+          path: "vis/env_world1_3d_sly2_v01.png",
+          title: "Svět 1: 3D noční přístav (Sly 2 styl)",
+          icon: "🌙"
+        },
+        {
+          id: "vis_w1_2d",
+          path: "vis/env_world1_2d_ubiart_v01.png",
+          title: "Svět 1: 2D únik (Rayman Origins UbiArt styl)",
+          icon: "🎨"
+        },
+        {
+          id: "vis_baron",
+          path: "vis/char_baron_sly2_v01.png",
+          title: "Baron Kaňka (hlavní záporák)",
+          icon: "🎩"
+        }
+      ];
+
+      const QUESTIONS = [
+        {
+          id: "q1",
+          text: "Kdo bude Brunův parťák v uchu a pilot mechanického komára?",
+          options: [
+            "Chytrý jezevec-vynálezce",
+            "Moudrá sova",
+            "Drzá veverka",
+            "Jiné – napíšu do poznámky"
+          ]
+        },
+        {
+          id: "q2",
+          text: "Jak má Bruno držet a používat zlodějskou hůl?",
+          options: [
+            "V packách jako antropomorfní hrdina na dvou nohách",
+            "V tlamě na čtyřech",
+            "Kombinace – běhá na dvou, sprintuje na čtyřech"
+          ]
+        },
+        {
+          id: "q3",
+          text: "Jak se ti líbí název \"Bruno: Ink & Shadow\"?",
+          options: [
+            "Super, necháme",
+            "Chci český název",
+            "Vymyslíme jiný"
+          ]
+        },
+        {
+          id: "q4",
+          text: "Jakou roli mají mít 2D Rayman Origins pasáže?",
+          options: [
+            "Únik z obrazu po sebrání kořisti",
+            "Přechod mezi jednotlivými lokacemi",
+            "Obojí podle levelu"
+          ]
+        },
+        {
+          id: "q5",
+          text: "Jakou roli mají mít Mosquito (střílecí) levely?",
+          options: [
+            "Most mezi 3 světy",
+            "Samostatný bonusový level v každém světě"
+          ]
+        },
+        {
+          id: "q6",
+          text: "Jak dlouhý má být první hratelný prototyp (Vertical Slice)?",
+          options: [
+            "Co nejrychlejší – 1 mini 3D ulice + 1 krátký 2D únik",
+            "Plnohodnotný první level včetně hudby a sbírání"
+          ]
+        }
+      ];
+
+      const IDEA_CATEGORIES = [
+        {
+          id: "cat_chars",
+          title: "🐾 Postavy & Příběh",
+          items: [
+            { id: "i_bruno", title: "Bruno jako hlavní hrdina (uši = vrtulník, obojek = HUD)" },
+            { id: "i_baron", title: "Baron Kaňka a Prastarý štětec" },
+            { id: "i_ghosts", title: "Duchové 3 legendárních mistrů" },
+            { id: "i_tone", title: "Komický start (Svět 1) -> Temný noir konec (Svět 3)" }
+          ]
+        },
+        {
+          id: "cat_3d",
+          title: "🦊 3D Mechaniky (Sly Cooper styl)",
+          items: [
+            { id: "i_3d_sparkle", title: "Modré třpytky a magnet na špičky/háky" },
+            { id: "i_3d_pickpocket", title: "Plížení a kradení klíčů holí" },
+            { id: "i_3d_cane", title: "Hůl „Kličkovka“ pro boj i páčení" },
+            { id: "i_3d_rail", title: "Rail Grinding (Svět 2 – styl Tennessee Kid)" },
+            { id: "i_3d_shot", title: "Jiskrový výstřel se zpomalením času (Svět 2)" },
+            { id: "i_3d_dragon", title: "Dračí skok ze špičky na špičku (Svět 3 – styl Rioichi)" },
+            { id: "i_3d_shadow", title: "Stínový průnik přes lasery (Svět 3)" }
+          ]
+        },
+        {
+          id: "cat_2d",
+          title: "🎨 2D Mechaniky (Rayman Origins styl)",
+          items: [
+            { id: "i_2d_cam", title: "Plynulý nájezd kamery ze 3D do 2D" },
+            { id: "i_2d_glide", title: "Plachtění na dlouhých uších" },
+            { id: "i_2d_wall", title: "Běh po zdech a skákací houby" },
+            { id: "i_2d_swing", title: "Houpání na kruzích holí a odrážení od nepřátel" },
+            { id: "i_2d_escape", title: "Útěk před rozpadajícím se inkoustem" }
+          ]
+        },
+        {
+          id: "cat_mosquito",
+          title: "🦟 Mosquito & Přechody",
+          items: [
+            { id: "i_mosq_ship", title: "Mechanický komár (Šídlo)" },
+            { id: "i_mosq_inhale", title: "Nasávání nepřátel/projektilů a vystřelování zpět" },
+            { id: "i_mosq_bridge", title: "Průlet mezi světy bez nudné mapy" }
+          ]
+        },
+        {
+          id: "cat_worlds",
+          title: "🌍 3 Světy & Bossové",
+          items: [
+            { id: "i_w1", title: "Svět 1: Zátoka Bublin (goofy přístav, boss Šéfkuchař Ropuch)" },
+            { id: "i_w2", title: "Svět 2: Měděný kaňon (steampunk vlaky, boss Šerif Píst)" },
+            { id: "i_w3", title: "Svět 3: Inkoustová citadela (temný noir, dvoufázový boss Baron Kaňka)" }
+          ]
+        },
+        {
+          id: "cat_collect",
+          title: "✨ Sběratelské předměty",
+          items: [
+            { id: "i_col_bottles", title: "Lahvičky s inkoustem ve 3D (cinkají a otevírají trezor)" },
+            { id: "i_col_sparks", title: "Zlaté jiskry ve 2D (jako Lums + Královská jiskra)" },
+            { id: "i_col_cages", title: "Tajné klece ve 2D (odemykají oblečky pro Bruna)" }
+          ]
+        }
+      ];
+
+      const STATUS_LABELS = {
+        done: "Hotovo",
+        doing: "Rozpracováno",
+        fix: "K opravě",
+        todo: "Zbývá"
+      };
+
+      const PLAN_CYCLE = ["todo", "doing", "done"];
+      const IDEA_CYCLE = ["todo", "doing", "fix", "done"];
+
+      /* ====== STATE ====== */
+      let state = loadState();
+      let currentIdeaFilter = "all";
+      let currentIdeaSearch = "";
+      let saveTimer = null;
+
+      function defaultState() {
+        return {
+          questions: {},
+          extraNotes: "",
+          visuals: {},      // { [id]: { rating: 'ok'|'edit'|'no'|null, note: '' } }
+          ideaVotes: {},    // { [id]: 'yes'|'maybe'|'no'|null }
+          ideaStatuses: {}, // { [id]: 'todo'|'doing'|'fix'|'done' }
+          planStatuses: {}  // { [taskId]: 'todo'|'doing'|'done' }
+        };
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return defaultState();
+          const parsed = JSON.parse(raw);
+          return Object.assign(defaultState(), parsed);
+        } catch (e) {
+          return defaultState();
+        }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          const el = document.getElementById("saveStatusText");
+          if (el) {
+            el.textContent = "Uloženo ✓";
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => {
+              el.textContent = "Uloženo lokálně";
+            }, 1600);
+          }
+        } catch (e) {
+          const el = document.getElementById("saveStatusText");
+          if (el) el.textContent = "Chyba ukládání";
+        }
+      }
+
+      function getPlanStatus(task) {
+        return state.planStatuses[task.id] || task.defaultStatus || "todo";
+      }
+
+      function getIdeaStatus(ideaId) {
+        return state.ideaStatuses[ideaId] || "todo";
+      }
+
+      function getIdeaVote(ideaId) {
+        return state.ideaVotes[ideaId] || null;
+      }
+
+      function getVisualState(visId) {
+        if (!state.visuals[visId]) {
+          state.visuals[visId] = { rating: null, note: "" };
+        }
+        return state.visuals[visId];
+      }
+
+      function allIdeas() {
+        return IDEA_CATEGORIES.flatMap(c => c.items.map(i => ({ ...i, catId: c.id, catTitle: c.title })));
+      }
+
+      /* ====== NAVIGATION ====== */
+      const VALID_TABS = ["prehled", "plan", "vizualy", "otazky", "napady"];
+
+      function getHashTab() {
+        const h = (window.location.hash || "#prehled").replace("#", "").toLowerCase();
+        return VALID_TABS.includes(h) ? h : "prehled";
+      }
+
+      function setActiveTab(tab) {
+        document.querySelectorAll(".tab-btn").forEach(btn => {
+          btn.classList.toggle("active", btn.dataset.tab === tab);
+        });
+        document.querySelectorAll(".view").forEach(view => {
+          view.classList.toggle("active", view.id === "view-" + tab);
+        });
+      }
+
+      window.addEventListener("hashchange", () => {
+        setActiveTab(getHashTab());
+      });
+
+      /* ====== BADGES ====== */
+      function updateBadges() {
+        const unratedVis = VISUALS.filter(v => !getVisualState(v.id).rating).length;
+        const badgeV = document.getElementById("badgeVisuals");
+        badgeV.textContent = unratedVis;
+        badgeV.classList.toggle("hidden", unratedVis === 0);
+
+        const unansweredQ = QUESTIONS.filter(q => !state.questions[q.id]).length;
+        const badgeQ = document.getElementById("badgeQuestions");
+        badgeQ.textContent = unansweredQ;
+        badgeQ.classList.toggle("hidden", unansweredQ === 0);
+      }
+
+      /* ====== 1) RENDER OVERVIEW ====== */
+      function renderOverview() {
+        const activeIdeas = allIdeas().filter(i => getIdeaVote(i.id) !== "no");
+        let done = 0, doing = 0, fix = 0, todo = 0;
+
+        activeIdeas.forEach(i => {
+          const st = getIdeaStatus(i.id);
+          if (st === "done") done++;
+          else if (st === "doing") doing++;
+          else if (st === "fix") fix++;
+          else todo++;
+        });
+
+        const total = activeIdeas.length;
+        const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+        const circumference = 2 * Math.PI * 50; // 314.159
+        const ring = document.getElementById("overallRing");
+        ring.style.strokeDasharray = circumference.toFixed(2);
+        ring.style.strokeDashoffset = (circumference * (1 - pct / 100)).toFixed(2);
+
+        document.getElementById("overallPct").textContent = pct + "%";
+        document.getElementById("overallMeta").textContent = `${done} / ${total} aktivních nápadů`;
+        document.getElementById("kpiDone").textContent = done;
+        document.getElementById("kpiDoing").textContent = doing;
+        document.getElementById("kpiFix").textContent = fix;
+        document.getElementById("kpiTodo").textContent = todo;
+
+        // Wave progress
+        const waveList = document.getElementById("waveProgressList");
+        waveList.innerHTML = WAVES.map(w => {
+          const tTotal = w.tasks.length;
+          const tDone = w.tasks.filter(t => getPlanStatus(t) === "done").length;
+          const tDoing = w.tasks.filter(t => getPlanStatus(t) === "doing").length;
+          const wPct = tTotal > 0 ? Math.round(((tDone + tDoing * 0.35) / tTotal) * 100) : 0;
+          const exactPct = tTotal > 0 ? Math.round((tDone / tTotal) * 100) : 0;
+          return `
+            <div class="prog-row">
+              <div class="prog-head">
+                <span class="prog-name">${escapeHtml(w.title)}</span>
+                <span class="prog-stat">${tDone}/${tTotal} hotovo (${exactPct}%)</span>
+              </div>
+              <div class="prog-track">
+                <div class="prog-fill" style="width: ${wPct}%"></div>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        // Area progress
+        const areaList = document.getElementById("areaProgressList");
+        areaList.innerHTML = IDEA_CATEGORIES.map(c => {
+          const active = c.items.filter(i => getIdeaVote(i.id) !== "no");
+          const aTotal = active.length;
+          const aDone = active.filter(i => getIdeaStatus(i.id) === "done").length;
+          const aPct = aTotal > 0 ? Math.round((aDone / aTotal) * 100) : 0;
+          return `
+            <div class="prog-row">
+              <div class="prog-head">
+                <span class="prog-name">${escapeHtml(c.title)}</span>
+                <span class="prog-stat">${aDone}/${aTotal} (${aPct}%)</span>
+              </div>
+              <div class="prog-track">
+                <div class="prog-fill green" style="width: ${aPct}%"></div>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      /* ====== 2) RENDER PLAN ====== */
+      function renderPlan() {
+        const container = document.getElementById("wavesContainer");
+        container.innerHTML = WAVES.map(w => {
+          const tDone = w.tasks.filter(t => getPlanStatus(t) === "done").length;
+          const tasksHtml = w.tasks.map(t => {
+            const st = getPlanStatus(t);
+            return `
+              <div class="task-item ${st}">
+                <span class="task-text">${escapeHtml(t.text)}</span>
+                <button type="button" class="status-pill ${st}" data-plan-task="${t.id}" title="Kliknutím přepneš stav úkolu">
+                  ${STATUS_LABELS[st]}
+                </button>
+              </div>
+            `;
+          }).join("");
+
+          return `
+            <div class="wave-card ${w.current ? "current" : ""}">
+              <div class="wave-head">
+                <h3 class="wave-title">
+                  ${escapeHtml(w.title)}
+                  <span class="wave-tag">${escapeHtml(w.version)}</span>
+                </h3>
+                <span class="prog-stat">${tDone} / ${w.tasks.length} hotovo</span>
+              </div>
+              <div class="task-list">${tasksHtml}</div>
+            </div>
+          `;
+        }).join("");
+
+        container.querySelectorAll("[data-plan-task]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const taskId = btn.dataset.planTask;
+            const task = WAVES.flatMap(w => w.tasks).find(t => t.id === taskId);
+            if (!task) return;
+            const cur = getPlanStatus(task);
+            const next = PLAN_CYCLE[(PLAN_CYCLE.indexOf(cur) + 1) % PLAN_CYCLE.length];
+            state.planStatuses[taskId] = next;
+            saveState();
+            renderPlan();
+            renderOverview();
+          });
+        });
+      }
+
+      /* ====== 3) RENDER VISUALS ====== */
+      function renderVisuals() {
+        const grid = document.getElementById("visualsGrid");
+        grid.innerHTML = VISUALS.map(v => {
+          const vs = getVisualState(v.id);
+          return `
+            <article class="vis-card" data-vis-id="${v.id}">
+              <div class="vis-media">
+                <img src="${escapeHtml(v.path)}" alt="${escapeHtml(v.title)}" data-vis-img="${v.id}" />
+                <div class="vis-placeholder" data-vis-ph="${v.id}" style="display: none;">
+                  <div class="vis-placeholder-icon">${v.icon}</div>
+                  <div class="vis-placeholder-hint">Concept art zatím není nahraný.<br/>Ulož obrázek pod tímto názvem:</div>
+                  <div class="vis-filename">${escapeHtml(v.path)}</div>
+                </div>
+              </div>
+              <div class="vis-body">
+                <div>
+                  <h3 class="vis-title">${escapeHtml(v.title)}</h3>
+                  <div class="vis-path-sub">${escapeHtml(v.path)}</div>
+                </div>
+                <div class="vote-group">
+                  <button type="button" class="vote-btn ${vs.rating === "ok" ? "active-good" : ""}" data-vis-rate="ok" data-vis="${v.id}">
+                    ✅ Spokojený
+                  </button>
+                  <button type="button" class="vote-btn ${vs.rating === "edit" ? "active-mid" : ""}" data-vis-rate="edit" data-vis="${v.id}">
+                    ✏️ Upravit
+                  </button>
+                  <button type="button" class="vote-btn ${vs.rating === "no" ? "active-bad" : ""}" data-vis-rate="no" data-vis="${v.id}">
+                    ❌ Ne
+                  </button>
+                </div>
+                <textarea class="note-input" data-vis-note="${v.id}" placeholder="Poznámka k tomuto vizuálu (co změnit, co se líbí)...">${escapeHtml(vs.note || "")}</textarea>
+              </div>
+            </article>
+          `;
+        }).join("");
+
+        // Image error fallback + lightbox
+        grid.querySelectorAll("img[data-vis-img]").forEach(img => {
+          const id = img.dataset.visImg;
+          const ph = grid.querySelector(`[data-vis-ph="${id}"]`);
+          const showPlaceholder = () => {
+            img.style.display = "none";
+            if (ph) ph.style.display = "flex";
+          };
+          img.addEventListener("error", showPlaceholder);
+          if (img.complete && img.naturalWidth === 0) {
+            showPlaceholder();
+          }
+          img.addEventListener("click", () => {
+            if (img.naturalWidth > 0) openLightbox(img.src);
+          });
+        });
+
+        // Rating buttons
+        grid.querySelectorAll("[data-vis-rate]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.dataset.vis;
+            const rate = btn.dataset.visRate;
+            const vs = getVisualState(id);
+            vs.rating = vs.rating === rate ? null : rate;
+            saveState();
+            updateVisualButtons(id);
+            updateBadges();
+          });
+        });
+
+        // Notes
+        grid.querySelectorAll("[data-vis-note]").forEach(ta => {
+          ta.addEventListener("input", () => {
+            const id = ta.dataset.visNote;
+            getVisualState(id).note = ta.value;
+            saveState();
+          });
+        });
+      }
+
+      function updateVisualButtons(visId) {
+        const card = document.querySelector(`.vis-card[data-vis-id="${visId}"]`);
+        if (!card) return;
+        const rate = getVisualState(visId).rating;
+        card.querySelectorAll("[data-vis-rate]").forEach(btn => {
+          btn.classList.remove("active-good", "active-mid", "active-bad");
+          if (btn.dataset.visRate === rate) {
+            if (rate === "ok") btn.classList.add("active-good");
+            if (rate === "edit") btn.classList.add("active-mid");
+            if (rate === "no") btn.classList.add("active-bad");
+          }
+        });
+      }
+
+      /* ====== 4) RENDER QUESTIONS ====== */
+      function renderQuestions() {
+        const list = document.getElementById("questionsList");
+        list.innerHTML = QUESTIONS.map((q, idx) => {
+          const selected = state.questions[q.id] || null;
+          const optsHtml = q.options.map(opt => {
+            const isSel = selected === opt;
+            return `
+              <button type="button" class="q-opt ${isSel ? "selected" : ""}" data-q="${q.id}" data-opt="${escapeAttr(opt)}">
+                <span class="q-radio" aria-hidden="true"></span>
+                <span>${escapeHtml(opt)}</span>
+              </button>
+            `;
+          }).join("");
+
+          return `
+            <div class="q-card ${selected ? "answered" : "unanswered"}">
+              <div class="q-head">
+                <h3 class="q-title"><span class="q-num">${idx + 1}.</span>${escapeHtml(q.text)}</h3>
+              </div>
+              <div class="q-options">${optsHtml}</div>
+            </div>
+          `;
+        }).join("");
+
+        list.querySelectorAll(".q-opt").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const qId = btn.dataset.q;
+            const opt = btn.dataset.opt;
+            state.questions[qId] = state.questions[qId] === opt ? null : opt;
+            saveState();
+            renderQuestions();
+            updateBadges();
+          });
+        });
+
+        const extraNotes = document.getElementById("extraNotes");
+        if (extraNotes.value !== (state.extraNotes || "")) {
+          extraNotes.value = state.extraNotes || "";
+        }
+      }
+
+      document.getElementById("extraNotes").addEventListener("input", e => {
+        state.extraNotes = e.target.value;
+        saveState();
+      });
+
+      /* ====== 5) RENDER IDEAS ====== */
+      function matchesIdeaFilter(idea) {
+        const st = getIdeaStatus(idea.id);
+        const vote = getIdeaVote(idea.id);
+        if (currentIdeaFilter === "todo" && st === "done") return false;
+        if (currentIdeaFilter === "done" && st !== "done") return false;
+        if (currentIdeaFilter === "unvoted" && vote !== null) return false;
+
+        if (currentIdeaSearch.trim()) {
+          const q = currentIdeaSearch.trim().toLowerCase();
+          if (!idea.title.toLowerCase().includes(q) && !idea.catTitle.toLowerCase().includes(q)) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function renderIdeas() {
+        const container = document.getElementById("ideasContainer");
+        let totalVisible = 0;
+
+        const html = IDEA_CATEGORIES.map(cat => {
+          const items = cat.items
+            .map(i => ({ ...i, catTitle: cat.title }))
+            .filter(matchesIdeaFilter);
+
+          if (items.length === 0) return "";
+          totalVisible += items.length;
+
+          const cardsHtml = items.map(item => {
+            const vote = getIdeaVote(item.id);
+            const st = getIdeaStatus(item.id);
+            return `
+              <div class="idea-card ${vote === "no" ? "voted-no" : ""}">
+                <div class="idea-top">
+                  <div class="idea-title">${escapeHtml(item.title)}</div>
+                  <button type="button" class="status-pill ${st}" data-idea-status="${item.id}" title="Kliknutím přepneš stav implementace">
+                    ${STATUS_LABELS[st]}
+                  </button>
+                </div>
+                <div class="vote-group">
+                  <button type="button" class="vote-btn ${vote === "yes" ? "active-good" : ""}" data-idea-vote="yes" data-idea="${item.id}">
+                    👍 Chci
+                  </button>
+                  <button type="button" class="vote-btn ${vote === "maybe" ? "active-mid" : ""}" data-idea-vote="maybe" data-idea="${item.id}">
+                    🤔 Možná
+                  </button>
+                  <button type="button" class="vote-btn ${vote === "no" ? "active-bad" : ""}" data-idea-vote="no" data-idea="${item.id}">
+                    👎 Ne
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join("");
+
+          return `
+            <details class="idea-cat" open>
+              <summary>
+                <span class="cat-left">
+                  <span class="cat-chevron">▶</span>
+                  <span>${escapeHtml(cat.title)}</span>
+                </span>
+                <span class="cat-count">${items.length} / ${cat.items.length}</span>
+              </summary>
+              <div class="idea-grid">${cardsHtml}</div>
+            </details>
+          `;
+        }).join("");
+
+        if (totalVisible === 0) {
+          container.innerHTML = `<div class="empty-state">Žádné nápady neodpovídají zvolenému filtru.</div>`;
+          return;
+        }
+
+        container.innerHTML = html;
+
+        container.querySelectorAll("[data-idea-vote]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.dataset.idea;
+            const v = btn.dataset.ideaVote;
+            state.ideaVotes[id] = state.ideaVotes[id] === v ? null : v;
+            saveState();
+            renderIdeas();
+            renderOverview();
+          });
+        });
+
+        container.querySelectorAll("[data-idea-status]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.dataset.ideaStatus;
+            const cur = getIdeaStatus(id);
+            const next = IDEA_CYCLE[(IDEA_CYCLE.indexOf(cur) + 1) % IDEA_CYCLE.length];
+            state.ideaStatuses[id] = next;
+            saveState();
+            renderIdeas();
+            renderOverview();
+          });
+        });
+      }
+
+      document.querySelectorAll("#ideaFilters .filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentIdeaFilter = btn.dataset.filter;
+          document.querySelectorAll("#ideaFilters .filter-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderIdeas();
+        });
+      });
+
+      document.getElementById("ideaSearch").addEventListener("input", e => {
+        currentIdeaSearch = e.target.value;
+        renderIdeas();
+      });
+
+      /* ====== COPY FOR AI ====== */
+      function buildAiSummary() {
+        const lines = [];
+        lines.push(`# Bruno: Ink & Shadow — Moje odpovědi a zpětná vazba (${APP_VERSION})`);
+        lines.push("");
+
+        // Questions
+        lines.push("## ❓ Odpovědi na otázky");
+        QUESTIONS.forEach((q, idx) => {
+          const ans = state.questions[q.id] || "(nezodpovězeno)";
+          lines.push(`${idx + 1}. ${q.text}`);
+          lines.push(`   → ${ans}`);
+        });
+        lines.push("");
+
+        // Extra notes
+        if (state.extraNotes && state.extraNotes.trim()) {
+          lines.push("## 📝 Moje poznámky a nápady navíc");
+          lines.push(state.extraNotes.trim());
+          lines.push("");
+        }
+
+        // Visuals
+        lines.push("## 🎨 Hodnocení vizuálů");
+        const rateMap = { ok: "Spokojený", edit: "Upravit", no: "Ne" };
+        VISUALS.forEach(v => {
+          const vs = getVisualState(v.id);
+          const rating = vs.rating ? rateMap[vs.rating] : "(nehodnoceno)";
+          const notePart = vs.note && vs.note.trim() ? ` | Poznámka: ${vs.note.trim()}` : "";
+          lines.push(`- ${v.title} (${v.path}): ${rating}${notePart}`);
+        });
+        lines.push("");
+
+        // Ideas
+        lines.push("## 💡 Hlasování u nápadů");
+        const voteGroups = { yes: [], maybe: [], no: [], unvoted: [] };
+        allIdeas().forEach(i => {
+          const v = getIdeaVote(i.id);
+          if (v === "yes") voteGroups.yes.push(i.title);
+          else if (v === "maybe") voteGroups.maybe.push(i.title);
+          else if (v === "no") voteGroups.no.push(i.title);
+          else voteGroups.unvoted.push(i.title);
+        });
+
+        lines.push(`### 👍 Chci (${voteGroups.yes.length})`);
+        lines.push(voteGroups.yes.length ? voteGroups.yes.map(t => `- ${t}`).join("\n") : "- (zatím nic)");
+
+        lines.push(`### 🤔 Možná (${voteGroups.maybe.length})`);
+        lines.push(voteGroups.maybe.length ? voteGroups.maybe.map(t => `- ${t}`).join("\n") : "- (zatím nic)");
+
+        lines.push(`### 👎 Ne (${voteGroups.no.length})`);
+        lines.push(voteGroups.no.length ? voteGroups.no.map(t => `- ${t}`).join("\n") : "- (zatím nic)");
+
+        if (voteGroups.unvoted.length) {
+          lines.push(`### ⏳ Nehlasováno (${voteGroups.unvoted.length})`);
+          lines.push(voteGroups.unvoted.map(t => `- ${t}`).join("\n"));
+        }
+
+        return lines.join("\n");
+      }
+
+      async function copyTextToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        let ok = false;
+        try {
+          ok = document.execCommand("copy");
+        } catch (e) {
+          ok = false;
+        }
+        document.body.removeChild(ta);
+        return ok;
+      }
+
+      document.getElementById("copyAiBtn").addEventListener("click", async () => {
+        const text = buildAiSummary();
+        try {
+          const ok = await copyTextToClipboard(text);
+          if (ok) {
+            showToast("✅ Odpovědi zkopírovány do schránky! Můžeš je vložit (Ctrl+V) do chatu.");
+          } else {
+            showToast("⚠️ Kopírování se nezdařilo — zkus otevřít přes HTTPS nebo povolit schránku.");
+          }
+        } catch (e) {
+          showToast("⚠️ Kopírování do schránky nebylo povoleno.");
+        }
+      });
+
+      /* ====== TOAST & LIGHTBOX ====== */
+      let toastTimer = null;
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 3200);
+      }
+
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      function openLightbox(src) {
+        lightboxImg.src = src;
+        lightbox.classList.add("open");
+      }
+      lightbox.addEventListener("click", () => {
+        lightbox.classList.remove("open");
+      });
+      document.addEventListener("keydown", e => {
+        if (e.key === "Escape") lightbox.classList.remove("open");
+      });
+
+      /* ====== HELPERS ====== */
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function escapeAttr(str) {
+        return escapeHtml(str).replace(/'/g, "&#39;");
+      }
+
+      /* ====== INIT ====== */
+      setActiveTab(getHashTab());
+      renderOverview();
+      renderPlan();
+      renderVisuals();
+      renderQuestions();
+      renderIdeas();
+      updateBadges();
+    })();
+  </script>
+</body>
+</html>
