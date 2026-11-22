@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bruno: Ink &amp; Shadow — Herní studio centrum (v0.1.4)</title>
+  <title>Bruno: Ink &amp; Shadow — Herní studio centrum (v0.1.5)</title>
   <style>
     :root {
       --bg: #0b0f17;
@@ -28,7 +28,7 @@
       --red-dim: rgba(248, 113, 113, 0.16);
       --radius: 14px;
       --radius-sm: 10px;
-      --sidebar-w: 272px;
+      --sidebar-w: 274px;
       --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
     }
 
@@ -50,8 +50,8 @@
 
     code {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.85em;
-      background: rgba(11, 15, 23, 0.7);
+      font-size: 0.84em;
+      background: rgba(11, 15, 23, 0.72);
       border: 1px solid var(--border);
       padding: 1px 6px;
       border-radius: 6px;
@@ -59,17 +59,11 @@
     }
 
     /* ====== LAYOUT ====== */
-    .app-shell {
-      display: flex;
-      min-height: 100vh;
-    }
+    .app-shell { display: flex; min-height: 100vh; }
 
-    /* Sidebar */
     .sidebar {
       position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
+      top: 0; left: 0; bottom: 0;
       width: var(--sidebar-w);
       background: rgba(17, 24, 39, 0.96);
       backdrop-filter: blur(14px);
@@ -89,8 +83,7 @@
     }
 
     .sb-icon {
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 10px;
       object-fit: cover;
       border: 1px solid rgba(251, 191, 36, 0.5);
@@ -99,30 +92,14 @@
       box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
     }
 
-    .sb-brand-title {
-      font-size: 0.98rem;
-      font-weight: 800;
-      line-height: 1.2;
-      color: var(--text);
-    }
-
-    .sb-brand-sub {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 3px;
-      font-size: 0.74rem;
-      color: var(--muted);
-    }
+    .sb-brand-title { font-size: 0.98rem; font-weight: 800; line-height: 1.2; color: var(--text); }
+    .sb-brand-sub { display: flex; align-items: center; gap: 6px; margin-top: 3px; font-size: 0.74rem; color: var(--muted); }
 
     .pill-ver {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--gold);
-      background: var(--gold-dim);
+      font-size: 0.7rem; font-weight: 800;
+      color: var(--gold); background: var(--gold-dim);
       border: 1px solid rgba(251, 191, 36, 0.45);
-      padding: 1px 7px;
-      border-radius: 999px;
+      padding: 1px 7px; border-radius: 999px;
     }
 
     .sb-progress {
@@ -132,29 +109,20 @@
     }
 
     .sb-prog-head {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      font-weight: 700;
-      margin-bottom: 6px;
+      display: flex; justify-content: space-between;
+      font-size: 0.78rem; font-weight: 700; margin-bottom: 6px;
     }
 
-    .sb-prog-pct {
-      color: var(--gold);
-    }
+    .sb-prog-pct { color: var(--gold); }
 
     .prog-track {
-      width: 100%;
-      height: 8px;
-      background: #0b0f17;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      overflow: hidden;
+      width: 100%; height: 8px;
+      background: #0b0f17; border: 1px solid var(--border);
+      border-radius: 999px; overflow: hidden;
     }
 
     .prog-fill {
-      height: 100%;
-      border-radius: 999px;
+      height: 100%; border-radius: 999px;
       background: linear-gradient(90deg, var(--cyan), var(--purple), var(--gold));
       transition: width 0.35s ease;
     }
@@ -163,171 +131,78 @@
     .prog-fill.cyan { background: linear-gradient(90deg, #06b6d4, var(--cyan)); }
     .prog-fill.purple { background: linear-gradient(90deg, #9333ea, var(--purple)); }
     .prog-fill.green { background: linear-gradient(90deg, #22c55e, var(--green)); }
+    .prog-fill.orange { background: linear-gradient(90deg, #ea580c, var(--orange)); }
 
     .sb-nav {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      flex: 1; overflow-y: auto; padding: 10px;
+      display: flex; flex-direction: column; gap: 4px;
     }
 
     .nav-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.89rem;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: all 0.15s ease;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; padding: 10px 12px; border-radius: var(--radius-sm);
+      color: var(--muted); text-decoration: none;
+      font-size: 0.88rem; font-weight: 700;
+      border: 1px solid transparent; transition: all 0.15s ease;
     }
 
-    .nav-link:hover {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text);
-    }
-
+    .nav-link:hover { background: rgba(255, 255, 255, 0.04); color: var(--text); }
     .nav-link.active {
       background: linear-gradient(135deg, rgba(251, 191, 36, 0.14), rgba(192, 132, 252, 0.1));
-      color: var(--gold);
-      border-color: rgba(251, 191, 36, 0.35);
+      color: var(--gold); border-color: rgba(251, 191, 36, 0.35);
     }
 
-    .nav-link-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
+    .nav-link-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
 
     .nav-badge {
-      font-size: 0.7rem;
-      font-weight: 800;
-      min-width: 22px;
-      height: 20px;
-      padding: 0 6px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--card);
-      color: var(--muted);
-      border: 1px solid var(--border);
+      font-size: 0.7rem; font-weight: 800; min-width: 22px; height: 20px;
+      padding: 0 6px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--card); color: var(--muted); border: 1px solid var(--border);
+      white-space: nowrap;
     }
 
-    .nav-badge.alert {
-      background: var(--red-dim);
-      color: var(--red);
-      border-color: rgba(248, 113, 113, 0.45);
-    }
-
-    .nav-badge.cyan {
-      background: var(--cyan-dim);
-      color: var(--cyan);
-      border-color: rgba(34, 211, 238, 0.4);
-    }
-
+    .nav-badge.alert { background: var(--red-dim); color: var(--red); border-color: rgba(248, 113, 113, 0.45); }
+    .nav-badge.cyan { background: var(--cyan-dim); color: var(--cyan); border-color: rgba(34, 211, 238, 0.4); }
+    .nav-badge.gold { background: var(--gold-dim); color: var(--gold); border-color: rgba(251, 191, 36, 0.45); }
     .nav-badge.hidden { display: none; }
 
     .sb-foot {
-      padding: 12px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      padding: 12px; border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 8px;
     }
 
-    .save-pill {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 0.75rem;
-      color: var(--green);
-    }
+    .save-pill { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.75rem; color: var(--green); }
+    .save-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
 
-    .save-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 8px var(--green);
-    }
-
-    /* Main Content */
-    .main-wrap {
-      flex: 1;
-      margin-left: var(--sidebar-w);
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
+    .main-wrap { flex: 1; margin-left: var(--sidebar-w); display: flex; flex-direction: column; min-width: 0; }
 
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 40;
+      position: sticky; top: 0; z-index: 40;
       background: rgba(11, 15, 23, 0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
 
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
 
     .hamburger {
-      display: none;
-      appearance: none;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-sm);
-      font-size: 1.15rem;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
+      display: none; appearance: none;
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); width: 38px; height: 38px; border-radius: var(--radius-sm);
+      font-size: 1.15rem; cursor: pointer; align-items: center; justify-content: center;
     }
 
-    .page-title {
-      margin: 0;
-      font-size: 1.08rem;
-      font-weight: 800;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .page-title { margin: 0; font-size: 1.08rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .btn-primary {
-      appearance: none;
-      border: 1px solid rgba(251, 191, 36, 0.75);
+      appearance: none; border: 1px solid rgba(251, 191, 36, 0.75);
       background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-      color: #0b0f17;
-      font-weight: 800;
-      font-size: 0.85rem;
-      padding: 9px 14px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
+      color: #0b0f17; font-weight: 800; font-size: 0.84rem;
+      padding: 9px 14px; border-radius: var(--radius-sm); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
       box-shadow: 0 6px 18px rgba(251, 191, 36, 0.22);
       transition: transform 0.12s ease, filter 0.15s ease;
     }
@@ -336,84 +211,46 @@
     .btn-primary:active { transform: translateY(0); }
 
     .btn-secondary {
-      appearance: none;
-      border: 1px solid var(--border-strong);
-      background: var(--card);
-      color: var(--text);
-      font-weight: 700;
-      font-size: 0.83rem;
-      padding: 8px 13px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.15s ease, border-color 0.15s ease;
+      appearance: none; border: 1px solid var(--border-strong);
+      background: var(--card); color: var(--text);
+      font-weight: 700; font-size: 0.82rem; padding: 8px 13px;
+      border-radius: var(--radius-sm); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
 
-    .btn-secondary:hover {
-      background: var(--card-hover);
-      border-color: var(--cyan);
-      color: var(--cyan);
-    }
+    .btn-secondary:hover { background: var(--card-hover); border-color: var(--cyan); color: var(--cyan); }
+    .btn-secondary.danger:hover { border-color: var(--red); color: var(--red); }
 
-    .content {
-      max-width: 1220px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 24px 24px 72px;
-    }
-
+    .content { max-width: 1240px; width: 100%; margin: 0 auto; padding: 24px 24px 72px; }
     .view { display: none; animation: fadeIn 0.18s ease; }
     .view.active { display: block; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Panels & Typography */
     .panel {
-      background: var(--bg-elev);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
+      background: var(--bg-elev); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
       margin-bottom: 20px;
     }
 
     .panel-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap; margin-bottom: 15px;
     }
 
     .panel-head h2, .panel-head h3 {
-      margin: 0;
-      font-size: 1.05rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      margin: 0; font-size: 1.05rem; font-weight: 800;
+      display: flex; align-items: center; gap: 8px;
     }
 
     .muted { color: var(--muted); font-size: 0.84rem; }
 
     .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.74rem;
-      font-weight: 800;
-      padding: 3px 9px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--text);
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.73rem; font-weight: 800; padding: 3px 9px;
+      border-radius: 999px; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); white-space: nowrap;
     }
 
     .tag.gold { background: var(--gold-dim); color: var(--gold); border-color: rgba(251, 191, 36, 0.45); }
@@ -427,857 +264,386 @@
     .hero-card {
       background: linear-gradient(135deg, rgba(22, 31, 51, 0.96), rgba(17, 24, 39, 0.96));
       border: 1px solid rgba(251, 191, 36, 0.35);
-      border-radius: var(--radius);
-      padding: 22px;
-      margin-bottom: 20px;
+      border-radius: var(--radius); padding: 22px; margin-bottom: 20px;
       box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: 1fr 210px;
-      gap: 22px;
-      align-items: center;
+      display: grid; grid-template-columns: 1fr 220px; gap: 22px; align-items: center;
     }
 
-    .hero-visuals {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .hero-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 16px;
-      object-fit: cover;
-      border: 2px solid rgba(251, 191, 36, 0.6);
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
-      cursor: zoom-in;
-    }
-
-    .hero-logo {
-      max-height: 76px;
-      max-width: 280px;
-      width: auto;
-      object-fit: contain;
-      border-radius: 10px;
-      background: rgba(11, 15, 23, 0.65);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      cursor: zoom-in;
-    }
-
-    .hero-desc {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      max-width: 680px;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    .hero-visuals { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+    .hero-icon { width: 72px; height: 72px; border-radius: 16px; object-fit: cover; border: 2px solid rgba(251, 191, 36, 0.6); box-shadow: 0 8px 22px rgba(0,0,0,0.5); cursor: zoom-in; }
+    .hero-logo { max-height: 76px; max-width: 280px; width: auto; object-fit: contain; border-radius: 10px; background: rgba(11,15,23,0.65); border: 1px solid var(--border); padding: 4px 10px; cursor: zoom-in; }
+    .hero-desc { margin: 0 0 14px; color: var(--muted); font-size: 0.91rem; max-width: 700px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
     .ring-card {
-      background: rgba(11, 15, 23, 0.55);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      background: rgba(11, 15, 23, 0.55); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
     }
 
-    .ring-box {
-      position: relative;
-      width: 136px;
-      height: 136px;
-    }
-
-    .ring-box svg {
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg);
-    }
-
+    .ring-box { position: relative; width: 136px; height: 136px; }
+    .ring-box svg { width: 100%; height: 100%; transform: rotate(-90deg); }
     .ring-bg { fill: none; stroke: #1e293b; stroke-width: 11; }
-    .ring-fg {
-      fill: none;
-      stroke: url(#ringGrad);
-      stroke-width: 11;
-      stroke-linecap: round;
-      transition: stroke-dashoffset 0.5s ease;
-    }
-
-    .ring-center {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
+    .ring-fg { fill: none; stroke: url(#ringGrad); stroke-width: 11; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+    .ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .ring-pct { font-size: 1.75rem; font-weight: 900; color: var(--gold); line-height: 1; }
     .ring-sub { font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
 
-    .area-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+    /* Next Actions */
+    .next-box {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.08), rgba(251, 191, 36, 0.06), rgba(17, 24, 39, 0.96));
+      border: 1px solid rgba(34, 211, 238, 0.4);
+      border-radius: var(--radius); padding: 18px 20px; margin-bottom: 20px; box-shadow: var(--shadow);
     }
 
-    .area-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .next-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
     }
 
-    .area-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.86rem;
-      font-weight: 700;
+    .next-card {
+      background: rgba(11, 15, 23, 0.65); border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm); padding: 14px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
     }
 
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+    .next-card.doing { border-left: 4px solid var(--cyan); }
+    .next-card.todo { border-left: 4px solid var(--gold); }
+
+    .next-title { font-size: 0.9rem; font-weight: 800; line-height: 1.35; }
+
+    /* Wave Harmonogram on Overview */
+    .wave-timeline {
+      display: flex; flex-direction: column; gap: 10px;
     }
 
-    .phase-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 15px;
-      border-top: 3px solid var(--gold);
+    .wave-row {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+      cursor: pointer; transition: border-color 0.15s ease, transform 0.12s ease, background 0.15s ease;
     }
 
-    .phase-box.p2 { border-top-color: var(--purple); }
+    .wave-row:hover { border-color: var(--gold); background: var(--card-hover); transform: translateX(3px); }
 
-    .phase-box h4 {
-      margin: 0 0 8px;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+    .wave-row-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;
     }
 
-    .phase-box ul {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: 0.86rem;
+    .wave-row-title { font-weight: 800; font-size: 0.94rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .wave-row-stats { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--muted); flex-wrap: wrap; }
+    .wave-row-pct { font-size: 0.92rem; font-weight: 900; color: var(--gold); min-width: 42px; text-align: right; }
+
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+
+    .breakdown-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
     }
 
-    .phase-box li { margin-bottom: 4px; }
-    .phase-box strong { color: var(--text); }
-
-    /* ====== 2) WORLDS & STORY ====== */
-    .worlds-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+    .mini-stat {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 12px 14px;
+      display: flex; flex-direction: column; gap: 7px;
     }
 
-    .world-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.16s ease, transform 0.16s ease;
+    .mini-stat-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; font-weight: 700; gap: 6px; }
+
+    /* ====== ROADMAP / PLAN TAB ====== */
+    .view-switcher {
+      display: inline-flex; background: #0b0f17; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 4px; gap: 4px; flex-wrap: wrap;
     }
 
-    .world-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-2px);
+    .vs-btn {
+      appearance: none; background: transparent; border: 1px solid transparent;
+      color: var(--muted); font-weight: 800; font-size: 0.82rem;
+      padding: 8px 13px; border-radius: 8px; cursor: pointer; transition: all 0.15s ease;
     }
 
-    .world-thumb {
-      height: 132px;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      position: relative;
-      overflow: hidden;
+    .vs-btn:hover { color: var(--text); }
+    .vs-btn.active {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.18), rgba(192, 132, 252, 0.12));
+      color: var(--gold); border-color: rgba(251, 191, 36, 0.45);
+    }
+
+    .plan-toolbar {
+      background: var(--bg-elev); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; margin-bottom: 18px;
+      display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow);
+    }
+
+    .plan-top-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+
+    .plan-filters-row {
+      display: grid; grid-template-columns: repeat(3, minmax(140px, 190px)) 1fr; gap: 10px; align-items: center;
+    }
+
+    .add-task-panel {
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.08), rgba(17, 24, 39, 0.96));
+      border: 1px solid rgba(192, 132, 252, 0.45);
+      border-radius: var(--radius); padding: 18px; margin-bottom: 18px; display: none;
+    }
+
+    .add-task-panel.open { display: block; }
+
+    .add-task-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px;
+    }
+
+    /* Wave Card in Roadmap */
+    .rm-wave {
+      background: var(--bg-elev); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 20px; overflow: hidden; box-shadow: var(--shadow);
+    }
+
+    .rm-wave-head {
+      padding: 18px 20px;
+      background: linear-gradient(135deg, rgba(22, 31, 51, 0.95), rgba(17, 24, 39, 0.95));
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    .world-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      cursor: zoom-in;
+    .rm-wave-title-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;
     }
 
-    .world-thumb-badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: rgba(11, 15, 23, 0.85);
-      border: 1px solid rgba(251, 191, 36, 0.5);
-      color: var(--gold);
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 999px;
+    .rm-wave-title { margin: 0; font-size: 1.04rem; font-weight: 900; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .rm-wave-goal { margin: 0 0 12px; font-size: 0.86rem; color: var(--muted); }
+    .rm-wave-prog-row { display: flex; align-items: center; gap: 12px; }
+
+    .rm-task-list { display: flex; flex-direction: column; }
+
+    .rm-task {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.14s ease;
     }
 
-    .world-body {
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      flex: 1;
+    .rm-task:last-child { border-bottom: none; }
+    .rm-task.expanded { background: rgba(22, 31, 51, 0.5); }
+
+    .rm-task-row {
+      padding: 13px 18px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      cursor: pointer;
     }
 
+    .rm-task-row:hover { background: rgba(255, 255, 255, 0.025); }
+
+    .rm-task-left {
+      display: flex; align-items: center; gap: 10px; flex: 1; min-width: 260px; flex-wrap: wrap;
+    }
+
+    .rm-status-btn {
+      appearance: none; border-radius: 999px; padding: 5px 11px;
+      font-size: 0.74rem; font-weight: 800; cursor: pointer;
+      border: 1px solid transparent; white-space: nowrap; transition: filter 0.12s ease;
+    }
+
+    .rm-status-btn:hover { filter: brightness(1.14); }
+    .rm-status-btn.done { background: var(--green-dim); color: var(--green); border-color: rgba(74, 222, 128, 0.45); }
+    .rm-status-btn.doing { background: var(--cyan-dim); color: var(--cyan); border-color: rgba(34, 211, 238, 0.45); }
+    .rm-status-btn.todo { background: rgba(148, 163, 184, 0.14); color: var(--muted); border-color: rgba(148, 163, 184, 0.35); }
+
+    .rm-code {
+      font-family: ui-monospace, Consolas, monospace; font-size: 0.76rem; font-weight: 800;
+      color: var(--gold); background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.32); padding: 2px 7px; border-radius: 6px;
+    }
+
+    .rm-title { font-size: 0.91rem; font-weight: 700; color: var(--text); }
+    .rm-task.is-done .rm-title { color: var(--muted); text-decoration: line-through; }
+
+    .rm-task-right {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    }
+
+    .rm-detail-btn {
+      appearance: none; background: var(--card); border: 1px solid var(--border);
+      color: var(--muted); font-size: 0.75rem; font-weight: 700;
+      padding: 5px 10px; border-radius: 7px; cursor: pointer;
+    }
+
+    .rm-detail-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Expanded Task Detail */
+    .rm-detail {
+      padding: 0 18px 18px 18px;
+      display: none;
+    }
+
+    .rm-task.expanded .rm-detail { display: block; }
+
+    .rm-detail-inner {
+      background: #0d1322; border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm); padding: 16px;
+      display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px;
+    }
+
+    .rm-detail h4 {
+      margin: 0 0 9px; font-size: 0.82rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.4px; color: var(--cyan);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .step-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+
+    .step-item label {
+      display: flex; align-items: flex-start; gap: 9px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 10px; font-size: 0.84rem;
+      cursor: pointer; transition: border-color 0.14s ease;
+    }
+
+    .step-item label:hover { border-color: var(--cyan); }
+    .step-item input[type="checkbox"] { margin-top: 3px; accent-color: var(--green); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+    .step-item.checked span { color: var(--muted); text-decoration: line-through; }
+
+    .dod-box {
+      background: rgba(74, 222, 128, 0.09); border: 1px solid rgba(74, 222, 128, 0.4);
+      border-radius: 8px; padding: 11px 13px; font-size: 0.84rem; color: #dcfce7;
+      margin-bottom: 12px;
+    }
+
+    .dod-box strong { display: block; color: var(--green); font-size: 0.77rem; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+
+    .files-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+    /* ====== EXISTING SECTIONS (WORLDS, MECHANICS, VISUALS, KANBAN, LOG, IDEAS, PROMPTS) ====== */
+    .worlds-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .world-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.16s ease, transform 0.16s ease; }
+    .world-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .world-thumb { height: 132px; background: linear-gradient(135deg, #0f172a, #1e293b); position: relative; overflow: hidden; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+    .world-thumb img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+    .world-thumb-badge { position: absolute; top: 10px; left: 10px; background: rgba(11,15,23,0.85); border: 1px solid rgba(251,191,36,0.5); color: var(--gold); font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; }
+    .world-body { padding: 15px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
     .world-body h4 { margin: 0; font-size: 1rem; font-weight: 800; }
-
-    .world-meta {
-      font-size: 0.82rem;
-      color: var(--muted);
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
+    .world-meta { font-size: 0.82rem; color: var(--muted); display: flex; flex-direction: column; gap: 5px; }
     .world-meta strong { color: var(--text); }
 
-    .story-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .story-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--purple);
-      border-radius: var(--radius-sm);
-      padding: 13px;
-    }
-
+    .story-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .story-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--purple); border-radius: var(--radius-sm); padding: 13px; }
     .story-card h4 { margin: 0 0 6px; font-size: 0.9rem; color: var(--purple); }
     .story-card p { margin: 0; font-size: 0.83rem; color: var(--muted); }
 
-    .sq-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .sq-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .sq-ico {
-      font-size: 1.5rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: rgba(34, 211, 238, 0.12);
-      border: 1px solid rgba(34, 211, 238, 0.35);
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-    }
-
+    .sq-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .sq-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; display: flex; gap: 12px; align-items: flex-start; }
+    .sq-ico { font-size: 1.5rem; width: 40px; height: 40px; border-radius: 10px; background: rgba(34,211,238,0.12); border: 1px solid rgba(34,211,238,0.35); display: grid; place-items: center; flex-shrink: 0; }
     .sq-card h4 { margin: 0 0 4px; font-size: 0.92rem; }
     .sq-card p { margin: 0; font-size: 0.83rem; color: var(--muted); }
 
-    /* ====== 3) MECHANICS & DIAGRAMS ====== */
-    .loop-svg-wrap {
-      background: #0d1322;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      overflow-x: auto;
-    }
-
-    .loop-svg {
-      width: 100%;
-      min-width: 720px;
-      height: auto;
-      display: block;
-    }
-
-    .loop-node {
-      cursor: pointer;
-      transition: filter 0.15s ease;
-    }
-
+    .loop-svg-wrap { background: #0d1322; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; overflow-x: auto; }
+    .loop-svg { width: 100%; min-width: 720px; height: auto; display: block; }
+    .loop-node { cursor: pointer; transition: filter 0.15s ease; }
     .loop-node:hover { filter: brightness(1.18); }
-
-    .loop-detail {
-      margin-top: 14px;
-      background: var(--card);
-      border: 1px solid rgba(34, 211, 238, 0.4);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      font-size: 0.88rem;
-    }
-
+    .loop-detail { margin-top: 14px; background: var(--card); border: 1px solid rgba(34,211,238,0.4); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 0.88rem; }
     .loop-detail h4 { margin: 0 0 4px; color: var(--cyan); font-size: 0.95rem; }
 
-    .pill-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .chip-btn {
-      appearance: none;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.81rem;
-      font-weight: 700;
-      padding: 7px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.14s ease;
-    }
-
+    .pill-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .chip-btn { appearance: none; background: var(--card); border: 1px solid var(--border); color: var(--muted); font-size: 0.81rem; font-weight: 700; padding: 7px 12px; border-radius: 999px; cursor: pointer; transition: all 0.14s ease; }
     .chip-btn:hover { color: var(--text); background: var(--card-hover); }
-    .chip-btn.active {
-      background: var(--gold-dim);
-      border-color: var(--gold);
-      color: var(--gold);
-    }
+    .chip-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
 
-    .ability-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .ability-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 13px;
-      transition: opacity 0.18s ease, border-color 0.18s ease, transform 0.15s ease;
-    }
-
-    .ability-card.highlight {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.25);
-    }
-
+    .ability-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .ability-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 13px; transition: opacity 0.18s ease, border-color 0.18s ease; }
+    .ability-card.highlight { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(251,191,36,0.25); }
     .ability-card.dim { opacity: 0.34; }
-
-    .ability-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-
+    .ability-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
     .ability-card h4 { margin: 0; font-size: 0.9rem; }
     .ability-card p { margin: 0; font-size: 0.81rem; color: var(--muted); }
 
-    /* Tables */
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-    }
-
-    table.studio-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.84rem;
-      min-width: 560px;
-    }
-
-    table.studio-table th,
-    table.studio-table td {
-      text-align: left;
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-
-    table.studio-table th {
-      background: #0e1526;
-      color: var(--gold);
-      font-weight: 800;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+    table.studio-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; min-width: 580px; }
+    table.studio-table th, table.studio-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    table.studio-table th { background: #0e1526; color: var(--gold); font-weight: 800; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.4px; }
     table.studio-table tr:last-child td { border-bottom: none; }
-    table.studio-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    table.studio-table tr:hover td { background: rgba(255,255,255,0.02); }
 
-    /* ====== 4) VISUALS ====== */
-    .vis-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .vis-card {
-      background: var(--bg-elev);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: var(--shadow);
-    }
-
-    .vis-media {
-      aspect-ratio: 16 / 10;
-      background: #090d16;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .vis-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      cursor: zoom-in;
-      transition: transform 0.25s ease;
-    }
-
+    .vis-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .vis-card { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow); }
+    .vis-media { aspect-ratio: 16 / 10; background: #090d16; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .vis-media img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; transition: transform 0.25s ease; }
     .vis-media img:hover { transform: scale(1.03); }
-
-    .vis-ph {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 16px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.78rem;
-      width: 100%;
-      height: 100%;
-    }
-
-    .vis-cat-badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(11, 15, 23, 0.85);
-      border: 1px solid var(--border-strong);
-      color: var(--cyan);
-      font-size: 0.68rem;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 999px;
-    }
-
-    .vis-body {
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      flex: 1;
-    }
-
+    .vis-ph { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; text-align: center; color: var(--muted); font-size: 0.78rem; width: 100%; height: 100%; }
+    .vis-cat-badge { position: absolute; top: 8px; right: 8px; background: rgba(11,15,23,0.85); border: 1px solid var(--border-strong); color: var(--cyan); font-size: 0.68rem; font-weight: 800; padding: 2px 7px; border-radius: 999px; }
+    .vis-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
     .vis-title { margin: 0; font-size: 0.92rem; font-weight: 800; }
     .vis-path { font-family: ui-monospace, Consolas, monospace; font-size: 0.72rem; color: var(--muted); }
     .vis-desc { margin: 4px 0 0; font-size: 0.8rem; color: var(--muted); }
 
-    .vote-row {
-      display: flex;
-      gap: 6px;
-    }
-
-    .vote-btn {
-      flex: 1;
-      appearance: none;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 0.76rem;
-      padding: 7px 6px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.14s ease;
-    }
-
+    .vote-row { display: flex; gap: 6px; }
+    .vote-btn { flex: 1; appearance: none; background: var(--card); border: 1px solid var(--border); color: var(--muted); font-weight: 700; font-size: 0.76rem; padding: 7px 6px; border-radius: 8px; cursor: pointer; transition: all 0.14s ease; }
     .vote-btn:hover { background: var(--card-hover); color: var(--text); }
     .vote-btn.active-good { background: var(--green-dim); border-color: var(--green); color: var(--green); }
     .vote-btn.active-mid { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
     .vote-btn.active-bad { background: var(--red-dim); border-color: var(--red); color: var(--red); }
 
-    .note-input {
-      width: 100%;
-      background: #0b0f17;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.82rem;
-      padding: 8px 10px;
-      resize: vertical;
-      min-height: 54px;
+    .note-input, .field-input, .field-select {
+      width: 100%; background: #0b0f17; border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-family: inherit; font-size: 0.83rem; padding: 8px 11px;
     }
+    .note-input { resize: vertical; min-height: 54px; }
+    .note-input:focus, .field-input:focus, .field-select:focus { outline: none; border-color: var(--gold); }
 
-    .note-input:focus { outline: none; border-color: var(--gold); }
-
-    /* ====== 5) KANBAN ====== */
-    .kanban-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      background: var(--bg-elev);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-    }
-
-    .kanban-board {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      align-items: start;
-    }
-
-    .kb-col {
-      background: var(--bg-elev);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px;
-      min-height: 220px;
-    }
-
+    /* Kanban */
+    .kanban-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+    .kb-col { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; min-height: 220px; }
     .kb-col.todo { border-top: 3px solid var(--muted); }
     .kb-col.doing { border-top: 3px solid var(--cyan); }
     .kb-col.done { border-top: 3px solid var(--green); }
-
-    .kb-col-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      font-weight: 800;
-      font-size: 0.94rem;
-    }
-
-    .kb-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .kb-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
+    .kb-col-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-weight: 800; font-size: 0.94rem; }
+    .kb-list { display: flex; flex-direction: column; gap: 10px; }
+    .kb-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; display: flex; flex-direction: column; gap: 8px; }
     .kb-card.done .kb-title { color: var(--muted); text-decoration: line-through; }
-
-    .kb-title { font-size: 0.87rem; font-weight: 700; line-height: 1.38; }
-
-    .kb-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-
-    .kb-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-      padding-top: 6px;
-      border-top: 1px solid rgba(38, 52, 79, 0.7);
-    }
-
-    .kb-move {
-      appearance: none;
-      background: rgba(11, 15, 23, 0.7);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.74rem;
-      font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 7px;
-      cursor: pointer;
-    }
-
+    .kb-title { font-size: 0.86rem; font-weight: 700; line-height: 1.38; }
+    .kb-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .kb-actions { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding-top: 6px; border-top: 1px solid rgba(38,52,79,0.7); }
+    .kb-move { appearance: none; background: rgba(11,15,23,0.7); border: 1px solid var(--border); color: var(--muted); font-size: 0.74rem; font-weight: 700; padding: 4px 8px; border-radius: 7px; cursor: pointer; }
     .kb-move:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* ====== 6) WORK LOG ====== */
-    .log-form {
-      display: grid;
-      grid-template-columns: 150px 150px 150px 1fr auto;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .field-input, .field-select {
-      background: #0b0f17;
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 8px;
-      padding: 9px 11px;
-      font-size: 0.84rem;
-      font-family: inherit;
-      width: 100%;
-    }
-
-    .field-input:focus, .field-select:focus { outline: none; border-color: var(--gold); }
-
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .log-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--gold);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
+    /* Log */
+    .log-form { display: grid; grid-template-columns: 150px 150px 150px 1fr auto; gap: 10px; align-items: center; }
+    .timeline { display: flex; flex-direction: column; gap: 12px; }
+    .log-item { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
     .log-item.info { border-left-color: var(--cyan); }
     .log-item.done { border-left-color: var(--green); }
     .log-item.next { border-left-color: var(--purple); }
+    .log-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 0.78rem; color: var(--muted); }
+    .log-meta-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .log-text { margin: 0; font-size: 0.88rem; }
 
-    .log-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .log-meta-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .log-text { margin: 0; font-size: 0.89rem; }
-
-    /* ====== 7) IDEAS & DECISIONS ====== */
-    .decided-box {
-      background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(17, 24, 39, 0.94));
-      border: 1px solid rgba(74, 222, 128, 0.4);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      margin-bottom: 20px;
-    }
-
-    .decided-list {
-      list-style: none;
-      margin: 12px 0 0;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 9px 14px;
-    }
-
-    .decided-list li {
-      background: rgba(11, 15, 23, 0.55);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 9px 11px;
-      font-size: 0.84rem;
-      display: flex;
-      gap: 8px;
-    }
-
+    /* Decided & Ideas */
+    .decided-box { background: linear-gradient(135deg, rgba(74,222,128,0.1), rgba(17,24,39,0.94)); border: 1px solid rgba(74,222,128,0.4); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 20px; }
+    .decided-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 14px; }
+    .decided-list li { background: rgba(11,15,23,0.55); border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; font-size: 0.84rem; display: flex; gap: 8px; }
     .decided-check { color: var(--green); font-weight: 900; }
-
-    .idea-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .idea-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 13px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
+    .idea-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .idea-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 13px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
     .idea-card.voted-no { opacity: 0.5; border-style: dashed; }
 
-    /* ====== 8) PROMPTS & HANDOFF ====== */
-    .prompt-pre {
-      background: #090d16;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.82rem;
-      color: #dbeafe;
-      white-space: pre-wrap;
-      word-break: break-word;
-      max-height: 440px;
-      overflow-y: auto;
-      margin: 0;
-      line-height: 1.55;
-    }
+    /* Prompts */
+    .prompt-pre { background: #090d16; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.82rem; color: #dbeafe; white-space: pre-wrap; word-break: break-word; max-height: 440px; overflow-y: auto; margin: 0; line-height: 1.55; }
 
-    /* ====== OVERLAYS, LIGHTBOX, TOAST, MOBILE BAR ====== */
-    .sb-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      z-index: 75;
-    }
-
+    /* Overlays */
+    .sb-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 75; }
     .sb-backdrop.open { display: block; }
-
-    .mobile-bar {
-      display: none;
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 60;
-      background: rgba(17, 24, 39, 0.96);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid var(--border);
-      grid-template-columns: repeat(5, 1fr);
-      padding: 6px 4px;
-    }
-
-    .mb-btn {
-      appearance: none;
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 0.68rem;
-      font-weight: 700;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      padding: 4px 2px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
+    .mobile-bar { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: rgba(17,24,39,0.96); backdrop-filter: blur(12px); border-top: 1px solid var(--border); grid-template-columns: repeat(5, 1fr); padding: 6px 4px; }
+    .mb-btn { appearance: none; background: none; border: none; color: var(--muted); font-size: 0.68rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 2px; text-decoration: none; cursor: pointer; }
     .mb-btn .mb-ico { font-size: 1.15rem; line-height: 1.1; }
     .mb-btn.active { color: var(--gold); }
 
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(5, 8, 15, 0.92);
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      gap: 12px;
-      cursor: zoom-out;
-    }
-
+    .lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(5,8,15,0.92); display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; gap: 12px; cursor: zoom-out; }
     .lightbox.open { display: flex; }
+    .lightbox img { max-width: 94vw; max-height: 82vh; border-radius: 12px; border: 1px solid var(--border-strong); box-shadow: 0 24px 64px rgba(0,0,0,0.75); }
+    .lightbox-cap { color: var(--text); font-size: 0.9rem; font-weight: 700; text-align: center; }
 
-    .lightbox img {
-      max-width: 94vw;
-      max-height: 82vh;
-      border-radius: 12px;
-      border: 1px solid var(--border-strong);
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75);
-    }
-
-    .lightbox-cap {
-      color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 250;
-      background: #161f33;
-      color: var(--text);
-      border: 1px solid var(--gold);
-      border-radius: var(--radius-sm);
-      padding: 12px 16px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
-      opacity: 0;
-      transform: translateY(10px);
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      max-width: 360px;
-    }
-
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 250; background: #161f33; color: var(--text); border: 1px solid var(--gold); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 0.85rem; font-weight: 700; box-shadow: 0 12px 32px rgba(0,0,0,0.6); opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; max-width: 380px; }
     .toast.show { opacity: 1; transform: translateY(0); }
 
-    /* ====== RESPONSIVE ====== */
+    /* Responsive */
     @media (max-width: 1120px) {
-      .area-grid, .worlds-grid, .vis-grid, .ability-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .story-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .kanban-board {
-        grid-template-columns: 1fr;
-      }
-      .log-form {
-        grid-template-columns: 1fr 1fr;
-      }
+      .worlds-grid, .vis-grid, .ability-grid, .next-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .story-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kanban-board, .rm-detail-inner { grid-template-columns: 1fr; }
+      .plan-filters-row, .log-form, .add-task-grid { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 900px) {
@@ -1288,16 +654,12 @@
       .mobile-bar { display: grid; }
       .content { padding: 16px 14px 86px; }
       .topbar { padding: 10px 14px; }
-      .hero-card, .two-col, .sq-grid, .decided-list, .idea-grid {
-        grid-template-columns: 1fr;
-      }
+      .hero-card, .two-col, .sq-grid, .decided-list, .idea-grid, .next-grid, .breakdown-grid { grid-template-columns: 1fr; }
       .toast { bottom: 72px; right: 14px; left: 14px; max-width: none; }
     }
 
     @media (max-width: 600px) {
-      .area-grid, .worlds-grid, .vis-grid, .ability-grid, .story-grid, .log-form {
-        grid-template-columns: 1fr;
-      }
+      .worlds-grid, .vis-grid, .ability-grid, .story-grid, .log-form, .plan-filters-row, .add-task-grid { grid-template-columns: 1fr; }
       .topbar .btn-primary span.hide-sm { display: none; }
     }
   </style>
@@ -1313,7 +675,7 @@
         <div>
           <div class="sb-brand-title">Bruno: Ink &amp; Shadow</div>
           <div class="sb-brand-sub">
-            <span class="pill-ver">v0.1.4</span>
+            <span class="pill-ver">v0.1.5</span>
             <span>Studio Centrum</span>
           </div>
         </div>
@@ -1333,6 +695,10 @@
         <a href="#prehled" class="nav-link" data-tab="prehled">
           <span class="nav-link-left"><span>🏠</span><span>Přehled</span></span>
         </a>
+        <a href="#plan" class="nav-link" data-tab="plan">
+          <span class="nav-link-left"><span>✅</span><span>Plán, Vlny &amp; Kanban</span></span>
+          <span class="nav-badge gold" id="badgeRoadmap">0/28</span>
+        </a>
         <a href="#svety" class="nav-link" data-tab="svety">
           <span class="nav-link-left"><span>🗺️</span><span>Světy &amp; Příběh</span></span>
           <span class="nav-badge cyan">6</span>
@@ -1343,10 +709,6 @@
         <a href="#vizualy" class="nav-link" data-tab="vizualy">
           <span class="nav-link-left"><span>🎨</span><span>Vizuály</span></span>
           <span class="nav-badge alert" id="badgeVisuals">23</span>
-        </a>
-        <a href="#plan" class="nav-link" data-tab="plan">
-          <span class="nav-link-left"><span>✅</span><span>Plán &amp; Kanban</span></span>
-          <span class="nav-badge" id="badgeKanban">0</span>
         </a>
         <a href="#denik" class="nav-link" data-tab="denik">
           <span class="nav-link-left"><span>📝</span><span>Deník práce</span></span>
@@ -1394,15 +756,15 @@
                 <img src="vis/logo_bruno_v01.png" alt="Logo Bruno: Ink & Shadow" class="hero-logo js-zoom" onerror="this.style.display='none'" />
               </div>
               <p class="hero-desc">
-                Stylizovaný 3D stealth/parkour ve stylu <strong>Sly Cooper 2</strong> propojený s 2D dynamickou plošinovkou ve stylu <strong>Rayman Origins (UbiArt)</strong> a Mosquito průlety na mechanickém komáru <em>Šídlo</em>. Kompletní zdroj pravdy držíme v <code>DESIGN.md</code>.
+                Řídicí centrum vývoje <strong>Bruno: Ink &amp; Shadow</strong> — 3D stealth/parkour ve stylu <em>Sly Cooper 2</em> plynule propojený s 2D plošinovkou ve stylu <em>Rayman Origins (UbiArt)</em> a Mosquito průlety na komáru <em>Šídlo</em>. Všechny úkoly a procenta se počítají živě z jedné Roadmapy (<code>done = 100 %</code>, <code>doing = 50 %</code>).
               </p>
               <div class="hero-tags">
-                <span class="tag gold">Verze v0.1.4</span>
-                <span class="tag cyan">Engine: Godot 4 (Jolt)</span>
-                <span class="tag purple">Jazyky: CS + EN</span>
-                <span class="tag green">6 Kapitol (2 fáze)</span>
+                <span class="tag gold">v0.1.5</span>
+                <span class="tag cyan">Godot 4</span>
+                <span class="tag purple">CS + EN</span>
+                <span class="tag green">6 Kapitol</span>
                 <span class="tag">🎨 23 Vizuálů</span>
-                <span class="tag">🎮 PC · Gamepad · Mobil</span>
+                <span class="tag" id="heroTaskCountTag">📋 28 Úkolů</span>
               </div>
             </div>
 
@@ -1421,58 +783,146 @@
                 </svg>
                 <div class="ring-center">
                   <div class="ring-pct" id="heroPct">0%</div>
-                  <div class="ring-sub">Kanban hotovo</div>
+                  <div class="ring-sub">Celkový postup</div>
                 </div>
               </div>
-              <div class="muted" id="heroMeta" style="margin-top: 8px;">0 / 0 úkolů</div>
+              <div class="muted" id="heroMeta" style="margin-top: 8px;">0 hotovo · 0 dělá se</div>
             </div>
           </div>
 
+          <!-- NEXT ACTIONS -->
+          <div class="next-box">
+            <div class="panel-head" style="margin-bottom: 12px;">
+              <h2 style="color: var(--cyan);">🎯 Co udělat právě teď (Next Actions)</h2>
+              <span class="muted">Automaticky vybrané rozpracované a nejbližší odemčené úkoly</span>
+            </div>
+            <div class="next-grid" id="nextActionsGrid"></div>
+          </div>
+
+          <!-- 6 WAVES HARMONOGRAM -->
           <div class="panel">
             <div class="panel-head">
-              <h2>📊 Postup podle oblastí vývoje</h2>
-              <span class="muted">Živě přepočítáváno z Kanbanu</span>
+              <h2>🌊 Harmonogram 6 vln vývoje</h2>
+              <span class="muted">Kliknutím na vlnu otevřeš její detailní úkoly a kroky</span>
             </div>
-            <div class="area-grid" id="overviewAreas"></div>
+            <div class="wave-timeline" id="overviewWaveTimeline"></div>
           </div>
 
+          <!-- PHASES & ROLES BREAKDOWN -->
           <div class="two-col">
             <div class="panel">
               <div class="panel-head">
-                <h2>🚀 2 Vývojové fáze (6 Kapitol)</h2>
-                <a href="#svety" class="tag cyan" style="text-decoration: none;">Otevřít Světy →</a>
+                <h2>🏁 Postup podle Fází</h2>
+                <span class="muted">Fáze 1 (v1.0.0) vs. Fáze 2 (v1.3.x)</span>
               </div>
-              <div style="display: flex; flex-direction: column; gap: 12px;">
-                <div class="phase-box">
-                  <h4><span>Fáze 1 — První plnohodnotné vydání</span><span class="tag gold">Kapitoly 1–3</span></h4>
-                  <ul>
-                    <li><strong>1. Zátoka Bublin</strong> — goofy noční přístav (Boss: Šéfkuchař Ropuch)</li>
-                    <li><strong>2. Měděný kaňon</strong> — steampunk western &amp; parní vlaky (Boss: Šerif Píst)</li>
-                    <li><strong>3. Zrcadlový karneval</strong> — noční Benátky, masky &amp; iluze (Boss: Hraběnka Škraboška)</li>
-                  </ul>
-                </div>
-                <div class="phase-box p2">
-                  <h4><span>Fáze 2 — Rozšíření &amp; Finále</span><span class="tag purple">Kapitoly 4–6</span></h4>
-                  <ul>
-                    <li><strong>4. Zamrzlá knihovna</strong> — zasněžené věže &amp; klouzání (Boss: Archivistka Můra)</li>
-                    <li><strong>5. Továrna na barvy</strong> — potrubí &amp; lasery (Boss: Inženýr Štětka)</li>
-                    <li><strong>6. Inkoustová citadela</strong> — deštivý temný noir (Dvoufázový boss: Baron Kaňka)</li>
-                  </ul>
-                </div>
-              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px;" id="phaseBreakdown"></div>
             </div>
 
             <div class="panel">
               <div class="panel-head">
-                <h2>📝 Poslední 3 záznamy z Deníku práce</h2>
-                <a href="#denik" class="tag purple" style="text-decoration: none;">Celý deník →</a>
+                <h2>👥 Rozdělení úkolů podle Rolí</h2>
+                <span class="muted">Tomáš · Claude · Antigravity · Gemini</span>
               </div>
-              <div class="timeline" id="overviewRecentLogs"></div>
+              <div class="breakdown-grid" id="roleBreakdown"></div>
             </div>
+          </div>
+
+          <!-- RECENT WORK LOG -->
+          <div class="panel">
+            <div class="panel-head">
+              <h2>📝 Poslední 3 záznamy z Deníku práce</h2>
+              <a href="#denik" class="tag purple" style="text-decoration: none;">Celý deník →</a>
+            </div>
+            <div class="timeline" id="overviewRecentLogs"></div>
           </div>
         </section>
 
-        <!-- 2) SVĚTY & PŘÍBĚH -->
+        <!-- 2) PLÁN, VLNY & KANBAN -->
+        <section id="view-plan" class="view">
+          <div class="plan-toolbar">
+            <div class="plan-top-row">
+              <div class="view-switcher" id="planViewSwitcher">
+                <button type="button" class="vs-btn active" data-pview="roadmap">📋 Podrobná Roadmapa (Vlny &amp; Kroky)</button>
+                <button type="button" class="vs-btn" data-pview="kanban">🗂️ Kanban nástěnka</button>
+                <button type="button" class="vs-btn" data-pview="milestones">🏁 Přehled milníků</button>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn-secondary" id="toggleAddTaskBtn">＋ Přidat vlastní úkol</button>
+                <button type="button" class="btn-secondary danger" id="resetRoadmapBtn">↺ Obnovit výchozí stavy</button>
+              </div>
+            </div>
+
+            <div class="plan-filters-row">
+              <select id="filterWave" class="field-select" aria-label="Filtr podle vlny">
+                <option value="all">🌊 Všechny vlny (1–6)</option>
+                <option value="1">Vlna 1 (v0.1.x) — Příprava</option>
+                <option value="2">Vlna 2 (v0.2.x) — Godot Greybox</option>
+                <option value="3">Vlna 3 (v0.3.x) — Vizuál, HUD, AI</option>
+                <option value="4">Vlna 4 (v0.4.x) — Kapitola 1</option>
+                <option value="5">Vlna 5 (v0.5–v1.0) — Fáze 1</option>
+                <option value="6">Vlna 6 (v1.1–v1.4) — Fáze 2</option>
+              </select>
+              <select id="filterRole" class="field-select" aria-label="Filtr podle role">
+                <option value="all">👥 Všechny role</option>
+                <option value="Tomáš">Tomáš</option>
+                <option value="Claude">Claude</option>
+                <option value="Antigravity">Antigravity</option>
+                <option value="Gemini">Gemini</option>
+              </select>
+              <select id="filterStatus" class="field-select" aria-label="Filtr podle stavu">
+                <option value="all">📌 Všechny stavy</option>
+                <option value="todo">📋 Zbývá</option>
+                <option value="doing">⏳ Rozpracováno</option>
+                <option value="done">✅ Hotovo</option>
+              </select>
+              <input type="search" id="filterSearch" class="field-input" placeholder="🔍 Hledat kód, úkol, krok nebo soubor..." />
+            </div>
+          </div>
+
+          <!-- ADD CUSTOM TASK FORM -->
+          <form class="add-task-panel" id="addTaskForm">
+            <div class="panel-head" style="margin-bottom: 12px;">
+              <h3 style="color: var(--purple);">➕ Přidat vlastní úkol do Roadmapy</h3>
+              <button type="button" class="kb-move" id="cancelAddTaskBtn">✕ Zavřít</button>
+            </div>
+            <div class="add-task-grid">
+              <select id="newTaskWave" class="field-select">
+                <option value="1">Vlna 1 (Příprava)</option>
+                <option value="2" selected>Vlna 2 (Godot Greybox)</option>
+                <option value="3">Vlna 3 (Vizuál, HUD, AI)</option>
+                <option value="4">Vlna 4 (Kapitola 1)</option>
+                <option value="5">Vlna 5 (Fáze 1 — v1.0)</option>
+                <option value="6">Vlna 6 (Fáze 2 — Finále)</option>
+              </select>
+              <input type="text" id="newTaskVer" class="field-input" placeholder="Cílová verze (např. v0.2.2)" value="v0.2.x" required />
+              <select id="newTaskOwner" class="field-select">
+                <option value="Tomáš">Tomáš</option>
+                <option value="Antigravity">Antigravity</option>
+                <option value="Tomáš + Antigravity">Tomáš + Antigravity</option>
+                <option value="Claude">Claude</option>
+                <option value="Gemini">Gemini</option>
+              </select>
+              <input type="text" id="newTaskTitle" class="field-input" placeholder="Název úkolu *" style="grid-column: span 2;" required />
+              <select id="newTaskPriority" class="field-select">
+                <option value="Kritické">Priorita: Kritické</option>
+                <option value="Vysoká" selected>Priorita: Vysoká</option>
+                <option value="Střední">Priorita: Střední</option>
+              </select>
+              <input type="text" id="newTaskEst" class="field-input" placeholder="Odhad času (např. 2 dny)" value="2 dny" />
+              <input type="text" id="newTaskFiles" class="field-input" placeholder="Soubory (oddělené čárkou)" />
+              <input type="text" id="newTaskAccept" class="field-input" placeholder="Definition of Done (jak ověříme)" />
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="newTaskSteps" class="field-input" style="flex: 1; min-width: 240px;" placeholder="Kroky oddělené středníkem (např. Krok 1; Krok 2; Krok 3)" />
+              <button type="submit" class="btn-primary">Uložit úkol</button>
+            </div>
+          </form>
+
+          <!-- DYNAMIC PLAN VIEW CONTAINER -->
+          <div id="planContent"></div>
+        </section>
+
+        <!-- 3) SVĚTY & PŘÍBĚH -->
         <section id="view-svety" class="view">
           <div class="panel">
             <div class="panel-head">
@@ -1519,37 +969,25 @@
             <div class="sq-grid">
               <div class="sq-card">
                 <div class="sq-ico">⏱️</div>
-                <div>
-                  <h4>Kikiiny časovky po střechách</h4>
-                  <p>Rychlostní parkour tratě přes modré špičky, okapy a lana na čas s Kikiiným komentářem ve vysílačce.</p>
-                </div>
+                <div><h4>Kikiiny časovky po střechách</h4><p>Rychlostní parkour tratě přes modré špičky, okapy a lana na čas s Kikiiným komentářem ve vysílačce.</p></div>
               </div>
               <div class="sq-card">
                 <div class="sq-ico">🎾</div>
-                <div>
-                  <h4>Tenisáková střelnice</h4>
-                  <p>Najdi a přesným odpalem tenisáku holí rozezvuč <strong>5 skrytých zvonů nebo terčů</strong> v každém hubu.</p>
-                </div>
+                <div><h4>Tenisáková střelnice</h4><p>Najdi a přesným odpalem tenisáku holí rozezvuč <strong>5 skrytých zvonů nebo terčů</strong> v každém hubu.</p></div>
               </div>
               <div class="sq-card">
                 <div class="sq-ico">🔑</div>
-                <div>
-                  <h4>Zlodějské zakázky</h4>
-                  <p>Čistý stealth: tichá krádež klíče od pasu elitní hlídky holí bez spuštění poplachu.</p>
-                </div>
+                <div><h4>Zlodějské zakázky</h4><p>Čistý stealth: tichá krádež klíče od pasu elitní hlídky holí bez spuštění poplachu.</p></div>
               </div>
               <div class="sq-card">
                 <div class="sq-ico">🌀</div>
-                <div>
-                  <h4>Tajné 2D trhliny</h4>
-                  <p>Skryté inkoustové portály vedoucí do náročných Rayman 2D výzev — odměnou jsou tajné klece s oblečky a Zlaté tenisáky.</p>
-                </div>
+                <div><h4>Tajné 2D trhliny</h4><p>Skryté inkoustové portály vedoucí do náročných Rayman 2D výzev — odměnou jsou tajné klece s oblečky a Zlaté tenisáky.</p></div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- 3) MECHANIKY & DIAGRAMY -->
+        <!-- 4) MECHANIKY & DIAGRAMY -->
         <section id="view-mechaniky" class="view">
           <div class="panel">
             <div class="panel-head">
@@ -1566,59 +1004,17 @@
                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#22d3ee" />
                   </marker>
                 </defs>
-
-                <!-- Connecting arrows -->
                 <line x1="184" y1="86" x2="210" y2="86" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowGold)" />
                 <line x1="378" y1="86" x2="404" y2="86" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowGold)" />
                 <line x1="572" y1="86" x2="598" y2="86" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowGold)" />
                 <line x1="766" y1="86" x2="792" y2="86" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowGold)" />
-
-                <!-- Return loop arrow -->
-                <path d="M 880 132 L 880 192 Q 880 206 864 206 L 116 206 Q 100 206 100 192 L 100 138"
-                      fill="none" stroke="#22d3ee" stroke-width="2.2" stroke-dasharray="7 5" marker-end="url(#arrowCyan)" />
-                <text x="490" y="198" text-anchor="middle" fill="#22d3ee" font-size="12" font-weight="700">
-                  Přistání v další kapitole → Nový 3D Open-Hub &amp; Úkryt (Safe House)
-                </text>
-
-                <!-- Node 1 -->
-                <g class="loop-node" data-loop="hub">
-                  <rect x="16" y="38" width="166" height="96" rx="14" fill="#161f33" stroke="#22d3ee" stroke-width="2.2" />
-                  <text x="99" y="68" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="800">1 · 3D STEALTH</text>
-                  <text x="99" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">3D Open-Hub</text>
-                  <text x="99" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">&amp; Plížení (Sly 2)</text>
-                </g>
-
-                <!-- Node 2 -->
-                <g class="loop-node" data-loop="tennis">
-                  <rect x="212" y="38" width="164" height="96" rx="14" fill="#161f33" stroke="#fbbf24" stroke-width="2.2" />
-                  <text x="294" y="68" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="800">2 · AKCE &amp; LOUPENÍ</text>
-                  <text x="294" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">Odpal tenisáku</text>
-                  <text x="294" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">&amp; 3D Interiéry</text>
-                </g>
-
-                <!-- Node 3 -->
-                <g class="loop-node" data-loop="portal">
-                  <rect x="406" y="38" width="164" height="96" rx="14" fill="#161f33" stroke="#c084fc" stroke-width="2.2" />
-                  <text x="488" y="68" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="800">3 · PŘECHOD</text>
-                  <text x="488" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">Portál obrazu</text>
-                  <text x="488" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">Plynulý nájezd 3D→2D</text>
-                </g>
-
-                <!-- Node 4 -->
-                <g class="loop-node" data-loop="run2d">
-                  <rect x="600" y="38" width="164" height="96" rx="14" fill="#161f33" stroke="#4ade80" stroke-width="2.2" />
-                  <text x="682" y="68" text-anchor="middle" fill="#4ade80" font-size="11" font-weight="800">4 · 2D UBIART</text>
-                  <text x="682" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">2D Rayman únik</text>
-                  <text x="682" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">4 nohy · uši · kapky</text>
-                </g>
-
-                <!-- Node 5 -->
-                <g class="loop-node" data-loop="mosquito">
-                  <rect x="794" y="38" width="170" height="96" rx="14" fill="#161f33" stroke="#fb923c" stroke-width="2.2" />
-                  <text x="879" y="68" text-anchor="middle" fill="#fb923c" font-size="11" font-weight="800">5 · MOST SVĚTŮ</text>
-                  <text x="879" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">Mosquito průlet</text>
-                  <text x="879" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">Kiki &amp; Šídlo</text>
-                </g>
+                <path d="M 880 132 L 880 192 Q 880 206 864 206 L 116 206 Q 100 206 100 192 L 100 138" fill="none" stroke="#22d3ee" stroke-width="2.2" stroke-dasharray="7 5" marker-end="url(#arrowCyan)" />
+                <text x="490" y="198" text-anchor="middle" fill="#22d3ee" font-size="12" font-weight="700">Přistání v další kapitole → Nový 3D Open-Hub &amp; Úkryt (Safe House)</text>
+                <g class="loop-node" data-loop="hub"><rect x="16" y="38" width="166" height="96" rx="14" fill="#161f33" stroke="#22d3ee" stroke-width="2.2" /><text x="99" y="68" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="800">1 · 3D STEALTH</text><text x="99" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">3D Open-Hub</text><text x="99" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">&amp; Plížení (Sly 2)</text></g>
+                <g class="loop-node" data-loop="tennis"><rect x="212" y="38" width="164" height="96" rx="14" fill="#161f33" stroke="#fbbf24" stroke-width="2.2" /><text x="294" y="68" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="800">2 · AKCE &amp; LOUPENÍ</text><text x="294" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">Odpal tenisáku</text><text x="294" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">&amp; 3D Interiéry</text></g>
+                <g class="loop-node" data-loop="portal"><rect x="406" y="38" width="164" height="96" rx="14" fill="#161f33" stroke="#c084fc" stroke-width="2.2" /><text x="488" y="68" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="800">3 · PŘECHOD</text><text x="488" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">Portál obrazu</text><text x="488" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">Plynulý nájezd 3D→2D</text></g>
+                <g class="loop-node" data-loop="run2d"><rect x="600" y="38" width="164" height="96" rx="14" fill="#161f33" stroke="#4ade80" stroke-width="2.2" /><text x="682" y="68" text-anchor="middle" fill="#4ade80" font-size="11" font-weight="800">4 · 2D UBIART</text><text x="682" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">2D Rayman únik</text><text x="682" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">4 nohy · uši · kapky</text></g>
+                <g class="loop-node" data-loop="mosquito"><rect x="794" y="38" width="170" height="96" rx="14" fill="#161f33" stroke="#fb923c" stroke-width="2.2" /><text x="879" y="68" text-anchor="middle" fill="#fb923c" font-size="11" font-weight="800">5 · MOST SVĚTŮ</text><text x="879" y="90" text-anchor="middle" fill="#f1f5f9" font-size="13.5" font-weight="800">Mosquito průlet</text><text x="879" y="110" text-anchor="middle" fill="#94a3b8" font-size="11.5">Kiki &amp; Šídlo</text></g>
               </svg>
             </div>
             <div class="loop-detail" id="loopDetail"></div>
@@ -1648,9 +1044,7 @@
             </div>
             <div class="table-wrap">
               <table class="studio-table">
-                <thead>
-                  <tr><th>Stav State Machine</th><th>Spouštěč</th><th>Chování</th><th>Verze</th></tr>
-                </thead>
+                <thead><tr><th>Stav State Machine</th><th>Spouštěč</th><th>Chování</th><th>Verze</th></tr></thead>
                 <tbody>
                   <tr><td><code>IDLE</code> / <code>MOVE</code></td><td>Základní pohyb</td><td>2 nohy, plížení, po 5 s idle pinkání tenisákem na čumáku</td><td><span class="tag gold">v0.2.0</span></td></tr>
                   <tr><td><code>SPRINT_4LEGS</code></td><td>Sprint</td><td>Hůl na záda, rychlý běh na všech čtyřech</td><td><span class="tag gold">v0.2.0</span></td></tr>
@@ -1670,10 +1064,7 @@
 
           <div class="two-col">
             <div class="panel">
-              <div class="panel-head">
-                <h2>🎨 Rayman 2D Platform Kit</h2>
-                <span class="tag green">7 znovupoužitelných .tscn scén</span>
-              </div>
+              <div class="panel-head"><h2>🎨 Rayman 2D Platform Kit</h2><span class="tag green">7 .tscn scén</span></div>
               <div class="table-wrap">
                 <table class="studio-table" style="min-width: 0;">
                   <thead><tr><th>Scéna (.tscn)</th><th>Mechanika</th></tr></thead>
@@ -1691,10 +1082,7 @@
             </div>
 
             <div class="panel">
-              <div class="panel-head">
-                <h2>🐾 Tabulka animací Bruna</h2>
-                <span class="tag gold">3D + 2D set</span>
-              </div>
+              <div class="panel-head"><h2>🐾 Tabulka animací Bruna</h2><span class="tag gold">3D + 2D set</span></div>
               <div class="table-wrap">
                 <table class="studio-table" style="min-width: 0;">
                   <thead><tr><th>Animace</th><th>Detail</th></tr></thead>
@@ -1719,26 +1107,21 @@
             </div>
             <div class="table-wrap">
               <table class="studio-table">
-                <thead>
-                  <tr><th>InputMap Akce</th><th>PC (Klávesnice + Myš)</th><th>Gamepad (PS / Xbox)</th><th>Mobilní dotykový HUD</th></tr>
-                </thead>
+                <thead><tr><th>InputMap Akce</th><th>PC (Klávesnice + Myš)</th><th>Gamepad (PS / Xbox)</th><th>Mobilní dotykový HUD</th></tr></thead>
                 <tbody>
                   <tr><td><code>move</code></td><td>WASD / Šipky</td><td>Levý analog</td><td>Levý virtuální joystick</td></tr>
                   <tr><td><code>jump_glide</code></td><td>Mezerník (podržet = uši)</td><td>✕ / A (podržet = uši)</td><td>Tlačítko Skok / Uši</td></tr>
                   <tr><td><code>sprint</code></td><td>Shift</td><td>R2 / RT</td><td>Auto-sprint zóna / tlačítko</td></tr>
                   <tr><td><code>cane_attack</code></td><td>Levé tlačítko myši</td><td>□ / X</td><td>Tlačítko Hůl</td></tr>
                   <tr><td><code>parkour_hook</code></td><td>E / Pravé tlačítko (u jiskry)</td><td>○ / B</td><td>Kontextové tlačítko Hák</td></tr>
-                  <tr><td><code>tennis_ball</code></td><td>Q / F (zamířit + odpálit)</td><td>△ / Y nebo L2+R2</td><td>Tlačítko Tenisák</td></tr>
+                  <tr><td><code>tennis_bat</code></td><td>Q / F (zamířit + odpálit)</td><td>△ / Y nebo L2+R2</td><td>Tlačítko Tenisák</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="muted" style="margin: 12px 0 0;">
-              <strong>HUD &amp; Minimapa:</strong> Zlatá šestiúhelníková známka na obojku (3 dílky životů + ikona tenisáku), počítadlo lahviček/kapek, 3D minimapa vpravo nahoře (červené kužely zorného pole hlídek, zlatý cíl, modrý ping lahviček) + 3D navigační paprsek. Všechny texty přes <code>tr("KEY")</code> z <code>translations.csv</code> (CS + EN).
-            </p>
           </div>
         </section>
 
-        <!-- 4) VIZUÁLY -->
+        <!-- 5) VIZUÁLY -->
         <section id="view-vizualy" class="view">
           <div class="panel" style="padding: 14px 18px;">
             <div class="panel-head" style="margin-bottom: 10px;">
@@ -1754,46 +1137,6 @@
             </div>
           </div>
           <div class="vis-grid" id="visualsGrid"></div>
-        </section>
-
-        <!-- 5) PLÁN & KANBAN -->
-        <section id="view-plan" class="view">
-          <div class="kanban-controls">
-            <div>
-              <div class="muted" style="margin-bottom: 6px; font-weight: 700;">Filtr podle role:</div>
-              <div class="pill-bar" style="margin: 0;" id="kbRoleFilter">
-                <button type="button" class="chip-btn active" data-role="all">Všichni</button>
-                <button type="button" class="chip-btn" data-role="Tomáš">Tomáš</button>
-                <button type="button" class="chip-btn" data-role="Gemini">Gemini</button>
-                <button type="button" class="chip-btn" data-role="Claude">Claude</button>
-                <button type="button" class="chip-btn" data-role="Antigravity">Antigravity</button>
-              </div>
-            </div>
-            <div>
-              <div class="muted" style="margin-bottom: 6px; font-weight: 700;">Filtr podle vlny:</div>
-              <div class="pill-bar" style="margin: 0;" id="kbWaveFilter">
-                <button type="button" class="chip-btn active" data-wave="all">Všechny vlny</button>
-                <button type="button" class="chip-btn" data-wave="v0.1.x">v0.1.x Příprava</button>
-                <button type="button" class="chip-btn" data-wave="v0.2.x">v0.2.x Godot Greybox &amp; Parkour</button>
-                <button type="button" class="chip-btn" data-wave="v0.3.x">v0.3.x Svět 1 Alpha</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="kanban-board">
-            <div class="kb-col todo">
-              <div class="kb-col-head"><span>📋 Zbývá</span><span class="tag" id="cntTodo">0</span></div>
-              <div class="kb-list" id="kbTodo"></div>
-            </div>
-            <div class="kb-col doing">
-              <div class="kb-col-head"><span>⏳ Rozpracováno</span><span class="tag cyan" id="cntDoing">0</span></div>
-              <div class="kb-list" id="kbDoing"></div>
-            </div>
-            <div class="kb-col done">
-              <div class="kb-col-head"><span>✅ Hotovo</span><span class="tag green" id="cntDone">0</span></div>
-              <div class="kb-list" id="kbDone"></div>
-            </div>
-          </div>
         </section>
 
         <!-- 6) DENÍK PRÁCE -->
@@ -1823,7 +1166,7 @@
 
           <div class="panel">
             <div class="panel-head">
-              <h2>📜 Časová osa vývoje (v0.1.0 → v0.1.4)</h2>
+              <h2>📜 Časová osa vývoje (v0.1.0 → v0.1.5)</h2>
               <span class="muted">Nové záznamy se ukládají do prohlížeče</span>
             </div>
             <div class="timeline" id="workLogList"></div>
@@ -1834,7 +1177,7 @@
         <section id="view-napady" class="view">
           <div class="decided-box">
             <div class="panel-head" style="margin-bottom: 0;">
-              <h2 style="color: var(--green);">✅ Rozhodnuto (v0.1.0 – v0.1.4)</h2>
+              <h2 style="color: var(--green);">✅ Rozhodnuto (v0.1.0 – v0.1.5)</h2>
               <button type="button" class="btn-primary js-copy-ai">📋 Zkopírovat odpovědi pro AI</button>
             </div>
             <ul class="decided-list">
@@ -1847,7 +1190,7 @@
               <li><span class="decided-check">✓</span><span><strong>Hůl &amp; Tenisák:</strong> Hrot plnicího pera + kůstka; odpal neonového tenisáku + 1 Zlatý tenisák v levelu + idle pinkání po 5 s.</span></li>
               <li><span class="decided-check">✓</span><span><strong>Úkryty, Interiéry &amp; Sidequesty:</strong> Safe House v každé kapitole, 3D interiéry s inkoustovým střihem, 4 typy sidequestů.</span></li>
               <li><span class="decided-check">✓</span><span><strong>Cutscény &amp; Originalita:</strong> Sly 2 „Živý komiks“, čistý měsíc bez cizích log, vlastní Zlaté kapky inkoustu (ne Lumové).</span></li>
-              <li><span class="decided-check">✓</span><span><strong>Vizuální knihovna:</strong> Uzavřena kompletní sada 23 concept artů, mockupů, HUD a mapy světa ve <code>vis/</code>.</span></li>
+              <li><span class="decided-check">✓</span><span><strong>Vizuály &amp; Roadmapa:</strong> 23 concept artů ve <code>vis/</code> + podrobná Roadmapa 6 vln a 28 úkolů s checklisty.</span></li>
             </ul>
           </div>
 
@@ -1902,9 +1245,9 @@
   <!-- MOBILE BOTTOM BAR -->
   <nav class="mobile-bar" aria-label="Rychlá mobilní navigace">
     <a href="#prehled" class="mb-btn" data-tab="prehled"><span class="mb-ico">🏠</span><span>Přehled</span></a>
+    <a href="#plan" class="mb-btn" data-tab="plan"><span class="mb-ico">✅</span><span>Roadmapa</span></a>
     <a href="#svety" class="mb-btn" data-tab="svety"><span class="mb-ico">🗺️</span><span>Světy</span></a>
     <a href="#vizualy" class="mb-btn" data-tab="vizualy"><span class="mb-ico">🎨</span><span>Vizuály</span></a>
-    <a href="#plan" class="mb-btn" data-tab="plan"><span class="mb-ico">✅</span><span>Kanban</span></a>
     <button type="button" class="mb-btn" id="mbMenuBtn"><span class="mb-ico">☰</span><span>Menu</span></button>
   </nav>
 
@@ -1921,103 +1264,523 @@
     (function () {
       "use strict";
 
-      const STORAGE_KEY = "bruno_ink_shadow_v1";
-      const APP_VERSION = "v0.1.4";
+      /* Preserved key for visuals, ideas, notes & logs + dedicated key for v0.1.5 roadmap */
+      const STORAGE_KEY_LEGACY = "bruno_ink_shadow_v1";
+      const STORAGE_KEY_ROADMAP = "bruno_roadmap_v015";
+      const APP_VERSION = "v0.1.5";
 
       const TAB_TITLES = {
         prehled: "🏠 Přehled projektu",
+        plan: "✅ Plán, Vlny & Kanban",
         svety: "🗺️ Světy & Příběh (6 Kapitol)",
         mechaniky: "🎮 Mechaniky & Diagramy",
         vizualy: "🎨 Vizuály & Concept Art (23)",
-        plan: "✅ Plán & Kanban",
         denik: "📝 Deník práce",
         napady: "💡 Nápady & Rozhodnutí",
         prompty: "🤖 Prompty & Handoff"
       };
 
-      /* ====== DATA: 6 CHAPTERS ====== */
-      const WORLDS = [
+      /* ================================================================
+         1. SINGLE SOURCE OF TRUTH: 6 WAVES & 28 DETAILED TASKS
+         ================================================================ */
+      const ROADMAP_WAVES = [
         {
-          num: 1, phase: 1, name: "Zátoka Bublin",
-          atmosphere: "Goofy & hravý noční přístav, maják a barevné 2D úniky.",
-          boss: "Šéfkuchař Ropuch (Žabí hlídači)",
-          safehouse: "Starý přístavní sklad pod molem (tabule loupeže, oblečky, tenisáky).",
-          interiors: "Ropuchova kuchyně, vnitřek majáku, rybí tržnice.",
-          abilities: "Ušní vrtulník, Běh po zdech ve 2D",
-          img: "vis/env_world1_3d_sly2_v01.png"
+          id: 1,
+          code: "Vlna 1",
+          versionRange: "v0.1.x",
+          title: "Příprava, Design Bible & Concept Art",
+          phase: "Příprava",
+          estimate: "Hotovo",
+          color: "green",
+          goal: "Uzamknout herní vizi, vizuální styl (Sly 2 + Rayman Origins), technickou dokumentaci a pracovní prostředí před prvním řádkem kódu."
         },
         {
-          num: 2, phase: 1, name: "Měděný kaňon",
-          atmosphere: "Dobrodružný steampunk western, parní vlaky a měděné rokle.",
-          boss: "Šerif Píst (Steampunk hlídky)",
-          safehouse: "Opuštěná vodárenská věž nad železniční tratí.",
-          interiors: "Vagóny parního vlaku, zlatý sejf banky, kotelna.",
-          abilities: "Rail Grinding, Jiskrový výstřel (tenisák ve zpomaleném čase)",
-          img: "vis/env_world2_3d_canyon_v01.png"
+          id: 2,
+          code: "Vlna 2",
+          versionRange: "v0.2.x",
+          title: "Godot 4 Greybox, Core Movement & Parkour",
+          phase: "Fáze 1 (Kap. 1–3)",
+          estimate: "2–4 týdny",
+          color: "cyan",
+          goal: "Postavit rock-solid technický základ v Godotu 4 na šedých kostkách – perfektní pocit z pohybu ve 3D i 2D, přechody a ovládání pro všechna zařízení."
         },
         {
-          num: 3, phase: 1, name: "Zrcadlový karneval",
-          atmosphere: "Noční Benátky, kanály, masky, iluze a třpytivé lustry.",
-          boss: "Hraběnka Škraboška (Maskované hlídky)",
-          safehouse: "Skrytá lóže v opuštěném divadle nad kanálem.",
-          interiors: "Zrcadlový sál, dílna masek, podzemní krypta gondol.",
-          abilities: "Zrcadlový úhyb / přitisknutí ke stínům, pokročilé kruhy",
-          img: null
+          id: 3,
+          code: "Vlna 3",
+          versionRange: "v0.3.x",
+          title: "Vizuální styl, UI/HUD, AI hlídky & Audio základ",
+          phase: "Fáze 1 (Kap. 1–3)",
+          estimate: "3–4 týdny",
+          color: "gold",
+          goal: "Proměnit šedý prototyp v autentickou hru ve stylu Sly 2 + Rayman Origins s funkčním HUDem, minimapou, hlídkami a zvukem."
         },
         {
-          num: 4, phase: 2, name: "Zamrzlá knihovna",
-          atmosphere: "Zasněžené gotické věže, klouzání po ledu a tiché inkoustové sály.",
-          boss: "Archivistka Můra (Tiché stráže)",
-          safehouse: "Vyhřátá podkrovní studovna se starým krbem.",
-          interiors: "Velká čítárna, zamrzlý archiv svitků, zvonice.",
-          abilities: "Ledové skluzavky, tichý dopad z výšky",
-          img: null
+          id: 4,
+          code: "Vlna 4",
+          versionRange: "v0.4.x",
+          title: "Kapitola 1 – Zátoka Bublin (Kompletní hratelná kapitola)",
+          phase: "Fáze 1 (Kap. 1–3)",
+          estimate: "6–8 týdnů",
+          color: "orange",
+          goal: "Dokončit první plnohodnotnou kapitolu včetně Open-Hubu, Úkrytu, interiérů, misí, bosse, sidequestů, cutscén a Mosquito průletu."
         },
         {
-          num: 5, phase: 2, name: "Továrna na barvy",
-          atmosphere: "Průmyslový komplex, obří potrubí, barevné kádě a laserové pasti.",
-          boss: "Inženýr Štětka (Průmyslové stráže)",
-          safehouse: "Řídicí kabina nad míchárnou pigmentů.",
-          interiors: "Sektor laserových mříží, míchárna inkoustu, lisovna.",
-          abilities: "Stínový průnik přes lasery, magnet na pohyblivá potrubí",
-          img: null
+          id: 5,
+          code: "Vlna 5",
+          versionRange: "v0.5.x – v1.0.0",
+          title: "Fáze 1 – Kapitoly 2 & 3 + Vydání v1.0",
+          phase: "Fáze 1 (Kap. 1–3)",
+          estimate: "3–4 měsíce",
+          color: "purple",
+          goal: "Rozšířit hru na první plnohodnotnou trilogii kapitol, doladit výkon na PC i mobilu a vydat verzi 1.0.0."
         },
         {
-          num: 6, phase: 2, name: "Inkoustová citadela",
-          atmosphere: "Deštivý temný noir, katedrála z tekutého inkoustu, blesky a stíny.",
-          boss: "Baron Kaňka (dvoufázový 3D + 2D finální souboj)",
-          safehouse: "Věžička nad chrámovým mostem s výhledem na čistý měsíc.",
-          interiors: "Galerie ukradených obrazů, Baronův ateliér, zvonice citadely.",
-          abilities: "Dračí skok ze špičky na špičku, mistrovská kombinace všeho",
-          img: "vis/env_world3_3d_citadel_v01.png"
+          id: 6,
+          code: "Vlna 6",
+          versionRange: "v1.1.x – v1.4.0",
+          title: "Fáze 2 – Kapitoly 4–6 & Velké finále",
+          phase: "Fáze 2 (Kap. 4–6)",
+          estimate: "3–4 měsíce",
+          color: "purple",
+          goal: "Dokončit druhou polovinu hry a dovést příběh k temnému noir finále proti Baronu Kaňkovi."
         }
       ];
 
-      /* ====== DATA: GAME LOOP ====== */
-      const LOOP_DETAILS = {
-        hub: {
-          title: "1. 3D Open-Hub & Plížení (Sly 2 styl)",
-          text: "Noční čtvrť s cel-shadingem, minimapou s radarem hlídek a 3D navigačním paprskem. Bruno využívá State Machine (špičky, okapy, římsy, plazení), sbírá modré lahvičky a plní 4 typy sidequestů."
+      const ROADMAP_TASKS = [
+        // --- VLNA 1 (3) ---
+        {
+          id: "W1-01", wave: 1, phase: "Příprava", version: "v0.1.0",
+          title: "Založení GitHub repozitáře bruno-ink-and-shadow a složkové struktury (vis/, game/)",
+          owner: "Tomáš + Gemini", status: "done", priority: "Kritické", estimate: "1 den",
+          dependsOn: [],
+          files: [".gitignore", "README.md", "vis/", "game/"],
+          steps: [
+            "Založit repo na GitHubu",
+            "Propojit s lokální složkou přes GitHub Desktop",
+            "Nastavit .gitignore pro Godot 4"
+          ],
+          acceptance: "Repozitář je funkční, synchronizace přes GitHub Desktop funguje obousměrně.",
+          note: ""
         },
-        tennis: {
-          title: "2. Odpal tenisáku & 3D Misijní interiéry",
-          text: "Odpal neonového tenisáku holí láká stráže a spouští zvony/spínače. Z hubu Bruno vstupuje inkoustovým střihem do tematických 3D interiérů (kuchyně, maják, vagóny) a vrací se do Úkrytu (Safe House)."
+        {
+          id: "W1-02", wave: 1, phase: "Příprava", version: "v0.1.1–v0.1.2",
+          title: "Kompletní artbook (23 schválených concept artů, HUD a in-game mockupů)",
+          owner: "Tomáš + Gemini", status: "done", priority: "Kritické", estimate: "3 dny",
+          dependsOn: [],
+          files: ["vis/*.png (23 souborů)"],
+          steps: [
+            "Vygenerovat hlavní postavy (Bruno, Kiki, Baron, Mistři)",
+            "Vygenerovat nepřátele a prostředí Světa 1–3",
+            "Vygenerovat originální hůl s perem, tenisáky a sběratelské předměty",
+            "Vygenerovat ikonu, mapu světa, cutscénu a 3D+2D in-game mockupy"
+          ],
+          acceptance: "Všech 23 PNG je uloženo v vis/ se správnými názvy, čistý měsíc bez cizích log a originální Zlaté kapky inkoustu.",
+          note: ""
         },
-        portal: {
-          title: "3. Portál živého obrazu (Přechod 3D → 2D)",
-          text: "Po sebrání kořisti nebo vstupu do tajné trhliny Bruno skočí do obrazu. Kamera provede plynulý nájezd do bočního 2D pohledu bez tvrdého přerušení tempa."
+        {
+          id: "W1-03", wave: 1, phase: "Příprava", version: "v0.1.3–v0.1.5",
+          title: "Game Design Bible (DESIGN.md) a Projektové centrum (index.html)",
+          owner: "Tomáš + Antigravity", status: "done", priority: "Kritické", estimate: "2 dny",
+          dependsOn: [],
+          files: ["DESIGN.md", "index.html"],
+          steps: [
+            "Zapsat 6 kapitol, Úkryt, interiéry a 4 typy sidequestů do DESIGN.md",
+            "Zapsat Sly Parkour State Machine a 7 Rayman 2D platforem",
+            "Nastavit pravidlo bilingvního vývoje CS+EN",
+            "Vytvořit podrobnou interaktivní Roadmapu v index.html"
+          ],
+          acceptance: "DESIGN.md slouží jako 100% zdroj pravdy pro Claudea i Antigravity; index.html přehledně sleduje celý vývoj.",
+          note: ""
         },
-        run2d: {
-          title: "4. 2D Rayman Origins únik (UbiArt styl)",
-          text: "Vrstvený parallax, sprint po čtyřech (hůl na zádech), Ušní vrtulník ve větrných proudech, 7 znovupoužitelných .tscn překážek, sběr Zlatých kapek inkoustu, tajných klecí a Zlatého tenisáku."
+
+        // --- VLNA 2 (8) ---
+        {
+          id: "W2-01", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
+          title: "Konzultace Godot 4 architektury s Claudem",
+          owner: "Tomáš + Claude", status: "doing", priority: "Kritické", estimate: "1 den",
+          dependsOn: ["W1-03"],
+          files: ["DESIGN.md"],
+          steps: [
+            "Poslat Claudovi DESIGN.md a handoff prompt",
+            "Ověřit návrh State Machine pro 3D+2D pohyb",
+            "Ověřit plynulý přechod kamery 3D↔2D",
+            "Schválit strukturu InputMap (PC+Gamepad+Mobil) a translations.csv"
+          ],
+          acceptance: "Máme finálně schválený technický plán bez architektonických dluhů.",
+          note: ""
         },
-        mosquito: {
-          title: "5. Mosquito průlet (Kiki & mechanický komár Šídlo)",
-          text: "Akční most mezi kapitolami bez nudné statické mapy: Kiki pilotuje Šídlo, nasává nepřátele i projektily a střílí je zpět, dokud nedoletí do další kapitoly Atlasu světů."
+        {
+          id: "W2-02", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
+          title: "Stažení a příprava Godot 4 na PC",
+          owner: "Tomáš", status: "doing", priority: "Kritické", estimate: "1 hodina",
+          dependsOn: [],
+          files: ["game/"],
+          steps: [
+            "Stáhnout standardní Godot 4 (NE .NET) z godotengine.org",
+            "Rozbalit do lokální složky",
+            "Ověřit spuštění Project Manageru"
+          ],
+          acceptance: "Godot 4 běží na PC a je připraven otevřít game/project.godot.",
+          note: ""
+        },
+        {
+          id: "W2-03", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
+          title: "Založení Godot 4 projektu, jednotná InputMap a bilingvní lokalizace CS/EN",
+          owner: "Antigravity", status: "todo", priority: "Kritické", estimate: "2 dny",
+          dependsOn: ["W2-01", "W2-02"],
+          files: ["game/project.godot", "game/localization/translations.csv", "game/scenes/ui/mobile_controls.tscn"],
+          steps: [
+            "Vytvořit game/project.godot se zapnutou 3D fyzikou Jolt",
+            "Nastavit InputMap pro Klávesnici+myš i Gamepad (PS/Xbox)",
+            "Přidat přepínatelný Mobilní dotykový HUD (klávesa M na PC, auto na mobilu)",
+            "Založit translations.csv (CS + EN) a ověřit přepínání jazyka"
+          ],
+          acceptance: "Projekt se spustí přes F5 bez jediné chyby; reaguje na klávesnici, ovladač i dotyková tlačítka; texty se přepínají CS↔EN.",
+          note: ""
+        },
+        {
+          id: "W2-04", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
+          title: "3D Greybox ulice, State Machine pohybu Bruna a magnet na špičky",
+          owner: "Antigravity", status: "todo", priority: "Kritické", estimate: "4 dny",
+          dependsOn: ["W2-03"],
+          files: ["game/scenes/levels/greybox_main.tscn", "game/scripts/player/state_machine.gd", "game/scripts/player/states/*.gd"],
+          steps: [
+            "Postavit testovací 3D ulici z bloků (střechy, propasti, 3 špičky s modrými jiskrami)",
+            "Vytvořit modulární State Machine (Idle, Walk, Sprint4Legs, Jump, DoubleJump, EarGlide, SpireMagnet)",
+            "Sestavit greybox model Bruna (kapsle s obojkem, ušima a holí) s jasnou změnou postoje na 2 vs. 4 nohy",
+            "Naladit feel skoků, coyote-time a plynulého přitažení na špičku"
+          ],
+          acceptance: "Bruno plynule chodí po dvou, sprintuje po čtyřech, plachtí na uších a magneticky přistává na všech 3 špičkách.",
+          note: ""
+        },
+        {
+          id: "W2-05", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
+          title: "Mechanika odpalování neonového tenisáku holí + testovací zvon",
+          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "2 dny",
+          dependsOn: ["W2-04"],
+          files: ["game/scenes/props/tennis_ball.tscn", "game/scenes/props/target_bell.tscn"],
+          steps: [
+            "Vytvořit scénu fyzikálního tenisáku se svítící stopou",
+            "Přidat akci tennis_bat (švih holí a odpal ve směru kamery/cíle)",
+            "Postavit vzdálený zvon na věži, který při zásahu rozsvítí signál a otevře bránu k obrazu"
+          ],
+          acceptance: "Odpal tenisáku je responzivní, trefení zvonu spolehlivě aktivuje bránu.",
+          note: ""
+        },
+        {
+          id: "W2-06", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
+          title: "Plynulý přechod 3D → 2D (Rám obrazu) a krátký 2D únik",
+          owner: "Antigravity", status: "todo", priority: "Kritické", estimate: "3 dny",
+          dependsOn: ["W2-04", "W2-05"],
+          files: ["game/scripts/camera/hybrid_camera.gd", "game/scenes/props/painting_portal.tscn"],
+          steps: [
+            "Vytvořit interaktivní Rám živého obrazu na konci 3D ulice",
+            "Naprogramovat plynulý Tween kamery z 3D pohledu do bočního 2D pohledu",
+            "Přepnout ovladač Bruna do 2D roviny (X+Y) s ušním vrtulníkem a sprintem na čtyřech",
+            "Přidat 2 skákací houby, Zlaté kapky v oblouku a výstupní portál zpět do 3D"
+          ],
+          acceptance: "Přechod 3D → 2D → 3D je plynulý, bez trhání kamery a zaseknutí fyziky.",
+          note: ""
+        },
+        {
+          id: "W2-07", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.1",
+          title: "Sly Parkour Update (rozšíření State Machine o všechny akrobatické stavy)",
+          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          dependsOn: ["W2-04"],
+          files: ["game/scripts/player/states/state_climb.gd", "state_crawl.gd", "state_ledge.gd", "state_wall_sneak.gd", "state_rail.gd"],
+          steps: [
+            "Přidat stav CLIMB (šplhání po okapech a trubkách s rotací kolem osy)",
+            "Přidat stav CRAWL (plazení pod stoly/lasery se sníženou kolizí a skrytím)",
+            "Přidat LEDGE_HANG (zachycení a ručkování po římsách)",
+            "Přidat WALL_SNEAK (přitisknutí ke zdi) a PATH_FOLLOW (chůze po lanech a drátech)"
+          ],
+          acceptance: "Všech 5 nových stavů funguje spolehlivě přes jedno kontextové tlačítko u modrých jisker bez bugů při přechodech.",
+          note: ""
+        },
+        {
+          id: "W2-08", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.1",
+          title: "2D Rayman Platform Kit (7 znovupoužitelných .tscn bloků)",
+          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "3 dny",
+          dependsOn: ["W2-06"],
+          files: ["game/scenes/platforms_2d/*.tscn"],
+          steps: [
+            "Vytvořit a otestovat: Skákací houbu/buben, Průchozí plošinu (One-way), Rozpadající se inkoustovou plošinu",
+            "Vytvořit Větrný/parní proud (interakce s ušním vrtulníkem), Houpací kruh na hůl, Stěnu na běh/wall-jump a Rytmický pohyblivý píst",
+            "Sestavit testovací 2D dráhu ze všech 7 prvků"
+          ],
+          acceptance: "Všech 7 bloků lze libovolně skládat v editoru jako lego a mají okamžitou vizuální i fyzikální odezvu.",
+          note: ""
+        },
+
+        // --- VLNA 3 (4) ---
+        {
+          id: "W3-01", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.0",
+          title: "3D Cel-shading shader (Sly 2) & 2D UbiArt vrstvený parallax",
+          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          dependsOn: ["W2-06"],
+          files: ["game/shaders/cel_outline.gdshader", "game/scenes/env/night_lighting.tscn"],
+          steps: [
+            "Napsat 3D cel-shading shader s ostrými stíny a černými inkoustovými obrysy",
+            "Nastavit noční osvětlení Zátoky Bublin (tmavě modrá obloha, čistý měsíc, teplá žlutá okna)",
+            "Vytvořit 2D ParallaxBackground systém s malovanými vrstvami a inkoustovými částicemi"
+          ],
+          acceptance: "Greybox scény vypadají stylově jako naše in-game mockupy při stabilních 60 FPS.",
+          note: ""
+        },
+        {
+          id: "W3-02", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.1",
+          title: "Kompletní herní HUD, 3D Minimapa s radarem a Menu (CS/EN)",
+          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          dependsOn: ["W2-03", "W2-05"],
+          files: ["game/scenes/ui/hud.tscn", "minimap.tscn", "main_menu.tscn"],
+          steps: [
+            "Vytvořit HUD (zlatá šestiúhelníková známka = 3 dílky životů, ikona tenisáku, počítadlo lahviček/kapek)",
+            "Naprogramovat kruhovou 3D minimapu s šipkou hráče, červenými kužely hlídek a modrým pingem lahviček",
+            "Přidat 3D navigační paprsek se vzdáleností (85m)",
+            "Vytvořit Hlavní menu, Pauzu a Nastavení (jazyk CS/EN, hlasitost, mobilní HUD)"
+          ],
+          acceptance: "Celé UI je plně přeložené (CS/EN), čitelné na PC i mobilu a přesně reaguje na dění ve hře.",
+          note: ""
+        },
+        {
+          id: "W3-03", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.2",
+          title: "AI nepřátel (Stealth hlídky, kužely zorného pole, odlákání tenisákem)",
+          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          dependsOn: ["W2-05", "W3-02"],
+          files: ["game/scripts/enemies/guard_ai.gd", "game/scenes/enemies/frog_guard.tscn"],
+          steps: [
+            "Vytvořit základní AI hlídky (patrolování po trase, kužel baterky/zorného pole)",
+            "Naprogramovat reakci na dopad tenisáku (hlídka se otočí a jde prozkoumat zvuk)",
+            "Přidat kradení klíče z opasku holí zezadu a alarm při spatření Bruna"
+          ],
+          acceptance: "Plížení, odlákání tenisákem i tichá krádež klíče fungují spolehlivě.",
+          note: ""
+        },
+        {
+          id: "W3-04", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.3",
+          title: "Stylizované 3D modely, animace Bruna a první audio vrstva",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Střední", estimate: "5 dní",
+          dependsOn: ["W3-01"],
+          files: ["game/assets/models/", "game/assets/audio/"],
+          steps: [
+            "Nahradit greybox kapsle stylizovaným modelem Bruna (s hrotem pera na holi) a Žabího hlídače",
+            "Doplnit idle animaci pinkání tenisákem na čumáku po 5 s nečinnosti",
+            "Přidat základní zvuky (kroky, cinkání lahviček, odpal tenisáku, skok na houbu, noční ambient)"
+          ],
+          acceptance: "Hra působí živě, má jasnou zvukovou zpětnou vazbu a čitelné animace.",
+          note: ""
+        },
+
+        // --- VLNA 4 (5) ---
+        {
+          id: "W4-01", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.0",
+          title: "3D Open-Hub Zátoka Bublin + Úkryt (Safe House)",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Kritické", estimate: "2 týdny",
+          dependsOn: ["W3-01", "W3-03"],
+          files: ["game/scenes/chapters/ch1_hub.tscn", "ch1_safehouse.tscn", "game/scripts/systems/save_manager.gd"],
+          steps: [
+            "Postavit noční přístav (střechy, mola, maják, jeřáby, modré jiskry, trubky a lana)",
+            "Rozmístit hlídky a 30 cinkajících modrých lahviček + tajný trezor",
+            "Vytvořit samostatnou scénu Úkrytu (přístavní loďka/kůlna) s převlékáním oblečků, poličkou na Zlaté tenisáky a tabulí misí"
+          ],
+          acceptance: "Celý přístav je volně prozkoumatelný, vstup do Úkrytu probíhá inkoustovým střihem a ukládá se progres (Save/Load).",
+          note: ""
+        },
+        {
+          id: "W4-02", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.1",
+          title: "Přípravné mise, 2 samostatné 3D interiéry a 2D úniky",
+          owner: "Antigravity", status: "todo", priority: "Kritické", estimate: "2 týdny",
+          dependsOn: ["W4-01", "W2-08"],
+          files: ["game/scenes/chapters/ch1_interior_lighthouse.tscn", "ch1_interior_kitchen.tscn", "ch1_2d_escape_01.tscn"],
+          steps: [
+            "Vytvořit Mise 1–3 (Hlas zvonu, Záchrana Kapitána Žbluňka, Sabotáž kuchyně)",
+            "Postavit 2 samostatné 3D interiéry (Vnitřek majáku s lasery, Ropuchova kuchyně s parními hrnci)",
+            "Napojit 2D Rayman úniky před stoupajícím inkoustem a odemčení Ušního vrtulníku"
+          ],
+          acceptance: "Všechny přípravné mise lze spustit z hubu, dokončit a posouvají příběh k velké loupeži.",
+          note: ""
+        },
+        {
+          id: "W4-03", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.2",
+          title: "Velká loupež & Boss fight: Šéfkuchař Ropuch",
+          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "1 týden",
+          dependsOn: ["W4-02"],
+          files: ["game/scenes/chapters/ch1_boss_toad.tscn"],
+          steps: [
+            "Vytvořit arénu bosse s útoky obří pánví a inkoustovou polévkou",
+            "Naprogramovat 3 fáze souboje kombinující úhyby, tenisák a údery holí",
+            "Přidat závěrečný zběsilý 2D únik z hroutícího se obrazu"
+          ],
+          acceptance: "Boss fight je zábavný, férový a jeho porážka uzavře hlavní linku Kapitoly 1.",
+          note: ""
+        },
+        {
+          id: "W4-04", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.3",
+          title: "4 typy Sidequestů v Zátoce Bublin",
+          owner: "Antigravity", status: "todo", priority: "Střední", estimate: "1 týden",
+          dependsOn: ["W4-01"],
+          files: ["game/scripts/systems/sidequests.gd"],
+          steps: [
+            "Přidat Kikiiny časovky po střechách",
+            "Přidat Tenisákovou střelnici (5 skrytých zvonů)",
+            "Přidat Zlodějskou zakázku (elitní hlídka)",
+            "Přidat Tajnou 2D trhlinu s klecí (odemyká Pirátský obleček) a 1 tajný Zlatý tenisák"
+          ],
+          acceptance: "Všechny 4 sidequesty jsou dohratelné a odměny se propisují do Úkrytu a procent dokončení.",
+          note: ""
+        },
+        {
+          id: "W4-05", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.4",
+          title: "Komiksové cutscény (CS/EN) a Mosquito průlet na Šídlu",
+          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "1 týden",
+          dependsOn: ["W4-03"],
+          files: ["game/scenes/cutscenes/comic_player.tscn", "game/scenes/mosquito/mosquito_flight_01.tscn"],
+          steps: [
+            "Vytvořit přehrávač „Živých komiksů“ (2D panely s parallaxem, zvuky a textovými bublinami z translations.csv)",
+            "Implementovat Prolog a závěr Kapitoly 1",
+            "Naprogramovat 2D boční střílečku/průlet na mechanickém komáru Šídlo (nasávání a vystřelování inkoustu) jako most do Kapitoly 2"
+          ],
+          acceptance: "Kapitola 1 má plnohodnotný začátek, konec i akční průlet do dalšího světa.",
+          note: ""
+        },
+
+        // --- VLNA 5 (4) ---
+        {
+          id: "W5-01", wave: 5, phase: "Fáze 1 (Kap. 1–3)", version: "v0.5.x",
+          title: "Kapitola 2 – Měděný kaňon (Steampunk western)",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Vysoká", estimate: "5–6 týdnů",
+          dependsOn: ["W4-05"],
+          files: ["game/scenes/chapters/ch2_*"],
+          steps: [
+            "Postavit Open-Hub kaňonu a Úkryt (odstavený vagón)",
+            "Odemknout u Elizy „Jiskry“ schopnosti Rail Grinding a Jiskrový výstřel (odrážení tenisáku ve zpomaleném čase)",
+            "Vytvořit interiéry jedoucího parního vlaku a banky",
+            "Implementovat sidequesty, 2D úniky a bosse Šerifa Písta"
+          ],
+          acceptance: "Celá Kapitola 2 je plně hratelná včetně nových schopností a Mosquito průletu.",
+          note: ""
+        },
+        {
+          id: "W5-02", wave: 5, phase: "Fáze 1 (Kap. 1–3)", version: "v0.6.x",
+          title: "Kapitola 3 – Zrcadlový karneval (Noční Benátky)",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Vysoká", estimate: "5–6 týdnů",
+          dependsOn: ["W5-01"],
+          files: ["game/scenes/chapters/ch3_*"],
+          steps: [
+            "Postavit Open-Hub kanálů a masek + Úkryt",
+            "Vytvořit interiéry Zrcadlového sálu a Podzemní galerie",
+            "Přidat nové rytmické 2D výzvy, sidequesty a bosse Hraběnku Škrabošku"
+          ],
+          acceptance: "Kapitola 3 uzavírá příběhový oblouk Fáze 1.",
+          note: ""
+        },
+        {
+          id: "W5-03", wave: 5, phase: "Fáze 1 (Kap. 1–3)", version: "v0.8.x",
+          title: "Atlas světů (Mapa) & výběr kapitol",
+          owner: "Antigravity", status: "todo", priority: "Střední", estimate: "1 týden",
+          dependsOn: ["W5-02"],
+          files: ["game/scenes/ui/world_map.tscn"],
+          steps: [
+            "Oživit mapu světa (ui_worldmap_v01.png styl) s interaktivním výběrem odemčených kapitol",
+            "Zobrazit trasu Šídla a přehled 100% sběratelských předmětů",
+            "Umožnit návrat do libovolné dokončené kapitoly"
+          ],
+          acceptance: "Hráč se může kdykoliv vracet do předchozích kapitol kvůli sidequestům a 100% dohrání.",
+          note: ""
+        },
+        {
+          id: "W5-04", wave: 5, phase: "Fáze 1 (Kap. 1–3)", version: "v0.9.x–v1.0.0",
+          title: "Optimalizace, kompletní kontrola CS/EN a export (PC + Android)",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Kritické", estimate: "2–3 týdny",
+          dependsOn: ["W5-03"],
+          files: ["game/export_presets.cfg", "builds/"],
+          steps: [
+            "Odladit výkon (FPS, paměť) na PC i mobilu",
+            "Projít 100 % textů v translations.csv (CS i EN)",
+            "Otestovat gamepad, klávesnici i dotyk",
+            "Přidat ikonu hry (icon_bruno_v01.png) a vyexportovat instalační balíčky (Windows .exe, Android .apk)"
+          ],
+          acceptance: "Stabilní, otestovaná verze v1.0.0 (Fáze 1) připravená k hraní a sdílení.",
+          note: ""
+        },
+
+        // --- VLNA 6 (4) ---
+        {
+          id: "W6-01", wave: 6, phase: "Fáze 2 (Kap. 4–6)", version: "v1.1.x",
+          title: "Kapitola 4 – Zamrzlá knihovna (Archivistka Můra)",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Střední", estimate: "4–5 týdnů",
+          dependsOn: ["W5-04"],
+          files: ["game/scenes/chapters/ch4_*"],
+          steps: [
+            "Zasněžené věže a klouzavé povrchy",
+            "Tajné archivy (interiéry)",
+            "2D úniky, sidequesty a boss Archivistka Můra"
+          ],
+          acceptance: "Kompletně hratelná Kapitola 4.",
+          note: ""
+        },
+        {
+          id: "W6-02", wave: 6, phase: "Fáze 2 (Kap. 4–6)", version: "v1.2.x",
+          title: "Kapitola 5 – Továrna na barvy (Inženýr Štětka)",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Střední", estimate: "4–5 týdnů",
+          dependsOn: ["W6-01"],
+          files: ["game/scenes/chapters/ch5_*"],
+          steps: [
+            "Průmyslový komplex s potrubím inkoustu a lasery",
+            "Rytmické písty ve 2D",
+            "Sidequesty a boss Inženýr Štětka"
+          ],
+          acceptance: "Kompletně hratelná Kapitola 5.",
+          note: ""
+        },
+        {
+          id: "W6-03", wave: 6, phase: "Fáze 2 (Kap. 4–6)", version: "v1.3.x",
+          title: "Kapitola 6 – Inkoustová citadela & Finále (Baron Kaňka)",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Kritické", estimate: "5–6 týdnů",
+          dependsOn: ["W6-02"],
+          files: ["game/scenes/chapters/ch6_*"],
+          steps: [
+            "Deštivý temný noir hub a katedrála z inkoustu",
+            "Mistr Kage a nové schopnosti (Dračí skok ze špičky na špičku, Stínový průnik přes lasery)",
+            "Dvoufázový 3D+2D finální souboj s Baronem Kaňkou a závěrečná komiksová cutscéna + titulky"
+          ],
+          acceptance: "Celá 6-kapitolová hra má uzavřený příběh a odměnu za 100% dohrání.",
+          note: ""
+        },
+        {
+          id: "W6-04", wave: 6, phase: "Fáze 2 (Kap. 4–6)", version: "v1.4.0",
+          title: "Finální balanc, 100% kontrola a kompletní vydání hry",
+          owner: "Tomáš + Antigravity", status: "todo", priority: "Střední", estimate: "1 týden",
+          dependsOn: ["W6-03"],
+          files: ["builds/"],
+          steps: [
+            "Finální playtest všech 6 kapitol",
+            "Oprava posledních bugů",
+            "Export kompletní edice pro PC i mobil"
+          ],
+          acceptance: "Projekt \"Bruno: Ink & Shadow\" je kompletně dokončený.",
+          note: ""
         }
+      ];
+
+      /* ====== OTHER STUDIO DATA ====== */
+      const WORLDS = [
+        { num: 1, phase: 1, name: "Zátoka Bublin", atmosphere: "Goofy & hravý noční přístav, maják a barevné 2D úniky.", boss: "Šéfkuchař Ropuch (Žabí hlídači)", safehouse: "Starý přístavní sklad pod molem (tabule loupeže, oblečky, tenisáky).", interiors: "Ropuchova kuchyně, vnitřek majáku, rybí tržnice.", abilities: "Ušní vrtulník, Běh po zdech ve 2D", img: "vis/env_world1_3d_sly2_v01.png" },
+        { num: 2, phase: 1, name: "Měděný kaňon", atmosphere: "Dobrodružný steampunk western, parní vlaky a měděné rokle.", boss: "Šerif Píst (Steampunk hlídky)", safehouse: "Opuštěný odstavený vagón nad železniční tratí.", interiors: "Vagóny parního vlaku, zlatý sejf banky, kotelna.", abilities: "Rail Grinding, Jiskrový výstřel (tenisák ve zpomaleném čase)", img: "vis/env_world2_3d_canyon_v01.png" },
+        { num: 3, phase: 1, name: "Zrcadlový karneval", atmosphere: "Noční Benátky, kanály, masky, iluze a třpytivé lustry.", boss: "Hraběnka Škraboška (Maskované hlídky)", safehouse: "Skrytá lóže v opuštěném divadle nad kanálem.", interiors: "Zrcadlový sál, dílna masek, podzemní galerie gondol.", abilities: "Zrcadlový úhyb / přitisknutí ke stínům, pokročilé kruhy", img: null },
+        { num: 4, phase: 2, name: "Zamrzlá knihovna", atmosphere: "Zasněžené gotické věže, klouzání po ledu a tiché inkoustové sály.", boss: "Archivistka Můra (Tiché stráže)", safehouse: "Vyhřátá podkrovní studovna se starým krbem.", interiors: "Velká čítárna, zamrzlý archiv svitků, zvonice.", abilities: "Ledové skluzavky, tichý dopad z výšky", img: null },
+        { num: 5, phase: 2, name: "Továrna na barvy", atmosphere: "Průmyslový komplex, obří potrubí, barevné kádě a laserové pasti.", boss: "Inženýr Štětka (Průmyslové stráže)", safehouse: "Řídicí kabina nad míchárnou pigmentů.", interiors: "Sektor laserových mříží, míchárna inkoustu, lisovna.", abilities: "Stínový průnik přes lasery, magnet na pohyblivá potrubí", img: null },
+        { num: 6, phase: 2, name: "Inkoustová citadela", atmosphere: "Deštivý temný noir, katedrála z tekutého inkoustu, blesky a stíny.", boss: "Baron Kaňka (dvoufázový 3D + 2D finální souboj)", safehouse: "Věžička nad chrámovým mostem s výhledem na čistý měsíc.", interiors: "Galerie ukradených obrazů, Baronův ateliér, zvonice citadely.", abilities: "Dračí skok ze špičky na špičku, mistrovská kombinace všeho", img: "vis/env_world3_3d_citadel_v01.png" }
+      ];
+
+      const LOOP_DETAILS = {
+        hub: { title: "1. 3D Open-Hub & Plížení (Sly 2 styl)", text: "Noční čtvrť s cel-shadingem, minimapou s radarem hlídek a 3D navigačním paprskem. Bruno využívá State Machine (špičky, okapy, římsy, plazení), sbírá modré lahvičky a plní 4 typy sidequestů." },
+        tennis: { title: "2. Odpal tenisáku & 3D Misijní interiéry", text: "Odpal neonového tenisáku holí láká stráže a spouští zvony/spínače. Z hubu Bruno vstupuje inkoustovým střihem do tematických 3D interiérů (kuchyně, maják, vagóny) a vrací se do Úkrytu (Safe House)." },
+        portal: { title: "3. Portál živého obrazu (Přechod 3D → 2D)", text: "Po sebrání kořisti nebo vstupu do tajné trhliny Bruno skočí do obrazu. Kamera provede plynulý nájezd do bočního 2D pohledu bez tvrdého přerušení tempa." },
+        run2d: { title: "4. 2D Rayman Origins únik (UbiArt styl)", text: "Vrstvený parallax, sprint po čtyřech (hůl na zádech), Ušní vrtulník ve větrných proudech, 7 znovupoužitelných .tscn překážek, sběr Zlatých kapek inkoustu, tajných klecí a Zlatého tenisáku." },
+        mosquito: { title: "5. Mosquito průlet (Kiki & mechanický komár Šídlo)", text: "Akční most mezi kapitolami bez nudné statické mapy: Kiki pilotuje Šídlo, nasává nepřátele i projektily a střílí je zpět, dokud nedoletí do další kapitoly Atlasu světů." }
       };
 
-      /* ====== DATA: ABILITIES ====== */
       const ABILITIES = [
         { cap: 1, name: "Ušní vrtulník", mode: "Obojí", desc: "Plachtění na dlouhých uších + stoupání ve větrných/parních proudech." },
         { cap: 1, name: "Magnet na modré jiskry", mode: "3D", desc: "Přesné přistání na špičky, háky, okapy a lana jedním kontextovým tlačítkem." },
@@ -2033,27 +1796,15 @@
         { cap: 6, name: "Mistrovský inkoustový úder", mode: "Obojí", desc: "Finální nabitý švih perem hole pro dvoufázový souboj s Baronem Kaňkou." }
       ];
 
-      /* ====== DATA: 23 VISUALS ====== */
-      const VIS_CATS = {
-        ui: "Identita, UI & Cutscény",
-        mockup: "In-Game Mockupy",
-        chars: "Postavy, Nepřátelé & Předměty",
-        worlds: "Světy & Prostředí"
-      };
-
+      const VIS_CATS = { ui: "Identita, UI & Cutscény", mockup: "In-Game Mockupy", chars: "Postavy, Nepřátelé & Předměty", worlds: "Světy & Prostředí" };
       const VISUALS = [
-        // Identita, UI & Cutscény (5)
         { id: "vis_logo", cat: "ui", path: "vis/logo_bruno_v01.png", title: "Logo hry: Bruno: Ink & Shadow", desc: "Oficiální logo a typografická identita hry." },
         { id: "vis_icon", cat: "ui", path: "vis/icon_bruno_v01.png", title: "Ikona hry (Bruno)", desc: "Čtvercová ikona pro desktop, mobil i launcher." },
         { id: "vis_hud", cat: "ui", path: "vis/ui_hud_mockup_v01.png", title: "Mockup HUD & Minimapy", desc: "Zlatá známka (3 životy), tenisák, minimapa s radarem a dotykové prvky." },
         { id: "vis_worldmap", cat: "ui", path: "vis/ui_worldmap_v01.png", title: "Atlas světů (Mapa)", desc: "Přehled kapitol propojených letem komára Šídlo." },
         { id: "vis_cutscene", cat: "ui", path: "vis/cutscene_intro_v01.png", title: "Komiksová cutscéna (Intro)", desc: "Styl Sly 2 „Živý komiks“ — panely s parallaxem a CS/EN bublinami." },
-
-        // In-Game Mockupy (2)
         { id: "vis_mock_3d", cat: "mockup", path: "vis/mockup_gameplay_3d_v01.png", title: "In-Game Mockup: 3D Stealth", desc: "Cílový vzhled 3D gameplaye s HUD, minimapou a cel-shadingem." },
         { id: "vis_mock_2d", cat: "mockup", path: "vis/mockup_gameplay_2d_v01.png", title: "In-Game Mockup: 2D Únik", desc: "Cílový vzhled 2D UbiArt plošinovky s vrstveným parallaxem." },
-
-        // Postavy, Nepřátelé & Předměty (12)
         { id: "vis_bruno", cat: "chars", path: "vis/char_bruno_sly2_v01.png", title: "Bruno (hlavní hrdina, Sly 2 styl)", desc: "Poznámka: ve hře bude měsíc čistý bez cizího loga." },
         { id: "vis_outfits", cat: "chars", path: "vis/char_bruno_outfits_v01.png", title: "Brunovy oblečky (Úkryt)", desc: "Odemknutelné kostýmy za tajné klece ve 2D pasážích." },
         { id: "vis_squirrel", cat: "chars", path: "vis/char_squirrel_sly2_v01.png", title: "Kiki — drzá veverka (parťačka)", desc: "Vysílačka, francouzský klíč, letecké brýle, pilotka Šídla." },
@@ -2066,75 +1817,21 @@
         { id: "vis_action_ball", cat: "chars", path: "vis/action_bruno_tennisball_v01.png", title: "Akce: Odpalování tenisáku holí", desc: "Míření na zvon/spínače pod čistým měsícem." },
         { id: "vis_props_collect", cat: "chars", path: "vis/props_collectibles_v01.png", title: "Sběratelské předměty", desc: "Modrá lahvička, Zlatá kapka s křídly, klec se skřítkem, zlatá známka HUD." },
         { id: "vis_mosquito", cat: "chars", path: "vis/veh_mosquito_ubiart_v01.png", title: "Mechanický komár „Šídlo“", desc: "Mosquito průlet mezi světy s Brunem a Kiki." },
-
-        // Světy & Prostředí (4)
         { id: "vis_w1_3d", cat: "worlds", path: "vis/env_world1_3d_sly2_v01.png", title: "Svět 1: 3D noční přístav (Sly 2 styl)", desc: "Zátoka Bublin — střechy, maják a modré jiskry." },
         { id: "vis_w1_2d", cat: "worlds", path: "vis/env_world1_2d_ubiart_v01.png", title: "Svět 1: 2D únik (UbiArt styl)", desc: "Ve hře jsou místo Lumů naše Zlaté kapky inkoustu." },
         { id: "vis_w2_3d", cat: "worlds", path: "vis/env_world2_3d_canyon_v01.png", title: "Svět 2: Měděný kaňon (3D)", desc: "Steampunk western, kaňony a parní vlaky." },
         { id: "vis_w3_3d", cat: "worlds", path: "vis/env_world3_3d_citadel_v01.png", title: "Inkoustová citadela (3D noir)", desc: "Deštivá noc a gotická katedrála z tekutého inkoustu." }
       ];
 
-      /* ====== DATA: KANBAN TASKS ====== */
-      const AREAS = [
-        { id: "art", name: "🎨 Concept Art & Vizuály", color: "gold" },
-        { id: "design", name: "📖 Herní design & Příběh", color: "purple" },
-        { id: "godot", name: "⚙️ Godot 4 Prototyp", color: "cyan" },
-        { id: "parkour", name: "🦊 3D Sly Parkour", color: "cyan" },
-        { id: "rayman", name: "🏃 2D Rayman Úniky", color: "green" },
-        { id: "ui", name: "🌐 UI/HUD & Lokalizace", color: "purple" }
-      ];
-
-      const KANBAN_TASKS = [
-        // Done (v0.1.x)
-        { id: "k_repo", title: "GitHub repozitář, struktura složek (vis/, game/) a základní plánovač", role: "Antigravity", wave: "v0.1.x", area: "design", defaultStatus: "done" },
-        { id: "k_art23", title: "Kompletní knihovna 23 concept artů (logo, ikona, mockupy, světy, postavy, HUD)", role: "Gemini", wave: "v0.1.x", area: "art", defaultStatus: "done" },
-        { id: "k_design", title: "Game Design Bible (DESIGN.md v0.1.4 – 6 kapitol, State Machine, CS+EN)", role: "Antigravity", wave: "v0.1.x", area: "design", defaultStatus: "done" },
-        { id: "k_hub14", title: "Projektové studio centrum (index.html v0.1.4 – 8 sekcí, Kanban, Prompty)", role: "Antigravity", wave: "v0.1.x", area: "ui", defaultStatus: "done" },
-        { id: "k_kits", title: "Návrh Sly 2 Movement Kitu (State Machine) a Rayman 2D Platform Kitu", role: "Tomáš", wave: "v0.1.x", area: "parkour", defaultStatus: "done" },
-
-        // Doing (pre-Godot transition)
-        { id: "k_claude", title: "Konzultace Godot 4 architektury s Claudem (State Machine, 3D↔2D, InputMap, CSV)", role: "Claude", wave: "v0.2.x", area: "godot", defaultStatus: "doing" },
-        { id: "k_install", title: "Stažení a instalace Godot 4 (s podporou Jolt 3D) na počítač", role: "Tomáš", wave: "v0.2.x", area: "godot", defaultStatus: "doing" },
-
-        // Todo (v0.2.x)
-        { id: "k_init_godot", title: "v0.2.0: Založení Godot 4 projektu v game/ + jednotná InputMap (PC/Gamepad/Mobil)", role: "Antigravity", wave: "v0.2.x", area: "godot", defaultStatus: "todo" },
-        { id: "k_i18n", title: "v0.2.0: Nativní bilingvní lokalizace CS + EN přes translations.csv", role: "Antigravity", wave: "v0.2.x", area: "ui", defaultStatus: "todo" },
-        { id: "k_grey3d", title: "v0.2.0: Greybox 3D ulice (Bruno 2/4 nohy, dvojskok, magnet na špičky, odpal tenisáku)", role: "Antigravity", wave: "v0.2.x", area: "godot", defaultStatus: "todo" },
-        { id: "k_grey2d", title: "v0.2.0: Plynulý přechod 3D → 2D + krátký 2D únik s ušním vrtulníkem", role: "Antigravity", wave: "v0.2.x", area: "rayman", defaultStatus: "todo" },
-        { id: "k_parkour21", title: "v0.2.1: Sly Parkour Update (CLIMB, CRAWL, LEDGE_HANG, WALL_SNEAK, PATH_FOLLOW)", role: "Antigravity", wave: "v0.2.x", area: "parkour", defaultStatus: "todo" },
-        { id: "k_platkit", title: "v0.2.1: 2D Rayman Platform Kit (7 znovupoužitelných .tscn scén)", role: "Antigravity", wave: "v0.2.x", area: "rayman", defaultStatus: "todo" },
-
-        // Todo (v0.3.x)
-        { id: "k_shaders", title: "v0.3.x: Cel-shading shader s černými obrysy (3D) + UbiArt vrstvený parallax (2D)", role: "Antigravity", wave: "v0.3.x", area: "art", defaultStatus: "todo" },
-        { id: "k_hud_mini", title: "v0.3.x: HUD (zlatá známka, tenisák), 3D minimapa s radarem a mobilní dotykový HUD", role: "Antigravity", wave: "v0.3.x", area: "ui", defaultStatus: "todo" },
-        { id: "k_alpha_w1", title: "v0.3.x: Vertical Slice Kap. 1 Zátoka Bublin (Hub, Úkryt, 1 interiér, komár Šídlo)", role: "Tomáš", wave: "v0.3.x", area: "design", defaultStatus: "todo" }
-      ];
-
-      /* ====== DATA: DEFAULT WORK LOG ====== */
       const DEFAULT_LOGS = [
-        {
-          id: "log_014", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.4",
-          text: "Přestavba plánovače na Herní studio centrum (8 sekcí, Kanban, SVG diagramy, Prompty), rozšíření DESIGN.md o 6 kapitol ve 2 fázích, CS+EN lokalizaci, Sly State Machine, 2D Platform Kit, Úkryty, sidequesty a kompletní galerii 23 vizuálů. Připraven handoff pro Claudea."
-        },
-        {
-          id: "log_013", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.3",
-          text: "Vytvořena Game Design Bible (DESIGN.md), pojmenována veverka-parťačka Kiki, schválena mechanika tenisáku (odpal + Zlatý tenisák + idle pinkání po 5 s) a uzavřena úvodní příprava."
-        },
-        {
-          id: "log_012", date: "2026-11-22", author: "Gemini", status: "done", version: "v0.1.2",
-          text: "Rozšířena vizuální knihovna o logo, ikonu, HUD mockup, mapu světa, komiksové intro, 3D/2D gameplay mockupy, oblečky, mistry, nepřátele všech světů, originální hůl s hrotem plnicího pera a komára Šídlo (celkem 23 obrázků)."
-        },
-        {
-          id: "log_011", date: "2026-11-22", author: "Tomáš", status: "info", version: "v0.1.1",
-          text: "Vygenerována první sada concept artu (Bruno, Baron Kaňka, 3D i 2D Svět 1) a potvrzen noční Sly 2 + Rayman UbiArt styl."
-        },
-        {
-          id: "log_010", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.0",
-          text: "Založení GitHub repozitáře bruno-ink-and-shadow, struktury složek (vis/, game/) a prvního interaktivního plánovače."
-        }
+        { id: "log_015", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.5", text: "Vybudována podrobná interaktivní Roadmapa 6 vln vývoje (28 úkolů s rozklikávacími kroky, závislostmi, definicí hotového stavu a boxem „Co udělat teď“), živě propojená s Kanbanem i Přehledem." },
+        { id: "log_014", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.4", text: "Přestavba plánovače na Herní studio centrum (8 sekcí, SVG diagramy, Prompty), rozšíření DESIGN.md o 6 kapitol ve 2 fázích, CS+EN lokalizaci, Sly State Machine, 2D Platform Kit, Úkryty, sidequesty a galerii 23 vizuálů." },
+        { id: "log_013", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.3", text: "Vytvořena Game Design Bible (DESIGN.md), pojmenována veverka-parťačka Kiki, schválena mechanika tenisáku (odpal + Zlatý tenisák + idle pinkání po 5 s) a uzavřena úvodní příprava." },
+        { id: "log_012", date: "2026-11-22", author: "Gemini", status: "done", version: "v0.1.2", text: "Rozšířena vizuální knihovna na všech 23 podkladů (logo, ikona, HUD mockup, mapa světa, komiksové intro, 3D/2D gameplay mockupy, oblečky, mistři, nepřátelé, hůl s perem a komár Šídlo)." },
+        { id: "log_011", date: "2026-11-22", author: "Tomáš", status: "info", version: "v0.1.1", text: "Vygenerována první sada concept artu (Bruno, Baron Kaňka, 3D i 2D Svět 1) a potvrzen noční Sly 2 + Rayman UbiArt styl." },
+        { id: "log_010", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.0", text: "Založení GitHub repozitáře bruno-ink-and-shadow, struktury složek (vis/, game/) a prvního interaktivního plánovače." }
       ];
 
-      /* ====== DATA: IDEAS ====== */
       const IDEAS = [
         { id: "i_6cap", cat: "Světy", title: "6 Kapitol ve 2 fázích (Fáze 1: Zátoka Bublin, Měděný kaňon, Zrcadlový karneval → Fáze 2: Zamrzlá knihovna, Továrna na barvy, Inkoustová citadela)" },
         { id: "i_safehouse", cat: "Světy", title: "Úkryt (Safe House) v každé kapitole + samostatné 3D misijní interiéry s inkoustovým střihem" },
@@ -2154,10 +1851,9 @@
         { id: "i_col_cages", cat: "Sbírání", title: "Tajné klece ve 2D odemykající Brunovy oblečky v Úkrytu" }
       ];
 
-      /* ====== PROMPTS ====== */
-      const CLAUDE_PROMPT = `Ahoj Claude! Pracuji na své indie hře „Bruno: Ink & Shadow“ v enginu Godot 4 a chci s tebou jako s hlavním softwarovým architektem navrhnout čistou architekturu před založením prvního projektu (verze v0.2.0).
+      const CLAUDE_PROMPT = `Ahoj Claude! Pracuji na své indie hře „Bruno: Ink & Shadow“ v enginu Godot 4 a chci s tebou jako s hlavním softwarovým architektem navrhnout čistou architekturu před založením prvního projektu (verze v0.2.0, aktuální stav plánovače v0.1.5).
 
-ZÁKLADNÍ SHRNUTÍ (celá specifikace je v přiloženém DESIGN.md v0.1.4):
+ZÁKLADNÍ SHRNUTÍ (celá specifikace je v přiloženém DESIGN.md):
 - Žánr: 3D stealth/parkour (styl Sly Cooper 2, Open-Hub + interiéry) plynule kombinovaný s 2D plošinovkou (styl Rayman Origins UbiArt) + boční Mosquito průlety mezi kapitolami.
 - Hrdina: Jezevčík Bruno (běh/plížení na 2 nohách, sprint na 4 s holí na zádech, uši = vrtulník na plachtění, originální hůl s hrotem plnicího pera, odpalování neonového tenisáku holí). Parťačka: veverka Kiki (pilotuje komára Šídlo).
 - Rozsah: 6 kapitol ve 2 fázích (Fáze 1: Zátoka Bublin, Měděný kaňon, Zrcadlový karneval; Fáze 2: Zamrzlá knihovna, Továrna na barvy, Inkoustová citadela).
@@ -2167,21 +1863,20 @@ ZÁKLADNÍ SHRNUTÍ (celá specifikace je v přiloženém DESIGN.md v0.1.4):
 
 PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
 1. State Machine pro 3D Sly parkour a plynulý přechod do 2D Rayman běhu:
-   - Jak nejlépe navrhnout uzlový State Machine v GDScriptu, aby v0.2.0 zvládlo základní pohyb (IDLE, MOVE, SPRINT_4LEGS, JUMP/GLIDE, SPIRE_PERCH, TENNIS_SWING) a v0.2.1 bez přepisování přibyly CLIMB, CRAWL, LEDGE_HANG, WALL_SNEAK, PATH_FOLLOW a HOOK_SWING?
-   - Doporučuješ pro 2D úniky přepnout kameru + uzamknout osu Z v 3D scéně (2.5D), nebo přepínat na nativní 2D scénu (Node2D / CharacterBody2D) přes inkoustový přechod? Porovnej výhody pro náš Rayman UbiArt styl.
+   - Jak nejlépe navrhnout uzlový State Machine v GDScriptu, aby v0.2.0 zvládlo základní pohyb (Idle, Walk, Sprint4Legs, Jump, DoubleJump, EarGlide, SpireMagnet, TennisSwing) a v0.2.1 bez přepisování přibyly CLIMB, CRAWL, LEDGE_HANG, WALL_SNEAK a PATH_FOLLOW?
+   - Doporučuješ pro 2D úniky přepnout kameru + uzamknout osu Z v 3D scéně (2.5D), nebo přepínat na nativní 2D scénu přes inkoustový přechod?
 2. Multiplatformní InputMap (PC + Gamepad + Mobil):
-   - Jak čistě oddělit čtení vstupu a automatické zobrazení dotykového HUD na mobilu bez zaneřádění hráčských skriptů?
+   - Jak čistě oddělit čtení vstupu a automatické zobrazení dotykového HUD na mobilu (klávesa M na PC)?
 3. Bilingvní lokalizace CS/EN od 1. dne:
    - Jaký doporučuješ konvenční systém klíčů v translations.csv (UI, komiksové cutscény, Kikiiny hlášky, názvy úkolů)?
-4. Přesný rozsah a struktura složek v game/ pro první hratelný Greybox v0.2.0:
-   - Navrhni konkrétní adresářovou strukturu Godot projektu v game/ a seznam 5–7 kroků, které předám Antigravity k nakódování v0.2.0.`;
+4. Přesný rozsah a struktura složek v game/ pro první hratelný Greybox v0.2.0 (úkoly W2-03 až W2-06).`;
 
-      const AGY_PROMPT = `Kontext projektu „Bruno: Ink & Shadow“ (verze v0.1.4):
+      const AGY_PROMPT = `Kontext projektu „Bruno: Ink & Shadow“ (verze v0.1.5):
 - Kořenová složka: c:\\Projekty\\bruno-ink-and-shadow
-- Hlavní zdroj pravdy: DESIGN.md (v0.1.4) — vždy si ho před větší změnou přečti.
-- Projektové centrum: index.html (v0.1.4, single-file, localStorage klíč bruno_ink_shadow_v1).
+- Hlavní zdroj pravdy: DESIGN.md — vždy si ho před větší změnou přečti.
+- Projektové centrum & Roadmapa: index.html (v0.1.5, 6 vln / 28 úkolů, localStorage klíče bruno_ink_shadow_v1 + bruno_roadmap_v015).
 - Vizuální knihovna: složka vis/ obsahuje 23 schválených concept artů, mockupů, HUD, mapy světa a komiksového intra.
-- Složka pro Godot 4 projekt: game/ (aktuální cíl: Vlna 2 — Greybox prototyp v0.2.0, následně Sly Parkour Update v0.2.1).
+- Složka pro Godot 4 projekt: game/ (aktuální cíl: Vlna 2 — Greybox prototyp v0.2.0 [W2-03 až W2-06], následně Sly Parkour + 2D Kit v0.2.1 [W2-07, W2-08]).
 - Závazná pravidla:
   1. Engine Godot 4 (GDScript, Jolt 3D, State Machine, jednotná InputMap pro PC/Gamepad/Mobil).
   2. Bilingvní vývoj CS + EN od 1. dne přes translations.csv (žádné hardcoded texty).
@@ -2189,74 +1884,144 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
   4. Originalita: čistý měsíc bez cizích log, originální hůl s hrotem plnicího pera, vlastní Zlaté kapky inkoustu (ne Lumové).
   5. Nic necommituj ani nepushuj na GitHub, dokud o to výslovně nepožádám.`;
 
-      /* ====== STATE ====== */
-      let state = loadState();
+      /* ====== STATE (PRESERVING LEGACY + NEW ROADMAP KEY) ====== */
+      let legacyState = loadLegacyState();
+      let rmState = loadRoadmapState();
+
+      let currentPlanView = "roadmap"; // 'roadmap' | 'kanban' | 'milestones'
+      let filterWave = "all";
+      let filterRole = "all";
+      let filterStatus = "all";
+      let filterSearch = "";
+      let expandedTasks = new Set(["W2-01", "W2-02"]);
+
       let currentWorldPhase = "all";
       let currentVisCat = "all";
-      let currentKbRole = "all";
-      let currentKbWave = "all";
       let currentIdeaFilter = "all";
       let currentIdeaSearch = "";
       let currentLoopKey = "hub";
       let currentAbilityCap = "all";
       let saveTimer = null;
 
-      function defaultState() {
+      function defaultLegacyState() {
+        return { visuals: {}, ideaVotes: {}, customLogs: [], extraNotes: "" };
+      }
+
+      function defaultRoadmapState() {
         return {
-          visuals: {},
-          ideaVotes: {},
-          kanbanStatuses: {},
-          customLogs: [],
-          extraNotes: ""
+          statuses: {},   // { [taskId]: 'done'|'doing'|'todo' }
+          steps: {},      // { [taskId]: { [stepIdx]: true/false } }
+          notes: {},      // { [taskId]: string }
+          customTasks: [] // user-added tasks matching ROADMAP_TASKS schema
         };
       }
 
-      function loadState() {
+      function loadLegacyState() {
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return defaultState();
-          const parsed = JSON.parse(raw);
-          return Object.assign(defaultState(), parsed);
-        } catch (e) {
-          return defaultState();
-        }
+          const raw = localStorage.getItem(STORAGE_KEY_LEGACY);
+          return raw ? Object.assign(defaultLegacyState(), JSON.parse(raw)) : defaultLegacyState();
+        } catch (e) { return defaultLegacyState(); }
       }
 
-      function saveState() {
+      function loadRoadmapState() {
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          const el = document.getElementById("saveStatusText");
-          if (el) {
-            el.textContent = "Uloženo ✓";
-            clearTimeout(saveTimer);
-            saveTimer = setTimeout(() => { el.textContent = "Uloženo v prohlížeči"; }, 1600);
-          }
-        } catch (e) {
-          const el = document.getElementById("saveStatusText");
-          if (el) el.textContent = "Chyba ukládání";
+          const raw = localStorage.getItem(STORAGE_KEY_ROADMAP);
+          return raw ? Object.assign(defaultRoadmapState(), JSON.parse(raw)) : defaultRoadmapState();
+        } catch (e) { return defaultRoadmapState(); }
+      }
+
+      function saveLegacyState() {
+        try {
+          localStorage.setItem(STORAGE_KEY_LEGACY, JSON.stringify(legacyState));
+          pulseSaveStatus();
+        } catch (e) {}
+      }
+
+      function saveRoadmapState() {
+        try {
+          localStorage.setItem(STORAGE_KEY_ROADMAP, JSON.stringify(rmState));
+          pulseSaveStatus();
+        } catch (e) {}
+      }
+
+      function pulseSaveStatus() {
+        const el = document.getElementById("saveStatusText");
+        if (!el) return;
+        el.textContent = "Uloženo ✓";
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => { el.textContent = "Uloženo v prohlížeči"; }, 1600);
+      }
+
+      /* ====== ROADMAP HELPERS (SINGLE SOURCE OF TRUTH) ====== */
+      function getAllTasks() {
+        return [...ROADMAP_TASKS, ...(rmState.customTasks || [])];
+      }
+
+      function getTaskStatus(task) {
+        return rmState.statuses[task.id] || task.status || "todo";
+      }
+
+      function getStepChecked(taskId, idx, taskStatus) {
+        if (rmState.steps[taskId] && typeof rmState.steps[taskId][idx] === "boolean") {
+          return rmState.steps[taskId][idx];
         }
+        return taskStatus === "done";
+      }
+
+      function getTaskStepProgress(task) {
+        const st = getTaskStatus(task);
+        const total = (task.steps || []).length;
+        let done = 0;
+        for (let i = 0; i < total; i++) {
+          if (getStepChecked(task.id, i, st)) done++;
+        }
+        return { done, total };
+      }
+
+      function getTaskNote(task) {
+        return typeof rmState.notes[task.id] === "string" ? rmState.notes[task.id] : (task.note || "");
+      }
+
+      function getBlockingDeps(task) {
+        const all = getAllTasks();
+        return (task.dependsOn || []).filter(depId => {
+          const dep = all.find(t => t.id === depId);
+          return dep && getTaskStatus(dep) !== "done";
+        });
+      }
+
+      function calcWeightedPct(tasks) {
+        if (!tasks.length) return 0;
+        let score = 0;
+        tasks.forEach(t => {
+          const st = getTaskStatus(t);
+          if (st === "done") score += 1;
+          else if (st === "doing") score += 0.5;
+        });
+        return Math.round((score / tasks.length) * 100);
+      }
+
+      function countStatuses(tasks) {
+        let done = 0, doing = 0, todo = 0;
+        tasks.forEach(t => {
+          const st = getTaskStatus(t);
+          if (st === "done") done++;
+          else if (st === "doing") doing++;
+          else todo++;
+        });
+        return { done, doing, todo, total: tasks.length };
       }
 
       function getVisState(id) {
-        if (!state.visuals[id]) state.visuals[id] = { rating: null, note: "" };
-        return state.visuals[id];
+        if (!legacyState.visuals[id]) legacyState.visuals[id] = { rating: null, note: "" };
+        return legacyState.visuals[id];
       }
 
-      function getKbStatus(task) {
-        return state.kanbanStatuses[task.id] || task.defaultStatus;
-      }
-
-      function getIdeaVote(id) {
-        return state.ideaVotes[id] || null;
-      }
-
-      function getAllLogs() {
-        return [...(state.customLogs || []), ...DEFAULT_LOGS];
-      }
+      function getIdeaVote(id) { return legacyState.ideaVotes[id] || null; }
+      function getAllLogs() { return [...(legacyState.customLogs || []), ...DEFAULT_LOGS]; }
 
       /* ====== NAVIGATION ====== */
       const VALID_TABS = Object.keys(TAB_TITLES);
-
       function getHashTab() {
         const h = (window.location.hash || "#prehled").replace("#", "").toLowerCase();
         return VALID_TABS.includes(h) ? h : "prehled";
@@ -2275,28 +2040,52 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
 
       const sidebar = document.getElementById("sidebar");
       const sbBackdrop = document.getElementById("sbBackdrop");
-      function openMobileSidebar() {
-        sidebar.classList.add("open");
-        sbBackdrop.classList.add("open");
-      }
-      function closeMobileSidebar() {
-        sidebar.classList.remove("open");
-        sbBackdrop.classList.remove("open");
-      }
+      function openMobileSidebar() { sidebar.classList.add("open"); sbBackdrop.classList.add("open"); }
+      function closeMobileSidebar() { sidebar.classList.remove("open"); sbBackdrop.classList.remove("open"); }
       document.getElementById("hamburgerBtn").addEventListener("click", openMobileSidebar);
       document.getElementById("mbMenuBtn").addEventListener("click", openMobileSidebar);
       sbBackdrop.addEventListener("click", closeMobileSidebar);
 
-      /* ====== GLOBAL PROGRESS & BADGES ====== */
-      function updateGlobalMetrics() {
-        const total = KANBAN_TASKS.length;
-        const done = KANBAN_TASKS.filter(t => getKbStatus(t) === "done").length;
-        const doing = KANBAN_TASKS.filter(t => getKbStatus(t) === "doing").length;
-        const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      function jumpToPlan(waveId, taskIdToExpand) {
+        currentPlanView = "roadmap";
+        filterWave = waveId ? String(waveId) : "all";
+        filterRole = "all";
+        filterStatus = "all";
+        filterSearch = "";
+        document.getElementById("filterWave").value = filterWave;
+        document.getElementById("filterRole").value = "all";
+        document.getElementById("filterStatus").value = "all";
+        document.getElementById("filterSearch").value = "";
+        document.querySelectorAll("#planViewSwitcher .vs-btn").forEach(b => b.classList.toggle("active", b.dataset.pview === "roadmap"));
+        if (taskIdToExpand) expandedTasks.add(taskIdToExpand);
+        window.location.hash = "#plan";
+        setActiveTab("plan");
+        renderPlan();
+        if (taskIdToExpand) {
+          setTimeout(() => {
+            const el = document.querySelector(`[data-task-el="${taskIdToExpand}"]`);
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 80);
+        }
+      }
 
-        // Sidebar progress
+      /* ====== GLOBAL METRICS & OVERVIEW RENDER ====== */
+      function renderOverviewAndMetrics() {
+        const tasks = getAllTasks();
+        const pct = calcWeightedPct(tasks);
+        const counts = countStatuses(tasks);
+
+        // Sidebar progress + badge
         document.getElementById("sbProgPct").textContent = pct + "%";
         document.getElementById("sbProgBar").style.width = pct + "%";
+        document.getElementById("badgeRoadmap").textContent = `${counts.done}/${counts.total}`;
+        document.getElementById("heroTaskCountTag").textContent = `📋 ${counts.total} Úkolů`;
+
+        // Visuals unrated badge
+        const unrated = VISUALS.filter(v => !getVisState(v.id).rating).length;
+        const bVis = document.getElementById("badgeVisuals");
+        bVis.textContent = unrated;
+        bVis.classList.toggle("hidden", unrated === 0);
 
         // Hero ring
         const circ = 2 * Math.PI * 50;
@@ -2304,53 +2093,529 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         ring.style.strokeDasharray = circ.toFixed(2);
         ring.style.strokeDashoffset = (circ * (1 - pct / 100)).toFixed(2);
         document.getElementById("heroPct").textContent = pct + "%";
-        document.getElementById("heroMeta").textContent = `${done} hotovo · ${doing} rozpracováno · ${total} celkem`;
+        document.getElementById("heroMeta").textContent = `✅ ${counts.done} · ⏳ ${counts.doing} · 📋 ${counts.todo}`;
 
-        // Badges
-        const unrated = VISUALS.filter(v => !getVisState(v.id).rating).length;
-        const bVis = document.getElementById("badgeVisuals");
-        bVis.textContent = unrated;
-        bVis.classList.toggle("hidden", unrated === 0);
+        // Next Actions (max 3: doing first, then unlocked todo)
+        const doingList = tasks.filter(t => getTaskStatus(t) === "doing");
+        const unlockedTodo = tasks.filter(t => getTaskStatus(t) === "todo" && getBlockingDeps(t).length === 0);
+        const nextList = [...doingList, ...unlockedTodo].slice(0, 3);
+        const nextGrid = document.getElementById("nextActionsGrid");
+        if (!nextList.length) {
+          nextGrid.innerHTML = `<div class="muted" style="grid-column:1/-1;">🎉 Všechny úkoly jsou dokončeny nebo čekají na odemčení závislostí!</div>`;
+        } else {
+          nextGrid.innerHTML = nextList.map(t => {
+            const st = getTaskStatus(t);
+            const sp = getTaskStepProgress(t);
+            return `
+              <div class="next-card ${st}">
+                <div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+                    <span class="rm-code">${escapeHtml(t.id)}</span>
+                    <span class="tag ${st === "doing" ? "cyan" : "gold"}">${st === "doing" ? "⏳ Rozpracováno" : "🔓 Připraveno"}</span>
+                  </div>
+                  <div class="next-title">${escapeHtml(t.title)}</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
+                    <span class="tag">${escapeHtml(t.version)}</span>
+                    <span class="tag purple">${escapeHtml(t.owner)}</span>
+                    <span class="tag">⏱️ ${escapeHtml(t.estimate)}</span>
+                    <span class="tag green">☑ ${sp.done}/${sp.total} kroků</span>
+                  </div>
+                </div>
+                <button type="button" class="btn-secondary" data-jump-wave="${t.wave}" data-jump-task="${t.id}" style="width:100%;justify-content:center;">
+                  Otevřít v plánu →
+                </button>
+              </div>
+            `;
+          }).join("");
+          nextGrid.querySelectorAll("[data-jump-task]").forEach(btn => {
+            btn.addEventListener("click", () => jumpToPlan(btn.dataset.jumpWave, btn.dataset.jumpTask));
+          });
+        }
 
-        document.getElementById("badgeKanban").textContent = `${done}/${total}`;
-
-        // Overview areas
-        const areaWrap = document.getElementById("overviewAreas");
-        areaWrap.innerHTML = AREAS.map(a => {
-          const tasks = KANBAN_TASKS.filter(t => t.area === a.id);
-          const aDone = tasks.filter(t => getKbStatus(t) === "done").length;
-          const aDoing = tasks.filter(t => getKbStatus(t) === "doing").length;
-          const aPct = tasks.length ? Math.round((aDone / tasks.length) * 100) : 0;
-          const barW = tasks.length ? Math.round(((aDone + aDoing * 0.35) / tasks.length) * 100) : 0;
+        // 6 Waves Timeline
+        const waveWrap = document.getElementById("overviewWaveTimeline");
+        waveWrap.innerHTML = ROADMAP_WAVES.map(w => {
+          const wTasks = tasks.filter(t => t.wave === w.id);
+          const wPct = calcWeightedPct(wTasks);
+          const wc = countStatuses(wTasks);
           return `
-            <div class="area-card">
-              <div class="area-head">
-                <span>${escapeHtml(a.name)}</span>
-                <span class="tag ${a.color}">${aPct}%</span>
+            <div class="wave-row" data-open-wave="${w.id}">
+              <div class="wave-row-top">
+                <div class="wave-row-title">
+                  <span class="tag ${w.color}">${escapeHtml(w.code)} · ${escapeHtml(w.versionRange)}</span>
+                  <span>${escapeHtml(w.title)}</span>
+                </div>
+                <div class="wave-row-stats">
+                  <span>⏱️ ${escapeHtml(w.estimate)}</span>
+                  <span>✅ ${wc.done} · ⏳ ${wc.doing} · 📋 ${wc.todo}</span>
+                  <span class="wave-row-pct">${wPct}%</span>
+                </div>
               </div>
               <div class="prog-track">
-                <div class="prog-fill ${a.color}" style="width: ${barW}%"></div>
+                <div class="prog-fill ${w.color}" style="width: ${wPct}%"></div>
               </div>
-              <div class="muted">${aDone}/${tasks.length} hotovo${aDoing ? ` · ${aDoing} probíhá` : ""}</div>
             </div>
           `;
         }).join("");
 
-        // Recent 3 logs in Overview
-        const recent = getAllLogs().slice(0, 3);
-        document.getElementById("overviewRecentLogs").innerHTML = recent.map(renderLogCardHtml).join("");
+        waveWrap.querySelectorAll("[data-open-wave]").forEach(row => {
+          row.addEventListener("click", () => jumpToPlan(row.dataset.openWave, null));
+        });
+
+        // Phase Breakdown
+        const phases = [
+          { key: "Příprava", label: "Příprava (v0.1.x)", color: "green" },
+          { key: "Fáze 1 (Kap. 1–3)", label: "Fáze 1 — Kapitoly 1–3 (v1.0.0)", color: "gold" },
+          { key: "Fáze 2 (Kap. 4–6)", label: "Fáze 2 — Kapitoly 4–6 (v1.3.x+)", color: "purple" }
+        ];
+        document.getElementById("phaseBreakdown").innerHTML = phases.map(p => {
+          const pt = tasks.filter(t => t.phase === p.key);
+          const pPct = calcWeightedPct(pt);
+          const pc = countStatuses(pt);
+          return `
+            <div class="mini-stat">
+              <div class="mini-stat-head">
+                <span>${escapeHtml(p.label)}</span>
+                <span class="tag ${p.color}">${pPct}%</span>
+              </div>
+              <div class="prog-track"><div class="prog-fill ${p.color}" style="width:${pPct}%"></div></div>
+              <div class="muted">✅ ${pc.done} · ⏳ ${pc.doing} · 📋 ${pc.todo} (celkem ${pc.total})</div>
+            </div>
+          `;
+        }).join("");
+
+        // Role Breakdown
+        const roles = [
+          { name: "Tomáš", color: "gold" },
+          { name: "Claude", color: "orange" },
+          { name: "Antigravity", color: "cyan" },
+          { name: "Gemini", color: "purple" }
+        ];
+        document.getElementById("roleBreakdown").innerHTML = roles.map(r => {
+          const rt = tasks.filter(t => t.owner.includes(r.name));
+          const rPct = calcWeightedPct(rt);
+          const rc = countStatuses(rt);
+          return `
+            <div class="mini-stat">
+              <div class="mini-stat-head">
+                <span>${escapeHtml(r.name)}</span>
+                <span class="tag ${r.color}">${rPct}%</span>
+              </div>
+              <div class="prog-track"><div class="prog-fill ${r.color}" style="width:${rPct}%"></div></div>
+              <div class="muted">${rc.done}/${rc.total} hotovo${rc.doing ? ` · ${rc.doing} dělá se` : ""}</div>
+            </div>
+          `;
+        }).join("");
+
+        // Recent 3 Logs
+        document.getElementById("overviewRecentLogs").innerHTML = getAllLogs().slice(0, 3).map(renderLogCardHtml).join("");
       }
 
-      /* ====== 2) RENDER WORLDS ====== */
+      /* ====== PLAN, WAVES & KANBAN ====== */
+      const PRIORITY_CLASS = { "Kritické": "red", "Vysoká": "orange", "Střední": "cyan" };
+      const STATUS_CYCLE = ["todo", "doing", "done"];
+      const STATUS_LABEL = { done: "✅ Hotovo", doing: "⏳ Dělá se", todo: "📋 Zbývá" };
+
+      function getFilteredTasks() {
+        const q = filterSearch.trim().toLowerCase();
+        return getAllTasks().filter(t => {
+          if (filterWave !== "all" && String(t.wave) !== filterWave) return false;
+          if (filterRole !== "all" && !t.owner.includes(filterRole)) return false;
+          if (filterStatus !== "all" && getTaskStatus(t) !== filterStatus) return false;
+          if (q) {
+            const hay = [t.id, t.title, t.version, t.owner, ...(t.files || []), ...(t.steps || []), t.acceptance || "", getTaskNote(t)].join(" ").toLowerCase();
+            if (!hay.includes(q)) return false;
+          }
+          return true;
+        });
+      }
+
+      function ownerColor(owner) {
+        if (owner.includes("Claude")) return "orange";
+        if (owner.includes("Antigravity")) return "cyan";
+        if (owner.includes("Gemini")) return "purple";
+        return "gold";
+      }
+
+      function renderPlan() {
+        const container = document.getElementById("planContent");
+        if (currentPlanView === "roadmap") renderPlanRoadmap(container);
+        else if (currentPlanView === "kanban") renderPlanKanban(container);
+        else renderPlanMilestones(container);
+      }
+
+      function renderPlanRoadmap(container) {
+        const filtered = getFilteredTasks();
+        const allTasks = getAllTasks();
+        const wavesToShow = ROADMAP_WAVES.filter(w => {
+          if (filterWave !== "all" && String(w.id) !== filterWave) return false;
+          return filtered.some(t => t.wave === w.id);
+        });
+
+        if (!wavesToShow.length) {
+          container.innerHTML = `<div class="panel" style="text-align:center;color:var(--muted);padding:34px;">Žádné úkoly neodpovídají zvolenému filtru.</div>`;
+          return;
+        }
+
+        container.innerHTML = wavesToShow.map(w => {
+          const allWaveTasks = allTasks.filter(t => t.wave === w.id);
+          const waveTasks = filtered.filter(t => t.wave === w.id);
+          const wPct = calcWeightedPct(allWaveTasks);
+          const wc = countStatuses(allWaveTasks);
+
+          const rowsHtml = waveTasks.map(t => {
+            const st = getTaskStatus(t);
+            const sp = getTaskStepProgress(t);
+            const blocking = getBlockingDeps(t);
+            const isExp = expandedTasks.has(t.id);
+            const noteVal = getTaskNote(t);
+
+            const depsHtml = (t.dependsOn || []).length
+              ? (blocking.length
+                  ? `<span class="tag red" title="Čeká na dokončení závislosti">🔒 Čeká na ${escapeHtml(blocking.join(", "))}</span>`
+                  : `<span class="tag green" title="Závislosti splněny">✓ Po ${escapeHtml(t.dependsOn.join(", "))}</span>`)
+              : "";
+
+            const stepsHtml = (t.steps || []).map((stepText, idx) => {
+              const checked = getStepChecked(t.id, idx, st);
+              return `
+                <li class="step-item ${checked ? "checked" : ""}">
+                  <label>
+                    <input type="checkbox" data-step-task="${t.id}" data-step-idx="${idx}" ${checked ? "checked" : ""} />
+                    <span>${escapeHtml(stepText)}</span>
+                  </label>
+                </li>
+              `;
+            }).join("");
+
+            const filesHtml = (t.files || []).map(f => `<code>${escapeHtml(f)}</code>`).join("") || `<span class="muted">Neurčeno</span>`;
+
+            return `
+              <div class="rm-task ${isExp ? "expanded" : ""} ${st === "done" ? "is-done" : ""}" data-task-el="${t.id}">
+                <div class="rm-task-row" data-toggle-task="${t.id}">
+                  <div class="rm-task-left">
+                    <button type="button" class="rm-status-btn ${st}" data-cycle-status="${t.id}" title="Kliknutím přepneš stav (Zbývá → Dělá se → Hotovo)">
+                      ${STATUS_LABEL[st]}
+                    </button>
+                    <span class="rm-code">${escapeHtml(t.id)}</span>
+                    <span class="tag">${escapeHtml(t.version)}</span>
+                    <span class="rm-title">${escapeHtml(t.title)}</span>
+                  </div>
+                  <div class="rm-task-right">
+                    ${depsHtml}
+                    <span class="tag ${PRIORITY_CLASS[t.priority] || ""}">${escapeHtml(t.priority)}</span>
+                    <span class="tag">⏱️ ${escapeHtml(t.estimate)}</span>
+                    <span class="tag ${ownerColor(t.owner)}">${escapeHtml(t.owner)}</span>
+                    <span class="tag">☑ ${sp.done}/${sp.total}</span>
+                    <button type="button" class="rm-detail-btn" data-toggle-btn="${t.id}">${isExp ? "Skrýt ▴" : "Detail ▾"}</button>
+                  </div>
+                </div>
+                <div class="rm-detail">
+                  <div class="rm-detail-inner">
+                    <div>
+                      <h4><span>Co přesně dělat</span><span>${sp.done}/${sp.total} kroků</span></h4>
+                      <ul class="step-list">${stepsHtml}</ul>
+                    </div>
+                    <div>
+                      <div class="dod-box">
+                        <strong>✅ Výstup / Jak ověřit (Definition of Done)</strong>
+                        ${escapeHtml(t.acceptance || "Ověřit funkčnost v Godotu 4.")}
+                      </div>
+                      <h4><span>Dotčené soubory</span></h4>
+                      <div class="files-wrap">${filesHtml}</div>
+                      <h4>
+                        <span>Moje poznámka</span>
+                        ${t.custom ? `<button type="button" class="kb-move" data-del-custom="${t.id}">🗑️ Smazat úkol</button>` : ""}
+                      </h4>
+                      <textarea class="note-input" data-task-note="${t.id}" placeholder="Vlastní poznámky, odkazy nebo nápady k tomuto úkolu...">${escapeHtml(noteVal)}</textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join("");
+
+          return `
+            <section class="rm-wave">
+              <div class="rm-wave-head">
+                <div class="rm-wave-title-row">
+                  <h3 class="rm-wave-title">
+                    <span class="tag ${w.color}">${escapeHtml(w.code)} (${escapeHtml(w.versionRange)})</span>
+                    <span>${escapeHtml(w.title)}</span>
+                  </h3>
+                  <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;">
+                    <span class="tag purple">${escapeHtml(w.phase)}</span>
+                    <span class="tag">⏱️ ${escapeHtml(w.estimate)}</span>
+                    <span class="tag">✅ ${wc.done} · ⏳ ${wc.doing} · 📋 ${wc.todo}</span>
+                  </div>
+                </div>
+                <p class="rm-wave-goal"><strong>Cíl vlny:</strong> ${escapeHtml(w.goal)}</p>
+                <div class="rm-wave-prog-row">
+                  <div class="prog-track" style="flex:1;"><div class="prog-fill ${w.color}" style="width:${wPct}%"></div></div>
+                  <strong style="color:var(--gold);font-size:0.9rem;min-width:40px;text-align:right;">${wPct}%</strong>
+                </div>
+              </div>
+              <div class="rm-task-list">${rowsHtml}</div>
+            </section>
+          `;
+        }).join("");
+
+        // Bind events
+        container.querySelectorAll("[data-cycle-status]").forEach(btn => {
+          btn.addEventListener("click", e => {
+            e.stopPropagation();
+            const id = btn.dataset.cycleStatus;
+            const task = getAllTasks().find(t => t.id === id);
+            if (!task) return;
+            const cur = getTaskStatus(task);
+            const next = STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur) + 1) % STATUS_CYCLE.length];
+            rmState.statuses[id] = next;
+            saveRoadmapState();
+            renderOverviewAndMetrics();
+            renderPlan();
+          });
+        });
+
+        container.querySelectorAll("[data-toggle-task]").forEach(row => {
+          row.addEventListener("click", e => {
+            if (e.target.closest("[data-cycle-status]")) return;
+            const id = row.dataset.toggleTask;
+            if (expandedTasks.has(id)) expandedTasks.delete(id);
+            else expandedTasks.add(id);
+            renderPlan();
+          });
+        });
+
+        container.querySelectorAll("[data-step-task]").forEach(cb => {
+          cb.addEventListener("change", () => {
+            const id = cb.dataset.stepTask;
+            const idx = Number(cb.dataset.stepIdx);
+            const task = getAllTasks().find(t => t.id === id);
+            if (!task) return;
+            if (!rmState.steps[id]) {
+              rmState.steps[id] = {};
+              const st = getTaskStatus(task);
+              (task.steps || []).forEach((_, i) => { rmState.steps[id][i] = (st === "done"); });
+            }
+            rmState.steps[id][idx] = cb.checked;
+            saveRoadmapState();
+            renderOverviewAndMetrics();
+            renderPlan();
+          });
+        });
+
+        container.querySelectorAll("[data-task-note]").forEach(ta => {
+          ta.addEventListener("input", () => {
+            rmState.notes[ta.dataset.taskNote] = ta.value;
+            saveRoadmapState();
+          });
+        });
+
+        container.querySelectorAll("[data-del-custom]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.dataset.delCustom;
+            if (!confirm("Opravdu smazat tento vlastní úkol?")) return;
+            rmState.customTasks = (rmState.customTasks || []).filter(t => t.id !== id);
+            saveRoadmapState();
+            renderOverviewAndMetrics();
+            renderPlan();
+            showToast("🗑️ Vlastní úkol smazán.");
+          });
+        });
+      }
+
+      function renderPlanKanban(container) {
+        const filtered = getFilteredTasks();
+        const cols = { todo: [], doing: [], done: [] };
+        filtered.forEach(t => cols[getTaskStatus(t)].push(t));
+
+        const colHtml = (list, status) => {
+          if (!list.length) return `<div class="muted" style="text-align:center;padding:22px 8px;">Žádné úkoly</div>`;
+          return list.map(t => {
+            const sp = getTaskStepProgress(t);
+            const blocking = getBlockingDeps(t);
+            return `
+              <div class="kb-card ${status}">
+                <div style="display:flex;justify-content:space-between;gap:6px;align-items:center;">
+                  <span class="rm-code">${escapeHtml(t.id)}</span>
+                  <span class="tag">${escapeHtml(t.version)} · Vlna ${t.wave}</span>
+                </div>
+                <div class="kb-title">${escapeHtml(t.title)}</div>
+                <div class="kb-tags">
+                  <span class="tag ${ownerColor(t.owner)}">${escapeHtml(t.owner)}</span>
+                  <span class="tag ${PRIORITY_CLASS[t.priority] || ""}">${escapeHtml(t.priority)}</span>
+                  <span class="tag">☑ ${sp.done}/${sp.total}</span>
+                  ${blocking.length ? `<span class="tag red">🔒 ${escapeHtml(blocking.join(", "))}</span>` : ""}
+                </div>
+                <div class="kb-actions">
+                  <div style="display:flex;gap:5px;">
+                    ${status !== "todo" ? `<button type="button" class="kb-move" data-kb-id="${t.id}" data-kb-to="${status === "done" ? "doing" : "todo"}">← Zpět</button>` : ""}
+                    <button type="button" class="kb-move" data-kb-detail="${t.id}" data-kb-wave="${t.wave}">Detail</button>
+                  </div>
+                  ${status !== "done"
+                    ? `<button type="button" class="kb-move" data-kb-id="${t.id}" data-kb-to="${status === "todo" ? "doing" : "done"}">${status === "todo" ? "Dělá se →" : "Hotovo ✓"}</button>`
+                    : `<span style="font-size:0.74rem;color:var(--green);font-weight:700;">Hotovo</span>`}
+                </div>
+              </div>
+            `;
+          }).join("");
+        };
+
+        container.innerHTML = `
+          <div class="kanban-board">
+            <div class="kb-col todo">
+              <div class="kb-col-head"><span>📋 Zbývá</span><span class="tag">${cols.todo.length}</span></div>
+              <div class="kb-list">${colHtml(cols.todo, "todo")}</div>
+            </div>
+            <div class="kb-col doing">
+              <div class="kb-col-head"><span>⏳ Rozpracováno</span><span class="tag cyan">${cols.doing.length}</span></div>
+              <div class="kb-list">${colHtml(cols.doing, "doing")}</div>
+            </div>
+            <div class="kb-col done">
+              <div class="kb-col-head"><span>✅ Hotovo</span><span class="tag green">${cols.done.length}</span></div>
+              <div class="kb-list">${colHtml(cols.done, "done")}</div>
+            </div>
+          </div>
+        `;
+
+        container.querySelectorAll("[data-kb-id]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            rmState.statuses[btn.dataset.kbId] = btn.dataset.kbTo;
+            saveRoadmapState();
+            renderOverviewAndMetrics();
+            renderPlan();
+          });
+        });
+
+        container.querySelectorAll("[data-kb-detail]").forEach(btn => {
+          btn.addEventListener("click", () => jumpToPlan(btn.dataset.kbWave, btn.dataset.kbDetail));
+        });
+      }
+
+      function renderPlanMilestones(container) {
+        const allTasks = getAllTasks();
+        const rows = ROADMAP_WAVES.map(w => {
+          const wt = allTasks.filter(t => t.wave === w.id);
+          const pct = calcWeightedPct(wt);
+          const c = countStatuses(wt);
+          return `
+            <tr>
+              <td>
+                <div style="font-weight:800;">${escapeHtml(w.code)}: ${escapeHtml(w.title)}</div>
+                <span class="tag ${w.color}" style="margin-top:4px;">${escapeHtml(w.versionRange)}</span>
+              </td>
+              <td><span class="tag purple">${escapeHtml(w.phase)}</span></td>
+              <td style="color:var(--muted);max-width:340px;">${escapeHtml(w.goal)}</td>
+              <td style="white-space:nowrap;">⏱️ ${escapeHtml(w.estimate)}</td>
+              <td style="white-space:nowrap;">✅ ${c.done} · ⏳ ${c.doing} · 📋 ${c.todo}</td>
+              <td style="min-width:140px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="prog-track" style="flex:1;"><div class="prog-fill ${w.color}" style="width:${pct}%"></div></div>
+                  <strong style="color:var(--gold);min-width:36px;text-align:right;">${pct}%</strong>
+                </div>
+              </td>
+              <td><button type="button" class="kb-move" data-ms-wave="${w.id}">Otevřít →</button></td>
+            </tr>
+          `;
+        }).join("");
+
+        container.innerHTML = `
+          <div class="panel">
+            <div class="panel-head">
+              <h2>🏁 Přehled všech 6 vývojových milníků</h2>
+              <span class="muted">Souhrn cílů, odhadů času a připravenosti</span>
+            </div>
+            <div class="table-wrap">
+              <table class="studio-table">
+                <thead>
+                  <tr><th>Vlna &amp; Verze</th><th>Fáze</th><th>Hlavní cíl vlny</th><th>Odhad</th><th>Úkoly</th><th>Připravenost</th><th></th></tr>
+                </thead>
+                <tbody>${rows}</tbody>
+              </table>
+            </div>
+          </div>
+        `;
+
+        container.querySelectorAll("[data-ms-wave]").forEach(btn => {
+          btn.addEventListener("click", () => jumpToPlan(btn.dataset.msWave, null));
+        });
+      }
+
+      /* Plan Toolbar Listeners */
+      document.querySelectorAll("#planViewSwitcher .vs-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentPlanView = btn.dataset.pview;
+          document.querySelectorAll("#planViewSwitcher .vs-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderPlan();
+        });
+      });
+
+      document.getElementById("filterWave").addEventListener("change", e => { filterWave = e.target.value; renderPlan(); });
+      document.getElementById("filterRole").addEventListener("change", e => { filterRole = e.target.value; renderPlan(); });
+      document.getElementById("filterStatus").addEventListener("change", e => { filterStatus = e.target.value; renderPlan(); });
+      document.getElementById("filterSearch").addEventListener("input", e => { filterSearch = e.target.value; renderPlan(); });
+
+      const addTaskForm = document.getElementById("addTaskForm");
+      document.getElementById("toggleAddTaskBtn").addEventListener("click", () => addTaskForm.classList.toggle("open"));
+      document.getElementById("cancelAddTaskBtn").addEventListener("click", () => addTaskForm.classList.remove("open"));
+
+      addTaskForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const wave = Number(document.getElementById("newTaskWave").value);
+        const waveObj = ROADMAP_WAVES.find(w => w.id === wave) || ROADMAP_WAVES[1];
+        const title = document.getElementById("newTaskTitle").value.trim();
+        if (!title) return;
+        const customNum = (rmState.customTasks || []).length + 1;
+        const stepsRaw = document.getElementById("newTaskSteps").value.trim();
+        const filesRaw = document.getElementById("newTaskFiles").value.trim();
+
+        const newTask = {
+          id: `W${wave}-C${String(customNum).padStart(2, "0")}`,
+          wave,
+          phase: waveObj.phase,
+          version: document.getElementById("newTaskVer").value.trim() || waveObj.versionRange,
+          title,
+          owner: document.getElementById("newTaskOwner").value,
+          status: "todo",
+          priority: document.getElementById("newTaskPriority").value,
+          estimate: document.getElementById("newTaskEst").value.trim() || "1–2 dny",
+          dependsOn: [],
+          files: filesRaw ? filesRaw.split(",").map(s => s.trim()).filter(Boolean) : ["game/"],
+          steps: stepsRaw ? stepsRaw.split(";").map(s => s.trim()).filter(Boolean) : ["Připravit návrh", "Implementovat v Godotu 4", "Otestovat výsledek"],
+          acceptance: document.getElementById("newTaskAccept").value.trim() || "Funkční a otestováno bez chyb.",
+          note: "",
+          custom: true
+        };
+
+        rmState.customTasks = rmState.customTasks || [];
+        rmState.customTasks.push(newTask);
+        expandedTasks.add(newTask.id);
+        saveRoadmapState();
+        addTaskForm.reset();
+        addTaskForm.classList.remove("open");
+        renderOverviewAndMetrics();
+        renderPlan();
+        showToast(`✅ Vlastní úkol ${newTask.id} přidán do Vlny ${wave}.`);
+      });
+
+      document.getElementById("resetRoadmapBtn").addEventListener("click", () => {
+        if (!confirm("Opravdu obnovit výchozí stavy Roadmapy (včetně odškrtnutých kroků, poznámek a vlastních úkolů)? Hodnocení vizuálů a nápady zůstanou zachovány.")) return;
+        rmState = defaultRoadmapState();
+        localStorage.removeItem(STORAGE_KEY_ROADMAP);
+        expandedTasks = new Set(["W2-01", "W2-02"]);
+        renderOverviewAndMetrics();
+        renderPlan();
+        showToast("↺ Výchozí stavy Roadmapy obnoveny.");
+      });
+
+      /* ====== WORLDS, MECHANICS, VISUALS, LOG, IDEAS ====== */
       function renderWorlds() {
         const list = WORLDS.filter(w => currentWorldPhase === "all" || String(w.phase) === currentWorldPhase);
         document.getElementById("worldsGrid").innerHTML = list.map(w => `
           <article class="world-card">
             <div class="world-thumb">
-              ${w.img
-                ? `<img src="${escapeHtml(w.img)}" alt="${escapeHtml(w.name)}" class="js-zoom" onerror="this.style.display='none'" />`
-                : `<div style="text-align:center;color:var(--muted);padding:12px;font-size:0.82rem;">✨ Concept art ve Fázi ${w.phase}<br/><strong style="color:var(--purple);">${escapeHtml(w.name)}</strong></div>`
-              }
+              ${w.img ? `<img src="${escapeHtml(w.img)}" alt="${escapeHtml(w.name)}" class="js-zoom" onerror="this.style.display='none'" />` : `<div style="text-align:center;color:var(--muted);padding:12px;font-size:0.82rem;">✨ Concept art ve Fázi ${w.phase}<br/><strong style="color:var(--purple);">${escapeHtml(w.name)}</strong></div>`}
               <span class="world-thumb-badge">Kapitola ${w.num} · Fáze ${w.phase}</span>
             </div>
             <div class="world-body">
@@ -2377,18 +2642,11 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         });
       });
 
-      /* ====== 3) MECHANICS & DIAGRAMS ====== */
       function renderLoopDetail() {
         const d = LOOP_DETAILS[currentLoopKey] || LOOP_DETAILS.hub;
         document.getElementById("loopDetail").innerHTML = `<h4>${escapeHtml(d.title)}</h4><p style="margin:0;color:var(--muted);">${escapeHtml(d.text)}</p>`;
       }
-
-      document.querySelectorAll(".loop-node").forEach(n => {
-        n.addEventListener("click", () => {
-          currentLoopKey = n.dataset.loop;
-          renderLoopDetail();
-        });
-      });
+      document.querySelectorAll(".loop-node").forEach(n => n.addEventListener("click", () => { currentLoopKey = n.dataset.loop; renderLoopDetail(); }));
 
       function renderAbilities() {
         const modeClass = { "3D": "cyan", "2D": "green", "Obojí": "gold" };
@@ -2397,17 +2655,13 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
           const cls = currentAbilityCap === "all" ? "" : (match ? "highlight" : "dim");
           return `
             <div class="ability-card ${cls}">
-              <div class="ability-top">
-                <h4>${escapeHtml(a.name)}</h4>
-                <span class="tag ${modeClass[a.mode] || ""}">${escapeHtml(a.mode)}</span>
-              </div>
+              <div class="ability-top"><h4>${escapeHtml(a.name)}</h4><span class="tag ${modeClass[a.mode] || ""}">${escapeHtml(a.mode)}</span></div>
               <p>${escapeHtml(a.desc)}</p>
               <div style="margin-top:8px;"><span class="tag purple">Kapitola ${a.cap}</span></div>
             </div>
           `;
         }).join("");
       }
-
       document.querySelectorAll("#abilityFilter .chip-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           currentAbilityCap = btn.dataset.cap;
@@ -2417,7 +2671,6 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         });
       });
 
-      /* ====== 4) RENDER VISUALS (23) ====== */
       function renderVisuals() {
         const list = VISUALS.filter(v => currentVisCat === "all" || v.cat === currentVisCat);
         const grid = document.getElementById("visualsGrid");
@@ -2427,11 +2680,7 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
             <article class="vis-card" data-vis-id="${v.id}">
               <div class="vis-media">
                 <img src="${escapeHtml(v.path)}" alt="${escapeHtml(v.title)}" class="js-zoom" data-vis-img="${v.id}" />
-                <div class="vis-ph" data-vis-ph="${v.id}">
-                  <span style="font-size:1.7rem;">🖼️</span>
-                  <span>Soubor nebyl nalezen:</span>
-                  <code>${escapeHtml(v.path)}</code>
-                </div>
+                <div class="vis-ph" data-vis-ph="${v.id}"><span style="font-size:1.7rem;">🖼️</span><span>Soubor nebyl nalezen:</span><code>${escapeHtml(v.path)}</code></div>
                 <span class="vis-cat-badge">${escapeHtml(VIS_CATS[v.cat])}</span>
               </div>
               <div class="vis-body">
@@ -2460,23 +2709,17 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
 
         grid.querySelectorAll("[data-vrate]").forEach(btn => {
           btn.addEventListener("click", () => {
-            const id = btn.dataset.vid;
-            const rate = btn.dataset.vrate;
-            const vs = getVisState(id);
-            vs.rating = vs.rating === rate ? null : rate;
-            saveState();
+            const vs = getVisState(btn.dataset.vid);
+            vs.rating = vs.rating === btn.dataset.vrate ? null : btn.dataset.vrate;
+            saveLegacyState();
             renderVisuals();
-            updateGlobalMetrics();
+            renderOverviewAndMetrics();
           });
         });
 
         grid.querySelectorAll("[data-vnote]").forEach(ta => {
-          ta.addEventListener("input", () => {
-            getVisState(ta.dataset.vnote).note = ta.value;
-            saveState();
-          });
+          ta.addEventListener("input", () => { getVisState(ta.dataset.vnote).note = ta.value; saveLegacyState(); });
         });
-
         bindZoomables();
       }
 
@@ -2489,84 +2732,8 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         });
       });
 
-      /* ====== 5) RENDER KANBAN ====== */
-      const ROLE_COLORS = {
-        "Tomáš": "gold",
-        "Gemini": "purple",
-        "Claude": "orange",
-        "Antigravity": "cyan"
-      };
-
-      function renderKanban() {
-        const filtered = KANBAN_TASKS.filter(t => {
-          if (currentKbRole !== "all" && t.role !== currentKbRole) return false;
-          if (currentKbWave !== "all" && t.wave !== currentKbWave) return false;
-          return true;
-        });
-
-        const cols = { todo: [], doing: [], done: [] };
-        filtered.forEach(t => cols[getKbStatus(t)].push(t));
-
-        document.getElementById("cntTodo").textContent = cols.todo.length;
-        document.getElementById("cntDoing").textContent = cols.doing.length;
-        document.getElementById("cntDone").textContent = cols.done.length;
-
-        const renderCol = (list, status) => {
-          if (!list.length) return `<div class="muted" style="text-align:center;padding:18px 8px;">Žádné úkoly</div>`;
-          return list.map(t => `
-            <div class="kb-card ${status}">
-              <div class="kb-title">${escapeHtml(t.title)}</div>
-              <div class="kb-tags">
-                <span class="tag ${ROLE_COLORS[t.role] || ""}">${escapeHtml(t.role)}</span>
-                <span class="tag">${escapeHtml(t.wave)}</span>
-              </div>
-              <div class="kb-actions">
-                ${status !== "todo" ? `<button type="button" class="kb-move" data-kid="${t.id}" data-to="${status === "done" ? "doing" : "todo"}">← Zpět</button>` : `<span></span>`}
-                ${status !== "done" ? `<button type="button" class="kb-move" data-kid="${t.id}" data-to="${status === "todo" ? "doing" : "done"}">${status === "todo" ? "Rozpracovat →" : "Dokončit ✓"}</button>` : `<span class="muted" style="font-size:0.74rem;color:var(--green);">Hotovo</span>`}
-              </div>
-            </div>
-          `).join("");
-        };
-
-        document.getElementById("kbTodo").innerHTML = renderCol(cols.todo, "todo");
-        document.getElementById("kbDoing").innerHTML = renderCol(cols.doing, "doing");
-        document.getElementById("kbDone").innerHTML = renderCol(cols.done, "done");
-
-        document.querySelectorAll(".kb-move").forEach(btn => {
-          btn.addEventListener("click", () => {
-            state.kanbanStatuses[btn.dataset.kid] = btn.dataset.to;
-            saveState();
-            renderKanban();
-            updateGlobalMetrics();
-          });
-        });
-      }
-
-      document.querySelectorAll("#kbRoleFilter .chip-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          currentKbRole = btn.dataset.role;
-          document.querySelectorAll("#kbRoleFilter .chip-btn").forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          renderKanban();
-        });
-      });
-
-      document.querySelectorAll("#kbWaveFilter .chip-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          currentKbWave = btn.dataset.wave;
-          document.querySelectorAll("#kbWaveFilter .chip-btn").forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          renderKanban();
-        });
-      });
-
-      /* ====== 6) RENDER WORK LOG ====== */
       function renderLogCardHtml(l) {
-        const statusMap = {
-          done: { label: "✅ Hotovo", cls: "green" },
-          info: { label: "🔧 Postup", cls: "cyan" },
-          next: { label: "🎯 Další krok", cls: "purple" }
-        };
+        const statusMap = { done: { label: "✅ Hotovo", cls: "green" }, info: { label: "🔧 Postup", cls: "cyan" }, next: { label: "🎯 Další krok", cls: "purple" } };
         const st = statusMap[l.status] || statusMap.info;
         return `
           <div class="log-item ${l.status || "info"}">
@@ -2574,7 +2741,7 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
               <div class="log-meta-left">
                 ${l.version ? `<span class="tag gold">${escapeHtml(l.version)}</span>` : ""}
                 <span class="tag ${st.cls}">${st.label}</span>
-                <span class="tag ${ROLE_COLORS[l.author] || ""}">${escapeHtml(l.author)}</span>
+                <span class="tag ${ownerColor(l.author)}">${escapeHtml(l.author)}</span>
                 <span>📅 ${escapeHtml(l.date)}</span>
               </div>
               ${l.custom ? `<button type="button" class="kb-move" data-del-log="${l.id}">🗑️ Smazat</button>` : ""}
@@ -2585,15 +2752,14 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
       }
 
       function renderWorkLog() {
-        const list = getAllLogs();
         const wrap = document.getElementById("workLogList");
-        wrap.innerHTML = list.map(renderLogCardHtml).join("");
+        wrap.innerHTML = getAllLogs().map(renderLogCardHtml).join("");
         wrap.querySelectorAll("[data-del-log]").forEach(btn => {
           btn.addEventListener("click", () => {
-            state.customLogs = (state.customLogs || []).filter(x => x.id !== btn.dataset.delLog);
-            saveState();
+            legacyState.customLogs = (legacyState.customLogs || []).filter(x => x.id !== btn.dataset.delLog);
+            saveLegacyState();
             renderWorkLog();
-            updateGlobalMetrics();
+            renderOverviewAndMetrics();
           });
         });
       }
@@ -2603,8 +2769,8 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         e.preventDefault();
         const text = document.getElementById("logText").value.trim();
         if (!text) return;
-        state.customLogs = state.customLogs || [];
-        state.customLogs.unshift({
+        legacyState.customLogs = legacyState.customLogs || [];
+        legacyState.customLogs.unshift({
           id: "clog_" + Date.now(),
           date: document.getElementById("logDate").value,
           author: document.getElementById("logAuthor").value,
@@ -2613,9 +2779,9 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
           custom: true
         });
         document.getElementById("logText").value = "";
-        saveState();
+        saveLegacyState();
         renderWorkLog();
-        updateGlobalMetrics();
+        renderOverviewAndMetrics();
         showToast("✅ Záznam přidán do Deníku práce.");
       });
 
@@ -2629,7 +2795,6 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         showToast(ok ? "✅ Deník práce zkopírován jako Markdown!" : "⚠️ Kopírování se nezdařilo.");
       });
 
-      /* ====== 7) RENDER IDEAS ====== */
       function renderIdeas() {
         const q = currentIdeaSearch.trim().toLowerCase();
         const list = IDEAS.filter(i => {
@@ -2668,15 +2833,14 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         grid.querySelectorAll("[data-ivote]").forEach(btn => {
           btn.addEventListener("click", () => {
             const id = btn.dataset.iid;
-            const v = btn.dataset.ivote;
-            state.ideaVotes[id] = state.ideaVotes[id] === v ? null : v;
-            saveState();
+            legacyState.ideaVotes[id] = legacyState.ideaVotes[id] === btn.dataset.ivote ? null : btn.dataset.ivote;
+            saveLegacyState();
             renderIdeas();
           });
         });
 
         const notesEl = document.getElementById("extraNotes");
-        if (notesEl.value !== (state.extraNotes || "")) notesEl.value = state.extraNotes || "";
+        if (notesEl.value !== (legacyState.extraNotes || "")) notesEl.value = legacyState.extraNotes || "";
       }
 
       document.querySelectorAll("#ideaFilterBar .chip-btn").forEach(btn => {
@@ -2687,45 +2851,56 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
           renderIdeas();
         });
       });
+      document.getElementById("ideaSearch").addEventListener("input", e => { currentIdeaSearch = e.target.value; renderIdeas(); });
+      document.getElementById("extraNotes").addEventListener("input", e => { legacyState.extraNotes = e.target.value; saveLegacyState(); });
 
-      document.getElementById("ideaSearch").addEventListener("input", e => {
-        currentIdeaSearch = e.target.value;
-        renderIdeas();
-      });
-
-      document.getElementById("extraNotes").addEventListener("input", e => {
-        state.extraNotes = e.target.value;
-        saveState();
-      });
-
-      /* ====== 8) PROMPTS & AI EXPORT ====== */
+      /* ====== PROMPTS & AI EXPORT (v0.1.5) ====== */
       document.getElementById("claudePromptText").textContent = CLAUDE_PROMPT;
       document.getElementById("agyPromptText").textContent = AGY_PROMPT;
-
       document.getElementById("copyClaudeBtn").addEventListener("click", async () => {
-        const ok = await copyText(CLAUDE_PROMPT);
-        showToast(ok ? "✅ Handoff prompt pro Claudea zkopírován!" : "⚠️ Kopírování se nezdařilo.");
+        showToast((await copyText(CLAUDE_PROMPT)) ? "✅ Handoff prompt pro Claudea zkopírován!" : "⚠️ Kopírování se nezdařilo.");
       });
-
       document.getElementById("copyAgyBtn").addEventListener("click", async () => {
-        const ok = await copyText(AGY_PROMPT);
-        showToast(ok ? "✅ Master kontext pro Antigravity zkopírován!" : "⚠️ Kopírování se nezdařilo.");
+        showToast((await copyText(AGY_PROMPT)) ? "✅ Master kontext pro Antigravity zkopírován!" : "⚠️ Kopírování se nezdařilo.");
       });
 
       function buildAiSummary() {
+        const allTasks = getAllTasks();
+        const totalPct = calcWeightedPct(allTasks);
+        const c = countStatuses(allTasks);
         const lines = [];
-        lines.push(`# Bruno: Ink & Shadow — Přehled stavu a odpovědí (${APP_VERSION})`);
+        lines.push(`# Bruno: Ink & Shadow — Přehled progresu a odpovědí (${APP_VERSION})`);
+        lines.push("");
+        lines.push(`## 🌊 Celkový progress Roadmapy: **${totalPct}%** (✅ ${c.done} hotovo · ⏳ ${c.doing} rozpracováno · 📋 ${c.todo} zbývá)`);
+        ROADMAP_WAVES.forEach(w => {
+          const wt = allTasks.filter(t => t.wave === w.id);
+          const wp = calcWeightedPct(wt);
+          const wc = countStatuses(wt);
+          lines.push(`- **${w.code} (${w.versionRange}) — ${w.title}:** ${wp}% (✅ ${wc.done} · ⏳ ${wc.doing} · 📋 ${wc.todo})`);
+        });
         lines.push("");
 
-        // Kanban summary
-        const kbDone = KANBAN_TASKS.filter(t => getKbStatus(t) === "done");
-        const kbDoing = KANBAN_TASKS.filter(t => getKbStatus(t) === "doing");
-        const kbTodo = KANBAN_TASKS.filter(t => getKbStatus(t) === "todo");
-        const pct = Math.round((kbDone.length / KANBAN_TASKS.length) * 100);
-        lines.push(`## ✅ Stav Kanbanu (${kbDone.length}/${KANBAN_TASKS.length} hotovo — ${pct}%)`);
-        lines.push(`- **Rozpracováno (${kbDoing.length}):** ${kbDoing.map(t => `${t.title} [${t.role}]`).join("; ") || "(nic)"}`);
-        lines.push(`- **Zbývá (${kbTodo.length}):** ${kbTodo.map(t => `${t.title} [${t.role}]`).join("; ") || "(nic)"}`);
+        // Doing tasks with sub-steps & notes
+        const doingTasks = allTasks.filter(t => getTaskStatus(t) === "doing");
+        lines.push(`## ⏳ Aktuálně rozpracované úkoly (${doingTasks.length})`);
+        if (!doingTasks.length) {
+          lines.push("- (žádné rozpracované úkoly)");
+        } else {
+          doingTasks.forEach(t => {
+            const sp = getTaskStepProgress(t);
+            const note = getTaskNote(t).trim();
+            lines.push(`- **${t.id}** [${t.version}] ${t.title} *(Role: ${t.owner} · Podkroky: ${sp.done}/${sp.total})*${note ? ` | Poznámka: ${note}` : ""}`);
+          });
+        }
         lines.push("");
+
+        // Any other tasks that have user notes
+        const notedOthers = allTasks.filter(t => getTaskStatus(t) !== "doing" && getTaskNote(t).trim());
+        if (notedOthers.length) {
+          lines.push("## 🗒️ Poznámky u dalších úkolů");
+          notedOthers.forEach(t => lines.push(`- **${t.id}** (${t.title}): ${getTaskNote(t).trim()}`));
+          lines.push("");
+        }
 
         // Visuals
         lines.push("## 🎨 Hodnocení vizuálů (23 podkladů)");
@@ -2740,28 +2915,24 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
 
         // Ideas
         const g = { yes: [], maybe: [], no: [] };
-        IDEAS.forEach(i => {
-          const v = getIdeaVote(i.id);
-          if (v && g[v]) g[v].push(i.title);
-        });
+        IDEAS.forEach(i => { const v = getIdeaVote(i.id); if (v && g[v]) g[v].push(i.title); });
         lines.push("## 💡 Hlasování u nápadů");
         lines.push(`- **👍 Chci (${g.yes.length}):** ${g.yes.join("; ") || "(zatím nehlasováno)"}`);
         lines.push(`- **🤔 Možná (${g.maybe.length}):** ${g.maybe.join("; ") || "(nic)"}`);
         lines.push(`- **👎 Ne (${g.no.length}):** ${g.no.join("; ") || "(nic)"}`);
-        lines.push("");
 
-        if (state.extraNotes && state.extraNotes.trim()) {
+        if (legacyState.extraNotes && legacyState.extraNotes.trim()) {
+          lines.push("");
           lines.push("## 📝 Poznámky navíc");
-          lines.push(state.extraNotes.trim());
+          lines.push(legacyState.extraNotes.trim());
         }
-
         return lines.join("\n");
       }
 
       document.querySelectorAll(".js-copy-ai").forEach(btn => {
         btn.addEventListener("click", async () => {
           const ok = await copyText(buildAiSummary());
-          showToast(ok ? "✅ Přehled odpovědí (v0.1.4) zkopírován do schránky!" : "⚠️ Kopírování do schránky se nezdařilo.");
+          showToast(ok ? "✅ Přehled Roadmapy & odpovědí (v0.1.5) zkopírován!" : "⚠️ Kopírování se nezdařilo.");
         });
       });
 
@@ -2769,7 +2940,6 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
       const lightbox = document.getElementById("lightbox");
       const lightboxImg = document.getElementById("lightboxImg");
       const lightboxCap = document.getElementById("lightboxCap");
-
       function bindZoomables() {
         document.querySelectorAll(".js-zoom").forEach(img => {
           if (img.dataset.zoomBound) return;
@@ -2783,14 +2953,8 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
           });
         });
       }
-
       lightbox.addEventListener("click", () => lightbox.classList.remove("open"));
-      document.addEventListener("keydown", e => {
-        if (e.key === "Escape") {
-          lightbox.classList.remove("open");
-          closeMobileSidebar();
-        }
-      });
+      document.addEventListener("keydown", e => { if (e.key === "Escape") { lightbox.classList.remove("open"); closeMobileSidebar(); } });
 
       async function copyText(text) {
         if (navigator.clipboard && window.isSecureContext) {
@@ -2815,7 +2979,7 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         t.textContent = msg;
         t.classList.add("show");
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 3200);
       }
 
       function escapeHtml(str) {
@@ -2828,14 +2992,14 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
 
       /* ====== INIT ====== */
       setActiveTab(getHashTab());
+      renderOverviewAndMetrics();
+      renderPlan();
       renderWorlds();
       renderLoopDetail();
       renderAbilities();
       renderVisuals();
-      renderKanban();
       renderWorkLog();
       renderIdeas();
-      updateGlobalMetrics();
       bindZoomables();
     })();
   </script>
