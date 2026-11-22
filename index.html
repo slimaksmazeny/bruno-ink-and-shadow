@@ -86,6 +86,19 @@
       filter: drop-shadow(0 4px 10px rgba(242, 193, 78, 0.25));
     }
 
+    .brand-logo {
+      height: 46px;
+      max-width: 170px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid rgba(242, 193, 78, 0.35);
+      background: rgba(16, 23, 42, 0.75);
+      padding: 2px 5px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+      flex-shrink: 0;
+    }
+
     .brand-text h1 {
       margin: 0;
       font-size: 1.25rem;
@@ -460,6 +473,12 @@
     }
 
     /* Changelog */
+    .changelog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
     .changelog-item {
       background: var(--card);
       border: 1px solid var(--border);
@@ -469,6 +488,11 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+    }
+
+    .changelog-item.older {
+      border-left-color: var(--border);
+      opacity: 0.9;
     }
 
     .changelog-head {
@@ -754,6 +778,13 @@
       margin-top: 2px;
     }
 
+    .vis-desc {
+      margin: 6px 0 0;
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
     .vote-group {
       display: flex;
       gap: 8px;
@@ -822,6 +853,63 @@
     }
 
     /* Questions Tab */
+    .decided-box {
+      background: linear-gradient(135deg, rgba(111, 207, 142, 0.1), rgba(24, 34, 58, 0.92));
+      border: 1px solid rgba(111, 207, 142, 0.42);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .decided-box h2 {
+      margin: 0 0 12px;
+      font-size: 1.04rem;
+      font-weight: 800;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .decided-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 9px 16px;
+    }
+
+    .decided-list li {
+      background: rgba(16, 23, 42, 0.55);
+      border: 1px solid rgba(52, 68, 107, 0.75);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      font-size: 0.87rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .decided-check {
+      color: var(--green);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .decided-list strong {
+      color: var(--text);
+    }
+
+    .q-section-title {
+      margin: 4px 0 12px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 0.2px;
+    }
+
     .q-list {
       display: flex;
       flex-direction: column;
@@ -1198,10 +1286,11 @@
             <text x="32" y="40" text-anchor="middle" fill="#f2c14e" font-size="24" font-weight="900" font-family="Segoe UI, sans-serif">B</text>
           </svg>
         </div>
+        <img src="vis/logo_bruno_v01.png" alt="Bruno: Ink &amp; Shadow" class="brand-logo" onerror="this.style.display='none'" />
         <div class="brand-text">
           <h1>
             Bruno: Ink &amp; Shadow
-            <span class="version-pill">v0.1.0</span>
+            <span class="version-pill">v0.1.2</span>
           </h1>
           <div class="brand-sub">
             <span>3D Stealth/Parkour (Sly 2) + 2D Plošinovka (UbiArt)</span>
@@ -1305,14 +1394,32 @@
           <span>📜 Historie verzí (Changelog)</span>
           <span class="sub">Každý milník jako verze na GitHubu</span>
         </div>
-        <div class="changelog-item">
-          <div class="changelog-head">
-            <span class="changelog-ver">v0.1.0</span>
-            <span class="wave-tag">Aktuální verze</span>
+        <div class="changelog-list">
+          <div class="changelog-item">
+            <div class="changelog-head">
+              <span class="changelog-ver">v0.1.2</span>
+              <span class="wave-tag">Aktuální verze</span>
+            </div>
+            <p class="changelog-desc">
+              Uzavřen kompletní concept art (11 obrázků včetně loga, originální hole s inkoustovým hrotem, tenisáku, veverky, nepřátel Světa 1 a komára Šídlo); zapsána rozhodnutí z prvních otázek.
+            </p>
           </div>
-          <p class="changelog-desc">
-            Založení GitHub repozitáře, struktury složek (<code>vis/</code>, <code>game/</code>) a interaktivního plánovače.
-          </p>
+          <div class="changelog-item older">
+            <div class="changelog-head">
+              <span class="changelog-ver">v0.1.1</span>
+            </div>
+            <p class="changelog-desc">
+              Vygenerována první sada concept artu (Bruno, Baron Kaňka, 3D i 2D Svět 1).
+            </p>
+          </div>
+          <div class="changelog-item older">
+            <div class="changelog-head">
+              <span class="changelog-ver">v0.1.0</span>
+            </div>
+            <p class="changelog-desc">
+              Založení GitHub repozitáře, struktury složek (<code>vis/</code>, <code>game/</code>) a interaktivního plánovače.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -1352,10 +1459,24 @@
 
     <!-- 4) OTÁZKY -->
     <section id="view-otazky" class="view">
+      <div class="decided-box">
+        <h2>✅ Rozhodnuto (v0.1.0 – v0.1.2)</h2>
+        <ul class="decided-list">
+          <li><span class="decided-check">✓</span><span><strong>Hlavní hrdina:</strong> Jezevčík Bruno (kombinace 2 nohy na plížení/boj, 4 nohy na sprint).</span></li>
+          <li><span class="decided-check">✓</span><span><strong>Parťák v uchu &amp; pilotka:</strong> Drzá veverka.</span></li>
+          <li><span class="decided-check">✓</span><span><strong>Název hry:</strong> Bruno: Ink &amp; Shadow.</span></li>
+          <li><span class="decided-check">✓</span><span><strong>Role 2D Rayman pasáží:</strong> Obojí podle levelu (úniky i přechody).</span></li>
+          <li><span class="decided-check">✓</span><span><strong>Role Mosquito pasáží:</strong> Most mezi 3 světy.</span></li>
+          <li><span class="decided-check">✓</span><span><strong>První hratelný prototyp:</strong> Co nejrychlejší (1 mini 3D ulice + 1 krátký 2D únik).</span></li>
+          <li><span class="decided-check">✓</span><span><strong>Originální identita:</strong> Hůl s hrotem plnicího pera, vlastní Zlaté kapky inkoustu, čistý měsíc bez cizích log.</span></li>
+        </ul>
+      </div>
+
+      <h3 class="q-section-title">❓ Otevřené otázky před startem Godotu</h3>
       <div class="q-list" id="questionsList"></div>
       <div class="extra-notes-box">
         <label for="extraNotes">📝 Moje poznámky a nápady navíc</label>
-        <textarea id="extraNotes" class="note-input" placeholder="Sem napiš cokoli dalšího — vlastní nápady na parťáka, názvy, atmosféru, hudbu nebo úpravy..."></textarea>
+        <textarea id="extraNotes" class="note-input" placeholder="Sem napiš cokoli dalšího — vlastní nápady na jméno veverky, tenisák, atmosféru, hudbu nebo úpravy..."></textarea>
       </div>
     </section>
 
@@ -1385,7 +1506,7 @@
       "use strict";
 
       const STORAGE_KEY = "bruno_ink_shadow_v1";
-      const APP_VERSION = "v0.1.0";
+      const APP_VERSION = "v0.1.2";
 
       /* ====== DATA DEFINITIONS ====== */
       const WAVES = [
@@ -1396,9 +1517,9 @@
           current: true,
           tasks: [
             { id: "w1_t1", text: "GitHub a plánovač", defaultStatus: "done" },
-            { id: "w1_t2", text: "Rozhodnutí o postavách a mechanikách", defaultStatus: "doing" },
-            { id: "w1_t3", text: "Concept art Bruna a 1. světa v ChatGPT", defaultStatus: "todo" },
-            { id: "w1_t4", text: "Finální Game Design Bible", defaultStatus: "todo" }
+            { id: "w1_t2", text: "Rozhodnutí o postavách a mechanikách", defaultStatus: "done" },
+            { id: "w1_t3", text: "Concept art Bruna, parťáka, zbraní a 1. světa v ChatGPT", defaultStatus: "done" },
+            { id: "w1_t4", text: "Finální kontrola vizuálů & přechod na Godot 4", defaultStatus: "doing" }
           ]
         },
         {
@@ -1451,83 +1572,110 @@
 
       const VISUALS = [
         {
+          id: "vis_logo",
+          path: "vis/logo_bruno_v01.png",
+          title: "Logo hry: Bruno: Ink & Shadow",
+          desc: "Oficiální název a identita hry",
+          icon: "🏷️"
+        },
+        {
           id: "vis_bruno",
           path: "vis/char_bruno_sly2_v01.png",
           title: "Bruno (hlavní hrdina, Sly 2 styl)",
+          desc: "Poznámka: ve hře bude měsíc čistý bez cizího loga",
           icon: "🐾"
+        },
+        {
+          id: "vis_squirrel",
+          path: "vis/char_squirrel_sly2_v01.png",
+          title: "Drzá veverka (parťák & pilotka)",
+          desc: "Vysílačka, klíč, letecké brýle",
+          icon: "🐿️"
+        },
+        {
+          id: "vis_baron",
+          path: "vis/char_baron_sly2_v01.png",
+          title: "Baron Kaňka (hlavní záporák)",
+          desc: "Havran s Prastarým štětcem a fialovým inkoustem",
+          icon: "🎩"
+        },
+        {
+          id: "vis_w1_enemies",
+          path: "vis/char_world1_enemies_sly2_v01.png",
+          title: "Svět 1: Šéfkuchař Ropuch & Žabí hlídač",
+          desc: "Boss a základní hlídka v přístavu",
+          icon: "🐸"
+        },
+        {
+          id: "vis_props_cane",
+          path: "vis/props_cane_tennisball_v01.png",
+          title: "Originální hůl & Tenisáky",
+          desc: "Hrot plnicího pera s inkoustem, omotávka obojku, kůstka, neonový a zlatý tenisák",
+          icon: "🖋️"
+        },
+        {
+          id: "vis_action_ball",
+          path: "vis/action_bruno_tennisball_v01.png",
+          title: "Akce: Odpalování tenisáku holí",
+          desc: "Ukázka mechaniky míření na zvon/tlačítka pod čistým měsícem",
+          icon: "🎾"
+        },
+        {
+          id: "vis_props_collect",
+          path: "vis/props_collectibles_v01.png",
+          title: "Sběratelské předměty",
+          desc: "Modrá lahvička s inkoustem, originální Zlatá kapka s křídly, klec se skřítkem, zlatá známka HUD",
+          icon: "✨"
         },
         {
           id: "vis_w1_3d",
           path: "vis/env_world1_3d_sly2_v01.png",
           title: "Svět 1: 3D noční přístav (Sly 2 styl)",
+          desc: "Zátoka Bublin – noční střechy a modré jiskry",
           icon: "🌙"
         },
         {
           id: "vis_w1_2d",
           path: "vis/env_world1_2d_ubiart_v01.png",
           title: "Svět 1: 2D únik (Rayman Origins UbiArt styl)",
+          desc: "Poznámka: ve hře budou místo Lumů naše Zlaté kapky inkoustu",
           icon: "🎨"
         },
         {
-          id: "vis_baron",
-          path: "vis/char_baron_sly2_v01.png",
-          title: "Baron Kaňka (hlavní záporák)",
-          icon: "🎩"
+          id: "vis_mosquito",
+          path: "vis/veh_mosquito_ubiart_v01.png",
+          title: "Mechanický komár „Šídlo“ (Mosquito pasáž)",
+          desc: "Průlet mezi světy s Brunem a veverkou",
+          icon: "🦟"
         }
       ];
 
       const QUESTIONS = [
         {
-          id: "q1",
-          text: "Kdo bude Brunův parťák v uchu a pilot mechanického komára?",
+          id: "q_v2_1",
+          text: "Jak pojmenujeme drzou veverku (parťačku)?",
           options: [
-            "Chytrý jezevec-vynálezce",
-            "Moudrá sova",
-            "Drzá veverka",
+            "Kiki",
+            "Roxy",
+            "Líza",
             "Jiné – napíšu do poznámky"
           ]
         },
         {
-          id: "q2",
-          text: "Jak má Bruno držet a používat zlodějskou hůl?",
+          id: "q_v2_2",
+          text: "Jak zapojíme tenisák do hratelnosti?",
           options: [
-            "V packách jako antropomorfní hrdina na dvou nohách",
-            "V tlamě na čtyřech",
-            "Kombinace – běhá na dvou, sprintuje na čtyřech"
+            "Odpalování holí na cíle a odlákání hlídek",
+            "Tajný Zlatý tenisák v každém levelu",
+            "Obojí + idle animace pinkání na čumáku"
           ]
         },
         {
-          id: "q3",
-          text: "Jak se ti líbí název \"Bruno: Ink & Shadow\"?",
+          id: "q_v2_3",
+          text: "Co uděláme jako první krok pro Vlnu 2 (Godot 4)?",
           options: [
-            "Super, necháme",
-            "Chci český název",
-            "Vymyslíme jiný"
-          ]
-        },
-        {
-          id: "q4",
-          text: "Jakou roli mají mít 2D Rayman Origins pasáže?",
-          options: [
-            "Únik z obrazu po sebrání kořisti",
-            "Přechod mezi jednotlivými lokacemi",
-            "Obojí podle levelu"
-          ]
-        },
-        {
-          id: "q5",
-          text: "Jakou roli mají mít Mosquito (střílecí) levely?",
-          options: [
-            "Most mezi 3 světy",
-            "Samostatný bonusový level v každém světě"
-          ]
-        },
-        {
-          id: "q6",
-          text: "Jak dlouhý má být první hratelný prototyp (Vertical Slice)?",
-          options: [
-            "Co nejrychlejší – 1 mini 3D ulice + 1 krátký 2D únik",
-            "Plnohodnotný první level včetně hudby a sbírání"
+            "Rovnou založit Godot 4 projekt a 3D+2D pohyb na kostkách",
+            "Nejdřív vytvořit krátkou Game Design Bibli v DESIGN.md"
           ]
         }
       ];
@@ -1549,7 +1697,8 @@
           items: [
             { id: "i_3d_sparkle", title: "Modré třpytky a magnet na špičky/háky" },
             { id: "i_3d_pickpocket", title: "Plížení a kradení klíčů holí" },
-            { id: "i_3d_cane", title: "Hůl „Kličkovka“ pro boj i páčení" },
+            { id: "i_3d_cane", title: "Originální hůl s hrotem plnicího pera a přívěskem kůstky" },
+            { id: "i_3d_tennis", title: "Odpalování neonového tenisáku holí – odlákání stráží, spínače a odrážení ve Světě 2" },
             { id: "i_3d_rail", title: "Rail Grinding (Svět 2 – styl Tennessee Kid)" },
             { id: "i_3d_shot", title: "Jiskrový výstřel se zpomalením času (Svět 2)" },
             { id: "i_3d_dragon", title: "Dračí skok ze špičky na špičku (Svět 3 – styl Rioichi)" },
@@ -1590,7 +1739,8 @@
           title: "✨ Sběratelské předměty",
           items: [
             { id: "i_col_bottles", title: "Lahvičky s inkoustem ve 3D (cinkají a otevírají trezor)" },
-            { id: "i_col_sparks", title: "Zlaté jiskry ve 2D (jako Lums + Královská jiskra)" },
+            { id: "i_col_sparks", title: "Originální Zlaté kapky inkoustu s křídly místo Lumů" },
+            { id: "i_col_tennis", title: "Tajný Zlatý tenisák v každém levelu pro 100% dohrání" },
             { id: "i_col_cages", title: "Tajné klece ve 2D (odemykají oblečky pro Bruna)" }
           ]
         }
@@ -1843,6 +1993,7 @@
                 <div>
                   <h3 class="vis-title">${escapeHtml(v.title)}</h3>
                   <div class="vis-path-sub">${escapeHtml(v.path)}</div>
+                  ${v.desc ? `<p class="vis-desc">${escapeHtml(v.desc)}</p>` : ""}
                 </div>
                 <div class="vote-group">
                   <button type="button" class="vote-btn ${vs.rating === "ok" ? "active-good" : ""}" data-vis-rate="ok" data-vis="${v.id}">
