@@ -1,0 +1,42 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/debug/debug_overlay.gd" id="1_uomc5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uomc5"]
+bg_color = Color(0.05, 0.04, 0.12, 0.82)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.71, 0.2, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="DebugOverlay" type="CanvasLayer" unique_id=1464297309]
+layer = 100
+script = ExtResource("1_uomc5")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1281875319]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uomc5")
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=293169019]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Text" type="Label" parent="Panel/Margin" unique_id=501427833]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.93, 0.95, 1, 1)
+text = "BRUNO DEBUG"

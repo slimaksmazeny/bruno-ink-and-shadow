@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bruno: Ink &amp; Shadow — Herní studio centrum (v0.1.6)</title>
+  <title>Bruno: Ink &amp; Shadow — Herní studio centrum (v0.1.7)</title>
   <style>
     :root {
       --bg: #0b0f17;
@@ -675,7 +675,7 @@
         <div>
           <div class="sb-brand-title">Bruno: Ink &amp; Shadow</div>
           <div class="sb-brand-sub">
-            <span class="pill-ver">v0.1.6</span>
+            <span class="pill-ver">v0.1.7</span>
             <span>Studio Centrum</span>
           </div>
         </div>
@@ -697,7 +697,7 @@
         </a>
         <a href="#plan" class="nav-link" data-tab="plan">
           <span class="nav-link-left"><span>✅</span><span>Plán, Vlny &amp; Kanban</span></span>
-          <span class="nav-badge gold" id="badgeRoadmap">0/28</span>
+          <span class="nav-badge gold" id="badgeRoadmap">0/30</span>
         </a>
         <a href="#svety" class="nav-link" data-tab="svety">
           <span class="nav-link-left"><span>🗺️</span><span>Světy &amp; Příběh</span></span>
@@ -759,12 +759,12 @@
                 Řídicí centrum vývoje <strong>Bruno: Ink &amp; Shadow</strong> — 3D stealth/parkour ve stylu <em>Sly Cooper 2</em> plynule propojený s 2D plošinovkou ve stylu <em>Rayman Origins (UbiArt)</em> a Mosquito průlety na komáru <em>Šídlo</em>. Všechny úkoly a procenta se počítají živě z jedné Roadmapy (<code>done = 100 %</code>, <code>doing = 50 %</code>).
               </p>
               <div class="hero-tags">
-                <span class="tag gold">v0.1.6</span>
+                <span class="tag gold">v0.1.7</span>
                 <span class="tag cyan">Godot 4</span>
                 <span class="tag purple">CS + EN</span>
                 <span class="tag green">6 Kapitol</span>
                 <span class="tag">🎨 30 Vizuálů</span>
-                <span class="tag" id="heroTaskCountTag">📋 28 Úkolů</span>
+                <span class="tag" id="heroTaskCountTag">📋 30 Úkolů</span>
               </div>
             </div>
 
@@ -821,7 +821,7 @@
             <div class="panel">
               <div class="panel-head">
                 <h2>👥 Rozdělení úkolů podle Rolí</h2>
-                <span class="muted">Tomáš · Claude · Antigravity · Gemini</span>
+                <span class="muted">Tomáš · Claude (hlavní vývoj) · Antigravity &amp; Gemini (záloha)</span>
               </div>
               <div class="breakdown-grid" id="roleBreakdown"></div>
             </div>
@@ -896,10 +896,10 @@
               </select>
               <input type="text" id="newTaskVer" class="field-input" placeholder="Cílová verze (např. v0.2.2)" value="v0.2.x" required />
               <select id="newTaskOwner" class="field-select">
-                <option value="Tomáš">Tomáš</option>
-                <option value="Antigravity">Antigravity</option>
-                <option value="Tomáš + Antigravity">Tomáš + Antigravity</option>
                 <option value="Claude">Claude</option>
+                <option value="Tomáš + Claude">Tomáš + Claude</option>
+                <option value="Tomáš">Tomáš</option>
+                <option value="Antigravity">Antigravity (záloha)</option>
                 <option value="Gemini">Gemini</option>
               </select>
               <input type="text" id="newTaskTitle" class="field-input" placeholder="Název úkolu *" style="grid-column: span 2;" required />
@@ -1109,12 +1109,15 @@
               <table class="studio-table">
                 <thead><tr><th>InputMap Akce</th><th>PC (Klávesnice + Myš)</th><th>Gamepad (PS / Xbox)</th><th>Mobilní dotykový HUD</th></tr></thead>
                 <tbody>
-                  <tr><td><code>move</code></td><td>WASD / Šipky</td><td>Levý analog</td><td>Levý virtuální joystick</td></tr>
-                  <tr><td><code>jump_glide</code></td><td>Mezerník (podržet = uši)</td><td>✕ / A (podržet = uši)</td><td>Tlačítko Skok / Uši</td></tr>
-                  <tr><td><code>sprint</code></td><td>Shift</td><td>R2 / RT</td><td>Auto-sprint zóna / tlačítko</td></tr>
-                  <tr><td><code>cane_attack</code></td><td>Levé tlačítko myši</td><td>□ / X</td><td>Tlačítko Hůl</td></tr>
-                  <tr><td><code>parkour_hook</code></td><td>E / Pravé tlačítko (u jiskry)</td><td>○ / B</td><td>Kontextové tlačítko Hák</td></tr>
-                  <tr><td><code>tennis_bat</code></td><td>Q / F (zamířit + odpálit)</td><td>△ / Y nebo L2+R2</td><td>Tlačítko Tenisák</td></tr>
+                  <tr><td><code>move_left/right/forward/back</code></td><td>WASD / Šipky (fyzické klávesy – funguje i na QWERTZ)</td><td>Levá páčka</td><td>Virtuální joystick</td></tr>
+                  <tr><td><code>look_left/right/up/down</code></td><td>Myš (po kliknutí zachycená, Esc uvolní)</td><td>Pravá páčka</td><td>Tah prstem v pravé polovině</td></tr>
+                  <tr><td><code>jump</code></td><td>Mezerník (podržet ve vzduchu = uši)</td><td>✕ / A</td><td>Tlačítko Skok</td></tr>
+                  <tr><td><code>sprint</code></td><td>Shift (držet)</td><td>L1 / LB nebo L3</td><td>Tlačítko Sprint</td></tr>
+                  <tr><td><code>action</code></td><td>E / Levé tlačítko myši</td><td>○ / B</td><td>Tlačítko Hůl (kotva / kontext)</td></tr>
+                  <tr><td><code>tennis</code></td><td>Q / Pravé tlačítko myši</td><td>△ / Y</td><td>Tlačítko Tenisák</td></tr>
+                  <tr><td><code>sneak</code></td><td>Ctrl (držet)</td><td>L2 / LT</td><td>Podle vychýlení joysticku</td></tr>
+                  <tr><td><code>pause</code></td><td>Esc</td><td>Options / Menu</td><td>Ikona pauzy</td></tr>
+                  <tr><td><code>debug_*</code></td><td>F3 = ladicí panel · L = jazyk · M = dotykový HUD</td><td>—</td><td>—</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1166,7 +1169,7 @@
 
           <div class="panel">
             <div class="panel-head">
-              <h2>📜 Časová osa vývoje (v0.1.0 → v0.1.6)</h2>
+              <h2>📜 Časová osa vývoje (v0.1.0 → v0.1.7)</h2>
               <span class="muted">Nové záznamy se ukládají do prohlížeče</span>
             </div>
             <div class="timeline" id="workLogList"></div>
@@ -1177,7 +1180,7 @@
         <section id="view-napady" class="view">
           <div class="decided-box">
             <div class="panel-head" style="margin-bottom: 0;">
-              <h2 style="color: var(--green);">✅ Rozhodnuto (v0.1.0 – v0.1.6)</h2>
+              <h2 style="color: var(--green);">✅ Rozhodnuto (v0.1.0 – v0.1.7)</h2>
               <button type="button" class="btn-primary js-copy-ai">📋 Zkopírovat odpovědi pro AI</button>
             </div>
             <ul class="decided-list">
@@ -1190,7 +1193,9 @@
               <li><span class="decided-check">✓</span><span><strong>Hůl &amp; Tenisák:</strong> Hrot plnicího pera + kůstka; odpal neonového tenisáku + 1 Zlatý tenisák v levelu + idle pinkání po 5 s.</span></li>
               <li><span class="decided-check">✓</span><span><strong>Úkryty, Interiéry &amp; Sidequesty:</strong> Safe House v každé kapitole, 3D interiéry s inkoustovým střihem, 4 typy sidequestů.</span></li>
               <li><span class="decided-check">✓</span><span><strong>Cutscény &amp; Originalita:</strong> Sly 2 „Živý komiks“, čistý měsíc bez cizích log, vlastní Zlaté kapky inkoustu (ne Lumové).</span></li>
-              <li><span class="decided-check">✓</span><span><strong>Vizuály &amp; Roadmapa:</strong> 30 concept artů ve <code>vis/</code> + podrobná Roadmapa 6 vln a 28 úkolů s checklisty.</span></li>
+              <li><span class="decided-check">✓</span><span><strong>Vizuály &amp; Roadmapa:</strong> 30 concept artů ve <code>vis/</code> + podrobná Roadmapa 6 vln a 30 úkolů s checklisty.</span></li>
+              <li><span class="decided-check">✓</span><span><strong>Technická architektura (<code>ARCHITECTURE.md</code>):</strong> Godot 4.7.x stable, jeden <code>CharacterBody3D</code> pro 3D i 2D (2.5D), plochý State Machine + systém kotev pro parkour, hybridní kamera s blendem dvou rigů, feature-based struktura <code>game/</code>.</span></li>
+              <li><span class="decided-check">✓</span><span><strong>Workflow od v0.1.7:</strong> Claude píše kód přímo v repozitáři a commituje do pracovních větví; Tomáš testuje v Godotu a schvaluje (merge). Antigravity &amp; Gemini jen jako záloha a pro design/vizuály. <code>v0.2.0</code> rozděleno na kroky A–F.</span></li>
             </ul>
           </div>
 
@@ -1222,16 +1227,16 @@
         <section id="view-prompty" class="view">
           <div class="panel">
             <div class="panel-head">
-              <h2>🧠 Handoff prompt pro Claudea (Architektura Godot 4)</h2>
+              <h2>🧠 Start nového vlákna s Claudem (hlavní vývojář)</h2>
               <button type="button" class="btn-primary" id="copyClaudeBtn">📋 Kopírovat prompt pro Claudea</button>
             </div>
-            <p class="muted" style="margin-top: 0;">Zkopíruj a vlož do nového chatu s Claudem (přidej k němu i soubor <code>DESIGN.md</code>) pro architektonickou konzultaci před založením Godot 4 projektu.</p>
+            <p class="muted" style="margin-top: 0;">Zkopíruj na začátek nového chatu s Claudem – naváže na repozitář, <code>ARCHITECTURE.md</code> a aktuální krok Roadmapy.</p>
             <pre class="prompt-pre" id="claudePromptText"></pre>
           </div>
 
           <div class="panel">
             <div class="panel-head">
-              <h2>⚡ Master kontext pro Antigravity</h2>
+              <h2>⚡ Záložní kontext pro Antigravity</h2>
               <button type="button" class="btn-secondary" id="copyAgyBtn">📋 Kopírovat kontext pro Antigravity</button>
             </div>
             <p class="muted" style="margin-top: 0;">Rychlý kontext pro každé nové vlákno v Antigravity, aby okamžitě navázalo na strukturu projektu a aktuální verzi.</p>
@@ -1267,7 +1272,7 @@
       /* Preserved key for visuals, ideas, notes & logs + dedicated key for v0.1.5+ roadmap */
       const STORAGE_KEY_LEGACY = "bruno_ink_shadow_v1";
       const STORAGE_KEY_ROADMAP = "bruno_roadmap_v015";
-      const APP_VERSION = "v0.1.6";
+      const APP_VERSION = "v0.1.7";
 
       const TAB_TITLES = {
         prehled: "🏠 Přehled projektu",
@@ -1281,7 +1286,7 @@
       };
 
       /* ================================================================
-         1. SINGLE SOURCE OF TRUTH: 6 WAVES & 28 DETAILED TASKS
+         1. SINGLE SOURCE OF TRUTH: 6 WAVES & 30 DETAILED TASKS
          ================================================================ */
       const ROADMAP_WAVES = [
         {
@@ -1393,120 +1398,158 @@
           note: ""
         },
 
-        // --- VLNA 2 (8) ---
+        // --- VLNA 2 (10) — v0.2.0 rozděleno na kroky A–F podle ARCHITECTURE.md ---
         {
           id: "W2-01", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
-          title: "Konzultace Godot 4 architektury s Claudem",
-          owner: "Tomáš + Claude", status: "doing", priority: "Kritické", estimate: "1 den",
+          title: "Konzultace Godot 4 architektury s Claudem (ARCHITECTURE.md)",
+          owner: "Tomáš + Claude", status: "done", priority: "Kritické", estimate: "1 den",
           dependsOn: ["W1-03"],
-          files: ["DESIGN.md"],
+          files: ["ARCHITECTURE.md", "DESIGN.md"],
           steps: [
             "Poslat Claudovi DESIGN.md a handoff prompt",
-            "Ověřit návrh State Machine pro 3D+2D pohyb",
-            "Ověřit plynulý přechod kamery 3D↔2D",
-            "Schválit strukturu InputMap (PC+Gamepad+Mobil) a translations.csv"
+            "Schválit jednoho CharacterBody3D pro 3D i 2D, State Machine + systém kotev",
+            "Schválit hybridní kameru (blend dvou rigů, dolly-zoom do 2D malby)",
+            "Schválit InputMap (PC+Gamepad+Dotyk), translations.csv, schéma save a strukturu game/",
+            "Rozdělit v0.2.0 na kroky A–F"
           ],
-          acceptance: "Máme finálně schválený technický plán bez architektonických dluhů.",
+          acceptance: "ARCHITECTURE.md je schválený zdroj pravdy pro kód; všech 7 bodů konzultace odsouhlaseno.",
           note: ""
         },
         {
           id: "W2-02", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
-          title: "Stažení a příprava Godot 4 na PC",
-          owner: "Tomáš", status: "doing", priority: "Kritické", estimate: "1 hodina",
+          title: "Instalace Godot 4.7.x stable na PC",
+          owner: "Tomáš", status: "done", priority: "Kritické", estimate: "1 hodina",
           dependsOn: [],
-          files: ["game/"],
+          files: ["C:\\Projekty\\Godot_v4.7.2-stable_win64.exe"],
           steps: [
-            "Stáhnout standardní Godot 4 (NE .NET) z godotengine.org",
-            "Rozbalit do lokální složky",
+            "Stáhnout standardní Godot 4.7.x stable (NE .NET, NE 4.8 beta)",
+            "Rozbalit do C:\\Projekty\\ (Godot_v4.7.2-stable_win64.exe)",
             "Ověřit spuštění Project Manageru"
           ],
-          acceptance: "Godot 4 běží na PC a je připraven otevřít game/project.godot.",
+          acceptance: "Godot 4.7.x běží na PC a je připraven otevřít game/project.godot.",
           note: ""
         },
         {
           id: "W2-03", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
-          title: "Založení Godot 4 projektu, jednotná InputMap a bilingvní lokalizace CS/EN",
-          owner: "Antigravity", status: "todo", priority: "Kritické", estimate: "2 dny",
+          title: "Krok A — Kostra projektu, InputMap, lokalizace CS/EN a ladicí panel F3",
+          owner: "Claude", status: "doing", priority: "Kritické", estimate: "1 den",
           dependsOn: ["W2-01", "W2-02"],
-          files: ["game/project.godot", "game/localization/translations.csv", "game/scenes/ui/mobile_controls.tscn"],
+          files: ["game/project.godot", "game/autoload/*.gd", "game/localization/translations.csv", "game/ui/debug/debug_overlay.tscn", "game/levels/greybox/greybox_street.tscn"],
           steps: [
-            "Vytvořit game/project.godot se zapnutou 3D fyzikou Jolt",
-            "Nastavit InputMap pro Klávesnici+myš i Gamepad (PS/Xbox)",
-            "Přidat přepínatelný Mobilní dotykový HUD (klávesa M na PC, auto na mobilu)",
-            "Založit translations.csv (CS + EN) a ověřit přepínání jazyka"
+            "Vytvořit game/project.godot (Jolt, Forward+ na PC / Mobile na Androidu, physics interpolation, kolizní vrstvy)",
+            "Založit 5 autoloadů (Events, InputManager, Settings, GameState, SaveManager) a strukturu složek",
+            "Nastavit celou InputMap pro klávesnici+myš i Xbox/PS ovladač",
+            "Založit UTF-8 translations.csv (CS+EN), ukládání jazyka do settings.cfg, přepínání klávesou L",
+            "Ladicí panel F3 (FPS, zařízení, jazyk, držené akce) + testovací greybox scéna",
+            "Tomáš otestuje checklist kroku A v Godotu"
           ],
-          acceptance: "Projekt se spustí přes F5 bez jediné chyby; reaguje na klávesnici, ovladač i dotyková tlačítka; texty se přepínají CS↔EN.",
+          acceptance: "F5 bez chyb; F3 ukáže panel; stisky kláves i ovladače se zobrazí jako akce; L přepne CS↔EN a jazyk zůstane i po restartu.",
           note: ""
         },
         {
           id: "W2-04", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
-          title: "3D Greybox ulice, State Machine pohybu Bruna a magnet na špičky",
-          owner: "Antigravity", status: "todo", priority: "Kritické", estimate: "4 dny",
+          title: "Krok B — Bruno, State Machine (Idle/Move/Sprint/Air) a 3D kamera",
+          owner: "Claude", status: "todo", priority: "Kritické", estimate: "2 dny",
           dependsOn: ["W2-03"],
-          files: ["game/scenes/levels/greybox_main.tscn", "game/scripts/player/state_machine.gd", "game/scripts/player/states/*.gd"],
+          files: ["game/player/player.tscn", "game/player/player.gd", "game/core/state_machine/*.gd", "game/player/states/*.gd", "game/player/profiles/*.tres", "game/camera/hybrid_camera.tscn", "game/camera/third_person_rig.gd"],
           steps: [
-            "Postavit testovací 3D ulici z bloků (střechy, propasti, 3 špičky s modrými jiskrami)",
-            "Vytvořit modulární State Machine (Idle, Walk, Sprint4Legs, Jump, DoubleJump, EarGlide, SpireMagnet)",
-            "Sestavit greybox model Bruna (kapsle s obojkem, ušima a holí) s jasnou změnou postoje na 2 vs. 4 nohy",
-            "Naladit feel skoků, coyote-time a plynulého přitažení na špičku"
+            "Greybox model Bruna (kapsle, uši, obojek, hůl) s postojem 2 nohy / 4 nohy",
+            "PlayerStateMachine + základní třídy GroundedState/AirborneState",
+            "Stavy Idle, Move (chůze/plížení), Sprint (4 nohy), Air (skok, dvojskok, coyote time, jump buffer)",
+            "ThirdPersonRig (myš + páčka, SpringArm) a HybridCamera zatím jen s 3D rigem",
+            "MovementProfile profile_3d.tres / profile_2d.tres laditelné v Inspectoru",
+            "Greybox ulice: podlaha, schody, kostky, propast"
           ],
-          acceptance: "Bruno plynule chodí po dvou, sprintuje po čtyřech, plachtí na uších a magneticky přistává na všech 3 špičkách.",
+          acceptance: "Bruno chodí, plíží se, sprintuje po 4, skáče a dvojskáče; kamera neprochází zdmi; panel F3 ukazuje správný stav.",
           note: ""
         },
         {
           id: "W2-05", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
-          title: "Mechanika odpalování neonového tenisáku holí + testovací zvon",
-          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "2 dny",
+          title: "Krok C — Ušní vrtulník, systém kotev a magnet na 3 špičky",
+          owner: "Claude", status: "todo", priority: "Kritické", estimate: "1–2 dny",
           dependsOn: ["W2-04"],
-          files: ["game/scenes/props/tennis_ball.tscn", "game/scenes/props/target_bell.tscn"],
+          files: ["game/player/states/state_glide.gd", "game/player/states/state_perch.gd", "game/player/states/anchor_state.gd", "game/player/anchor_detector.gd", "game/world/anchors/anchor.gd", "game/world/anchors/spire_anchor.tscn"],
           steps: [
-            "Vytvořit scénu fyzikálního tenisáku se svítící stopou",
-            "Přidat akci tennis_bat (švih holí a odpal ve směru kamery/cíle)",
-            "Postavit vzdálený zvon na věži, který při zásahu rozsvítí signál a otevře bránu k obrazu"
+            "Stav Glide (podržení skoku ve vzduchu = zpomalený pád)",
+            "Anchor (typ SPIRE) + AnchorDetector s výběrem nejlepší kotvy a modrými jiskrami",
+            "Stav Perch (magnetické přitažení a balancování na špičce)",
+            "3 špičky na střechách greybox ulice"
           ],
-          acceptance: "Odpal tenisáku je responzivní, trefení zvonu spolehlivě aktivuje bránu.",
+          acceptance: "Plachtění zpomalí pád; u špičky se rozsvítí jiskry; tlačítko akce přitáhne Bruna na špičku a nikdy se nezasekne.",
           note: ""
         },
         {
           id: "W2-06", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
-          title: "Plynulý přechod 3D → 2D (Rám obrazu) a krátký 2D únik",
-          owner: "Antigravity", status: "todo", priority: "Kritické", estimate: "3 dny",
-          dependsOn: ["W2-04", "W2-05"],
-          files: ["game/scripts/camera/hybrid_camera.gd", "game/scenes/props/painting_portal.tscn"],
-          steps: [
-            "Vytvořit interaktivní Rám živého obrazu na konci 3D ulice",
-            "Naprogramovat plynulý Tween kamery z 3D pohledu do bočního 2D pohledu",
-            "Přepnout ovladač Bruna do 2D roviny (X+Y) s ušním vrtulníkem a sprintem na čtyřech",
-            "Přidat 2 skákací houby, Zlaté kapky v oblouku a výstupní portál zpět do 3D"
-          ],
-          acceptance: "Přechod 3D → 2D → 3D je plynulý, bez trhání kamery a zaseknutí fyziky.",
-          note: ""
-        },
-        {
-          id: "W2-07", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.1",
-          title: "Sly Parkour Update (rozšíření State Machine o všechny akrobatické stavy)",
-          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          title: "Krok D — Mobilní dotykový HUD (joystick + 4 tlačítka, přepínač M)",
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "1 den",
           dependsOn: ["W2-04"],
-          files: ["game/scripts/player/states/state_climb.gd", "state_crawl.gd", "state_ledge.gd", "state_wall_sneak.gd", "state_rail.gd"],
+          files: ["game/ui/touch_controls/touch_controls.tscn", "game/ui/touch_controls/virtual_joystick.gd"],
           steps: [
-            "Přidat stav CLIMB (šplhání po okapech a trubkách s rotací kolem osy)",
-            "Přidat stav CRAWL (plazení pod stoly/lasery se sníženou kolizí a skrytím)",
-            "Přidat LEDGE_HANG (zachycení a ručkování po římsách)",
-            "Přidat WALL_SNEAK (přitisknutí ke zdi) a PATH_FOLLOW (chůze po lanech a drátech)"
+            "Virtuální joystick mačkající akce move_* přes Input.action_press",
+            "4 TouchScreenButton (hůl, skok, sprint, tenisák) napojené na InputMap",
+            "Rozhlížení tahem prstu v pravé polovině obrazovky",
+            "Přepínač M na PC (emulace dotyku myší), automaticky zapnuto na mobilu",
+            "Volitelně: první testovací Android APK"
           ],
-          acceptance: "Všech 5 nových stavů funguje spolehlivě přes jedno kontextové tlačítko u modrých jisker bez bugů při přechodech.",
+          acceptance: "M zobrazí/skryje HUD; myší „prstem“ jde chodit a skákat; stavy se chovají stejně jako s klávesnicí.",
           note: ""
         },
         {
-          id: "W2-08", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.1",
-          title: "2D Rayman Platform Kit (7 znovupoužitelných .tscn bloků)",
-          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "3 dny",
-          dependsOn: ["W2-06"],
-          files: ["game/scenes/platforms_2d/*.tscn"],
+          id: "W2-07", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
+          title: "Krok E — Odpal neonového tenisáku holí + testovací zvon a brána",
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "1 den",
+          dependsOn: ["W2-04"],
+          files: ["game/player/states/state_swing.gd", "game/world/props/tennis_ball.tscn", "game/world/props/target_bell.tscn", "game/world/props/gate.tscn"],
           steps: [
-            "Vytvořit a otestovat: Skákací houbu/buben, Průchozí plošinu (One-way), Rozpadající se inkoustovou plošinu",
-            "Vytvořit Větrný/parní proud (interakce s ušním vrtulníkem), Houpací kruh na hůl, Stěnu na běh/wall-jump a Rytmický pohyblivý píst",
-            "Sestavit testovací 2D dráhu ze všech 7 prvků"
+            "Stav Swing (švih holí a odpal ve směru kamery)",
+            "Tenisák jako RigidBody3D s CCD a svítící stopou",
+            "Zvon na věži (Area3D) → signál přes Events → otevření brány k obrazu"
+          ],
+          acceptance: "Odpal je responzivní; zásah zvonu otevře bránu 10× z 10; míček neprolétá zdmi.",
+          note: ""
+        },
+        {
+          id: "W2-08", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
+          title: "Krok F — Plynulý přechod 3D → 2D (Rám obrazu) a krátký 2D únik",
+          owner: "Claude", status: "todo", priority: "Kritické", estimate: "2 dny",
+          dependsOn: ["W2-05", "W2-07"],
+          files: ["game/camera/hybrid_camera.gd", "game/camera/side_scroll_rig.gd", "game/world/portals/painting_portal.tscn", "game/world/portals/exit_portal.tscn", "game/ui/transitions/ink_wipe.tscn", "game/shaders/ink_wipe.gdshader", "game/world/platforms_2d/bouncy_mushroom.tscn"],
+          steps: [
+            "SideScrollRig + blend_to() s dolly-zoom efektem (zploštění do malby)",
+            "Stav Locked a 2D režim hráče (pohyb uzamčený do roviny, profile_2d)",
+            "Rám obrazu (vstup) a výstupní portál zpět do 3D, inkoustový přechod",
+            "Krátká 2D dráha: 2 skákací houby, propast, výstup"
+          ],
+          acceptance: "Přechod 3D → 2D → 3D je plynulý bez cuknutí; během přechodu nejde ovládat; ve 2D nejde vyběhnout z roviny; po návratu míří ovládání správně.",
+          note: ""
+        },
+        {
+          id: "W2-09", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.1",
+          title: "Sly Parkour Update (nové typy kotev + stavy)",
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          dependsOn: ["W2-05"],
+          files: ["game/player/states/state_climb.gd", "game/player/states/state_crawl.gd", "game/player/states/state_ledge_hang.gd", "game/player/states/state_wall_sneak.gd", "game/player/states/state_path_follow.gd", "game/player/states/state_hook_swing.gd", "game/world/anchors/"],
+          steps: [
+            "Kotvy PIPE + stav Climb (šplhání po okapech a trubkách)",
+            "Stav Crawl (nízká kolize CollisionLow, plazení pod stoly/lasery)",
+            "Kotvy LEDGE + stav LedgeHang (ručkování po římsách)",
+            "Kotvy WALL + stav WallSneak, kotvy ROPE + stav PathFollow",
+            "Kotvy RING + stav HookSwing"
+          ],
+          acceptance: "Všechny nové stavy fungují přes jedno kontextové tlačítko u modrých jisker; jádro hráče se nemuselo měnit.",
+          note: ""
+        },
+        {
+          id: "W2-10", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.1",
+          title: "2D Rayman Platform Kit (7 znovupoužitelných .tscn bloků) + Zlaté kapky",
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "3 dny",
+          dependsOn: ["W2-08"],
+          files: ["game/world/platforms_2d/*.tscn", "game/world/collectibles/golden_drop.tscn"],
+          steps: [
+            "Skákací houba/buben (doladit z kroku F), Průchozí plošina (One-way), Rozpadající se inkoustová plošina",
+            "Větrný/parní proud (pro ušní vrtulník), Houpací kruh na hůl, Stěna na běh/wall-jump, Rytmický píst",
+            "Zlaté kapky inkoustu v obloucích skoků",
+            "Testovací 2D dráha ze všech 7 prvků"
           ],
           acceptance: "Všech 7 bloků lze libovolně skládat v editoru jako lego a mají okamžitou vizuální i fyzikální odezvu.",
           note: ""
@@ -1516,9 +1559,9 @@
         {
           id: "W3-01", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.0",
           title: "3D Cel-shading shader (Sly 2) & 2D UbiArt vrstvený parallax",
-          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "4 dny",
-          dependsOn: ["W2-06"],
-          files: ["game/shaders/cel_outline.gdshader", "game/scenes/env/night_lighting.tscn"],
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          dependsOn: ["W2-08"],
+          files: ["game/shaders/cel_toon.gdshader", "game/shaders/outline_hull.gdshader", "game/world/env/night_lighting.tscn"],
           steps: [
             "Napsat 3D cel-shading shader s ostrými stíny a černými inkoustovými obrysy",
             "Nastavit noční osvětlení Zátoky Bublin (tmavě modrá obloha, čistý měsíc, teplá žlutá okna)",
@@ -1530,9 +1573,9 @@
         {
           id: "W3-02", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.1",
           title: "Kompletní herní HUD, 3D Minimapa s radarem a Menu (CS/EN)",
-          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "4 dny",
-          dependsOn: ["W2-03", "W2-05"],
-          files: ["game/scenes/ui/hud.tscn", "minimap.tscn", "main_menu.tscn"],
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          dependsOn: ["W2-06", "W2-07"],
+          files: ["game/ui/hud/hud.tscn", "game/ui/hud/minimap.tscn", "game/ui/menus/main_menu.tscn"],
           steps: [
             "Vytvořit HUD (zlatá šestiúhelníková známka = 3 dílky životů, ikona tenisáku, počítadlo lahviček/kapek)",
             "Naprogramovat kruhovou 3D minimapu s šipkou hráče, červenými kužely hlídek a modrým pingem lahviček",
@@ -1545,9 +1588,9 @@
         {
           id: "W3-03", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.2",
           title: "AI nepřátel (Stealth hlídky, kužely zorného pole, odlákání tenisákem)",
-          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "4 dny",
-          dependsOn: ["W2-05", "W3-02"],
-          files: ["game/scripts/enemies/guard_ai.gd", "game/scenes/enemies/frog_guard.tscn"],
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          dependsOn: ["W2-07", "W3-02"],
+          files: ["game/enemies/guard_ai.gd", "game/enemies/frog_guard/frog_guard.tscn"],
           steps: [
             "Vytvořit základní AI hlídky (patrolování po trase, kužel baterky/zorného pole)",
             "Naprogramovat reakci na dopad tenisáku (hlídka se otočí a jde prozkoumat zvuk)",
@@ -1559,7 +1602,7 @@
         {
           id: "W3-04", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.3",
           title: "Stylizované 3D modely, animace Bruna a první audio vrstva",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Střední", estimate: "5 dní",
+          owner: "Tomáš + Claude", status: "todo", priority: "Střední", estimate: "5 dní",
           dependsOn: ["W3-01"],
           files: ["game/assets/models/", "game/assets/audio/"],
           steps: [
@@ -1575,9 +1618,9 @@
         {
           id: "W4-01", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.0",
           title: "3D Open-Hub Zátoka Bublin + Úkryt (Safe House)",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Kritické", estimate: "2 týdny",
+          owner: "Tomáš + Claude", status: "todo", priority: "Kritické", estimate: "2 týdny",
           dependsOn: ["W3-01", "W3-03"],
-          files: ["game/scenes/chapters/ch1_hub.tscn", "ch1_safehouse.tscn", "game/scripts/systems/save_manager.gd"],
+          files: ["game/levels/ch1/ch1_hub.tscn", "game/levels/ch1/ch1_safehouse.tscn", "game/autoload/save_manager.gd"],
           steps: [
             "Postavit noční přístav (střechy, mola, maják, jeřáby, modré jiskry, trubky a lana)",
             "Rozmístit hlídky a 30 cinkajících modrých lahviček + tajný trezor",
@@ -1589,9 +1632,9 @@
         {
           id: "W4-02", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.1",
           title: "Přípravné mise, 2 samostatné 3D interiéry a 2D úniky",
-          owner: "Antigravity", status: "todo", priority: "Kritické", estimate: "2 týdny",
-          dependsOn: ["W4-01", "W2-08"],
-          files: ["game/scenes/chapters/ch1_interior_lighthouse.tscn", "ch1_interior_kitchen.tscn", "ch1_2d_escape_01.tscn"],
+          owner: "Claude", status: "todo", priority: "Kritické", estimate: "2 týdny",
+          dependsOn: ["W4-01", "W2-10"],
+          files: ["game/levels/ch1/ch1_interior_lighthouse.tscn", "game/levels/ch1/ch1_interior_kitchen.tscn", "game/levels/ch1/ch1_2d_escape_01.tscn"],
           steps: [
             "Vytvořit Mise 1–3 (Hlas zvonu, Záchrana Kapitána Žbluňka, Sabotáž kuchyně)",
             "Postavit 2 samostatné 3D interiéry (Vnitřek majáku s lasery, Ropuchova kuchyně s parními hrnci)",
@@ -1603,9 +1646,9 @@
         {
           id: "W4-03", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.2",
           title: "Velká loupež & Boss fight: Šéfkuchař Ropuch",
-          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "1 týden",
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "1 týden",
           dependsOn: ["W4-02"],
-          files: ["game/scenes/chapters/ch1_boss_toad.tscn"],
+          files: ["game/levels/ch1/ch1_boss_toad.tscn"],
           steps: [
             "Vytvořit arénu bosse s útoky obří pánví a inkoustovou polévkou",
             "Naprogramovat 3 fáze souboje kombinující úhyby, tenisák a údery holí",
@@ -1617,9 +1660,9 @@
         {
           id: "W4-04", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.3",
           title: "4 typy Sidequestů v Zátoce Bublin",
-          owner: "Antigravity", status: "todo", priority: "Střední", estimate: "1 týden",
+          owner: "Claude", status: "todo", priority: "Střední", estimate: "1 týden",
           dependsOn: ["W4-01"],
-          files: ["game/scripts/systems/sidequests.gd"],
+          files: ["game/world/sidequests/sidequest_manager.gd"],
           steps: [
             "Přidat Kikiiny časovky po střechách",
             "Přidat Tenisákovou střelnici (5 skrytých zvonů)",
@@ -1632,9 +1675,9 @@
         {
           id: "W4-05", wave: 4, phase: "Fáze 1 (Kap. 1–3)", version: "v0.4.4",
           title: "Komiksové cutscény (CS/EN) a Mosquito průlet na Šídlu",
-          owner: "Antigravity", status: "todo", priority: "Vysoká", estimate: "1 týden",
+          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "1 týden",
           dependsOn: ["W4-03"],
-          files: ["game/scenes/cutscenes/comic_player.tscn", "game/scenes/mosquito/mosquito_flight_01.tscn"],
+          files: ["game/ui/cutscenes/comic_player.tscn", "game/levels/mosquito/mosquito_flight_01.tscn"],
           steps: [
             "Vytvořit přehrávač „Živých komiksů“ (2D panely s parallaxem, zvuky a textovými bublinami z translations.csv)",
             "Implementovat Prolog a závěr Kapitoly 1",
@@ -1648,9 +1691,9 @@
         {
           id: "W5-01", wave: 5, phase: "Fáze 1 (Kap. 1–3)", version: "v0.5.x",
           title: "Kapitola 2 – Měděný kaňon (Steampunk western)",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Vysoká", estimate: "5–6 týdnů",
+          owner: "Tomáš + Claude", status: "todo", priority: "Vysoká", estimate: "5–6 týdnů",
           dependsOn: ["W4-05"],
-          files: ["game/scenes/chapters/ch2_*"],
+          files: ["game/levels/ch2/*"],
           steps: [
             "Postavit Open-Hub kaňonu a Úkryt (odstavený vagón)",
             "Odemknout u Elizy „Jiskry“ schopnosti Rail Grinding a Jiskrový výstřel (odrážení tenisáku ve zpomaleném čase)",
@@ -1663,9 +1706,9 @@
         {
           id: "W5-02", wave: 5, phase: "Fáze 1 (Kap. 1–3)", version: "v0.6.x",
           title: "Kapitola 3 – Zrcadlový karneval (Noční Benátky)",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Vysoká", estimate: "5–6 týdnů",
+          owner: "Tomáš + Claude", status: "todo", priority: "Vysoká", estimate: "5–6 týdnů",
           dependsOn: ["W5-01"],
-          files: ["game/scenes/chapters/ch3_*"],
+          files: ["game/levels/ch3/*"],
           steps: [
             "Postavit Open-Hub kanálů a masek + Úkryt",
             "Vytvořit interiéry Zrcadlového sálu a Podzemní galerie",
@@ -1677,9 +1720,9 @@
         {
           id: "W5-03", wave: 5, phase: "Fáze 1 (Kap. 1–3)", version: "v0.8.x",
           title: "Atlas světů (Mapa) & výběr kapitol",
-          owner: "Antigravity", status: "todo", priority: "Střední", estimate: "1 týden",
+          owner: "Claude", status: "todo", priority: "Střední", estimate: "1 týden",
           dependsOn: ["W5-02"],
-          files: ["game/scenes/ui/world_map.tscn"],
+          files: ["game/ui/menus/world_map.tscn"],
           steps: [
             "Oživit mapu světa (ui_worldmap_v01.png styl) s interaktivním výběrem odemčených kapitol",
             "Zobrazit trasu Šídla a přehled 100% sběratelských předmětů",
@@ -1691,7 +1734,7 @@
         {
           id: "W5-04", wave: 5, phase: "Fáze 1 (Kap. 1–3)", version: "v0.9.x–v1.0.0",
           title: "Optimalizace, kompletní kontrola CS/EN a export (PC + Android)",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Kritické", estimate: "2–3 týdny",
+          owner: "Tomáš + Claude", status: "todo", priority: "Kritické", estimate: "2–3 týdny",
           dependsOn: ["W5-03"],
           files: ["game/export_presets.cfg", "builds/"],
           steps: [
@@ -1708,9 +1751,9 @@
         {
           id: "W6-01", wave: 6, phase: "Fáze 2 (Kap. 4–6)", version: "v1.1.x",
           title: "Kapitola 4 – Zamrzlá knihovna (Archivistka Můra)",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Střední", estimate: "4–5 týdnů",
+          owner: "Tomáš + Claude", status: "todo", priority: "Střední", estimate: "4–5 týdnů",
           dependsOn: ["W5-04"],
-          files: ["game/scenes/chapters/ch4_*"],
+          files: ["game/levels/ch4/*"],
           steps: [
             "Zasněžené věže a klouzavé povrchy",
             "Tajné archivy (interiéry)",
@@ -1722,9 +1765,9 @@
         {
           id: "W6-02", wave: 6, phase: "Fáze 2 (Kap. 4–6)", version: "v1.2.x",
           title: "Kapitola 5 – Továrna na barvy (Inženýr Štětka)",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Střední", estimate: "4–5 týdnů",
+          owner: "Tomáš + Claude", status: "todo", priority: "Střední", estimate: "4–5 týdnů",
           dependsOn: ["W6-01"],
-          files: ["game/scenes/chapters/ch5_*"],
+          files: ["game/levels/ch5/*"],
           steps: [
             "Průmyslový komplex s potrubím inkoustu a lasery",
             "Rytmické písty ve 2D",
@@ -1736,9 +1779,9 @@
         {
           id: "W6-03", wave: 6, phase: "Fáze 2 (Kap. 4–6)", version: "v1.3.x",
           title: "Kapitola 6 – Inkoustová citadela & Finále (Baron Kaňka)",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Kritické", estimate: "5–6 týdnů",
+          owner: "Tomáš + Claude", status: "todo", priority: "Kritické", estimate: "5–6 týdnů",
           dependsOn: ["W6-02"],
-          files: ["game/scenes/chapters/ch6_*"],
+          files: ["game/levels/ch6/*"],
           steps: [
             "Deštivý temný noir hub a katedrála z inkoustu",
             "Mistr Kage a nové schopnosti (Dračí skok ze špičky na špičku, Stínový průnik přes lasery)",
@@ -1750,7 +1793,7 @@
         {
           id: "W6-04", wave: 6, phase: "Fáze 2 (Kap. 4–6)", version: "v1.4.0",
           title: "Finální balanc, 100% kontrola a kompletní vydání hry",
-          owner: "Tomáš + Antigravity", status: "todo", priority: "Střední", estimate: "1 týden",
+          owner: "Tomáš + Claude", status: "todo", priority: "Střední", estimate: "1 týden",
           dependsOn: ["W6-03"],
           files: ["builds/"],
           steps: [
@@ -1838,6 +1881,9 @@
       ];
 
       const DEFAULT_LOGS = [
+        { id: "log_019", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok A (W2-03): založena kostra Godot 4.7 projektu v game/ – project.godot (Jolt, Forward+/Mobile, physics interpolation, pojmenované kolizní vrstvy), 5 autoloadů, kompletní InputMap (klávesnice+myš, Xbox/PS), UTF-8 translations.csv (CS+EN), ladicí panel F3 a testovací greybox scéna. Ověřeno headless spuštěním Godot 4.7; čeká na test Tomáše." },
+        { id: "log_018", date: "2026-11-23", author: "Claude", status: "done", version: "v0.1.7", text: "Synchronizace index.html s ARCHITECTURE.md: Vlna 2 přepsána na kroky A–F (W2-03 až W2-08) + Sly Parkour (W2-09) a 2D Kit (W2-10), feature-based cesty k souborům, hlavní vývoj převzal Claude (Antigravity/Gemini záloha). Uložené stavy v prohlížeči se automaticky přemapují, klíče localStorage zůstávají." },
+        { id: "log_017", date: "2026-11-23", author: "Claude", status: "done", version: "v0.1.7", text: "Architektonická konzultace dokončena – vznikl ARCHITECTURE.md (Godot 4.7.x, jeden CharacterBody3D pro 3D i 2D, State Machine + systém kotev, hybridní kamera s dolly-zoom přechodem, InputMap pro PC/gamepad/dotyk, lokalizace CS/EN, schéma save, struktura game/). Tomáš schválil všech 7 bodů." },
         { id: "log_016", date: "2026-11-22", author: "Tomáš", status: "done", version: "v0.1.6", text: "Doplněno 7 nových concept artů do složky vis/ (celkem 30 vizuálů: Úkryt Kap. 1, Ropuchova kuchyně, Zrcadlový karneval + nepřátelé, 2D únik Měděného kaňonu, sada 2D platforem a pozadí hlavního menu) a aktualizována galerie v index.html před navazující konzultací s Claudem." },
         { id: "log_015", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.5", text: "Vybudována podrobná interaktivní Roadmapa 6 vln vývoje (28 úkolů s rozklikávacími kroky, závislostmi, definicí hotového stavu a boxem „Co udělat teď“), živě propojená s Kanbanem i Přehledem." },
         { id: "log_014", date: "2026-11-22", author: "Antigravity", status: "done", version: "v0.1.4", text: "Přestavba plánovače na Herní studio centrum (8 sekcí, SVG diagramy, Prompty), rozšíření DESIGN.md o 6 kapitol ve 2 fázích, CS+EN lokalizaci, Sly State Machine, 2D Platform Kit, Úkryty, sidequesty a galerii 23 vizuálů." },
@@ -1866,49 +1912,47 @@
         { id: "i_col_cages", cat: "Sbírání", title: "Tajné klece ve 2D odemykající Brunovy oblečky v Úkrytu" }
       ];
 
-      const CLAUDE_PROMPT = `Ahoj Claude! Pracuji na své indie hře „Bruno: Ink & Shadow“ v enginu Godot 4 a chci s tebou jako s hlavním softwarovým architektem navrhnout čistou architekturu před založením prvního projektu (verze v0.2.0, aktuální stav plánovače v0.1.6).
+      const CLAUDE_PROMPT = `Ahoj Claude! Pokračujeme na mé hře „Bruno: Ink & Shadow“ (Godot 4.7.x stable, GDScript, Jolt). Jsi hlavní vývojář: píšeš kód přímo v repozitáři.
 
-ZÁKLADNÍ SHRNUTÍ (celá specifikace je v přiloženém DESIGN.md):
-- Žánr: 3D stealth/parkour (styl Sly Cooper 2, Open-Hub + interiéry) plynule kombinovaný s 2D plošinovkou (styl Rayman Origins UbiArt) + boční Mosquito průlety mezi kapitolami.
-- Hrdina: Jezevčík Bruno (běh/plížení na 2 nohách, sprint na 4 s holí na zádech, uši = vrtulník na plachtění, originální hůl s hrotem plnicího pera, odpalování neonového tenisáku holí). Parťačka: veverka Kiki (pilotuje komára Šídlo).
-- Rozsah: 6 kapitol ve 2 fázích (Fáze 1: Zátoka Bublin, Měděný kaňon, Zrcadlový karneval; Fáze 2: Zamrzlá knihovna, Továrna na barvy, Inkoustová citadela).
-- Tech stack: Godot 4 (GDScript), 3D fyzika Jolt, nativní 2D engine.
-- Platformy: PC (klávesnice + myš), Gamepad (PS/Xbox) i Mobil (dotykový HUD).
-- Lokalizace: Bilingvní od 1. dne — Čeština (CS) + Angličtina (EN) přes nativní .csv tabulku Godotu 4.
+KONTEXT:
+- GitHub: slimaksmazeny/bruno-ink-and-shadow · lokálně: C:\\Projekty\\bruno-ink-and-shadow · Godot: C:\\Projekty\\Godot_v4.7.2-stable_win64.exe
+- ARCHITECTURE.md = závazná technická architektura (State Machine, kotvy, hybridní kamera, InputMap, lokalizace, save, struktura game/, pravidla kódu).
+- DESIGN.md = herní design. index.html = Projektové centrum (Roadmapa, Kanban, Deník práce; localStorage klíče bruno_ink_shadow_v1 + bruno_roadmap_v015 se NESMÍ měnit).
+- Aktuální cíl: v0.2.0 rozděleno na kroky A–F (W2-03 až W2-08), pak v0.2.1 (W2-09 Parkour, W2-10 2D Kit).
 
-PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
-1. State Machine pro 3D Sly parkour a plynulý přechod do 2D Rayman běhu:
-   - Jak nejlépe navrhnout uzlový State Machine v GDScriptu, aby v0.2.0 zvládlo základní pohyb (Idle, Walk, Sprint4Legs, Jump, DoubleJump, EarGlide, SpireMagnet, TennisSwing) a v0.2.1 bez přepisování přibyly CLIMB, CRAWL, LEDGE_HANG, WALL_SNEAK a PATH_FOLLOW?
-   - Doporučuješ pro 2D úniky přepnout kameru + uzamknout osu Z v 3D scéně (2.5D), nebo přepínat na nativní 2D scénu přes inkoustový přechod?
-2. Multiplatformní InputMap (PC + Gamepad + Mobil):
-   - Jak čistě oddělit čtení vstupu a automatické zobrazení dotykového HUD na mobilu (klávesa M na PC)?
-3. Bilingvní lokalizace CS/EN od 1. dne:
-   - Jaký doporučuješ konvenční systém klíčů v translations.csv (UI, komiksové cutscény, Kikiiny hlášky, názvy úkolů)?
-4. Přesný rozsah a struktura složek v game/ pro první hratelný Greybox v0.2.0 (úkoly W2-03 až W2-06).`;
+PRAVIDLA:
+1. Před prací si přečti ARCHITECTURE.md a v index.html zjisti, který krok je na řadě.
+2. Pracuj po jednom kroku; ověř projekt přes Godot (headless import + spuštění bez chyb).
+3. Commituj do pracovní větve claude/... a otevři PR; do main merguji já po otestování.
+4. Na konci kroku mi napiš krátký testovací checklist a aktualizuj Roadmapu + Deník práce v index.html.
+5. Žádné texty natvrdo (translations.csv CS+EN), jen akce z InputMap, typovaný GDScript.
 
-      const AGY_PROMPT = `Kontext projektu „Bruno: Ink & Shadow“ (verze v0.1.6):
-- Kořenová složka: c:\\Projekty\\bruno-ink-and-shadow
-- Hlavní zdroj pravdy: DESIGN.md — vždy si ho před větší změnou přečti.
-- Projektové centrum & Roadmapa: index.html (v0.1.6, 6 vln / 28 úkolů, localStorage klíče bruno_ink_shadow_v1 + bruno_roadmap_v015).
-- Vizuální knihovna: složka vis/ obsahuje 30 schválených concept artů, interiérů, mockupů, HUD, hlavního menu, mapy světa a komiksového intra.
-- Složka pro Godot 4 projekt: game/ (aktuální cíl: Vlna 2 — Greybox prototyp v0.2.0 [W2-03 až W2-06], následně Sly Parkour + 2D Kit v0.2.1 [W2-07, W2-08]).
+Úkol pro toto vlákno: `;
+
+      const AGY_PROMPT = `Záložní kontext projektu „Bruno: Ink & Shadow“ (verze v0.1.7) — Antigravity je od v0.1.7 jen záloha, hlavní vývoj dělá Claude.
+- Kořenová složka: c:\\Projekty\\bruno-ink-and-shadow · Godot 4.7.x: C:\\Projekty\\Godot_v4.7.2-stable_win64.exe
+- Závazná technická architektura: ARCHITECTURE.md (přečti před jakoukoli změnou kódu). Herní design: DESIGN.md.
+- Projektové centrum & Roadmapa: index.html (v0.1.7, 6 vln / 30 úkolů, localStorage klíče bruno_ink_shadow_v1 + bruno_roadmap_v015 — neměnit).
+- Vizuální knihovna: vis/ (30 schválených concept artů).
+- Godot projekt: game/ (feature-based struktura: autoload/, core/, player/, camera/, world/, levels/, ui/, shaders/, localization/).
+- Aktuální cíl: v0.2.0 kroky A–F (W2-03 až W2-08), poté v0.2.1 (W2-09, W2-10).
 - Závazná pravidla:
-  1. Engine Godot 4 (GDScript, Jolt 3D, State Machine, jednotná InputMap pro PC/Gamepad/Mobil).
-  2. Bilingvní vývoj CS + EN od 1. dne přes translations.csv (žádné hardcoded texty).
-  3. Nejdřív zábavný pohyb na šedých kostkách (Greybox), až potom shadery a finální art.
-  4. Originalita: čistý měsíc bez cizích log, originální hůl s hrotem plnicího pera, vlastní Zlaté kapky inkoustu (ne Lumové).
-  5. Nic necommituj ani nepushuj na GitHub, dokud o to výslovně nepožádám.`;
+  1. Dodržuj sekci 10 v ARCHITECTURE.md (Godot 4 syntaxe, typovaný GDScript, žádné texty natvrdo, jen InputMap akce).
+  2. Pracuj jen na zadaném kroku a jen v souborech, které k němu patří.
+  3. Po změně spusť: C:\\Projekty\\Godot_v4.7.2-stable_win64_console.exe --headless --path game --editor --quit a oprav všechny chyby.
+  4. Nic necommituj ani nepushuj, dokud o to výslovně nepožádám.`;
 
       /* ====== STATE (PRESERVING LEGACY + NEW ROADMAP KEY) ====== */
       let legacyState = loadLegacyState();
       let rmState = loadRoadmapState();
+      migrateRoadmapV017();
 
       let currentPlanView = "roadmap"; // 'roadmap' | 'kanban' | 'milestones'
       let filterWave = "all";
       let filterRole = "all";
       let filterStatus = "all";
       let filterSearch = "";
-      let expandedTasks = new Set(["W2-01", "W2-02"]);
+      let expandedTasks = new Set(["W2-03", "W2-04"]);
 
       let currentWorldPhase = "all";
       let currentVisCat = "all";
@@ -1936,6 +1980,29 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
           const raw = localStorage.getItem(STORAGE_KEY_LEGACY);
           return raw ? Object.assign(defaultLegacyState(), JSON.parse(raw)) : defaultLegacyState();
         } catch (e) { return defaultLegacyState(); }
+      }
+
+      /* v0.1.7: Vlna 2 přepsána na kroky A–F. Klíče localStorage zůstávají stejné,
+         jen se jednorázově přemapují uložené stavy/poznámky starých ID úkolů. */
+      function migrateRoadmapV017() {
+        const applied = Array.isArray(rmState.migrations) ? rmState.migrations : [];
+        if (applied.includes("v0.1.7")) return;
+        const remap = { "W2-03": "W2-03", "W2-04": "W2-04", "W2-05": "W2-07", "W2-06": "W2-08", "W2-07": "W2-09", "W2-08": "W2-10" };
+        ["statuses", "notes"].forEach(bucketName => {
+          const bucket = rmState[bucketName] || {};
+          const moved = {};
+          Object.keys(remap).forEach(oldId => { if (oldId in bucket) moved[remap[oldId]] = bucket[oldId]; });
+          Object.keys(remap).forEach(oldId => { delete bucket[oldId]; });
+          rmState[bucketName] = Object.assign(bucket, moved);
+        });
+        // Kroky (checkboxy) starých úkolů neodpovídají novým krokům → vynulovat jen u Vlny 2
+        rmState.steps = rmState.steps || {};
+        ["W2-01", "W2-02", "W2-03", "W2-04", "W2-05", "W2-06", "W2-07", "W2-08", "W2-09", "W2-10"].forEach(id => { delete rmState.steps[id]; });
+        // Konzultace architektury a instalace Godotu jsou hotové
+        rmState.statuses["W2-01"] = "done";
+        rmState.statuses["W2-02"] = "done";
+        rmState.migrations = [...applied, "v0.1.7"];
+        try { localStorage.setItem(STORAGE_KEY_ROADMAP, JSON.stringify(rmState)); } catch (e) {}
       }
 
       function loadRoadmapState() {
@@ -2618,7 +2685,7 @@ PROSÍM O ARCHITEKTONICKÉ DOPORUČENÍ K TĚMTO 4 BODŮM:
         if (!confirm("Opravdu obnovit výchozí stavy Roadmapy (včetně odškrtnutých kroků, poznámek a vlastních úkolů)? Hodnocení vizuálů a nápady zůstanou zachovány.")) return;
         rmState = defaultRoadmapState();
         localStorage.removeItem(STORAGE_KEY_ROADMAP);
-        expandedTasks = new Set(["W2-01", "W2-02"]);
+        expandedTasks = new Set(["W2-03", "W2-04"]);
         renderOverviewAndMetrics();
         renderPlan();
         showToast("↺ Výchozí stavy Roadmapy obnoveny.");
