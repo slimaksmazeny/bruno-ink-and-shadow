@@ -26,6 +26,7 @@ GameState="*res://autoload/game_state.gd"
 SaveManager="*res://autoload/save_manager.gd"
 DebugOverlay="*res://ui/debug/debug_overlay.tscn"
 TouchControls="*res://ui/touch_controls/touch_controls.tscn"
+InkWipe="*res://ui/transitions/ink_wipe.tscn"
 
 [debug]
 

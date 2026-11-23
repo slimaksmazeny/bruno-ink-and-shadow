@@ -10,7 +10,7 @@ HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
 HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
 HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
 HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
-GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.0, Krok E)","Bruno: Ink & Shadow — test street (v0.2.0, Step E)"
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.0, Krok F)","Bruno: Ink & Shadow — test street (v0.2.0, Step F)"
 GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
 GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc = uvolnit myš","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc = release mouse"
 GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog
@@ -20,5 +20,7 @@ GB_SIGN_RAMP,Rampa nahoru,Ramp up
 GB_SIGN_GAP,"Propast 3,5 m: sprint nebo dvojskok","3.5 m gap: sprint or double jump"
 GB_SIGN_SPIRE,"Cvičná špička: skoč a zmáčkni E / ○","Practice spire: jump and press E / B"
 GB_SIGN_ROOFS,"Na střechy: schod → bedna → střecha → 3 špičky","To the roofs: step → crate → roof → 3 spires"
-GB_SIGN_BELL,"Trefi zvon tenisákem → otevře se brána k obrazu","Hit the bell with a tennis ball → the gate to the painting opens"
+GB_SIGN_BELL,"Trefi zvon tenisákem → otevře se brána → vběhni do obrazu","Hit the bell with a tennis ball → the gate opens → run into the painting"
 GB_SIGN_TRAINING,"Trénink: □ / levé tl. myši 3× = kombo · ve vzduchu = útok ve vzduchu","Training: X / left mouse 3× = combo · in the air = air attack"
+GB_SIGN_MUSHROOM,"Skoč na houbu! (pak dvojskok)","Jump on the mushroom! (then double jump)"
+GB_SIGN_EXIT,"Výstup zpět do 3D","Exit back to 3D"

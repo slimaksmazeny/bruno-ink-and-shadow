@@ -1451,7 +1451,7 @@
         {
           id: "W2-04", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok B — Bruno, State Machine (Idle/Move/Sprint/Air) a 3D kamera",
-          owner: "Claude", status: "doing", priority: "Kritické", estimate: "2 dny",
+          owner: "Claude", status: "done", priority: "Kritické", estimate: "2 dny",
           dependsOn: ["W2-03"],
           files: ["game/player/player.tscn", "game/player/player.gd", "game/core/state_machine/*.gd", "game/player/states/*.gd", "game/player/profiles/*.tres", "game/camera/hybrid_camera.tscn", "game/camera/third_person_rig.gd"],
           steps: [
@@ -1468,7 +1468,7 @@
         {
           id: "W2-05", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok C — Ušní vrtulník, systém kotev a magnet na 3 špičky",
-          owner: "Claude", status: "doing", priority: "Kritické", estimate: "1–2 dny",
+          owner: "Claude", status: "done", priority: "Kritické", estimate: "1–2 dny",
           dependsOn: ["W2-04"],
           files: ["game/player/states/state_glide.gd", "game/player/states/state_perch.gd", "game/player/states/anchor_state.gd", "game/player/anchor_detector.gd", "game/world/anchors/anchor.gd", "game/world/anchors/spire_anchor.tscn"],
           steps: [
@@ -1483,7 +1483,7 @@
         {
           id: "W2-06", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok D — Mobilní dotykový HUD (joystick + 4 tlačítka, přepínač M)",
-          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "1 den",
+          owner: "Claude", status: "done", priority: "Vysoká", estimate: "1 den",
           dependsOn: ["W2-04"],
           files: ["game/ui/touch_controls/touch_controls.tscn", "game/ui/touch_controls/touch_controls.gd", "game/ui/touch_controls/touch_stick.gd", "game/ui/touch_controls/touch_draw.gd"],
           steps: [
@@ -1499,7 +1499,7 @@
         {
           id: "W2-07", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok E — Odpal neonového tenisáku holí + testovací zvon a brána",
-          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "1 den",
+          owner: "Claude", status: "done", priority: "Vysoká", estimate: "1 den",
           dependsOn: ["W2-04"],
           files: ["game/player/states/state_swing.gd", "game/world/props/tennis_ball.tscn", "game/world/props/target_bell.tscn", "game/world/props/gate.tscn"],
           steps: [
@@ -1513,7 +1513,7 @@
         {
           id: "W2-08", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok F — Plynulý přechod 3D → 2D (Rám obrazu) a krátký 2D únik",
-          owner: "Claude", status: "todo", priority: "Kritické", estimate: "2 dny",
+          owner: "Claude", status: "doing", priority: "Kritické", estimate: "2 dny",
           dependsOn: ["W2-05", "W2-07"],
           files: ["game/camera/hybrid_camera.gd", "game/camera/side_scroll_rig.gd", "game/world/portals/painting_portal.tscn", "game/world/portals/exit_portal.tscn", "game/ui/transitions/ink_wipe.tscn", "game/shaders/ink_wipe.gdshader", "game/world/platforms_2d/bouncy_mushroom.tscn"],
           steps: [
@@ -1883,6 +1883,7 @@
       ];
 
       const DEFAULT_LOGS = [
+        { id: "log_027", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok F (W2-08): po zvonu a otevření brány vběhne Bruno do zlatého rámu → kamera vplave do obrazu (dolly + zúžení záběru), inkoustový přechod (shader s nepravidelným okrajem), Bruno se objeví ve 2D malbě (pohyb uzamčený do roviny, profil Rayman, kamera z boku s výhledem dopředu). 2D únik: 2 skákací houby (odraz 3,4 m + dvojskok), vyvýšené plošiny, propast (návrat na začátek 2D), výstupní portál → zpět do 3D před rám s „vyplutím“ kamery. Oprava: odraz z houby se už nezkracuje puštěním skoku; modrý hrot hole se hýbe s holí." },
         { id: "log_026", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "Útok holí doladěn ve stylu Sly: kombo až 3 švihů (□ / levé tl. myši opakovaně) s krátkým výpadem dopředu, 3. švih = otočka s větším odhozením; auto-natočení na nejbližší cíl před Brunem; útok ve vzduchu (jednou za skok); zásah = krátké zastavení času + jemné zatřesení kamery; po aktivní fázi jde útok zrušit skokem. Tréninkový koutek: figurína s počítadlem zásahů a 3 rozbitelné bedny (obnoví se). Tenisák zasáhne i je." },
         { id: "log_025", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "Ovládání podle Tomáše (inspirace Sly + Rayman): míření L2 / pravé tl. myši (kamera se přiblíží přes rameno, Bruno drží směr pohledu, úkroky 3 m/s) + výstřel R2 / levé tl.; útok holí □ / levé tl. myši; přichycení ○ / E / prostřední tl. myši – nově jen ke kotvě ve směru pohledu kamery (±50°); sprint navíc i na R1. Uši přesunuty na temeno hlavy s kloubem – při vrtulníku se zvednou a točí nad hlavou. PR #3 přesměrován na main (obsahuje Kroky B–E)." },
         { id: "log_024", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok E (W2-07): stav Swing (švih holí, Bruno se natočí ve směru míření), neonový tenisák (RigidBody3D s CCD, svítící stopa, max. 3 najednou), zvon na věži (zásah → rozhoupání, rozsvícení, Events.bell_hit) a brána před obrazem, která zajede do země. Míří se na zaměřovač „+“ uprostřed obrazovky; kamera je nově lehce přes pravé rameno. Testy a generátory scén uloženy do tools/ – všech 5 sad (A–E) prochází." },

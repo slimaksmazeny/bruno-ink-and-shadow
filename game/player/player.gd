@@ -127,13 +127,30 @@ func hit_stop(duration: float) -> void:
 	_hit_stop_running = false
 
 
+## Odkud se Bruno obnoví po pádu (start úrovně, vstup do obrazu…).
+func set_checkpoint(t: Transform3D) -> void:
+	_spawn_transform = Transform3D(Basis(), t.origin)
+
+
+## Odraz (skákací houba): vymrští nahoru, dvojskok i útok ve vzduchu zůstávají k dispozici.
+func bounce(up_velocity: float) -> void:
+	velocity.y = up_velocity
+	jumps_used = 1
+	air_attack_used = false
+	visual.land_squash(0.7)
+	state_machine.transition_to(&"Air", {"bounce": true, "force": true})
+
+
 func respawn() -> void:
 	global_transform = _spawn_transform
 	velocity = Vector3.ZERO
 	jumps_used = 0
 	reset_physics_interpolation()
 	if camera != null:
-		camera.snap_to_target()
+		if mode == Mode.MODE_2D:
+			camera.side_rig.snap()
+		else:
+			camera.snap_to_target()
 	state_machine.transition_to(&"Idle", {"force": true})
 
 

@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/portals/painting_portal.gd" id="1_g0b4m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_74yve"]
+size = Vector3(5, 3, 1.2)
+
+[node name="PaintingPortal" type="Area3D" unique_id=1923856039]
+script = ExtResource("1_g0b4m")
+
+[node name="Shape" type="CollisionShape3D" parent="." unique_id=1635825961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_74yve")
+
+[node name="CameraMarker" type="Marker3D" parent="." unique_id=1333731846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 3.4)
+
+[node name="ReturnPoint" type="Marker3D" parent="." unique_id=425118987]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.05, 3.3)

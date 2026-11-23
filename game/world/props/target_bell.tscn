@@ -27,38 +27,38 @@ height = 0.75
 [sub_resource type="SphereShape3D" id="SphereShape3D_k1ppv"]
 radius = 0.95
 
-[node name="TargetBell" type="Node3D" unique_id=1515826048]
+[node name="TargetBell" type="Node3D" unique_id=1998536696]
 script = ExtResource("1_yy2ge")
 
-[node name="Frame" type="StaticBody3D" parent="." unique_id=995240475]
+[node name="Frame" type="StaticBody3D" parent="." unique_id=574051064]
 collision_layer = 16
 collision_mask = 0
 
-[node name="PostL" type="MeshInstance3D" parent="Frame" unique_id=880862908]
+[node name="PostL" type="MeshInstance3D" parent="Frame" unique_id=1393814511]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.8, 0)
 material_override = SubResource("StandardMaterial3D_7s6xg")
 mesh = SubResource("BoxMesh_4ql67")
 
-[node name="PostR" type="MeshInstance3D" parent="Frame" unique_id=1435389353]
+[node name="PostR" type="MeshInstance3D" parent="Frame" unique_id=1202979235]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.8, 0)
 material_override = SubResource("StandardMaterial3D_7s6xg")
 mesh = SubResource("BoxMesh_3xicj")
 
-[node name="Beam" type="MeshInstance3D" parent="Frame" unique_id=1566438521]
+[node name="Beam" type="MeshInstance3D" parent="Frame" unique_id=309324453]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 material_override = SubResource("StandardMaterial3D_7s6xg")
 mesh = SubResource("BoxMesh_xmotx")
 
-[node name="BellPivot" type="Node3D" parent="." unique_id=351068363]
+[node name="BellPivot" type="Node3D" parent="." unique_id=189927404]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0)
 
-[node name="BellMesh" type="MeshInstance3D" parent="BellPivot" unique_id=1780851037]
+[node name="BellMesh" type="MeshInstance3D" parent="BellPivot" unique_id=612549939]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
 material_override = SubResource("StandardMaterial3D_ctebj")
 mesh = SubResource("CylinderMesh_tvy6y")
 
-[node name="HitArea" type="Area3D" parent="." unique_id=1481904226]
+[node name="HitArea" type="Area3D" parent="." unique_id=101446190]
 
-[node name="Shape" type="CollisionShape3D" parent="HitArea" unique_id=410011324]
+[node name="Shape" type="CollisionShape3D" parent="HitArea" unique_id=439505760]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 shape = SubResource("SphereShape3D_k1ppv")

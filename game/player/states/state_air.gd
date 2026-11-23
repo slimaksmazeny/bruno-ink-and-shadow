@@ -5,10 +5,14 @@ extends AirborneState
 const MAX_JUMPS: int = 2
 
 var _from_sprint: bool = false
+## Odraz z houby se nezkracuje puštěním skoku (dokud Bruno stoupá z odrazu).
+var _bounce_rise: bool = false
 
 
 func enter(previous: StringName, msg: Dictionary = {}) -> void:
 	_from_sprint = previous == &"Sprint"
+	# Odraz z houby: zachová se vodorovná rychlost (Rayman feel) a nezkracuje se.
+	_bounce_rise = msg.get("bounce", false)
 	carried_speed = maxf(horizontal_speed(), player.profile.walk_speed)
 	if msg.get("jump", false):
 		_ground_jump()
@@ -36,7 +40,9 @@ func physics_update(delta: float) -> void:
 		machine.transition_to(&"Glide")
 		return
 
-	apply_gravity(delta)
+	if player.velocity.y <= 0.0:
+		_bounce_rise = false
+	apply_gravity(delta, 1.0, not _bounce_rise)
 	air_control(delta, carried_speed)
 	check_landing()
 
@@ -49,6 +55,7 @@ func _ground_jump() -> void:
 
 
 func _double_jump() -> void:
+	_bounce_rise = false
 	player.velocity.y = jump_velocity(player.profile.double_jump_height)
 	# Po pádu z hrany bez skoku je dvojskok poslední možný skok.
 	player.jumps_used = MAX_JUMPS

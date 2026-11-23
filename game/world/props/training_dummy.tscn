@@ -32,41 +32,41 @@ height = 1.1
 radius = 0.2
 height = 0.4
 
-[node name="TrainingDummy" type="Node3D" unique_id=440852780]
+[node name="TrainingDummy" type="Node3D" unique_id=1987928037]
 script = ExtResource("1_rxikb")
 
-[node name="Body" type="StaticBody3D" parent="." unique_id=1275954089]
+[node name="Body" type="StaticBody3D" parent="." unique_id=897035866]
 collision_layer = 16
 collision_mask = 0
 
-[node name="Shape" type="CollisionShape3D" parent="Body" unique_id=2009732883]
+[node name="Shape" type="CollisionShape3D" parent="Body" unique_id=1070891533]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CylinderShape3D_gkfuu")
 
-[node name="Post" type="MeshInstance3D" parent="Body" unique_id=1203642242]
+[node name="Post" type="MeshInstance3D" parent="Body" unique_id=898472883]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 material_override = SubResource("StandardMaterial3D_nstvd")
 mesh = SubResource("CylinderMesh_njj16")
 
-[node name="Base" type="MeshInstance3D" parent="Body" unique_id=1574293305]
+[node name="Base" type="MeshInstance3D" parent="Body" unique_id=112540282]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
 material_override = SubResource("StandardMaterial3D_nstvd")
 mesh = SubResource("CylinderMesh_w30ni")
 
-[node name="SackPivot" type="Node3D" parent="." unique_id=1558165740]
+[node name="SackPivot" type="Node3D" parent="." unique_id=1417606077]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 
-[node name="Sack" type="MeshInstance3D" parent="SackPivot" unique_id=39236435]
+[node name="Sack" type="MeshInstance3D" parent="SackPivot" unique_id=635512310]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 material_override = SubResource("StandardMaterial3D_16fca")
 mesh = SubResource("CapsuleMesh_wyu8k")
 
-[node name="Head" type="MeshInstance3D" parent="SackPivot" unique_id=1210106881]
+[node name="Head" type="MeshInstance3D" parent="SackPivot" unique_id=1464494173]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_16fca")
 mesh = SubResource("SphereMesh_c6bow")
 
-[node name="HitLabel" type="Label3D" parent="." unique_id=1057470080]
+[node name="HitLabel" type="Label3D" parent="." unique_id=560662291]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
 pixel_size = 0.008
