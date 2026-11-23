@@ -25,6 +25,7 @@ Settings="*res://autoload/settings.gd"
 GameState="*res://autoload/game_state.gd"
 SaveManager="*res://autoload/save_manager.gd"
 DebugOverlay="*res://ui/debug/debug_overlay.tscn"
+TouchControls="*res://ui/touch_controls/touch_controls.tscn"
 
 [debug]
 

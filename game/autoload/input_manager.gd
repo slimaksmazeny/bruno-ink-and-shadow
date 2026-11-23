@@ -22,6 +22,8 @@ var mouse_sensitivity: float = 0.003
 var stick_sensitivity: float = 3.0
 
 var _mouse_look: Vector2 = Vector2.ZERO
+## Akce navázané na tlačítka myši, dočasně odebrané, když je zapnutý dotykový HUD.
+var _stripped_mouse_events: Dictionary = {}
 var _touch_look: Vector2 = Vector2.ZERO
 
 
@@ -80,6 +82,8 @@ func get_move_vector() -> Vector2:
 
 func set_touch_controls(on: bool) -> void:
 	touch_controls_visible = on
+	# S dotykovým HUD nesmí klik/dotyk zároveň spouštět akce navázané na tlačítka myši.
+	_set_mouse_bindings_enabled(not on)
 	if not OS.has_feature("mobile"):
 		# Na PC se myš začne chovat jako prst, aby šel dotykový HUD testovat.
 		Input.emulate_touch_from_mouse = on
@@ -179,3 +183,23 @@ func _on_joy_connection_changed(device_id: int, connected: bool) -> void:
 			pad_family_changed.emit(pad_family)
 		else:
 			_set_active_pad(pads[0])
+
+
+func _set_mouse_bindings_enabled(enabled: bool) -> void:
+	if enabled:
+		for action: StringName in _stripped_mouse_events:
+			for e: InputEvent in _stripped_mouse_events[action]:
+				if InputMap.has_action(action):
+					InputMap.action_add_event(action, e)
+		_stripped_mouse_events.clear()
+		return
+	for action: StringName in InputMap.get_actions():
+		if String(action).begins_with("ui_"):
+			continue
+		for e: InputEvent in InputMap.action_get_events(action):
+			if e is InputEventMouseButton:
+				if not _stripped_mouse_events.has(action):
+					_stripped_mouse_events[action] = []
+				(_stripped_mouse_events[action] as Array).append(e)
+				InputMap.action_erase_event(action, e)
+				Input.action_release(action)

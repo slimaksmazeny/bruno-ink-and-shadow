@@ -38,60 +38,60 @@ emission_energy_multiplier = 0.9
 [sub_resource type="BoxMesh" id="BoxMesh_pq26c"]
 size = Vector3(0.09, 0.09, 0.09)
 
-[node name="SpireAnchor" type="Area3D" unique_id=1545040456 node_paths=PackedStringArray("snap_point")]
+[node name="SpireAnchor" type="Area3D" unique_id=1374791209 node_paths=PackedStringArray("snap_point")]
 script = ExtResource("1_5q5oi")
 snap_point = NodePath("SnapPoint")
 
-[node name="Pole" type="StaticBody3D" parent="." unique_id=1757841834]
+[node name="Pole" type="StaticBody3D" parent="." unique_id=1275326886]
 collision_mask = 0
 
-[node name="PoleShape" type="CollisionShape3D" parent="Pole" unique_id=1160446509]
+[node name="PoleShape" type="CollisionShape3D" parent="Pole" unique_id=1532225873]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CylinderShape3D_cq7ht")
 
-[node name="PoleMesh" type="MeshInstance3D" parent="Pole" unique_id=951514786]
+[node name="PoleMesh" type="MeshInstance3D" parent="Pole" unique_id=1043511551]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 material_override = SubResource("StandardMaterial3D_17uom")
 mesh = SubResource("CylinderMesh_y5i6h")
 
-[node name="Cap" type="MeshInstance3D" parent="Pole" unique_id=952246464]
+[node name="Cap" type="MeshInstance3D" parent="Pole" unique_id=1968619475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56, 0)
 material_override = SubResource("StandardMaterial3D_d1x7f")
 mesh = SubResource("CylinderMesh_5w1w1")
 
-[node name="Zone" type="CollisionShape3D" parent="." unique_id=1431376089]
+[node name="Zone" type="CollisionShape3D" parent="." unique_id=6536197]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
 shape = SubResource("SphereShape3D_4q5m8")
 
-[node name="SnapPoint" type="Marker3D" parent="." unique_id=893958007]
+[node name="SnapPoint" type="Marker3D" parent="." unique_id=1567793539]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.63, 0)
 
-[node name="SparklesHolder" type="Node3D" parent="." unique_id=1236227921]
+[node name="SparklesHolder" type="Node3D" parent="." unique_id=1591326188]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
 
-[node name="Sparkles" type="Node3D" parent="SparklesHolder" unique_id=1917425734]
+[node name="Sparkles" type="Node3D" parent="SparklesHolder" unique_id=607260350]
 
-[node name="Spark0" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=1960044527]
+[node name="Spark0" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=1541403042]
 transform = Transform3D(0.70710677, 0.49999997, 0.49999997, 0, 0.70710677, -0.70710677, -0.70710677, 0.49999997, 0.49999997, 0.32, 0, 0)
 material_override = SubResource("StandardMaterial3D_tg4ha")
 mesh = SubResource("BoxMesh_pq26c")
 
-[node name="Spark1" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=355331654]
+[node name="Spark1" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=301996779]
 transform = Transform3D(0.70710677, 0.49999997, 0.49999997, 0, 0.70710677, -0.70710677, -0.70710677, 0.49999997, 0.49999997, 0.09888544, 0.05, 0.3043381)
 material_override = SubResource("StandardMaterial3D_tg4ha")
 mesh = SubResource("BoxMesh_pq26c")
 
-[node name="Spark2" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=1513882287]
+[node name="Spark2" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=1967072075]
 transform = Transform3D(0.70710677, 0.49999997, 0.49999997, 0, 0.70710677, -0.70710677, -0.70710677, 0.49999997, 0.49999997, -0.25888544, 0, 0.18809128)
 material_override = SubResource("StandardMaterial3D_tg4ha")
 mesh = SubResource("BoxMesh_pq26c")
 
-[node name="Spark3" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=71713343]
+[node name="Spark3" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=1703764035]
 transform = Transform3D(0.70710677, 0.49999997, 0.49999997, 0, 0.70710677, -0.70710677, -0.70710677, 0.49999997, 0.49999997, -0.25888544, 0.05, -0.18809128)
 material_override = SubResource("StandardMaterial3D_tg4ha")
 mesh = SubResource("BoxMesh_pq26c")
 
-[node name="Spark4" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=976415753]
+[node name="Spark4" type="MeshInstance3D" parent="SparklesHolder/Sparkles" unique_id=896176134]
 transform = Transform3D(0.70710677, 0.49999997, 0.49999997, 0, 0.70710677, -0.70710677, -0.70710677, 0.49999997, 0.49999997, 0.09888544, 0, -0.3043381)
 material_override = SubResource("StandardMaterial3D_tg4ha")
 mesh = SubResource("BoxMesh_pq26c")

@@ -6,24 +6,24 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_mxb01"]
 radius = 0.25
 
-[node name="HybridCamera" type="Node3D" unique_id=60656324]
+[node name="HybridCamera" type="Node3D" unique_id=167763325]
 physics_interpolation_mode = 2
 script = ExtResource("1_pjv45")
 
-[node name="ThirdPersonRig" type="Node3D" parent="." unique_id=243689849]
+[node name="ThirdPersonRig" type="Node3D" parent="." unique_id=780674574]
 script = ExtResource("2_dmuan")
 
-[node name="YawPivot" type="Node3D" parent="ThirdPersonRig" unique_id=934060166]
+[node name="YawPivot" type="Node3D" parent="ThirdPersonRig" unique_id=216619846]
 
-[node name="PitchPivot" type="Node3D" parent="ThirdPersonRig/YawPivot" unique_id=5587752]
+[node name="PitchPivot" type="Node3D" parent="ThirdPersonRig/YawPivot" unique_id=203842056]
 
-[node name="SpringArm3D" type="SpringArm3D" parent="ThirdPersonRig/YawPivot/PitchPivot" unique_id=2052013905]
+[node name="SpringArm3D" type="SpringArm3D" parent="ThirdPersonRig/YawPivot/PitchPivot" unique_id=59800590]
 shape = SubResource("SphereShape3D_mxb01")
 spring_length = 5.5
 margin = 0.2
 
-[node name="CameraPoint" type="Marker3D" parent="ThirdPersonRig/YawPivot/PitchPivot/SpringArm3D" unique_id=940957604]
+[node name="CameraPoint" type="Marker3D" parent="ThirdPersonRig/YawPivot/PitchPivot/SpringArm3D" unique_id=751377982]
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1952730904]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1850735772]
 current = true
 fov = 70.0

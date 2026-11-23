@@ -423,7 +423,7 @@ func _track_device(event: InputEvent) -> void:
 
 ### 4.3 Dotykový HUD (`ui/touch_controls/`)
 - **Tlačítka:** `TouchScreenButton` s vyplněnou vlastností `action` (`jump`, `sprint`, `action`, `tennis`) → Godot akci mačká nativně, multi-touch funguje. `passby_press = true` pro skok.
-- **Virtuální joystick** (`virtual_joystick.gd`, `Control`): sleduje index prstu z `InputEventScreenTouch/Drag` a převádí výchylku na akce:
+- **Virtuální joystick** (`touch_stick.gd`, `Control`): sleduje index prstu z `InputEventScreenTouch/Drag` a převádí výchylku na akce:
   ```gdscript
   func _apply(v: Vector2) -> void:   # v v rozsahu -1..1
   	_press(&"move_left",  maxf(-v.x, 0.0)); _press(&"move_right", maxf(v.x, 0.0))
@@ -539,6 +539,7 @@ game/                                  ← res://
 │   ├── save_manager.gd                ← JSON save + settings.cfg
 │   └── settings.gd                    ← jazyk, hlasitost, citlivost (aplikuje a ukládá)
 │   (+ DebugOverlay = ui/debug/debug_overlay.tscn jako 6. autoload, jen debug)
+│   (+ TouchControls = ui/touch_controls/touch_controls.tscn jako 7. autoload)
 ├── core/
 │   ├── state_machine/
 │   │   ├── player_state.gd
@@ -583,7 +584,7 @@ game/                                  ← res://
 │       └── greybox_street.tscn        ← hlavní scéna v0.2.0
 ├── ui/
 │   ├── debug/        debug_overlay.tscn/.gd
-│   ├── touch_controls/ touch_controls.tscn, virtual_joystick.gd
+│   ├── touch_controls/ touch_controls.tscn, touch_stick.gd
 │   ├── hud/          (v0.3.1)
 │   ├── menus/        (v0.3.1)
 │   └── transitions/  ink_wipe.tscn
