@@ -1,0 +1,16 @@
+keys,cs,en
+UI_LANG_NAME,Čeština,English
+UI_MENU_PLAY,Hrát,Play
+UI_MENU_CONTINUE,Pokračovat,Continue
+UI_MENU_SETTINGS,Nastavení,Settings
+UI_MENU_QUIT,Ukončit,Quit
+UI_SETTINGS_LANGUAGE,Jazyk,Language
+UI_PAUSE_TITLE,Pauza,Paused
+HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
+HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
+HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
+HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.0, Krok A)","Bruno: Ink & Shadow — test street (v0.2.0, Step A)"
+GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
+GB_HINT_KEYS,"F3 = ladicí panel · L = přepnout jazyk · M = dotykové ovládání · klik = zachytit myš · Esc = uvolnit myš","F3 = debug panel · L = switch language · M = touch controls · click = capture mouse · Esc = release mouse"
+GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog

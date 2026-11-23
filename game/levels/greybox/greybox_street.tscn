@@ -1,0 +1,147 @@
+[gd_scene format=3]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_niufp"]
+sky_top_color = Color(0.06, 0.07, 0.2, 1)
+sky_horizon_color = Color(0.25, 0.22, 0.45, 1)
+ground_bottom_color = Color(0.05, 0.05, 0.1, 1)
+ground_horizon_color = Color(0.2, 0.18, 0.35, 1)
+
+[sub_resource type="Sky" id="Sky_lskbd"]
+sky_material = SubResource("ProceduralSkyMaterial_niufp")
+
+[sub_resource type="Environment" id="Environment_tiucf"]
+background_mode = 2
+sky = SubResource("Sky_lskbd")
+ambient_light_source = 3
+ambient_light_energy = 1.2
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0jf85"]
+albedo_color = Color(0.45, 0.45, 0.5, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w11qk"]
+albedo_color = Color(0.3, 0.3, 0.36, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mv2yc"]
+albedo_color = Color(0.95, 0.71, 0.2, 1)
+roughness = 0.9
+emission_enabled = true
+emission = Color(0.95, 0.71, 0.2, 1)
+emission_energy_multiplier = 0.6
+
+[node name="GreyboxStreet" type="Node3D" unique_id=824026505]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=107709590]
+environment = SubResource("Environment_tiucf")
+
+[node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=2003172778]
+transform = Transform3D(0.81915206, 0.43938506, -0.36868784, 0, 0.64278764, 0.76604444, 0.57357645, -0.62750685, 0.5265408, 0, 0, 0)
+light_color = Color(0.75, 0.8, 1, 1)
+light_energy = 0.9
+shadow_enabled = true
+
+[node name="Geometry" type="Node3D" parent="." unique_id=1768326314]
+
+[node name="Street" type="CSGBox3D" parent="Geometry" unique_id=1270971065]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+collision_mask = 0
+size = Vector3(60, 1, 24)
+material = SubResource("StandardMaterial3D_0jf85")
+
+[node name="HouseLeft" type="CSGBox3D" parent="Geometry" unique_id=1749830052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, -10)
+use_collision = true
+collision_mask = 0
+size = Vector3(10, 8, 8)
+material = SubResource("StandardMaterial3D_w11qk")
+
+[node name="HouseMid" type="CSGBox3D" parent="Geometry" unique_id=1750249838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, -12)
+use_collision = true
+collision_mask = 0
+size = Vector3(8, 11, 8)
+material = SubResource("StandardMaterial3D_w11qk")
+
+[node name="HouseRight" type="CSGBox3D" parent="Geometry" unique_id=1670313054]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3, -10)
+use_collision = true
+collision_mask = 0
+size = Vector3(10, 6, 8)
+material = SubResource("StandardMaterial3D_w11qk")
+
+[node name="StepLow" type="CSGBox3D" parent="Geometry" unique_id=1006995889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 2)
+use_collision = true
+collision_mask = 0
+size = Vector3(4, 1, 4)
+material = SubResource("StandardMaterial3D_0jf85")
+
+[node name="StepHigh" type="CSGBox3D" parent="Geometry" unique_id=1664241172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 2)
+use_collision = true
+collision_mask = 0
+size = Vector3(4, 2, 4)
+material = SubResource("StandardMaterial3D_0jf85")
+
+[node name="PaintingFrame" type="CSGBox3D" parent="Geometry" unique_id=2126370267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 3, -6)
+use_collision = true
+collision_mask = 0
+size = Vector3(6, 4, 0.6)
+material = SubResource("StandardMaterial3D_mv2yc")
+
+[node name="PaintingSign" type="Label3D" parent="." unique_id=548699286]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 6, -5.6)
+pixel_size = 0.011
+modulate = Color(1, 0.92, 0.6, 1)
+text = "GB_SIGN_PAINTING"
+font_size = 96
+outline_size = 24
+
+[node name="DiacriticsTest" type="Label3D" parent="." unique_id=1005820702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -7.9)
+pixel_size = 0.012
+text = "GB_DIACRITICS_TEST"
+font_size = 64
+outline_size = 16
+
+[node name="TempCamera" type="Camera3D" parent="." unique_id=155652254]
+transform = Transform3D(1, 0, 0, 0, 0.9702957, 0.2419219, 0, -0.2419219, 0.9702957, 8, 7, 24)
+current = true
+fov = 70.0
+
+[node name="HintLayer" type="CanvasLayer" parent="." unique_id=568719261]
+
+[node name="HintBox" type="VBoxContainer" parent="HintLayer" unique_id=1572803068]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -900.0
+offset_top = -120.0
+offset_right = 900.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+alignment = 2
+
+[node name="Title" type="Label" parent="HintLayer/HintBox" unique_id=2025700726]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.8)
+theme_override_constants/outline_size = 8
+text = "GB_TITLE"
+horizontal_alignment = 1
+
+[node name="Keys" type="Label" parent="HintLayer/HintBox" unique_id=796263191]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.8)
+theme_override_constants/outline_size = 8
+text = "GB_HINT_KEYS"
+horizontal_alignment = 1
