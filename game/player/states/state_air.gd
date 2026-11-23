@@ -22,6 +22,9 @@ func exit() -> void:
 func physics_update(delta: float) -> void:
 	if Input.is_action_just_pressed(&"action") and try_enter_anchor():
 		return
+	if Input.is_action_just_pressed(&"attack") and not player.air_attack_used:
+		machine.transition_to(&"AirAttack")
+		return
 	if Input.is_action_just_pressed(&"jump"):
 		if player.jumps_used == 0 and player.coyote_timer > 0.0:
 			_ground_jump()

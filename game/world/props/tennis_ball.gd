@@ -30,6 +30,13 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
-func _on_body_entered(_body: Node) -> void:
+func _on_body_entered(body: Node) -> void:
+	# Tenisák zasáhne i figurínu / bedny (stejně jako hůl, slabší).
+	if gravity_scale < 1.0:
+		var target: Node = body
+		if target != null and not target.is_in_group(&"hittable"):
+			target = target.get_parent()
+		if target != null and target.is_in_group(&"hittable") and target.has_method("on_cane_hit"):
+			target.call("on_cane_hit", {"damage": 1, "knockback": 3.0, "combo": 1, "dir": linear_velocity.normalized(), "from": global_position})
 	# Po prvním odrazu už „normální“ gravitace – míček se skutálí na zem.
 	gravity_scale = 1.0

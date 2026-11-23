@@ -13,6 +13,9 @@ extends Node3D
 @onready var rig_3d: ThirdPersonRig = $ThirdPersonRig
 @onready var cam: Camera3D = $Camera3D
 var rig_2d: Node3D = null
+var _shake_strength: float = 0.0
+var _shake_time: float = 0.0
+var _shake_left: float = 0.0
 
 
 func _ready() -> void:
@@ -24,8 +27,20 @@ func _ready() -> void:
 	_apply()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	_apply()
+	if _shake_left > 0.0:
+		# Zatřesení při zásahu – jemně, ať se nikomu neudělá špatně.
+		_shake_left = maxf(_shake_left - delta, 0.0)
+		var k: float = _shake_strength * (_shake_left / _shake_time)
+		cam.global_position += cam.global_transform.basis * Vector3(randf_range(-k, k), randf_range(-k, k), 0.0)
+
+
+## Krátké zatřesení kamerou (zásah holí, dopad…).
+func shake(strength: float, duration: float) -> void:
+	_shake_strength = maxf(strength, _shake_strength if _shake_left > 0.0 else 0.0)
+	_shake_time = duration
+	_shake_left = duration
 
 
 func _apply() -> void:

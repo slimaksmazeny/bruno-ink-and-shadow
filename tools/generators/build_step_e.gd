@@ -6,6 +6,7 @@ func _initialize() -> void:
 	_build_profiles()
 	_build_spire()
 	_build_props()
+	_build_hittables()
 	_build_player()
 	_build_camera()
 	_build_greybox_street()
@@ -200,6 +201,19 @@ func _build_player() -> void:
 	for leg: Array in [["LegFL", -0.15, -0.35], ["LegFR", 0.15, -0.35], ["LegBL", -0.15, 0.45], ["LegBR", 0.15, 0.45]]:
 		_mesh(sprint, leg[0], _cyl(0.06, 0.3), Vector3(leg[1], 0.15, leg[2]), Vector3.ZERO, black)
 
+	# --- Zásahová zóna hole (před Brunem, otáčí se s Visual)
+	var hitbox := Area3D.new()
+	hitbox.name = "CaneHitbox"
+	hitbox.set_script(load("res://player/cane_hitbox.gd"))
+	var hb_shape := SphereShape3D.new()
+	hb_shape.radius = 0.95
+	var hb_col := CollisionShape3D.new()
+	hb_col.name = "Shape"
+	hb_col.shape = hb_shape
+	hb_col.position = Vector3(0, 0.8, -0.95)
+	hitbox.add_child(hb_col)
+	root.add_child(hitbox)
+
 	# --- Detektor kotev (modré jiskry)
 	var det := Area3D.new()
 	det.name = "AnchorDetector"
@@ -219,10 +233,10 @@ func _build_player() -> void:
 	sm.set_script(load("res://core/state_machine/player_state_machine.gd"))
 	root.add_child(sm)
 	var idle: Node = null
-	for state_name: String in ["Idle", "Move", "Sprint", "Air", "Glide", "Perch", "Swing", "Aim"]:
+	for state_name: String in ["Idle", "Move", "Sprint", "Air", "Glide", "Perch", "Swing", "Aim", "Attack", "AirAttack"]:
 		var st := Node.new()
 		st.name = state_name
-		st.set_script(load("res://player/states/state_%s.gd" % state_name.to_lower()))
+		st.set_script(load("res://player/states/state_%s.gd" % state_name.to_snake_case()))
 		sm.add_child(st)
 		if state_name == "Idle":
 			idle = st
@@ -394,6 +408,65 @@ func _build_props() -> void:
 	_save_scene(gate, "res://world/props/gate.tscn")
 
 
+# ------------------------------------------------------------------ hittables
+func _build_hittables() -> void:
+	var wood := _mat(Color(0.55, 0.38, 0.2))
+	var sack_mat := _mat(Color(0.85, 0.75, 0.5))
+	var dummy := Node3D.new()
+	dummy.name = "TrainingDummy"
+	dummy.set_script(load("res://world/props/training_dummy.gd"))
+	var body := StaticBody3D.new()
+	body.name = "Body"
+	body.collision_layer = 16
+	body.collision_mask = 0
+	dummy.add_child(body)
+	var post_shape := CylinderShape3D.new()
+	post_shape.radius = 0.35
+	post_shape.height = 1.8
+	var pcol := CollisionShape3D.new()
+	pcol.name = "Shape"
+	pcol.shape = post_shape
+	pcol.position = Vector3(0, 0.9, 0)
+	body.add_child(pcol)
+	_mesh(body, "Post", _cyl(0.07, 0.6), Vector3(0, 0.3, 0), Vector3.ZERO, wood)
+	_mesh(body, "Base", _cyl(0.4, 0.08), Vector3(0, 0.04, 0), Vector3.ZERO, wood)
+	var pivot := Node3D.new()
+	pivot.name = "SackPivot"
+	pivot.position = Vector3(0, 0.55, 0)
+	dummy.add_child(pivot)
+	var sack := _mesh(pivot, "Sack", _capsule(0.33, 1.1), Vector3(0, 0.6, 0), Vector3.ZERO, sack_mat)
+	sack.name = "Sack"
+	_mesh(pivot, "Head", _sphere(0.2), Vector3(0, 1.3, 0), Vector3.ZERO, sack_mat)
+	var label := Label3D.new()
+	label.name = "HitLabel"
+	label.text = "×1"
+	label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	label.font_size = 72
+	label.outline_size = 18
+	label.pixel_size = 0.008
+	label.modulate = Color(1.0, 0.85, 0.3)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 2.3, 0)
+	dummy.add_child(label)
+	_save_scene(dummy, "res://world/props/training_dummy.tscn")
+
+	var crate := StaticBody3D.new()
+	crate.name = "BreakableCrate"
+	crate.set_script(load("res://world/props/breakable_crate.gd"))
+	crate.collision_layer = 16
+	crate.collision_mask = 0
+	var cshape := BoxShape3D.new()
+	cshape.size = Vector3(0.9, 0.9, 0.9)
+	var ccol := CollisionShape3D.new()
+	ccol.name = "Shape"
+	ccol.shape = cshape
+	ccol.position = Vector3(0, 0.45, 0)
+	crate.add_child(ccol)
+	var cm := _mesh(crate, "Mesh", _boxm(Vector3(0.9, 0.9, 0.9)), Vector3(0, 0.45, 0), Vector3.ZERO, _mat(Color(0.62, 0.42, 0.22)))
+	cm.name = "Mesh"
+	_save_scene(crate, "res://world/props/breakable_crate.tscn")
+
+
 # ------------------------------------------------------------------ camera
 func _build_camera() -> void:
 	var root := Node3D.new()
@@ -553,6 +626,20 @@ func _build_greybox_street() -> void:
 	bell.position = Vector3(32, 8, -9)
 	bell.rotation_degrees = Vector3(0, -90, 0)
 	root.add_child(bell)
+	# Tréninkový koutek útoku holí: figurína + 3 rozbitelné bedny
+	var training := Node3D.new()
+	training.name = "Training"
+	root.add_child(training)
+	var dummy_inst: Node3D = (load("res://world/props/training_dummy.tscn") as PackedScene).instantiate()
+	dummy_inst.position = Vector3(-7, 0, 9)
+	training.add_child(dummy_inst)
+	var crate_scene: PackedScene = load("res://world/props/breakable_crate.tscn")
+	for i: int in 3:
+		var c: Node3D = crate_scene.instantiate()
+		c.name = "Crate%d" % (i + 1)
+		c.position = Vector3(-9.0 - i * 1.3, 0, 7.8)
+		training.add_child(c)
+	_sign(root, "SignTraining", "GB_SIGN_TRAINING", Vector3(-9, 2.4, 7.2), 0.0042, Color(1.0, 0.85, 0.4))
 	var gate: Node3D = (load("res://world/props/gate.tscn") as PackedScene).instantiate()
 	gate.name = "PaintingGate"
 	gate.position = Vector3(24, 0, -5.2)

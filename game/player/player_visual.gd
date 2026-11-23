@@ -53,6 +53,39 @@ func play_swing(duration: float) -> void:
 	tw.tween_property(cane, "rotation_degrees", Vector3(0, 0, -8), duration * 0.65).set_trans(Tween.TRANS_SINE)
 
 
+## Útok holí: 1. švih zprava doleva, 2. zleva doprava, 3. otočka o 360° (finále komba).
+func play_attack(combo: int, duration: float) -> void:
+	var cane: Node3D = $Stand/Cane
+	var tw: Tween = create_tween()
+	match combo:
+		1:
+			cane.rotation_degrees = Vector3(-80, 70, -20)
+			tw.tween_property(cane, "rotation_degrees", Vector3(-85, -80, -20), duration * 0.45).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		2:
+			cane.rotation_degrees = Vector3(-85, -80, -20)
+			tw.tween_property(cane, "rotation_degrees", Vector3(-80, 70, -20), duration * 0.45).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		_:
+			cane.rotation_degrees = Vector3(-90, 0, -20)
+			var spin: Node3D = $Stand
+			spin.rotation.y = 0.0
+			tw.parallel().tween_property(spin, "rotation:y", -TAU, duration * 0.6).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			tw.tween_callback(func() -> void: spin.rotation.y = 0.0)
+	tw.tween_property(cane, "rotation_degrees", Vector3(0, 0, -8), duration * 0.4).set_trans(Tween.TRANS_SINE)
+
+
+## Útok ve vzduchu: rychlá otočka celého Bruna s napřaženou holí.
+func play_air_attack(duration: float) -> void:
+	var cane: Node3D = $Stand/Cane
+	var spin: Node3D = $Stand
+	set_posture(Posture.STAND)
+	cane.rotation_degrees = Vector3(-90, 0, -20)
+	spin.rotation.y = 0.0
+	var tw: Tween = create_tween()
+	tw.tween_property(spin, "rotation:y", -TAU, duration * 0.8).set_trans(Tween.TRANS_SINE)
+	tw.tween_callback(func() -> void: spin.rotation.y = 0.0)
+	tw.tween_property(cane, "rotation_degrees", Vector3(0, 0, -8), duration * 0.2)
+
+
 ## Odkud tenisák vyletí (hrot hole ve výšce hrudníku).
 func get_ball_spawn() -> Vector3:
 	return global_position + get_forward() * 0.7 + Vector3.UP * 0.9

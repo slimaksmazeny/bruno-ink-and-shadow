@@ -23,18 +23,24 @@ var jump_buffer_timer: float = 0.0
 var is_sneaking: bool = false
 ## Plížení přepnuté tlačítkem L3 (na ovladači). Zruší ho sprint nebo další stisk L3.
 var sneak_toggled: bool = false
+## Útok ve vzduchu jde jednou za skok (obnoví se po dopadu).
+var air_attack_used: bool = false
 
 var _spawn_transform: Transform3D
 
 @onready var state_machine: PlayerStateMachine = $StateMachine
 @onready var visual: PlayerVisual = $Visual
 @onready var anchor_detector: AnchorDetector = $AnchorDetector
+@onready var cane_hitbox: CaneHitbox = $CaneHitbox
+
+var _hit_stop_running: bool = false
 
 
 func _ready() -> void:
 	profile = profile_3d
 	_spawn_transform = global_transform
 	anchor_detector.player = self
+	cane_hitbox.hit_landed.connect(_on_cane_hit_landed)
 	state_machine.setup(self)
 
 
@@ -54,6 +60,8 @@ func _physics_process(delta: float) -> void:
 		respawn()
 
 	visual.update_visual(delta, self)
+	# Hitbox není pod Visual (ten se při dopadu škáluje – Jolt nepodporuje nerovnoměrné škálování tvarů).
+	cane_hitbox.rotation.y = visual.rotation.y
 	_debug_watch()
 
 
@@ -99,6 +107,24 @@ func consume_jump_buffer() -> bool:
 		jump_buffer_timer = 0.0
 		return true
 	return false
+
+
+## Zásah holí: krátké „zastavení času“ a zatřesení kamery – zásah je cítit (Sly feel).
+func _on_cane_hit_landed(_target: Node, info: Dictionary) -> void:
+	var strong: bool = int(info.get("combo", 1)) >= 3
+	hit_stop(0.09 if strong else 0.05)
+	if camera != null:
+		camera.shake(0.18 if strong else 0.09, 0.2)
+
+
+func hit_stop(duration: float) -> void:
+	if _hit_stop_running:
+		return
+	_hit_stop_running = true
+	Engine.time_scale = 0.05
+	await get_tree().create_timer(duration, true, false, true).timeout
+	Engine.time_scale = 1.0
+	_hit_stop_running = false
 
 
 func respawn() -> void:

@@ -6,6 +6,7 @@ extends PlayerState
 
 func enter(_previous: StringName, _msg: Dictionary = {}) -> void:
 	player.jumps_used = 0
+	player.air_attack_used = false
 
 
 ## Vrací true, pokud stav přepnul – volající stav pak už nic dalšího nedělá.
@@ -15,13 +16,13 @@ func handle_common(_delta: float) -> bool:
 			return true
 		# Na dotyku je hůl jedno tlačítko: kotva v dosahu = přichycení, jinak útok.
 		if InputManager.touch_controls_visible:
-			machine.transition_to(&"Swing", {"ball": false})
+			machine.transition_to(&"Attack", {"combo": 1})
 			return true
-	if Input.is_action_pressed(&"aim") and machine.has_state(&"Aim"):
+	if Input.is_action_pressed(&"aim") and machine.has_state(&"Aim") and player.mode == Player.Mode.MODE_3D:
 		machine.transition_to(&"Aim")
 		return true
 	if Input.is_action_just_pressed(&"attack"):
-		machine.transition_to(&"Swing", {"ball": false})
+		machine.transition_to(&"Attack", {"combo": 1})
 		return true
 	if Input.is_action_just_pressed(&"tennis"):
 		machine.transition_to(&"Swing", {"ball": true})
@@ -42,7 +43,7 @@ func stick_to_floor() -> void:
 
 ## Vybere správný pozemní stav podle vstupu (používá se i po dopadu).
 static func pick_ground_state(p: Player) -> StringName:
-	if Input.is_action_pressed(&"aim"):
+	if Input.is_action_pressed(&"aim") and p.mode == Player.Mode.MODE_3D:
 		return &"Aim"
 	var strength: float = p.get_move_strength()
 	if strength < 0.05:
