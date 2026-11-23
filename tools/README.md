@@ -16,6 +16,7 @@ C:\Projekty\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script .
 | `test_step_d.gd` | dotyk: joystick, tlačítko sprintu a skoku, rozhlížení, vypnutí myších akcí v dotykovém režimu |
 | `test_step_e.gd` | odpal tenisáku, zásah zvonu, otevření brány, míček neprolétá zdí |
 | `test_step_f.gd` | brána → vstup do obrazu (průlet kamery, inkoust), 2D režim a kamera z boku, rovina drží, odraz z houby + dvojskok na plošinu, pád do propasti → návrat na začátek 2D, výstup zpět do 3D |
+| `test_camera_2d_peek.gd` | 2D kamera: na kraji plošiny nad dírou se sníží a oddálí, uprostřed se vrátí |
 | `test_attack.gd` | kombo holí 1→2→3 (výpad, auto-cíl na figurínu), rozbití bedny, útok ve vzduchu jednou za skok, obnovení času po zastavení |
 | `test_step_e2_aim.gd` | míření (kamera, úkroky, výstřel, sprint potlačen), útok holí, přichycení jen ke kotvě, na kterou se díváš |
 
