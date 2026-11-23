@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://camera/hybrid_camera.gd" id="1_pjv45"]
+[ext_resource type="Script" path="res://camera/third_person_rig.gd" id="2_dmuan"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mxb01"]
+radius = 0.25
+
+[node name="HybridCamera" type="Node3D" unique_id=529497715]
+physics_interpolation_mode = 2
+script = ExtResource("1_pjv45")
+
+[node name="ThirdPersonRig" type="Node3D" parent="." unique_id=1682167405]
+script = ExtResource("2_dmuan")
+
+[node name="YawPivot" type="Node3D" parent="ThirdPersonRig" unique_id=1327534541]
+
+[node name="PitchPivot" type="Node3D" parent="ThirdPersonRig/YawPivot" unique_id=2036054158]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="ThirdPersonRig/YawPivot/PitchPivot" unique_id=1361054369]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0, 0)
+shape = SubResource("SphereShape3D_mxb01")
+spring_length = 5.5
+margin = 0.2
+
+[node name="CameraPoint" type="Marker3D" parent="ThirdPersonRig/YawPivot/PitchPivot/SpringArm3D" unique_id=1001143678]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=39978435]
+current = true
+fov = 70.0

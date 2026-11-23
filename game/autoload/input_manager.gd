@@ -4,24 +4,36 @@
 extends Node
 
 enum Device { KEYBOARD_MOUSE, GAMEPAD, TOUCH }
+## Rodina ovladače – jen pro ikonky tlačítek v UI (✕○△□ vs. A B X Y). Mapování tlačítek je pro všechny stejné:
+## ✕ = A (skok), ○ = B (hůl), △ = Y (tenisák), R2 = RT (sprint), L3 = stisk levé páčky (plížení přepínačem), Options = Menu (pauza).
+enum PadFamily { NONE, XBOX, PLAYSTATION, NINTENDO, GENERIC }
 
 signal device_changed(device: Device)
+signal pad_family_changed(family: PadFamily)
 signal touch_controls_toggled(visible: bool)
 
 const JOY_MOTION_THRESHOLD: float = 0.3
 
 var last_device: Device = Device.KEYBOARD_MOUSE
+var pad_family: PadFamily = PadFamily.NONE
+var pad_name: String = ""
 var touch_controls_visible: bool = false
 var mouse_sensitivity: float = 0.003
 var stick_sensitivity: float = 3.0
 
 var _mouse_look: Vector2 = Vector2.ZERO
+## Akce navázané na tlačítka myši, dočasně odebrané, když je zapnutý dotykový HUD.
+var _stripped_mouse_events: Dictionary = {}
 var _touch_look: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_touch_controls(OS.has_feature("mobile"))
+	Input.joy_connection_changed.connect(_on_joy_connection_changed)
+	var pads: Array[int] = Input.get_connected_joypads()
+	if not pads.is_empty():
+		_set_active_pad(pads[0])
 
 
 func _input(event: InputEvent) -> void:
@@ -70,6 +82,8 @@ func get_move_vector() -> Vector2:
 
 func set_touch_controls(on: bool) -> void:
 	touch_controls_visible = on
+	# S dotykovým HUD nesmí klik/dotyk zároveň spouštět akce navázané na tlačítka myši.
+	_set_mouse_bindings_enabled(not on)
 	if not OS.has_feature("mobile"):
 		# Na PC se myš začne chovat jako prst, aby šel dotykový HUD testovat.
 		Input.emulate_touch_from_mouse = on
@@ -105,9 +119,11 @@ func _track_device(event: InputEvent) -> void:
 		detected = Device.TOUCH
 	elif event is InputEventJoypadButton:
 		detected = Device.GAMEPAD
+		_set_active_pad(event.device)
 	elif event is InputEventJoypadMotion:
 		if absf((event as InputEventJoypadMotion).axis_value) > JOY_MOTION_THRESHOLD:
 			detected = Device.GAMEPAD
+			_set_active_pad(event.device)
 	elif event is InputEventKey or event is InputEventMouseButton:
 		detected = Device.KEYBOARD_MOUSE
 	elif event is InputEventMouseMotion and not Input.emulate_touch_from_mouse:
@@ -116,3 +132,74 @@ func _track_device(event: InputEvent) -> void:
 	if detected != last_device:
 		last_device = detected
 		device_changed.emit(detected)
+
+
+func pad_family_name(family: PadFamily) -> String:
+	match family:
+		PadFamily.PLAYSTATION:
+			return "PlayStation"
+		PadFamily.XBOX:
+			return "Xbox"
+		PadFamily.NINTENDO:
+			return "Nintendo"
+		PadFamily.GENERIC:
+			return "Generic"
+		_:
+			return "-"
+
+
+## Rozpozná rodinu ovladače podle názvu, který hlásí systém (SDL databáze v Godotu).
+static func classify_pad(joy_name: String) -> PadFamily:
+	var n: String = joy_name.to_lower()
+	for key: String in ["ps4", "ps5", "ps3", "dualshock", "dualsense", "playstation", "sony", "wireless controller"]:
+		if n.contains(key):
+			return PadFamily.PLAYSTATION
+	for key: String in ["xbox", "xinput", "microsoft", "x-box"]:
+		if n.contains(key):
+			return PadFamily.XBOX
+	for key: String in ["nintendo", "switch", "pro controller", "joy-con"]:
+		if n.contains(key):
+			return PadFamily.NINTENDO
+	return PadFamily.GENERIC
+
+
+func _set_active_pad(device_id: int) -> void:
+	var joy_name: String = Input.get_joy_name(device_id)
+	var family: PadFamily = classify_pad(joy_name)
+	pad_name = joy_name
+	if family != pad_family:
+		pad_family = family
+		pad_family_changed.emit(family)
+
+
+func _on_joy_connection_changed(device_id: int, connected: bool) -> void:
+	if connected:
+		_set_active_pad(device_id)
+	else:
+		var pads: Array[int] = Input.get_connected_joypads()
+		if pads.is_empty():
+			pad_name = ""
+			pad_family = PadFamily.NONE
+			pad_family_changed.emit(pad_family)
+		else:
+			_set_active_pad(pads[0])
+
+
+func _set_mouse_bindings_enabled(enabled: bool) -> void:
+	if enabled:
+		for action: StringName in _stripped_mouse_events:
+			for e: InputEvent in _stripped_mouse_events[action]:
+				if InputMap.has_action(action):
+					InputMap.action_add_event(action, e)
+		_stripped_mouse_events.clear()
+		return
+	for action: StringName in InputMap.get_actions():
+		if String(action).begins_with("ui_"):
+			continue
+		for e: InputEvent in InputMap.action_get_events(action):
+			if e is InputEventMouseButton:
+				if not _stripped_mouse_events.has(action):
+					_stripped_mouse_events[action] = []
+				(_stripped_mouse_events[action] as Array).append(e)
+				InputMap.action_erase_event(action, e)
+				Input.action_release(action)

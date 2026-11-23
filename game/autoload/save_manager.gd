@@ -46,11 +46,11 @@ func load_game(slot: int = 1) -> bool:
 ## Aktualizuje starší savy na aktuální SAVE_VERSION. Nové pole = nový krok migrace.
 func _migrate(loaded: Dictionary) -> Dictionary:
 	var version: int = int(loaded.get("save_version", 0))
-	var result: Dictionary = GameState.default_data()
+	var result: Dictionary = SaveSchema.default_data()
 	result.merge(loaded, true)
 	if version < 1:
 		pass # zatím žádná starší verze neexistuje
-	result["save_version"] = GameState.SAVE_VERSION
+	result["save_version"] = SaveSchema.SAVE_VERSION
 	return result
 
 

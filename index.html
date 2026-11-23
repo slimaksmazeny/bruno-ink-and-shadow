@@ -1110,12 +1110,14 @@
                 <thead><tr><th>InputMap Akce</th><th>PC (Klávesnice + Myš)</th><th>Gamepad (PS / Xbox)</th><th>Mobilní dotykový HUD</th></tr></thead>
                 <tbody>
                   <tr><td><code>move_left/right/forward/back</code></td><td>WASD / Šipky (fyzické klávesy – funguje i na QWERTZ)</td><td>Levá páčka</td><td>Virtuální joystick</td></tr>
-                  <tr><td><code>look_left/right/up/down</code></td><td>Myš (po kliknutí zachycená, Esc uvolní)</td><td>Pravá páčka</td><td>Tah prstem v pravé polovině</td></tr>
-                  <tr><td><code>jump</code></td><td>Mezerník (podržet ve vzduchu = uši)</td><td>✕ / A</td><td>Tlačítko Skok</td></tr>
-                  <tr><td><code>sprint</code></td><td>Shift (držet)</td><td>L1 / LB nebo L3</td><td>Tlačítko Sprint</td></tr>
-                  <tr><td><code>action</code></td><td>E / Levé tlačítko myši</td><td>○ / B</td><td>Tlačítko Hůl (kotva / kontext)</td></tr>
-                  <tr><td><code>tennis</code></td><td>Q / Pravé tlačítko myši</td><td>△ / Y</td><td>Tlačítko Tenisák</td></tr>
-                  <tr><td><code>sneak</code></td><td>Ctrl (držet)</td><td>L2 / LT</td><td>Podle vychýlení joysticku</td></tr>
+                  <tr><td><code>look_*</code></td><td>Myš (po kliknutí zachycená, Esc uvolní)</td><td>Pravá páčka</td><td>Tah prstem v pravé polovině</td></tr>
+                  <tr><td><code>jump</code></td><td>Mezerník (znovu = dvojskok, držet při pádu = ušní vrtulník)</td><td>✕ / A</td><td>Tlačítko Skok</td></tr>
+                  <tr><td><code>sprint</code></td><td>Shift (držet)</td><td>R1 nebo R2 / RB nebo RT (držet; R2 jen když nemíříš)</td><td>Tlačítko Sprint</td></tr>
+                  <tr><td><code>sneak</code> / <code>sneak_toggle</code></td><td>Ctrl (držet)</td><td>L3 – stisk levé páčky (přepínač)</td><td>Podle vychýlení joysticku</td></tr>
+                  <tr><td><code>attack</code></td><td>Levé tlačítko myši / F</td><td>□ / X</td><td>Tlačítko Hůl (když není kotva v dosahu)</td></tr>
+                  <tr><td><code>action</code> (přichycení)</td><td>E / prostřední tlačítko myši</td><td>○ / B</td><td>Tlačítko Hůl (kotva v dosahu)</td></tr>
+                  <tr><td><code>aim</code> + <code>fire</code></td><td>Pravé tlačítko myši (držet) + levé tlačítko</td><td>L2 / LT (držet) + R2 / RT</td><td>—</td></tr>
+                  <tr><td><code>tennis</code> (rychlý odpal)</td><td>Q</td><td>—</td><td>Tlačítko Tenisák</td></tr>
                   <tr><td><code>pause</code></td><td>Esc</td><td>Options / Menu</td><td>Ikona pauzy</td></tr>
                   <tr><td><code>debug_*</code></td><td>F3 = ladicí panel · L = jazyk · M = dotykový HUD</td><td>—</td><td>—</td></tr>
                 </tbody>
@@ -1432,7 +1434,7 @@
         {
           id: "W2-03", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok A — Kostra projektu, InputMap, lokalizace CS/EN a ladicí panel F3",
-          owner: "Claude", status: "doing", priority: "Kritické", estimate: "1 den",
+          owner: "Claude", status: "done", priority: "Kritické", estimate: "1 den",
           dependsOn: ["W2-01", "W2-02"],
           files: ["game/project.godot", "game/autoload/*.gd", "game/localization/translations.csv", "game/ui/debug/debug_overlay.tscn", "game/levels/greybox/greybox_street.tscn"],
           steps: [
@@ -1449,7 +1451,7 @@
         {
           id: "W2-04", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok B — Bruno, State Machine (Idle/Move/Sprint/Air) a 3D kamera",
-          owner: "Claude", status: "todo", priority: "Kritické", estimate: "2 dny",
+          owner: "Claude", status: "doing", priority: "Kritické", estimate: "2 dny",
           dependsOn: ["W2-03"],
           files: ["game/player/player.tscn", "game/player/player.gd", "game/core/state_machine/*.gd", "game/player/states/*.gd", "game/player/profiles/*.tres", "game/camera/hybrid_camera.tscn", "game/camera/third_person_rig.gd"],
           steps: [
@@ -1466,7 +1468,7 @@
         {
           id: "W2-05", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok C — Ušní vrtulník, systém kotev a magnet na 3 špičky",
-          owner: "Claude", status: "todo", priority: "Kritické", estimate: "1–2 dny",
+          owner: "Claude", status: "doing", priority: "Kritické", estimate: "1–2 dny",
           dependsOn: ["W2-04"],
           files: ["game/player/states/state_glide.gd", "game/player/states/state_perch.gd", "game/player/states/anchor_state.gd", "game/player/anchor_detector.gd", "game/world/anchors/anchor.gd", "game/world/anchors/spire_anchor.tscn"],
           steps: [
@@ -1481,9 +1483,9 @@
         {
           id: "W2-06", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok D — Mobilní dotykový HUD (joystick + 4 tlačítka, přepínač M)",
-          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "1 den",
+          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "1 den",
           dependsOn: ["W2-04"],
-          files: ["game/ui/touch_controls/touch_controls.tscn", "game/ui/touch_controls/virtual_joystick.gd"],
+          files: ["game/ui/touch_controls/touch_controls.tscn", "game/ui/touch_controls/touch_controls.gd", "game/ui/touch_controls/touch_stick.gd", "game/ui/touch_controls/touch_draw.gd"],
           steps: [
             "Virtuální joystick mačkající akce move_* přes Input.action_press",
             "4 TouchScreenButton (hůl, skok, sprint, tenisák) napojené na InputMap",
@@ -1497,7 +1499,7 @@
         {
           id: "W2-07", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.0",
           title: "Krok E — Odpal neonového tenisáku holí + testovací zvon a brána",
-          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "1 den",
+          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "1 den",
           dependsOn: ["W2-04"],
           files: ["game/player/states/state_swing.gd", "game/world/props/tennis_ball.tscn", "game/world/props/target_bell.tscn", "game/world/props/gate.tscn"],
           steps: [
@@ -1881,6 +1883,12 @@
       ];
 
       const DEFAULT_LOGS = [
+        { id: "log_025", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "Ovládání podle Tomáše (inspirace Sly + Rayman): míření L2 / pravé tl. myši (kamera se přiblíží přes rameno, Bruno drží směr pohledu, úkroky 3 m/s) + výstřel R2 / levé tl.; útok holí □ / levé tl. myši; přichycení ○ / E / prostřední tl. myši – nově jen ke kotvě ve směru pohledu kamery (±50°); sprint navíc i na R1. Uši přesunuty na temeno hlavy s kloubem – při vrtulníku se zvednou a točí nad hlavou. PR #3 přesměrován na main (obsahuje Kroky B–E)." },
+        { id: "log_024", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok E (W2-07): stav Swing (švih holí, Bruno se natočí ve směru míření), neonový tenisák (RigidBody3D s CCD, svítící stopa, max. 3 najednou), zvon na věži (zásah → rozhoupání, rozsvícení, Events.bell_hit) a brána před obrazem, která zajede do země. Míří se na zaměřovač „+“ uprostřed obrazovky; kamera je nově lehce přes pravé rameno. Testy a generátory scén uloženy do tools/ – všech 5 sad (A–E) prochází." },
+        { id: "log_023", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok D (W2-06): dotykové ovládání jako globální autoload TouchControls – plovoucí joystick vlevo, 4 tlačítka podle HUD mockupu (hůl, skok, sprint, tenisák), pauza, rozhlížení tahem prstu, plný multi-touch. Tlačítka jen mačkají akce z InputMap. Na PC přepínač M (myš = prst, akce na tlačítkách myši se dočasně vypnou). Pozn.: Godot 4.7 má vestavěnou třídu VirtualJoystick, naše se proto jmenuje TouchStick." },
+        { id: "log_022", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok C (W2-05): ušní vrtulník (držet skok při pádu → pád 2,5 m/s, uši se roztočí), systém kotev Anchor + AnchorDetector s modrými jiskrami, stav Perch (magnetické přitažení a balancování na špičce, skok z ní zachová dvojskok). V ulici cvičná špička + cesta na střechy (schod → bedna → střecha) a 3 špičky. Ovladač: sprint R2/RT, plížení přepínačem L3. Automatický test celé trasy přes 3 špičky prošel." },
+        { id: "log_021", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok B (W2-04): greybox Bruno (postoj na 2 nohách / sprint po 4), PlayerStateMachine se stavy Idle, Move (chůze + plížení), Sprint a Air (skok, dvojskok, coyote time, jump buffer, kratší skok při ťuknutí), 3D kamera s myší i pravou páčkou, pád do propasti = návrat na start. Profily pohybu profile_3d/2d.tres laditelné v Inspectoru. Rozpoznání DualShock 4 / Xbox ovladače. Automatický test: chůze 4,5 m/s, sprint 9 m/s, skok 1,68 m, dvojskok 2,7 m." },
+        { id: "log_020", date: "2026-11-23", author: "Tomáš", status: "done", version: "v0.2.0", text: "Krok A otestován v Godotu 4.7.2 na PC: projekt startuje bez chyb, F3 panel, přepínání a pamatování jazyka CS/EN, zachycení myši. Godot připnut do nabídky Start, Claude převzal ovládání Godotu a GitHub Desktopu." },
         { id: "log_019", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok A (W2-03): založena kostra Godot 4.7 projektu v game/ – project.godot (Jolt, Forward+/Mobile, physics interpolation, pojmenované kolizní vrstvy), 5 autoloadů, kompletní InputMap (klávesnice+myš, Xbox/PS), UTF-8 translations.csv (CS+EN), ladicí panel F3 a testovací greybox scéna. Ověřeno headless spuštěním Godot 4.7; čeká na test Tomáše." },
         { id: "log_018", date: "2026-11-23", author: "Claude", status: "done", version: "v0.1.7", text: "Synchronizace index.html s ARCHITECTURE.md: Vlna 2 přepsána na kroky A–F (W2-03 až W2-08) + Sly Parkour (W2-09) a 2D Kit (W2-10), feature-based cesty k souborům, hlavní vývoj převzal Claude (Antigravity/Gemini záloha). Uložené stavy v prohlížeči se automaticky přemapují, klíče localStorage zůstávají." },
         { id: "log_017", date: "2026-11-23", author: "Claude", status: "done", version: "v0.1.7", text: "Architektonická konzultace dokončena – vznikl ARCHITECTURE.md (Godot 4.7.x, jeden CharacterBody3D pro 3D i 2D, State Machine + systém kotev, hybridní kamera s dolly-zoom přechodem, InputMap pro PC/gamepad/dotyk, lokalizace CS/EN, schéma save, struktura game/). Tomáš schválil všech 7 bodů." },

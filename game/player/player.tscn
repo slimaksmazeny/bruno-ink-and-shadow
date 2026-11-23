@@ -1,0 +1,319 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_kb6p2"]
+[ext_resource type="Resource" path="res://player/profiles/profile_3d.tres" id="2_wodsf"]
+[ext_resource type="Resource" path="res://player/profiles/profile_2d.tres" id="3_32hag"]
+[ext_resource type="Script" path="res://player/player_visual.gd" id="4_tqiix"]
+[ext_resource type="Script" path="res://player/anchor_detector.gd" id="5_e7oew"]
+[ext_resource type="Script" path="res://core/state_machine/player_state_machine.gd" id="6_c35mf"]
+[ext_resource type="Script" path="res://player/states/state_idle.gd" id="7_65viv"]
+[ext_resource type="Script" path="res://player/states/state_move.gd" id="8_x7c3f"]
+[ext_resource type="Script" path="res://player/states/state_sprint.gd" id="9_bjvpn"]
+[ext_resource type="Script" path="res://player/states/state_air.gd" id="10_s7qer"]
+[ext_resource type="Script" path="res://player/states/state_glide.gd" id="11_g4c7l"]
+[ext_resource type="Script" path="res://player/states/state_perch.gd" id="12_knn7v"]
+[ext_resource type="Script" path="res://player/states/state_swing.gd" id="13_7pqkx"]
+[ext_resource type="Script" path="res://player/states/state_aim.gd" id="14_uw77l"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rptt4"]
+radius = 0.35
+height = 1.25
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r7pn3"]
+size = Vector3(0.6, 0.5, 1.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b8hi5"]
+albedo_color = Color(0.09, 0.08, 0.08, 1)
+roughness = 0.6
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2uvqg"]
+radius = 0.27
+height = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1s1yo"]
+albedo_color = Color(0.78, 0.45, 0.18, 1)
+roughness = 0.85
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5ejfk"]
+radius = 0.17
+height = 0.6
+
+[sub_resource type="SphereMesh" id="SphereMesh_jd2rm"]
+radius = 0.23
+height = 0.46
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_q28gw"]
+radius = 0.1
+height = 0.36
+
+[sub_resource type="SphereMesh" id="SphereMesh_ge24q"]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_pnw6m"]
+size = Vector3(0.05, 0.42, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1so5t"]
+size = Vector3(0.05, 0.42, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_55jnj"]
+albedo_color = Color(0.72, 0.08, 0.1, 1)
+roughness = 0.85
+
+[sub_resource type="TorusMesh" id="TorusMesh_dx5ib"]
+inner_radius = 0.17
+outer_radius = 0.23
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2xo5"]
+albedo_color = Color(0.95, 0.71, 0.2, 1)
+roughness = 0.4
+emission_enabled = true
+emission = Color(0.95, 0.71, 0.2, 1)
+emission_energy_multiplier = 0.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_art4l"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.02
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fjxoa"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 1.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gswnw"]
+albedo_color = Color(0.25, 0.55, 1, 1)
+roughness = 0.3
+emission_enabled = true
+emission = Color(0.25, 0.55, 1, 1)
+emission_energy_multiplier = 1.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_xcnuv"]
+radius = 0.06
+height = 0.12
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_j55il"]
+radius = 0.24
+height = 1.15
+
+[sub_resource type="SphereMesh" id="SphereMesh_hjies"]
+radius = 0.21
+height = 0.42
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mmwog"]
+radius = 0.09
+height = 0.32
+
+[sub_resource type="BoxMesh" id="BoxMesh_8pxes"]
+size = Vector3(0.05, 0.16, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fmu53"]
+size = Vector3(0.05, 0.16, 0.42)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_w7j2h"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n0b8q"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jfgyi"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_237xx"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wpyo2"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7crtr"]
+radius = 4.5
+
+[node name="Player" type="CharacterBody3D" unique_id=1453051346]
+collision_layer = 2
+collision_mask = 17
+floor_max_angle = 0.80285144
+floor_snap_length = 0.35
+script = ExtResource("1_kb6p2")
+profile_3d = ExtResource("2_wodsf")
+profile_2d = ExtResource("3_32hag")
+
+[node name="CollisionStand" type="CollisionShape3D" parent="." unique_id=930771619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0)
+shape = SubResource("CapsuleShape3D_rptt4")
+
+[node name="CollisionLow" type="CollisionShape3D" parent="." unique_id=1166942997]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_r7pn3")
+disabled = true
+
+[node name="Visual" type="Node3D" parent="." unique_id=7829073]
+script = ExtResource("4_tqiix")
+
+[node name="Stand" type="Node3D" parent="Visual" unique_id=1991637652]
+
+[node name="Body" type="MeshInstance3D" parent="Visual/Stand" unique_id=1121584507]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("CapsuleMesh_2uvqg")
+
+[node name="Belly" type="MeshInstance3D" parent="Visual/Stand" unique_id=268620150]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.13)
+material_override = SubResource("StandardMaterial3D_1s1yo")
+mesh = SubResource("CapsuleMesh_5ejfk")
+
+[node name="Head" type="MeshInstance3D" parent="Visual/Stand" unique_id=375410897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13, -0.04)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("SphereMesh_jd2rm")
+
+[node name="Snout" type="MeshInstance3D" parent="Visual/Stand" unique_id=244160354]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.08, -0.3)
+material_override = SubResource("StandardMaterial3D_1s1yo")
+mesh = SubResource("CapsuleMesh_q28gw")
+
+[node name="Nose" type="MeshInstance3D" parent="Visual/Stand" unique_id=1463981680]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.48)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("SphereMesh_ge24q")
+
+[node name="EarsPivot" type="Node3D" parent="Visual/Stand" unique_id=382770239]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33, -0.02)
+
+[node name="EarHingeL" type="Node3D" parent="Visual/Stand/EarsPivot" unique_id=25407474]
+transform = Transform3D(0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 0, 0, 1, -0.16, 0, 0)
+
+[node name="EarL" type="MeshInstance3D" parent="Visual/Stand/EarsPivot/EarHingeL" unique_id=1995795451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("BoxMesh_pnw6m")
+
+[node name="EarHingeR" type="Node3D" parent="Visual/Stand/EarsPivot" unique_id=393698544]
+transform = Transform3D(0.9396926, -0.34202012, 0, 0.34202012, 0.9396926, 0, 0, 0, 1, 0.16, 0, 0)
+
+[node name="EarR" type="MeshInstance3D" parent="Visual/Stand/EarsPivot/EarHingeR" unique_id=856626688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("BoxMesh_1so5t")
+
+[node name="Collar" type="MeshInstance3D" parent="Visual/Stand" unique_id=1686953089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+material_override = SubResource("StandardMaterial3D_55jnj")
+mesh = SubResource("TorusMesh_dx5ib")
+
+[node name="Tag" type="MeshInstance3D" parent="Visual/Stand" unique_id=1164351015]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.82, -0.23)
+material_override = SubResource("StandardMaterial3D_a2xo5")
+mesh = SubResource("CylinderMesh_art4l")
+
+[node name="Cane" type="MeshInstance3D" parent="Visual/Stand" unique_id=1556585652]
+transform = Transform3D(0.99026805, 0.1391731, 0, -0.1391731, 0.99026805, 0, 0, 0, 1, 0.38, 0.55, -0.05)
+material_override = SubResource("StandardMaterial3D_a2xo5")
+mesh = SubResource("CylinderMesh_fjxoa")
+
+[node name="CaneTip" type="MeshInstance3D" parent="Visual/Stand" unique_id=24177205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1.07, -0.05)
+material_override = SubResource("StandardMaterial3D_gswnw")
+mesh = SubResource("SphereMesh_xcnuv")
+
+[node name="Sprint" type="Node3D" parent="Visual" unique_id=1637472703]
+visible = false
+
+[node name="Body" type="MeshInstance3D" parent="Visual/Sprint" unique_id=1675524020]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.38, 0.05)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("CapsuleMesh_j55il")
+
+[node name="Head" type="MeshInstance3D" parent="Visual/Sprint" unique_id=573879639]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -0.62)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("SphereMesh_hjies")
+
+[node name="Snout" type="MeshInstance3D" parent="Visual/Sprint" unique_id=1902912679]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.5, -0.84)
+material_override = SubResource("StandardMaterial3D_1s1yo")
+mesh = SubResource("CapsuleMesh_mmwog")
+
+[node name="EarL" type="MeshInstance3D" parent="Visual/Sprint" unique_id=2023302984]
+transform = Transform3D(0.9396926, 0.34202012, 0, -0.33036608, 0.90767336, 0.25881904, 0.088521324, -0.24321035, 0.9659258, -0.2, 0.6, -0.42)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("BoxMesh_8pxes")
+
+[node name="EarR" type="MeshInstance3D" parent="Visual/Sprint" unique_id=1117163713]
+transform = Transform3D(0.9396926, -0.34202012, 0, 0.33036608, 0.90767336, 0.25881904, -0.088521324, -0.24321035, 0.9659258, 0.2, 0.6, -0.42)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("BoxMesh_fmu53")
+
+[node name="Collar" type="MeshInstance3D" parent="Visual/Sprint" unique_id=607581042]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.46, -0.42)
+material_override = SubResource("StandardMaterial3D_55jnj")
+mesh = SubResource("TorusMesh_dx5ib")
+
+[node name="CaneOnBack" type="MeshInstance3D" parent="Visual/Sprint" unique_id=1515909307]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.66, 0.05)
+material_override = SubResource("StandardMaterial3D_a2xo5")
+mesh = SubResource("CylinderMesh_w7j2h")
+
+[node name="LegFL" type="MeshInstance3D" parent="Visual/Sprint" unique_id=2106460421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0.15, -0.35)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("CylinderMesh_n0b8q")
+
+[node name="LegFR" type="MeshInstance3D" parent="Visual/Sprint" unique_id=1818633541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.15, -0.35)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("CylinderMesh_jfgyi")
+
+[node name="LegBL" type="MeshInstance3D" parent="Visual/Sprint" unique_id=234496323]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0.15, 0.45)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("CylinderMesh_237xx")
+
+[node name="LegBR" type="MeshInstance3D" parent="Visual/Sprint" unique_id=2079505197]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.15, 0.45)
+material_override = SubResource("StandardMaterial3D_b8hi5")
+mesh = SubResource("CylinderMesh_wpyo2")
+
+[node name="AnchorDetector" type="Area3D" parent="." unique_id=1675203495]
+script = ExtResource("5_e7oew")
+
+[node name="Shape" type="CollisionShape3D" parent="AnchorDetector" unique_id=1314058012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("SphereShape3D_7crtr")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1139122218 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_c35mf")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1762599900]
+script = ExtResource("7_65viv")
+
+[node name="Move" type="Node" parent="StateMachine" unique_id=1776343369]
+script = ExtResource("8_x7c3f")
+
+[node name="Sprint" type="Node" parent="StateMachine" unique_id=1928880170]
+script = ExtResource("9_bjvpn")
+
+[node name="Air" type="Node" parent="StateMachine" unique_id=222902108]
+script = ExtResource("10_s7qer")
+
+[node name="Glide" type="Node" parent="StateMachine" unique_id=317857941]
+script = ExtResource("11_g4c7l")
+
+[node name="Perch" type="Node" parent="StateMachine" unique_id=477957396]
+script = ExtResource("12_knn7v")
+
+[node name="Swing" type="Node" parent="StateMachine" unique_id=56427165]
+script = ExtResource("13_7pqkx")
+
+[node name="Aim" type="Node" parent="StateMachine" unique_id=2005467511]
+script = ExtResource("14_uw77l")

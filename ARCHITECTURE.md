@@ -256,7 +256,7 @@ func get_snap_position(_from: Vector3) -> Vector3:
 	return snap_point.global_position   # LEDGE/ROPE v0.2.1 přepíšou na nejbližší bod úsečky
 ```
 
-- `AnchorDetector` (Area3D koule ~4 m na hráči) drží seznam kotev v dosahu a vybírá **nejlepší** (vzdálenost + směr pohledu + kotva nad/před hráčem). Nejlepší kotvě zapne modré jiskry (zvýraznění).
+- `AnchorDetector` (Area3D koule ~4 m na hráči) drží seznam kotev v dosahu a vybírá **nejlepší** podle **směru kamery** (kotva mimo 50° od pohledu se nenabídne, pokud nestojíš přímo u ní) a vzdálenosti – Bruno se přichytí tam, kam se hráč dívá. Nejlepší kotvě zapne modré jiskry (zvýraznění).
 - `GroundedState` i `AirborneState` při `action` zavolají jednu sdílenou funkci:
 
 ```gdscript
@@ -290,6 +290,7 @@ HybridCamera (Node3D, hybrid_camera.gd)        ← v levelu, NE jako dítě hrá
 │   └── CameraPoint (Marker3D)
 └── Camera3D                                   ← jediná skutečná kamera
 ```
+- **Kamera přes rameno:** SpringArm je posunutý o 0,55 m doprava, aby Bruno nezakrýval zaměřovač (míření tenisákem přes střed obrazovky).
 - **Oba rigy se aktualizují každý snímek**, i když je jejich váha 0. 3D rig čte vstup myši/páčky jen když je hráč v 3D.
 - Kamera v `_process` čte `player.get_global_transform_interpolated()` a je zapnutá **physics interpolation** (projektové nastavení) → žádné cukání při 60 Hz fyzice a 120 Hz monitoru.
 
@@ -350,10 +351,12 @@ func blend_to(target: float, duration: float = 0.9) -> void:
 | `move_left/right/forward/back` | A / D / W / S | levá páčka | levá páčka | virtuální joystick |
 | `look_left/right/up/down` | myš (delta) | pravá páčka | pravá páčka | tah prstem v pravé polovině |
 | `jump` | Mezerník | A | ✕ | tlačítko šipka ↑ |
-| `sprint` (držet) | Shift | LB / L3 | L1 / L3 | tlačítko běžícího Bruna |
-| `action` (hůl: kotva / kontext) | E / levé tlačítko myši | B | ○ | tlačítko hole |
-| `tennis` (odpal tenisáku) | Q / pravé tlačítko myši | Y | △ | tlačítko tenisáku |
-| `sneak` (držet, plížení) | Ctrl | LT | L2 | (automaticky podle vychýlení joysticku) |
+| `sprint` (držet) | Shift | RB nebo RT | R1 nebo R2 (R2 jen když nemíříš) | tlačítko běžícího Bruna |
+| `attack` (útok holí) | levé tl. myši / F | X | □ | tlačítko hole (bez kotvy v dosahu) |
+| `action` (přichycení ke kotvě) | E / prostřední tl. myši | B | ○ | tlačítko hole (kotva v dosahu) |
+| `aim` (držet) + `fire` | pravé tl. myši + levé tl. myši | LT + RT | L2 + R2 | — |
+| `tennis` (rychlý odpal) | Q | — | — | tlačítko tenisáku |
+| `sneak` (držet) / `sneak_toggle` (přepnout) | Ctrl (držet) | L3 – stisk páčky | L3 – stisk páčky | (automaticky podle vychýlení joysticku) |
 | `pause` | Esc | Menu | Options | ikona pauzy |
 | `debug_toggle_touch` | M | — | — | — |
 | `debug_overlay` | F3 | — | — | — |
@@ -423,7 +426,7 @@ func _track_device(event: InputEvent) -> void:
 
 ### 4.3 Dotykový HUD (`ui/touch_controls/`)
 - **Tlačítka:** `TouchScreenButton` s vyplněnou vlastností `action` (`jump`, `sprint`, `action`, `tennis`) → Godot akci mačká nativně, multi-touch funguje. `passby_press = true` pro skok.
-- **Virtuální joystick** (`virtual_joystick.gd`, `Control`): sleduje index prstu z `InputEventScreenTouch/Drag` a převádí výchylku na akce:
+- **Virtuální joystick** (`touch_stick.gd`, `Control`): sleduje index prstu z `InputEventScreenTouch/Drag` a převádí výchylku na akce:
   ```gdscript
   func _apply(v: Vector2) -> void:   # v v rozsahu -1..1
   	_press(&"move_left",  maxf(-v.x, 0.0)); _press(&"move_right", maxf(v.x, 0.0))
@@ -539,6 +542,7 @@ game/                                  ← res://
 │   ├── save_manager.gd                ← JSON save + settings.cfg
 │   └── settings.gd                    ← jazyk, hlasitost, citlivost (aplikuje a ukládá)
 │   (+ DebugOverlay = ui/debug/debug_overlay.tscn jako 6. autoload, jen debug)
+│   (+ TouchControls = ui/touch_controls/touch_controls.tscn jako 7. autoload)
 ├── core/
 │   ├── state_machine/
 │   │   ├── player_state.gd
@@ -583,7 +587,7 @@ game/                                  ← res://
 │       └── greybox_street.tscn        ← hlavní scéna v0.2.0
 ├── ui/
 │   ├── debug/        debug_overlay.tscn/.gd
-│   ├── touch_controls/ touch_controls.tscn, virtual_joystick.gd
+│   ├── touch_controls/ touch_controls.tscn, touch_stick.gd
 │   ├── hud/          (v0.3.1)
 │   ├── menus/        (v0.3.1)
 │   └── transitions/  ink_wipe.tscn

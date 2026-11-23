@@ -1,0 +1,7 @@
+# Jednotné konce řádků (LF) – Godot je na Windows zapisuje jako LF a GitHub Desktop pak
+# hlásil „změny“ bez obsahu. Binární soubory git nechává být.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.translation binary
+*.exe binary
