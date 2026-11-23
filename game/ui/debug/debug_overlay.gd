@@ -71,6 +71,7 @@ func _build_text() -> String:
 	for id: int in Input.get_connected_joypads():
 		pads.append(Input.get_joy_name(id))
 	lines.append("Gamepads: %s" % (", ".join(pads) if pads.size() > 0 else "-"))
+	lines.append("Pad family: %s" % InputManager.pad_family_name(InputManager.pad_family))
 
 	var move: Vector2 = InputManager.get_move_vector()
 	var look: Vector2 = InputManager.get_look_stick()
@@ -84,7 +85,7 @@ func _build_text() -> String:
 	lines.append("Actions: %s" % (", ".join(held) if held.size() > 0 else "-"))
 
 	if _watches.is_empty():
-		lines.append("Player state: - (Step B)")
+		lines.append("Player state: -")
 	for key: String in _watches:
 		lines.append("%s: %s" % [key, _watches[key]])
 	return "\n".join(lines)
