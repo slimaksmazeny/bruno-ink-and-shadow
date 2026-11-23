@@ -11,8 +11,8 @@ export.cfg
 export_credentials.cfg
 *.tmp
 
-# Imported translations (automatically generated from CSV files)
-*.translation
+# Imported translations: generated from translations.csv, but committed on purpose
+# so a fresh clone opens without 'Cannot open file *.translation' errors.
 
 # Mono-specific ignores
 .mono/

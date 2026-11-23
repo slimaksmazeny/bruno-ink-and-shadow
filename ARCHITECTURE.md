@@ -1,7 +1,7 @@
 # Bruno: Ink & Shadow — Technická architektura (`ARCHITECTURE.md`)
 
 > **Zdroj pravdy pro kód v `game/`.** `DESIGN.md` říká *co* hra dělá, tento dokument říká *jak* je to postavené.
-> Verze dokumentu: `v0.2.0-arch.1` (doplněno při Kroku A: autoload DebugOverlay, akce `debug_toggle_language`, `*.translation` se negenerují do gitu) · Autor: Claude (architekt) · Schvaluje: Tomáš · Implementuje: Claude (záloha: Antigravity)
+> Verze dokumentu: `v0.2.0-arch.1` (doplněno při Kroku A: autoload DebugOverlay, akce `debug_toggle_language`, `*.translation` se commitují) · Autor: Claude (architekt) · Schvaluje: Tomáš · Implementuje: Claude (záloha: Antigravity)
 > Při rozporu mezi tímto dokumentem a roadmapou v `index.html` platí tento dokument (cesty k souborům jsou zde aktualizované).
 
 ---
@@ -650,7 +650,7 @@ gdscript/warnings/untyped_declaration=1
 ```
 (Přesné názvy klíčů ověřit v Godotu — po spuštění editoru a uložení Project Settings je Godot přepíše do správného tvaru.)
 
-**`.gitignore` v kořeni repa musí obsahovat:** `.godot/`, `*.tmp` a `*.translation` (generuje se z CSV při importu). Soubory `*.import` a `*.uid` **commitovat**.
+**`.gitignore` v kořeni repa musí obsahovat:** `.godot/` a `*.tmp`. Soubory `*.translation` (generované z CSV) se commitují, aby čerstvý klon šel otevřít bez chyb. Soubory `*.import` a `*.uid` **commitovat**.
 
 ---
 
