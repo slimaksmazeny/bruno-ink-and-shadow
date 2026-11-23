@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bruno: Ink &amp; Shadow — Herní studio centrum (v0.1.7)</title>
+  <title>Bruno: Ink &amp; Shadow — Herní studio centrum (v0.1.8)</title>
   <style>
     :root {
       --bg: #0b0f17;
@@ -662,6 +662,33 @@
       .worlds-grid, .vis-grid, .ability-grid, .story-grid, .log-form, .plan-filters-row, .add-task-grid { grid-template-columns: 1fr; }
       .topbar .btn-primary span.hide-sm { display: none; }
     }
+    /* ===== v0.1.8: přehlednější centrum ===== */
+    .sb-group-label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); opacity: 0.75; margin: 14px 10px 4px; font-weight: 700; }
+    .sb-group-label:first-child { margin-top: 2px; }
+    .now-card { border: 1px solid rgba(34, 211, 238, 0.45); background: linear-gradient(135deg, rgba(34, 211, 238, 0.10), rgba(192, 132, 252, 0.07)); border-radius: 18px; padding: 18px 20px; margin-bottom: 18px; }
+    .now-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+    .now-kicker { color: var(--cyan); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .now-title { font-size: 1.25rem; font-weight: 800; margin: 4px 0 12px; line-height: 1.3; }
+    .now-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
+    @media (max-width: 860px) { .now-grid { grid-template-columns: 1fr; } }
+    .now-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+    .now-steps li { display: flex; gap: 8px; align-items: flex-start; font-size: 0.9rem; line-height: 1.4; }
+    .now-steps li .ck { flex: none; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--muted); display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; margin-top: 1px; }
+    .now-steps li.done { color: var(--muted); }
+    .now-steps li.done .ck { background: var(--green); border-color: var(--green); color: #06140b; }
+    .next-list { display: flex; flex-direction: column; gap: 8px; }
+    .next-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line, rgba(255,255,255,0.08)); background: rgba(255,255,255,0.02); cursor: pointer; }
+    .next-row:hover { border-color: rgba(251, 191, 36, 0.5); }
+    .next-row-title { font-weight: 650; font-size: 0.92rem; }
+    .quick-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+    .quick-link { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line, rgba(255,255,255,0.08)); background: rgba(255,255,255,0.02); text-decoration: none; color: inherit; }
+    .quick-link:hover { border-color: rgba(34, 211, 238, 0.55); }
+    .quick-link strong { font-size: 0.92rem; }
+    .quick-link span { font-size: 0.78rem; color: var(--muted); }
+    .log-text.clamp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .log-more { background: none; border: none; color: var(--cyan); cursor: pointer; font-size: 0.8rem; padding: 2px 0; font-weight: 700; }
+    .rm-wave-done-note { padding: 10px 16px 14px; color: var(--muted); font-size: 0.86rem; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .toggle-chip { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; font-size: 0.85rem; }
   </style>
 </head>
 <body>
@@ -675,7 +702,7 @@
         <div>
           <div class="sb-brand-title">Bruno: Ink &amp; Shadow</div>
           <div class="sb-brand-sub">
-            <span class="pill-ver">v0.1.7</span>
+            <span class="pill-ver">v0.1.8</span>
             <span>Studio Centrum</span>
           </div>
         </div>
@@ -692,27 +719,30 @@
       </div>
 
       <nav class="sb-nav" id="sbNav">
+        <div class="sb-group-label">Vývoj</div>
         <a href="#prehled" class="nav-link" data-tab="prehled">
-          <span class="nav-link-left"><span>🏠</span><span>Přehled</span></span>
+          <span class="nav-link-left"><span>🎯</span><span>Dnes</span></span>
         </a>
         <a href="#plan" class="nav-link" data-tab="plan">
-          <span class="nav-link-left"><span>✅</span><span>Plán, Vlny &amp; Kanban</span></span>
+          <span class="nav-link-left"><span>✅</span><span>Roadmapa</span></span>
           <span class="nav-badge gold" id="badgeRoadmap">0/30</span>
         </a>
+        <a href="#denik" class="nav-link" data-tab="denik">
+          <span class="nav-link-left"><span>📝</span><span>Deník práce</span></span>
+        </a>
+        <div class="sb-group-label">Hra</div>
         <a href="#svety" class="nav-link" data-tab="svety">
           <span class="nav-link-left"><span>🗺️</span><span>Světy &amp; Příběh</span></span>
           <span class="nav-badge cyan">6</span>
         </a>
         <a href="#mechaniky" class="nav-link" data-tab="mechaniky">
-          <span class="nav-link-left"><span>🎮</span><span>Mechaniky &amp; Diagramy</span></span>
+          <span class="nav-link-left"><span>🎮</span><span>Ovládání &amp; Mechaniky</span></span>
         </a>
         <a href="#vizualy" class="nav-link" data-tab="vizualy">
           <span class="nav-link-left"><span>🎨</span><span>Vizuály</span></span>
           <span class="nav-badge alert" id="badgeVisuals">30</span>
         </a>
-        <a href="#denik" class="nav-link" data-tab="denik">
-          <span class="nav-link-left"><span>📝</span><span>Deník práce</span></span>
-        </a>
+        <div class="sb-group-label">Nástroje</div>
         <a href="#napady" class="nav-link" data-tab="napady">
           <span class="nav-link-left"><span>💡</span><span>Nápady &amp; Otázky</span></span>
         </a>
@@ -737,7 +767,7 @@
       <header class="topbar">
         <div class="topbar-left">
           <button type="button" class="hamburger" id="hamburgerBtn" aria-label="Otevřít menu">☰</button>
-          <h1 class="page-title" id="topPageTitle">🏠 Přehled projektu</h1>
+          <h1 class="page-title" id="topPageTitle">🎯 Dnes</h1>
         </div>
         <div style="display: flex; align-items: center; gap: 8px;">
           <button type="button" class="btn-primary js-copy-ai">
@@ -756,11 +786,11 @@
                 <img src="vis/logo_bruno_v01.png" alt="Logo Bruno: Ink & Shadow" class="hero-logo js-zoom" onerror="this.style.display='none'" />
               </div>
               <p class="hero-desc">
-                Řídicí centrum vývoje <strong>Bruno: Ink &amp; Shadow</strong> — 3D stealth/parkour ve stylu <em>Sly Cooper 2</em> plynule propojený s 2D plošinovkou ve stylu <em>Rayman Origins (UbiArt)</em> a Mosquito průlety na komáru <em>Šídlo</em>. Všechny úkoly a procenta se počítají živě z jedné Roadmapy (<code>done = 100 %</code>, <code>doing = 50 %</code>).
+                3D stealth/parkour ve stylu <em>Sly Cooper 2</em> + 2D plošinovka ve stylu <em>Rayman Origins</em>. Godot 4.7 · Claude vyvíjí přímo v repozitáři, Tomáš testuje a schvaluje.
               </p>
               <div class="hero-tags">
-                <span class="tag gold">v0.1.7</span>
-                <span class="tag cyan">Godot 4</span>
+                <span class="tag gold">Hra v0.2.0</span>
+                <span class="tag cyan">Godot 4.7</span>
                 <span class="tag purple">CS + EN</span>
                 <span class="tag green">6 Kapitol</span>
                 <span class="tag">🎨 30 Vizuálů</span>
@@ -790,47 +820,47 @@
             </div>
           </div>
 
-          <!-- NEXT ACTIONS -->
-          <div class="next-box">
-            <div class="panel-head" style="margin-bottom: 12px;">
-              <h2 style="color: var(--cyan);">🎯 Co udělat právě teď (Next Actions)</h2>
-              <span class="muted">Automaticky vybrané rozpracované a nejbližší odemčené úkoly</span>
+          <!-- TEĎ DĚLÁME -->
+          <div class="now-card" id="nowCard"></div>
+
+          <div class="two-col">
+            <!-- PAK NA ŘADĚ -->
+            <div class="panel">
+              <div class="panel-head">
+                <h2>⏭️ Pak na řadě</h2>
+                <a href="#plan" class="tag purple" style="text-decoration: none;">Celá roadmapa →</a>
+              </div>
+              <div class="next-list" id="nextActionsGrid"></div>
             </div>
-            <div class="next-grid" id="nextActionsGrid"></div>
+            <!-- RYCHLÉ ODKAZY -->
+            <div class="panel">
+              <div class="panel-head">
+                <h2>🔗 Rychlé odkazy</h2>
+              </div>
+              <div class="quick-links">
+                <a class="quick-link" href="https://github.com/slimaksmazeny/bruno-ink-and-shadow/pulls" target="_blank" rel="noopener"><strong>🔀 Pull Requesty</strong><span>Co čeká na otestování a merge</span></a>
+                <a class="quick-link" href="https://github.com/slimaksmazeny/bruno-ink-and-shadow" target="_blank" rel="noopener"><strong>📦 Repozitář na GitHubu</strong><span>slimaksmazeny/bruno-ink-and-shadow</span></a>
+                <a class="quick-link" href="ARCHITECTURE.md" target="_blank"><strong>🏗️ ARCHITECTURE.md</strong><span>Jak je hra postavená</span></a>
+                <a class="quick-link" href="DESIGN.md" target="_blank"><strong>📖 DESIGN.md</strong><span>Herní design (bible)</span></a>
+                <a class="quick-link" href="tools/README.md" target="_blank"><strong>🧪 Testy</strong><span>Automatické testy kroků (tools/)</span></a>
+                <a class="quick-link" href="#mechaniky"><strong>🎮 Ovládání</strong><span>Klávesnice · DualShock / Xbox · dotyk</span></a>
+              </div>
+            </div>
           </div>
 
-          <!-- 6 WAVES HARMONOGRAM -->
+          <!-- 6 VLN -->
           <div class="panel">
             <div class="panel-head">
-              <h2>🌊 Harmonogram 6 vln vývoje</h2>
-              <span class="muted">Kliknutím na vlnu otevřeš její detailní úkoly a kroky</span>
+              <h2>🌊 Vlny vývoje</h2>
+              <span class="muted">Klikni na vlnu pro její úkoly</span>
             </div>
             <div class="wave-timeline" id="overviewWaveTimeline"></div>
-          </div>
-
-          <!-- PHASES & ROLES BREAKDOWN -->
-          <div class="two-col">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>🏁 Postup podle Fází</h2>
-                <span class="muted">Fáze 1 (v1.0.0) vs. Fáze 2 (v1.3.x)</span>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 10px;" id="phaseBreakdown"></div>
-            </div>
-
-            <div class="panel">
-              <div class="panel-head">
-                <h2>👥 Rozdělení úkolů podle Rolí</h2>
-                <span class="muted">Tomáš · Claude (hlavní vývoj) · Antigravity &amp; Gemini (záloha)</span>
-              </div>
-              <div class="breakdown-grid" id="roleBreakdown"></div>
-            </div>
           </div>
 
           <!-- RECENT WORK LOG -->
           <div class="panel">
             <div class="panel-head">
-              <h2>📝 Poslední 3 záznamy z Deníku práce</h2>
+              <h2>📝 Naposledy v deníku</h2>
               <a href="#denik" class="tag purple" style="text-decoration: none;">Celý deník →</a>
             </div>
             <div class="timeline" id="overviewRecentLogs"></div>
@@ -847,6 +877,7 @@
                 <button type="button" class="vs-btn" data-pview="milestones">🏁 Přehled milníků</button>
               </div>
               <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <label class="toggle-chip btn-secondary"><input type="checkbox" id="hideDoneToggle" checked /> Skrýt hotové</label>
                 <button type="button" class="btn-secondary" id="toggleAddTaskBtn">＋ Přidat vlastní úkol</button>
                 <button type="button" class="btn-secondary danger" id="resetRoadmapBtn">↺ Obnovit výchozí stavy</button>
               </div>
@@ -991,6 +1022,30 @@
         <section id="view-mechaniky" class="view">
           <div class="panel">
             <div class="panel-head">
+              <h2>🕹️ Ovládání — klávesnice + myš · DualShock / Xbox · dotyk</h2>
+              <span class="tag purple">translations.csv od 1. dne</span>
+            </div>
+            <div class="table-wrap">
+              <table class="studio-table">
+                <thead><tr><th>InputMap Akce</th><th>PC (Klávesnice + Myš)</th><th>Gamepad (PS / Xbox)</th><th>Mobilní dotykový HUD</th></tr></thead>
+                <tbody>
+                  <tr><td><code>move_left/right/forward/back</code></td><td>WASD / Šipky (fyzické klávesy – funguje i na QWERTZ)</td><td>Levá páčka</td><td>Virtuální joystick</td></tr>
+                  <tr><td><code>look_*</code></td><td>Myš (po kliknutí zachycená, Esc uvolní)</td><td>Pravá páčka</td><td>Tah prstem v pravé polovině</td></tr>
+                  <tr><td><code>jump</code></td><td>Mezerník (znovu = dvojskok, držet při pádu = ušní vrtulník)</td><td>✕ / A</td><td>Tlačítko Skok</td></tr>
+                  <tr><td><code>sprint</code></td><td>Shift (držet)</td><td>R1 nebo R2 / RB nebo RT (držet; R2 jen když nemíříš)</td><td>Tlačítko Sprint</td></tr>
+                  <tr><td><code>sneak</code> / <code>sneak_toggle</code></td><td>Ctrl (držet)</td><td>L3 – stisk levé páčky (přepínač)</td><td>Podle vychýlení joysticku</td></tr>
+                  <tr><td><code>attack</code></td><td>Levé tlačítko myši / F</td><td>□ / X</td><td>Tlačítko Hůl (když není kotva v dosahu)</td></tr>
+                  <tr><td><code>action</code> (přichycení)</td><td>E / prostřední tlačítko myši</td><td>○ / B</td><td>Tlačítko Hůl (kotva v dosahu)</td></tr>
+                  <tr><td><code>aim</code> + <code>fire</code></td><td>Pravé tlačítko myši (držet) + levé tlačítko</td><td>L2 / LT (držet) + R2 / RT</td><td>—</td></tr>
+                  <tr><td><code>tennis</code> (rychlý odpal)</td><td>Q</td><td>—</td><td>Tlačítko Tenisák</td></tr>
+                  <tr><td><code>pause</code></td><td>Esc</td><td>Options / Menu</td><td>Ikona pauzy</td></tr>
+                  <tr><td><code>debug_*</code></td><td>F3 = ladicí panel · L = jazyk · M = dotykový HUD</td><td>—</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
               <h2>🔄 Interaktivní diagram herní smyčky</h2>
               <span class="muted">Klikni na libovolný blok pro technický detail</span>
             </div>
@@ -1039,24 +1094,25 @@
 
           <div class="panel">
             <div class="panel-head">
-              <h2>🦊 Sly 2 Movement Kit — 3D State Machine</h2>
-              <span class="tag cyan">Kontextové tlačítko Hák/Akrobacie u modrých jisker</span>
+              <h2>🦊 Stavy Bruna (State Machine) — co už je ve hře</h2>
+              <span class="tag cyan">player/states/*.gd</span>
             </div>
             <div class="table-wrap">
               <table class="studio-table">
-                <thead><tr><th>Stav State Machine</th><th>Spouštěč</th><th>Chování</th><th>Verze</th></tr></thead>
+                <thead><tr><th>Stav</th><th>Spouštěč</th><th>Chování</th><th>Verze</th></tr></thead>
                 <tbody>
-                  <tr><td><code>IDLE</code> / <code>MOVE</code></td><td>Základní pohyb</td><td>2 nohy, plížení, po 5 s idle pinkání tenisákem na čumáku</td><td><span class="tag gold">v0.2.0</span></td></tr>
-                  <tr><td><code>SPRINT_4LEGS</code></td><td>Sprint</td><td>Hůl na záda, rychlý běh na všech čtyřech</td><td><span class="tag gold">v0.2.0</span></td></tr>
-                  <tr><td><code>JUMP</code> / <code>GLIDE</code></td><td>Skok / podržení</td><td>Dvojskok + Ušní vrtulník (zpomalený pád)</td><td><span class="tag gold">v0.2.0</span></td></tr>
-                  <tr><td><code>SPIRE_PERCH</code></td><td>Hák u špičky</td><td>Magnetické přitažení na modrou jiskru (špička/komín)</td><td><span class="tag gold">v0.2.0</span></td></tr>
-                  <tr><td><code>TENNIS_SWING</code></td><td>Akce tenisáku</td><td>Odpal neonového tenisáku holí na zvon/spínač/hlídku</td><td><span class="tag gold">v0.2.0</span></td></tr>
-                  <tr><td><code>CLIMB</code></td><td>Hák u okapu/trubky</td><td>Vertikální šplhání po okapech a potrubí</td><td><span class="tag purple">v0.2.1</span></td></tr>
-                  <tr><td><code>CRAWL</code></td><td>Plížení pod překážkou</td><td>Nízké plazení pod stoly, mřížemi a lasery</td><td><span class="tag purple">v0.2.1</span></td></tr>
-                  <tr><td><code>LEDGE_HANG</code></td><td>Hák / hrana římsy</td><td>Ručkování do stran po římsách a vyšvihnutí nahoru</td><td><span class="tag purple">v0.2.1</span></td></tr>
-                  <tr><td><code>WALL_SNEAK</code></td><td>Hák u zdi</td><td>Přitisknutí ke zdi a tiché vyklonění za roh</td><td><span class="tag purple">v0.2.1</span></td></tr>
-                  <tr><td><code>PATH_FOLLOW</code></td><td>Hák u lana/kolejnice</td><td>Chůze po lanech (Kap. 1) a Rail Grinding (Kap. 2)</td><td><span class="tag purple">v0.2.1</span></td></tr>
-                  <tr><td><code>HOOK_SWING</code></td><td>Hák u závěsného kruhu</td><td>Kyvadlové houpání a katapult přes propasti</td><td><span class="tag purple">v0.2.1</span></td></tr>
+                  <tr><td><code>Idle</code> / <code>Move</code></td><td>Páčka / WASD</td><td>Chůze na 2 nohách 4,5 m/s; plížení (L3 / Ctrl nebo slabá výchylka) 2 m/s</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Sprint</code></td><td>R1 / R2 / Shift</td><td>Hůl na záda, běh po čtyřech 9 m/s</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Air</code></td><td>✕ / Mezerník</td><td>Skok ~1,7 m, dvojskok ~2,7 m, coyote time, jump buffer, kratší skok ťuknutím</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Glide</code></td><td>Držet skok při pádu</td><td>Ušní vrtulník – uši nad hlavou se točí, pád 2,5 m/s</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Perch</code></td><td>○ / E u modré špičky</td><td>Magnetické přitažení obloukem, balancování; kotva podle směru pohledu kamery</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Attack</code></td><td>□ / levé tl. myši (až 3×)</td><td>Kombo 3 švihů s výpadem, auto-cíl, 3. švih = otočka; hit-stop + zatřesení</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>AirAttack</code></td><td>□ ve vzduchu</td><td>Otočka s holí, malé nadlehčení, jednou za skok</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Aim</code></td><td>L2 / pravé tl. myši (držet)</td><td>Kamera přes rameno se přiblíží, úkroky 3 m/s; R2 / levé tl. = výstřel tenisáku</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Swing</code></td><td>Q / dotykové tlačítko tenisáku</td><td>Rychlý odpal tenisáku na zaměřovač</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Locked</code></td><td>Portál / cutscéna</td><td>Vstup ignorován – průlet do obrazu a zpět</td><td><span class="tag green">✅ v0.2.0</span></td></tr>
+                  <tr><td><code>Climb</code> · <code>Crawl</code> · <code>LedgeHang</code></td><td>○ u okapu / pod překážkou / u římsy</td><td>Šplhání, plazení (nízká kolize), ručkování</td><td><span class="tag purple">v0.2.1</span></td></tr>
+                  <tr><td><code>WallSneak</code> · <code>PathFollow</code> · <code>HookSwing</code></td><td>○ u zdi / lana / kruhu</td><td>Přitisknutí ke zdi, chůze po laně a rail grinding, houpání na háku</td><td><span class="tag purple">v0.2.1</span></td></tr>
                 </tbody>
               </table>
             </div>
@@ -1100,30 +1156,6 @@
             </div>
           </div>
 
-          <div class="panel">
-            <div class="panel-head">
-              <h2>🕹️ Jednotná InputMap (PC / Gamepad / Mobil) &amp; Lokalizace (CS + EN)</h2>
-              <span class="tag purple">translations.csv od 1. dne</span>
-            </div>
-            <div class="table-wrap">
-              <table class="studio-table">
-                <thead><tr><th>InputMap Akce</th><th>PC (Klávesnice + Myš)</th><th>Gamepad (PS / Xbox)</th><th>Mobilní dotykový HUD</th></tr></thead>
-                <tbody>
-                  <tr><td><code>move_left/right/forward/back</code></td><td>WASD / Šipky (fyzické klávesy – funguje i na QWERTZ)</td><td>Levá páčka</td><td>Virtuální joystick</td></tr>
-                  <tr><td><code>look_*</code></td><td>Myš (po kliknutí zachycená, Esc uvolní)</td><td>Pravá páčka</td><td>Tah prstem v pravé polovině</td></tr>
-                  <tr><td><code>jump</code></td><td>Mezerník (znovu = dvojskok, držet při pádu = ušní vrtulník)</td><td>✕ / A</td><td>Tlačítko Skok</td></tr>
-                  <tr><td><code>sprint</code></td><td>Shift (držet)</td><td>R1 nebo R2 / RB nebo RT (držet; R2 jen když nemíříš)</td><td>Tlačítko Sprint</td></tr>
-                  <tr><td><code>sneak</code> / <code>sneak_toggle</code></td><td>Ctrl (držet)</td><td>L3 – stisk levé páčky (přepínač)</td><td>Podle vychýlení joysticku</td></tr>
-                  <tr><td><code>attack</code></td><td>Levé tlačítko myši / F</td><td>□ / X</td><td>Tlačítko Hůl (když není kotva v dosahu)</td></tr>
-                  <tr><td><code>action</code> (přichycení)</td><td>E / prostřední tlačítko myši</td><td>○ / B</td><td>Tlačítko Hůl (kotva v dosahu)</td></tr>
-                  <tr><td><code>aim</code> + <code>fire</code></td><td>Pravé tlačítko myši (držet) + levé tlačítko</td><td>L2 / LT (držet) + R2 / RT</td><td>—</td></tr>
-                  <tr><td><code>tennis</code> (rychlý odpal)</td><td>Q</td><td>—</td><td>Tlačítko Tenisák</td></tr>
-                  <tr><td><code>pause</code></td><td>Esc</td><td>Options / Menu</td><td>Ikona pauzy</td></tr>
-                  <tr><td><code>debug_*</code></td><td>F3 = ladicí panel · L = jazyk · M = dotykový HUD</td><td>—</td><td>—</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </section>
 
         <!-- 5) VIZUÁLY -->
@@ -1251,7 +1283,7 @@
 
   <!-- MOBILE BOTTOM BAR -->
   <nav class="mobile-bar" aria-label="Rychlá mobilní navigace">
-    <a href="#prehled" class="mb-btn" data-tab="prehled"><span class="mb-ico">🏠</span><span>Přehled</span></a>
+    <a href="#prehled" class="mb-btn" data-tab="prehled"><span class="mb-ico">🎯</span><span>Dnes</span></a>
     <a href="#plan" class="mb-btn" data-tab="plan"><span class="mb-ico">✅</span><span>Roadmapa</span></a>
     <a href="#svety" class="mb-btn" data-tab="svety"><span class="mb-ico">🗺️</span><span>Světy</span></a>
     <a href="#vizualy" class="mb-btn" data-tab="vizualy"><span class="mb-ico">🎨</span><span>Vizuály</span></a>
@@ -1274,13 +1306,13 @@
       /* Preserved key for visuals, ideas, notes & logs + dedicated key for v0.1.5+ roadmap */
       const STORAGE_KEY_LEGACY = "bruno_ink_shadow_v1";
       const STORAGE_KEY_ROADMAP = "bruno_roadmap_v015";
-      const APP_VERSION = "v0.1.7";
+      const APP_VERSION = "v0.1.8";
 
       const TAB_TITLES = {
-        prehled: "🏠 Přehled projektu",
-        plan: "✅ Plán, Vlny & Kanban",
+        prehled: "🎯 Dnes",
+        plan: "✅ Roadmapa",
         svety: "🗺️ Světy & Příběh (6 Kapitol)",
-        mechaniky: "🎮 Mechaniky & Diagramy",
+        mechaniky: "🎮 Ovládání & Mechaniky",
         vizualy: "🎨 Vizuály & Concept Art (30)",
         denik: "📝 Deník práce",
         napady: "💡 Nápady & Rozhodnutí",
@@ -1883,6 +1915,7 @@
       ];
 
       const DEFAULT_LOGS = [
+        { id: "log_028", date: "2026-11-23", author: "Claude", status: "done", version: "v0.1.8", text: "Projektové centrum zpřehledněno: navigace ve 3 skupinách (Vývoj / Hra / Nástroje), přehled „Dnes“ s jedním velkým panelem aktuálního úkolu (kroky + jak ověřit), „Pak na řadě“, rychlé odkazy (PR, repo, ARCHITECTURE, DESIGN, testy) a kompaktní vlny; panely Fáze a Role odstraněny. Roadmapa skrývá hotové úkoly (přepínač) a rozbaluje jen rozpracované. Dlouhé záznamy deníku se zkracují. Mechaniky: ovládání nahoře, aktuální tabulka stavů Bruna. Data i klíče localStorage beze změny." },
         { id: "log_027", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok F (W2-08): po zvonu a otevření brány vběhne Bruno do zlatého rámu → kamera vplave do obrazu (dolly + zúžení záběru), inkoustový přechod (shader s nepravidelným okrajem), Bruno se objeví ve 2D malbě (pohyb uzamčený do roviny, profil Rayman, kamera z boku s výhledem dopředu). 2D únik: 2 skákací houby (odraz 3,4 m + dvojskok), vyvýšené plošiny, propast (návrat na začátek 2D), výstupní portál → zpět do 3D před rám s „vyplutím“ kamery. Oprava: odraz z houby se už nezkracuje puštěním skoku; modrý hrot hole se hýbe s holí." },
         { id: "log_026", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "Útok holí doladěn ve stylu Sly: kombo až 3 švihů (□ / levé tl. myši opakovaně) s krátkým výpadem dopředu, 3. švih = otočka s větším odhozením; auto-natočení na nejbližší cíl před Brunem; útok ve vzduchu (jednou za skok); zásah = krátké zastavení času + jemné zatřesení kamery; po aktivní fázi jde útok zrušit skokem. Tréninkový koutek: figurína s počítadlem zásahů a 3 rozbitelné bedny (obnoví se). Tenisák zasáhne i je." },
         { id: "log_025", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "Ovládání podle Tomáše (inspirace Sly + Rayman): míření L2 / pravé tl. myši (kamera se přiblíží přes rameno, Bruno drží směr pohledu, úkroky 3 m/s) + výstřel R2 / levé tl.; útok holí □ / levé tl. myši; přichycení ○ / E / prostřední tl. myši – nově jen ke kotvě ve směru pohledu kamery (±50°); sprint navíc i na R1. Uši přesunuty na temeno hlavy s kloubem – při vrtulníku se zvednou a točí nad hlavou. PR #3 přesměrován na main (obsahuje Kroky B–E)." },
@@ -1961,8 +1994,10 @@ PRAVIDLA:
       let filterWave = "all";
       let filterRole = "all";
       let filterStatus = "all";
+      let hideDone = true;
       let filterSearch = "";
-      let expandedTasks = new Set(["W2-03", "W2-04"]);
+      // Rozbalený je jen aktuálně rozpracovaný úkol (méně chaosu).
+      let expandedTasks = new Set(getAllTasks().filter(t => getTaskStatus(t) === "doing").map(t => t.id));
 
       let currentWorldPhase = "all";
       let currentVisCat = "all";
@@ -2149,7 +2184,14 @@ PRAVIDLA:
         document.getElementById("filterStatus").value = "all";
         document.getElementById("filterSearch").value = "";
         document.querySelectorAll("#planViewSwitcher .vs-btn").forEach(b => b.classList.toggle("active", b.dataset.pview === "roadmap"));
-        if (taskIdToExpand) expandedTasks.add(taskIdToExpand);
+        if (taskIdToExpand) {
+          expandedTasks.add(taskIdToExpand);
+          const jt = getAllTasks().find(t => t.id === taskIdToExpand);
+          if (jt && getTaskStatus(jt) === "done") {
+            hideDone = false;
+            document.getElementById("hideDoneToggle").checked = false;
+          }
+        }
         window.location.hash = "#plan";
         setActiveTab("plan");
         renderPlan();
@@ -2187,42 +2229,56 @@ PRAVIDLA:
         document.getElementById("heroPct").textContent = pct + "%";
         document.getElementById("heroMeta").textContent = `✅ ${counts.done} · ⏳ ${counts.doing} · 📋 ${counts.todo}`;
 
-        // Next Actions (max 3: doing first, then unlocked todo)
+        // TEĎ DĚLÁME: první rozpracovaný úkol (nebo první odemčený)
         const doingList = tasks.filter(t => getTaskStatus(t) === "doing");
         const unlockedTodo = tasks.filter(t => getTaskStatus(t) === "todo" && getBlockingDeps(t).length === 0);
-        const nextList = [...doingList, ...unlockedTodo].slice(0, 3);
-        const nextGrid = document.getElementById("nextActionsGrid");
-        if (!nextList.length) {
-          nextGrid.innerHTML = `<div class="muted" style="grid-column:1/-1;">🎉 Všechny úkoly jsou dokončeny nebo čekají na odemčení závislostí!</div>`;
+        const nowTask = doingList[0] || unlockedTodo[0] || null;
+        const nowCard = document.getElementById("nowCard");
+        if (!nowTask) {
+          nowCard.innerHTML = `<div class="now-kicker">🎉 Hotovo</div><div class="now-title">Všechny úkoly jsou dokončené nebo čekají na závislosti.</div>`;
         } else {
-          nextGrid.innerHTML = nextList.map(t => {
-            const st = getTaskStatus(t);
-            const sp = getTaskStepProgress(t);
-            return `
-              <div class="next-card ${st}">
-                <div>
-                  <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
-                    <span class="rm-code">${escapeHtml(t.id)}</span>
-                    <span class="tag ${st === "doing" ? "cyan" : "gold"}">${st === "doing" ? "⏳ Rozpracováno" : "🔓 Připraveno"}</span>
-                  </div>
-                  <div class="next-title">${escapeHtml(t.title)}</div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
-                    <span class="tag">${escapeHtml(t.version)}</span>
-                    <span class="tag purple">${escapeHtml(t.owner)}</span>
-                    <span class="tag">⏱️ ${escapeHtml(t.estimate)}</span>
-                    <span class="tag green">☑ ${sp.done}/${sp.total} kroků</span>
-                  </div>
-                </div>
-                <button type="button" class="btn-secondary" data-jump-wave="${t.wave}" data-jump-task="${t.id}" style="width:100%;justify-content:center;">
-                  Otevřít v plánu →
-                </button>
-              </div>
-            `;
+          const nst = getTaskStatus(nowTask);
+          const nsp = getTaskStepProgress(nowTask);
+          const stepsLi = (nowTask.steps || []).map((txt, idx) => {
+            const ok = getStepChecked(nowTask.id, idx, nst);
+            return `<li class="${ok ? "done" : ""}"><span class="ck">${ok ? "✓" : ""}</span><span>${escapeHtml(txt)}</span></li>`;
           }).join("");
-          nextGrid.querySelectorAll("[data-jump-task]").forEach(btn => {
-            btn.addEventListener("click", () => jumpToPlan(btn.dataset.jumpWave, btn.dataset.jumpTask));
-          });
+          nowCard.innerHTML = `
+            <div class="now-head">
+              <span class="now-kicker">${nst === "doing" ? "⏳ Teď děláme" : "🔓 Na řadě"} · ${escapeHtml(nowTask.id)} · ${escapeHtml(nowTask.version)}</span>
+              <span style="display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="tag ${ownerColor(nowTask.owner)}">${escapeHtml(nowTask.owner)}</span>
+                <span class="tag green">☑ ${nsp.done}/${nsp.total} kroků</span>
+              </span>
+            </div>
+            <div class="now-title">${escapeHtml(nowTask.title)}</div>
+            <div class="now-grid">
+              <ul class="now-steps">${stepsLi}</ul>
+              <div>
+                <div class="dod-box"><strong>✅ Jak ověřit</strong>${escapeHtml(nowTask.acceptance || "")}</div>
+                <button type="button" class="btn-secondary" id="nowOpenBtn" style="margin-top:10px;width:100%;justify-content:center;">Otevřít v Roadmapě (odškrtávání kroků) →</button>
+              </div>
+            </div>`;
+          document.getElementById("nowOpenBtn").addEventListener("click", () => jumpToPlan(nowTask.wave, nowTask.id));
         }
+
+        // PAK NA ŘADĚ: další 4 úkoly (rozpracované a odemčené), kromě aktuálního
+        const nextList = [...doingList, ...unlockedTodo].filter(t => t !== nowTask).slice(0, 4);
+        const nextGrid = document.getElementById("nextActionsGrid");
+        nextGrid.innerHTML = nextList.length ? nextList.map(t => {
+          const st = getTaskStatus(t);
+          return `
+            <div class="next-row" data-jump-wave="${t.wave}" data-jump-task="${t.id}">
+              <div>
+                <div style="display:flex;gap:6px;align-items:center;margin-bottom:3px;"><span class="rm-code">${escapeHtml(t.id)}</span><span class="tag">${escapeHtml(t.version)}</span></div>
+                <div class="next-row-title">${escapeHtml(t.title)}</div>
+              </div>
+              <span class="tag ${st === "doing" ? "cyan" : "gold"}">${st === "doing" ? "⏳" : "🔓"}</span>
+            </div>`;
+        }).join("") : `<div class="muted">Nic dalšího zatím není odemčené.</div>`;
+        nextGrid.querySelectorAll("[data-jump-task]").forEach(row => {
+          row.addEventListener("click", () => jumpToPlan(row.dataset.jumpWave, row.dataset.jumpTask));
+        });
 
         // 6 Waves Timeline
         const waveWrap = document.getElementById("overviewWaveTimeline");
@@ -2254,51 +2310,6 @@ PRAVIDLA:
           row.addEventListener("click", () => jumpToPlan(row.dataset.openWave, null));
         });
 
-        // Phase Breakdown
-        const phases = [
-          { key: "Příprava", label: "Příprava (v0.1.x)", color: "green" },
-          { key: "Fáze 1 (Kap. 1–3)", label: "Fáze 1 — Kapitoly 1–3 (v1.0.0)", color: "gold" },
-          { key: "Fáze 2 (Kap. 4–6)", label: "Fáze 2 — Kapitoly 4–6 (v1.3.x+)", color: "purple" }
-        ];
-        document.getElementById("phaseBreakdown").innerHTML = phases.map(p => {
-          const pt = tasks.filter(t => t.phase === p.key);
-          const pPct = calcWeightedPct(pt);
-          const pc = countStatuses(pt);
-          return `
-            <div class="mini-stat">
-              <div class="mini-stat-head">
-                <span>${escapeHtml(p.label)}</span>
-                <span class="tag ${p.color}">${pPct}%</span>
-              </div>
-              <div class="prog-track"><div class="prog-fill ${p.color}" style="width:${pPct}%"></div></div>
-              <div class="muted">✅ ${pc.done} · ⏳ ${pc.doing} · 📋 ${pc.todo} (celkem ${pc.total})</div>
-            </div>
-          `;
-        }).join("");
-
-        // Role Breakdown
-        const roles = [
-          { name: "Tomáš", color: "gold" },
-          { name: "Claude", color: "orange" },
-          { name: "Antigravity", color: "cyan" },
-          { name: "Gemini", color: "purple" }
-        ];
-        document.getElementById("roleBreakdown").innerHTML = roles.map(r => {
-          const rt = tasks.filter(t => t.owner.includes(r.name));
-          const rPct = calcWeightedPct(rt);
-          const rc = countStatuses(rt);
-          return `
-            <div class="mini-stat">
-              <div class="mini-stat-head">
-                <span>${escapeHtml(r.name)}</span>
-                <span class="tag ${r.color}">${rPct}%</span>
-              </div>
-              <div class="prog-track"><div class="prog-fill ${r.color}" style="width:${rPct}%"></div></div>
-              <div class="muted">${rc.done}/${rc.total} hotovo${rc.doing ? ` · ${rc.doing} dělá se` : ""}</div>
-            </div>
-          `;
-        }).join("");
-
         // Recent 3 Logs
         document.getElementById("overviewRecentLogs").innerHTML = getAllLogs().slice(0, 3).map(renderLogCardHtml).join("");
       }
@@ -2314,6 +2325,7 @@ PRAVIDLA:
           if (filterWave !== "all" && String(t.wave) !== filterWave) return false;
           if (filterRole !== "all" && !t.owner.includes(filterRole)) return false;
           if (filterStatus !== "all" && getTaskStatus(t) !== filterStatus) return false;
+          if (hideDone && filterStatus === "all" && getTaskStatus(t) === "done") return false;
           if (q) {
             const hay = [t.id, t.title, t.version, t.owner, ...(t.files || []), ...(t.steps || []), t.acceptance || "", getTaskNote(t)].join(" ").toLowerCase();
             if (!hay.includes(q)) return false;
@@ -2341,6 +2353,7 @@ PRAVIDLA:
         const allTasks = getAllTasks();
         const wavesToShow = ROADMAP_WAVES.filter(w => {
           if (filterWave !== "all" && String(w.id) !== filterWave) return false;
+          if (hideDone && filterStatus === "all" && !filterSearch.trim() && filterRole === "all") return true;
           return filtered.some(t => t.wave === w.id);
         });
 
@@ -2447,12 +2460,23 @@ PRAVIDLA:
                   <strong style="color:var(--gold);font-size:0.9rem;min-width:40px;text-align:right;">${wPct}%</strong>
                 </div>
               </div>
+              ${(() => {
+                const hiddenDone = hideDone && filterStatus === "all" ? allWaveTasks.filter(t => getTaskStatus(t) === "done").length : 0;
+                return hiddenDone ? `<div class="rm-wave-done-note">✅ ${hiddenDone} ${hiddenDone === 1 ? "hotový úkol skrytý" : (hiddenDone < 5 ? "hotové úkoly skryté" : "hotových úkolů skryto")} <button type="button" class="log-more" data-show-done="1">Zobrazit hotové</button></div>` : "";
+              })()}
               <div class="rm-task-list">${rowsHtml}</div>
             </section>
           `;
         }).join("");
 
         // Bind events
+        container.querySelectorAll("[data-show-done]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            hideDone = false;
+            document.getElementById("hideDoneToggle").checked = false;
+            renderPlan();
+          });
+        });
         container.querySelectorAll("[data-cycle-status]").forEach(btn => {
           btn.addEventListener("click", e => {
             e.stopPropagation();
@@ -2646,6 +2670,7 @@ PRAVIDLA:
       document.getElementById("filterWave").addEventListener("change", e => { filterWave = e.target.value; renderPlan(); });
       document.getElementById("filterRole").addEventListener("change", e => { filterRole = e.target.value; renderPlan(); });
       document.getElementById("filterStatus").addEventListener("change", e => { filterStatus = e.target.value; renderPlan(); });
+      document.getElementById("hideDoneToggle").addEventListener("change", e => { hideDone = e.target.checked; renderPlan(); });
       document.getElementById("filterSearch").addEventListener("input", e => { filterSearch = e.target.value; renderPlan(); });
 
       const addTaskForm = document.getElementById("addTaskForm");
@@ -2695,7 +2720,7 @@ PRAVIDLA:
         if (!confirm("Opravdu obnovit výchozí stavy Roadmapy (včetně odškrtnutých kroků, poznámek a vlastních úkolů)? Hodnocení vizuálů a nápady zůstanou zachovány.")) return;
         rmState = defaultRoadmapState();
         localStorage.removeItem(STORAGE_KEY_ROADMAP);
-        expandedTasks = new Set(["W2-03", "W2-04"]);
+        expandedTasks = new Set(getAllTasks().filter(t => getTaskStatus(t) === "doing").map(t => t.id));
         renderOverviewAndMetrics();
         renderPlan();
         showToast("↺ Výchozí stavy Roadmapy obnoveny.");
@@ -2838,7 +2863,8 @@ PRAVIDLA:
               </div>
               ${l.custom ? `<button type="button" class="kb-move" data-del-log="${l.id}">🗑️ Smazat</button>` : ""}
             </div>
-            <p class="log-text">${escapeHtml(l.text)}</p>
+            <p class="log-text ${l.text.length > 260 ? "clamp" : ""}">${escapeHtml(l.text)}</p>
+            ${l.text.length > 260 ? `<button type="button" class="log-more" onclick="const t=this.previousElementSibling;t.classList.toggle('clamp');this.textContent=t.classList.contains('clamp')?'Zobrazit celé ▾':'Sbalit ▴';">Zobrazit celé ▾</button>` : ""}
           </div>
         `;
       }
