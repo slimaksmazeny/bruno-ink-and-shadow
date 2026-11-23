@@ -1,0 +1,58 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/props/tennis_ball.gd" id="1_fyxhv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rwtc0"]
+friction = 0.6
+bounce = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qift0"]
+radius = 0.12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o18na"]
+albedo_color = Color(0.75, 1, 0.2, 1)
+roughness = 0.3
+emission_enabled = true
+emission = Color(0.75, 1, 0.2, 1)
+emission_energy_multiplier = 1.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_5vsnp"]
+radius = 0.12
+height = 0.24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phyoj"]
+albedo_color = Color(0.75, 1, 0.25, 1)
+roughness = 0.3
+emission_enabled = true
+emission = Color(0.75, 1, 0.25, 1)
+emission_energy_multiplier = 1.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_wpo2j"]
+material = SubResource("StandardMaterial3D_phyoj")
+radius = 0.07
+height = 0.14
+
+[sub_resource type="Curve" id="Curve_56cld"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="TennisBall" type="RigidBody3D" unique_id=759827387]
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_rwtc0")
+script = ExtResource("1_fyxhv")
+
+[node name="Shape" type="CollisionShape3D" parent="." unique_id=1256377893]
+shape = SubResource("SphereShape3D_qift0")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=565475331]
+material_override = SubResource("StandardMaterial3D_o18na")
+mesh = SubResource("SphereMesh_5vsnp")
+
+[node name="Trail" type="CPUParticles3D" parent="." unique_id=546656951]
+amount = 24
+lifetime = 0.35
+mesh = SubResource("SphereMesh_wpo2j")
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+scale_amount_curve = SubResource("Curve_56cld")

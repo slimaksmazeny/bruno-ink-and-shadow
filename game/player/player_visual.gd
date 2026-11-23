@@ -38,6 +38,26 @@ func set_perched(on: bool) -> void:
 	perched = on
 
 
+## Okamžitě natočí Bruna do daného směru (míření tenisákem).
+func face_direction(dir: Vector3) -> void:
+	if dir.length() > 0.01:
+		_yaw = atan2(-dir.x, -dir.z)
+		rotation.y = _yaw
+
+
+## Švih holí jako pálkou.
+func play_swing(duration: float) -> void:
+	var cane: Node3D = $Stand/Cane
+	var tw: Tween = create_tween()
+	tw.tween_property(cane, "rotation_degrees", Vector3(-70, 0, -60), duration * 0.35).set_trans(Tween.TRANS_BACK)
+	tw.tween_property(cane, "rotation_degrees", Vector3(0, 0, -8), duration * 0.65).set_trans(Tween.TRANS_SINE)
+
+
+## Odkud tenisák vyletí (hrot hole ve výšce hrudníku).
+func get_ball_spawn() -> Vector3:
+	return global_position + get_forward() * 0.7 + Vector3.UP * 0.9
+
+
 ## Směr, kterým se Bruno dívá (vodorovně).
 func get_forward() -> Vector3:
 	return Vector3(-sin(_yaw), 0.0, -cos(_yaw))

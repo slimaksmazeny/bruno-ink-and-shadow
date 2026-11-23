@@ -12,6 +12,9 @@ func enter(_previous: StringName, _msg: Dictionary = {}) -> void:
 func handle_common(_delta: float) -> bool:
 	if Input.is_action_just_pressed(&"action") and try_enter_anchor():
 		return true
+	if Input.is_action_just_pressed(&"tennis") and machine.has_state(&"Swing") and machine.current_name() != &"Swing":
+		machine.transition_to(&"Swing")
+		return true
 	if player.consume_jump_buffer():
 		machine.transition_to(&"Air", {"jump": true})
 		return true

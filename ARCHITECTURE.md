@@ -290,6 +290,7 @@ HybridCamera (Node3D, hybrid_camera.gd)        ← v levelu, NE jako dítě hrá
 │   └── CameraPoint (Marker3D)
 └── Camera3D                                   ← jediná skutečná kamera
 ```
+- **Kamera přes rameno:** SpringArm je posunutý o 0,55 m doprava, aby Bruno nezakrýval zaměřovač (míření tenisákem přes střed obrazovky).
 - **Oba rigy se aktualizují každý snímek**, i když je jejich váha 0. 3D rig čte vstup myši/páčky jen když je hráč v 3D.
 - Kamera v `_process` čte `player.get_global_transform_interpolated()` a je zapnutá **physics interpolation** (projektové nastavení) → žádné cukání při 60 Hz fyzice a 120 Hz monitoru.
 

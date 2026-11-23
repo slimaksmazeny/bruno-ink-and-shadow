@@ -1,209 +1,229 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://world/anchors/spire_anchor.tscn" id="1_1ospf"]
-[ext_resource type="Script" path="res://world/anchors/anchor.gd" id="2_trfhx"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="3_nm02q"]
-[ext_resource type="Script" path="res://player/player.gd" id="4_omteh"]
-[ext_resource type="Resource" path="res://player/profiles/profile_3d.tres" id="5_oiqm6"]
-[ext_resource type="Resource" path="res://player/profiles/profile_2d.tres" id="6_bqgxi"]
-[ext_resource type="PackedScene" path="res://camera/hybrid_camera.tscn" id="7_cba57"]
-[ext_resource type="Script" path="res://camera/hybrid_camera.gd" id="8_devmr"]
-[ext_resource type="Script" path="res://levels/greybox/greybox_hints.gd" id="9_46jep"]
+[ext_resource type="PackedScene" path="res://world/anchors/spire_anchor.tscn" id="1_oiqm6"]
+[ext_resource type="Script" path="res://world/anchors/anchor.gd" id="2_bqgxi"]
+[ext_resource type="PackedScene" path="res://world/props/target_bell.tscn" id="3_cba57"]
+[ext_resource type="Script" path="res://world/props/target_bell.gd" id="4_devmr"]
+[ext_resource type="PackedScene" path="res://world/props/gate.tscn" id="5_46jep"]
+[ext_resource type="Script" path="res://world/props/gate.gd" id="6_biy62"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="7_ppr0o"]
+[ext_resource type="Script" path="res://player/player.gd" id="8_vw8wj"]
+[ext_resource type="Resource" path="res://player/profiles/profile_3d.tres" id="9_tce6u"]
+[ext_resource type="Resource" path="res://player/profiles/profile_2d.tres" id="10_q218x"]
+[ext_resource type="PackedScene" path="res://camera/hybrid_camera.tscn" id="11_74r1d"]
+[ext_resource type="Script" path="res://camera/hybrid_camera.gd" id="12_1xrrm"]
+[ext_resource type="Script" path="res://levels/greybox/greybox_hints.gd" id="13_ggpxh"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_biy62"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_livf1"]
 sky_top_color = Color(0.06, 0.07, 0.2, 1)
 sky_horizon_color = Color(0.25, 0.22, 0.45, 1)
 ground_bottom_color = Color(0.05, 0.05, 0.1, 1)
 ground_horizon_color = Color(0.2, 0.18, 0.35, 1)
 
-[sub_resource type="Sky" id="Sky_ppr0o"]
-sky_material = SubResource("ProceduralSkyMaterial_biy62")
+[sub_resource type="Sky" id="Sky_22ufl"]
+sky_material = SubResource("ProceduralSkyMaterial_livf1")
 
-[sub_resource type="Environment" id="Environment_vw8wj"]
+[sub_resource type="Environment" id="Environment_6enxb"]
 background_mode = 2
-sky = SubResource("Sky_ppr0o")
+sky = SubResource("Sky_22ufl")
 ambient_light_source = 3
 ambient_light_energy = 1.2
 tonemap_mode = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tce6u"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42daj"]
 albedo_color = Color(0.45, 0.45, 0.5, 1)
 roughness = 0.85
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q218x"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wwuq4"]
 albedo_color = Color(0.85, 0.25, 0.25, 1)
 roughness = 0.85
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_74r1d"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d6n4s"]
 albedo_color = Color(0.3, 0.3, 0.36, 1)
 roughness = 0.85
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1xrrm"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkqkx"]
 albedo_color = Color(0.58, 0.58, 0.64, 1)
 roughness = 0.85
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ggpxh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdgu6"]
 albedo_color = Color(0.95, 0.71, 0.2, 1)
 roughness = 0.85
 emission_enabled = true
 emission = Color(0.95, 0.71, 0.2, 1)
 emission_energy_multiplier = 0.6
 
-[node name="GreyboxStreet" type="Node3D" unique_id=528831324]
+[node name="GreyboxStreet" type="Node3D" unique_id=329309248]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=982418701]
-environment = SubResource("Environment_vw8wj")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=404196110]
+environment = SubResource("Environment_6enxb")
 
-[node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=82843488]
+[node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=1717292308]
 transform = Transform3D(0.81915206, 0.43938506, -0.36868784, 0, 0.64278764, 0.76604444, 0.57357645, -0.62750685, 0.5265408, 0, 0, 0)
 light_color = Color(0.75, 0.8, 1, 1)
 light_energy = 0.9
 shadow_enabled = true
 
-[node name="Geometry" type="Node3D" parent="." unique_id=1290116697]
+[node name="Geometry" type="Node3D" parent="." unique_id=691376797]
 
-[node name="StreetA" type="CSGBox3D" parent="Geometry" unique_id=2118590806]
+[node name="StreetA" type="CSGBox3D" parent="Geometry" unique_id=1943029048]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -0.5, 0)
 use_collision = true
 collision_mask = 0
 size = Vector3(44, 1, 24)
-material = SubResource("StandardMaterial3D_tce6u")
+material = SubResource("StandardMaterial3D_42daj")
 
-[node name="StreetB" type="CSGBox3D" parent="Geometry" unique_id=1721093744]
+[node name="StreetB" type="CSGBox3D" parent="Geometry" unique_id=1352570918]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.75, -0.5, 0)
 use_collision = true
 collision_mask = 0
 size = Vector3(22.5, 1, 24)
-material = SubResource("StandardMaterial3D_tce6u")
+material = SubResource("StandardMaterial3D_42daj")
 
-[node name="GapEdgeA" type="CSGBox3D" parent="Geometry" unique_id=1302093805]
+[node name="GapEdgeA" type="CSGBox3D" parent="Geometry" unique_id=1035873337]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.85, 0.02, 0)
 use_collision = true
 collision_mask = 0
 size = Vector3(0.3, 0.05, 24)
-material = SubResource("StandardMaterial3D_q218x")
+material = SubResource("StandardMaterial3D_wwuq4")
 
-[node name="GapEdgeB" type="CSGBox3D" parent="Geometry" unique_id=225683601]
+[node name="GapEdgeB" type="CSGBox3D" parent="Geometry" unique_id=2044243976]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.65, 0.02, 0)
 use_collision = true
 collision_mask = 0
 size = Vector3(0.3, 0.05, 24)
-material = SubResource("StandardMaterial3D_q218x")
+material = SubResource("StandardMaterial3D_wwuq4")
 
-[node name="HouseLeft" type="CSGBox3D" parent="Geometry" unique_id=977354137]
+[node name="HouseLeft" type="CSGBox3D" parent="Geometry" unique_id=1612004528]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, -10)
 use_collision = true
 collision_mask = 0
 size = Vector3(10, 8, 8)
-material = SubResource("StandardMaterial3D_74r1d")
+material = SubResource("StandardMaterial3D_d6n4s")
 
-[node name="HouseMid" type="CSGBox3D" parent="Geometry" unique_id=85714196]
+[node name="HouseMid" type="CSGBox3D" parent="Geometry" unique_id=1625693447]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, -12)
 use_collision = true
 collision_mask = 0
 size = Vector3(8, 11, 8)
-material = SubResource("StandardMaterial3D_74r1d")
+material = SubResource("StandardMaterial3D_d6n4s")
 
-[node name="HouseRight" type="CSGBox3D" parent="Geometry" unique_id=197230920]
+[node name="HouseRight" type="CSGBox3D" parent="Geometry" unique_id=938801736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3, -10)
 use_collision = true
 collision_mask = 0
 size = Vector3(10, 6, 8)
-material = SubResource("StandardMaterial3D_74r1d")
+material = SubResource("StandardMaterial3D_d6n4s")
 
-[node name="Ramp" type="CSGBox3D" parent="Geometry" unique_id=245239518]
+[node name="Ramp" type="CSGBox3D" parent="Geometry" unique_id=754564914]
 transform = Transform3D(0.9702957, -0.2419219, 0, 0.2419219, 0.9702957, 0, 0, 0, 1, -10, 0.95, 4)
 use_collision = true
 collision_mask = 0
 size = Vector3(8, 0.4, 3)
-material = SubResource("StandardMaterial3D_1xrrm")
+material = SubResource("StandardMaterial3D_tkqkx")
 
-[node name="RampTop" type="CSGBox3D" parent="Geometry" unique_id=1431394912]
+[node name="RampTop" type="CSGBox3D" parent="Geometry" unique_id=246891692]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 4)
 use_collision = true
 collision_mask = 0
 size = Vector3(4, 2, 3)
-material = SubResource("StandardMaterial3D_1xrrm")
+material = SubResource("StandardMaterial3D_tkqkx")
 
-[node name="JumpBox1m" type="CSGBox3D" parent="Geometry" unique_id=1304604584]
+[node name="JumpBox1m" type="CSGBox3D" parent="Geometry" unique_id=657707401]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.5, 10)
 use_collision = true
 collision_mask = 0
 size = Vector3(2, 1, 2)
-material = SubResource("StandardMaterial3D_1xrrm")
+material = SubResource("StandardMaterial3D_tkqkx")
 
-[node name="JumpBox1_5m" type="CSGBox3D" parent="Geometry" unique_id=350747589]
+[node name="JumpBox1_5m" type="CSGBox3D" parent="Geometry" unique_id=1900782896]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.75, 10)
 use_collision = true
 collision_mask = 0
 size = Vector3(2, 1.5, 2)
-material = SubResource("StandardMaterial3D_1xrrm")
+material = SubResource("StandardMaterial3D_tkqkx")
 
-[node name="JumpBox2_4m" type="CSGBox3D" parent="Geometry" unique_id=1791827147]
+[node name="JumpBox2_4m" type="CSGBox3D" parent="Geometry" unique_id=253630025]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1.2, 10)
 use_collision = true
 collision_mask = 0
 size = Vector3(2, 2.4, 2)
-material = SubResource("StandardMaterial3D_1xrrm")
+material = SubResource("StandardMaterial3D_tkqkx")
 
-[node name="StepLow" type="CSGBox3D" parent="Geometry" unique_id=1875669937]
+[node name="StepLow" type="CSGBox3D" parent="Geometry" unique_id=295701216]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 2)
 use_collision = true
 collision_mask = 0
 size = Vector3(4, 1, 4)
-material = SubResource("StandardMaterial3D_tce6u")
+material = SubResource("StandardMaterial3D_42daj")
 
-[node name="StepHigh" type="CSGBox3D" parent="Geometry" unique_id=419339866]
+[node name="StepHigh" type="CSGBox3D" parent="Geometry" unique_id=1951920648]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 2)
 use_collision = true
 collision_mask = 0
 size = Vector3(4, 2, 4)
-material = SubResource("StandardMaterial3D_tce6u")
+material = SubResource("StandardMaterial3D_42daj")
 
-[node name="PaintingFrame" type="CSGBox3D" parent="Geometry" unique_id=458772196]
+[node name="PaintingFrame" type="CSGBox3D" parent="Geometry" unique_id=835975305]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 3, -6)
 use_collision = true
 collision_mask = 0
 size = Vector3(6, 4, 0.6)
-material = SubResource("StandardMaterial3D_ggpxh")
+material = SubResource("StandardMaterial3D_qdgu6")
 
-[node name="RoofCrate" type="CSGBox3D" parent="Geometry" unique_id=1313576685]
+[node name="RoofCrate" type="CSGBox3D" parent="Geometry" unique_id=948808752]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2.25, -3.5)
 use_collision = true
 collision_mask = 0
 size = Vector3(2.5, 4.5, 2.5)
-material = SubResource("StandardMaterial3D_1xrrm")
+material = SubResource("StandardMaterial3D_tkqkx")
 
-[node name="Spire2Column" type="CSGBox3D" parent="Geometry" unique_id=288271462]
+[node name="Spire2Column" type="CSGBox3D" parent="Geometry" unique_id=1275268485]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 3.5, -10)
 use_collision = true
 collision_mask = 0
 size = Vector3(0.5, 7, 0.5)
-material = SubResource("StandardMaterial3D_74r1d")
+material = SubResource("StandardMaterial3D_d6n4s")
 
-[node name="Spires" type="Node3D" parent="." unique_id=1519131684]
+[node name="BellTower" type="CSGBox3D" parent="Geometry" unique_id=87441389]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 4, -9)
+use_collision = true
+collision_mask = 0
+size = Vector3(2.4, 8, 2.4)
+material = SubResource("StandardMaterial3D_d6n4s")
 
-[node name="SpirePractice" type="Area3D" parent="Spires" unique_id=1374791209 node_paths=PackedStringArray("snap_point") instance=ExtResource("1_1ospf")]
+[node name="Spires" type="Node3D" parent="." unique_id=530235308]
+
+[node name="SpirePractice" type="Area3D" parent="Spires" unique_id=1076412738 node_paths=PackedStringArray("snap_point") instance=ExtResource("1_oiqm6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 9)
-script = ExtResource("2_trfhx")
+script = ExtResource("2_bqgxi")
 snap_point = NodePath("SnapPoint")
 
-[node name="Spire1_RoofRight" type="Area3D" parent="Spires" unique_id=823642004 node_paths=PackedStringArray("snap_point") instance=ExtResource("1_1ospf")]
+[node name="Spire1_RoofRight" type="Area3D" parent="Spires" unique_id=29382989 node_paths=PackedStringArray("snap_point") instance=ExtResource("1_oiqm6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 6, -9)
-script = ExtResource("2_trfhx")
+script = ExtResource("2_bqgxi")
 snap_point = NodePath("SnapPoint")
 
-[node name="Spire2_Pole" type="Area3D" parent="Spires" unique_id=1485024870 node_paths=PackedStringArray("snap_point") instance=ExtResource("1_1ospf")]
+[node name="Spire2_Pole" type="Area3D" parent="Spires" unique_id=2037487004 node_paths=PackedStringArray("snap_point") instance=ExtResource("1_oiqm6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 7, -10)
-script = ExtResource("2_trfhx")
+script = ExtResource("2_bqgxi")
 snap_point = NodePath("SnapPoint")
 
-[node name="Spire3_RoofMid" type="Area3D" parent="Spires" unique_id=591258825 node_paths=PackedStringArray("snap_point") instance=ExtResource("1_1ospf")]
+[node name="Spire3_RoofMid" type="Area3D" parent="Spires" unique_id=905203471 node_paths=PackedStringArray("snap_point") instance=ExtResource("1_oiqm6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 11, -9)
-script = ExtResource("2_trfhx")
+script = ExtResource("2_bqgxi")
 snap_point = NodePath("SnapPoint")
 
-[node name="PaintingSign" type="Label3D" parent="." unique_id=1968077329]
+[node name="TargetBell" type="Node3D" parent="." unique_id=446165824 instance=ExtResource("3_cba57")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 32, 8, -9)
+script = ExtResource("4_devmr")
+
+[node name="PaintingGate" type="AnimatableBody3D" parent="." unique_id=89768616 instance=ExtResource("5_46jep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -5.2)
+collision_mask = 0
+script = ExtResource("6_biy62")
+
+[node name="PaintingSign" type="Label3D" parent="." unique_id=1521364928]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 6, -5.6)
 pixel_size = 0.011
 modulate = Color(1, 0.92, 0.6, 1)
@@ -211,14 +231,14 @@ text = "GB_SIGN_PAINTING"
 font_size = 64
 outline_size = 16
 
-[node name="DiacriticsTest" type="Label3D" parent="." unique_id=828918993]
+[node name="DiacriticsTest" type="Label3D" parent="." unique_id=1222766689]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -7.9)
 pixel_size = 0.012
 text = "GB_DIACRITICS_TEST"
 font_size = 64
 outline_size = 16
 
-[node name="SignJumps" type="Label3D" parent="." unique_id=631812426]
+[node name="SignJumps" type="Label3D" parent="." unique_id=2083974664]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 3.4, 8.9)
 pixel_size = 0.006
 modulate = Color(0.8, 0.9, 1, 1)
@@ -226,7 +246,7 @@ text = "GB_SIGN_JUMPS"
 font_size = 64
 outline_size = 16
 
-[node name="SignRamp" type="Label3D" parent="." unique_id=378283584]
+[node name="SignRamp" type="Label3D" parent="." unique_id=1689719792]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3.4, 5.6)
 pixel_size = 0.008
 modulate = Color(0.8, 0.9, 1, 1)
@@ -234,7 +254,7 @@ text = "GB_SIGN_RAMP"
 font_size = 64
 outline_size = 16
 
-[node name="SignGap" type="Label3D" parent="." unique_id=1138405484]
+[node name="SignGap" type="Label3D" parent="." unique_id=2013182303]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.75, 2.2, 3)
 pixel_size = 0.008
 modulate = Color(1, 0.6, 0.6, 1)
@@ -242,7 +262,7 @@ text = "GB_SIGN_GAP"
 font_size = 64
 outline_size = 16
 
-[node name="SignSpire" type="Label3D" parent="." unique_id=410350520]
+[node name="SignSpire" type="Label3D" parent="." unique_id=1494695654]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3, 9)
 pixel_size = 0.007
 modulate = Color(0.6, 0.85, 1, 1)
@@ -250,7 +270,7 @@ text = "GB_SIGN_SPIRE"
 font_size = 64
 outline_size = 16
 
-[node name="SignRoofs" type="Label3D" parent="." unique_id=845252975]
+[node name="SignRoofs" type="Label3D" parent="." unique_id=776159644]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 5.4, -2.1)
 pixel_size = 0.007
 modulate = Color(0.6, 0.85, 1, 1)
@@ -258,26 +278,34 @@ text = "GB_SIGN_ROOFS"
 font_size = 64
 outline_size = 16
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=1121015411 node_paths=PackedStringArray("camera") instance=ExtResource("3_nm02q")]
+[node name="SignBell" type="Label3D" parent="." unique_id=1623636288]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 32, 11.2, -9)
+pixel_size = 0.009
+modulate = Color(0.85, 1, 0.4, 1)
+text = "GB_SIGN_BELL"
+font_size = 64
+outline_size = 16
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1214904253 node_paths=PackedStringArray("camera") instance=ExtResource("7_ppr0o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 11)
 collision_layer = 2
 collision_mask = 17
 floor_max_angle = 0.80285144
 floor_snap_length = 0.35
-script = ExtResource("4_omteh")
-profile_3d = ExtResource("5_oiqm6")
-profile_2d = ExtResource("6_bqgxi")
+script = ExtResource("8_vw8wj")
+profile_3d = ExtResource("9_tce6u")
+profile_2d = ExtResource("10_q218x")
 camera = NodePath("../HybridCamera")
 
-[node name="HybridCamera" type="Node3D" parent="." unique_id=167763325 node_paths=PackedStringArray("target") instance=ExtResource("7_cba57")]
+[node name="HybridCamera" type="Node3D" parent="." unique_id=200810502 node_paths=PackedStringArray("target") instance=ExtResource("11_74r1d")]
 physics_interpolation_mode = 2
-script = ExtResource("8_devmr")
+script = ExtResource("12_1xrrm")
 target = NodePath("../Player")
 
-[node name="HintLayer" type="CanvasLayer" parent="." unique_id=1423903974]
-script = ExtResource("9_46jep")
+[node name="HintLayer" type="CanvasLayer" parent="." unique_id=1961137789]
+script = ExtResource("13_ggpxh")
 
-[node name="HintBox" type="VBoxContainer" parent="HintLayer" unique_id=1676995359]
+[node name="HintBox" type="VBoxContainer" parent="HintLayer" unique_id=1316417248]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -292,7 +320,7 @@ grow_vertical = 0
 mouse_filter = 2
 alignment = 2
 
-[node name="Title" type="Label" parent="HintLayer/HintBox" unique_id=769306132]
+[node name="Title" type="Label" parent="HintLayer/HintBox" unique_id=428752158]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
@@ -301,7 +329,7 @@ text = "GB_TITLE"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Controls" type="Label" parent="HintLayer/HintBox" unique_id=652425956]
+[node name="Controls" type="Label" parent="HintLayer/HintBox" unique_id=938744573]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
@@ -310,7 +338,7 @@ text = "GB_HINT_CONTROLS"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Keys" type="Label" parent="HintLayer/HintBox" unique_id=176080470]
+[node name="Keys" type="Label" parent="HintLayer/HintBox" unique_id=1514341121]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
@@ -318,3 +346,24 @@ theme_override_constants/outline_size = 8
 text = "GB_HINT_KEYS"
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="Crosshair" type="Label" parent="HintLayer" unique_id=170036772]
+auto_translate_mode = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -11.5
+offset_right = 5.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(1, 1, 1, 0.75)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.8)
+theme_override_constants/outline_size = 6
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
