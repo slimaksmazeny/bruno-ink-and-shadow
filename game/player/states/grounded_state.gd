@@ -10,6 +10,8 @@ func enter(_previous: StringName, _msg: Dictionary = {}) -> void:
 
 ## Vrací true, pokud stav přepnul – volající stav pak už nic dalšího nedělá.
 func handle_common(_delta: float) -> bool:
+	if Input.is_action_just_pressed(&"action") and try_enter_anchor():
+		return true
 	if player.consume_jump_buffer():
 		machine.transition_to(&"Air", {"jump": true})
 		return true

@@ -20,11 +20,18 @@ func exit() -> void:
 
 
 func physics_update(delta: float) -> void:
+	if Input.is_action_just_pressed(&"action") and try_enter_anchor():
+		return
 	if Input.is_action_just_pressed(&"jump"):
 		if player.jumps_used == 0 and player.coyote_timer > 0.0:
 			_ground_jump()
 		elif player.jumps_used < MAX_JUMPS:
 			_double_jump()
+
+	# Ušní vrtulník: držet skok během pádu.
+	if player.velocity.y < 0.0 and Input.is_action_pressed(&"jump") and not Input.is_action_just_pressed(&"jump"):
+		machine.transition_to(&"Glide")
+		return
 
 	apply_gravity(delta)
 	air_control(delta, carried_speed)

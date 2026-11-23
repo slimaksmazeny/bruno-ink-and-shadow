@@ -10,11 +10,13 @@ HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
 HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
 HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
 HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
-GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.0, Krok B)","Bruno: Ink & Shadow — test street (v0.2.0, Step B)"
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.0, Krok C)","Bruno: Ink & Shadow — test street (v0.2.0, Step C)"
 GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
 GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc = uvolnit myš","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc = release mouse"
 GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog
-GB_HINT_CONTROLS,"WASD / levá páčka = pohyb · myš / pravá páčka = kamera · Mezerník / ✕ = skok (znovu ve vzduchu = dvojskok) · Shift / R2 = sprint po 4 · Ctrl (držet) / L3 (přepnout) = plížení","WASD / left stick = move · mouse / right stick = camera · Space / A = jump (again in air = double jump) · Shift / RT = sprint on 4 legs · Ctrl (hold) / L3 (toggle) = sneak"
+GB_HINT_CONTROLS,"WASD / levá páčka = pohyb · myš / pravá páčka = kamera · Mezerník / ✕ = skok (znovu = dvojskok, držet při pádu = ušní vrtulník) · E / ○ = přicvaknout na modrou špičku · Shift / R2 = sprint po 4 · Ctrl (držet) / L3 (přepnout) = plížení","WASD / left stick = move · mouse / right stick = camera · Space / A = jump (again = double jump, hold while falling = ear copter) · E / B = snap to blue spire · Shift / RT = sprint on 4 legs · Ctrl (hold) / L3 (toggle) = sneak"
 GB_SIGN_JUMPS,"Skoky: 1 m · 1,5 m · 2,4 m (dvojskok)","Jumps: 1 m · 1.5 m · 2.4 m (double jump)"
 GB_SIGN_RAMP,Rampa nahoru,Ramp up
 GB_SIGN_GAP,"Propast 3,5 m: sprint nebo dvojskok","3.5 m gap: sprint or double jump"
+GB_SIGN_SPIRE,"Cvičná špička: skoč a zmáčkni E / ○","Practice spire: jump and press E / B"
+GB_SIGN_ROOFS,"Na střechy: schod → bedna → střecha → 3 špičky","To the roofs: step → crate → roof → 3 spires"

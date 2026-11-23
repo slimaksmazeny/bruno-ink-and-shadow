@@ -28,16 +28,19 @@ var _spawn_transform: Transform3D
 
 @onready var state_machine: PlayerStateMachine = $StateMachine
 @onready var visual: PlayerVisual = $Visual
+@onready var anchor_detector: AnchorDetector = $AnchorDetector
 
 
 func _ready() -> void:
 	profile = profile_3d
 	_spawn_transform = global_transform
+	anchor_detector.player = self
 	state_machine.setup(self)
 
 
 func _physics_process(delta: float) -> void:
 	_update_timers(delta)
+	anchor_detector.refresh(PlayerState.ANCHOR_STATES.keys())
 	state_machine.physics_update(delta)
 
 	if mode == Mode.MODE_2D:
@@ -130,3 +133,5 @@ func _debug_watch() -> void:
 	DebugOverlay.watch("Mode", "3D" if mode == Mode.MODE_3D else "2D")
 	DebugOverlay.watch("Speed", "%.2f m/s  (vy %.2f)" % [h_speed, velocity.y])
 	DebugOverlay.watch("On floor", "%s   jumps %d   coyote %.2f" % [is_on_floor(), jumps_used, coyote_timer])
+	var a: Anchor = anchor_detector.best_anchor()
+	DebugOverlay.watch("Anchor", a.name if a != null else "-")

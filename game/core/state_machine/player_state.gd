@@ -4,6 +4,11 @@
 class_name PlayerState
 extends Node
 
+## Typ kotvy → stav, který ji obslouží. v0.2.1 sem jen přidá řádky (PIPE → Climb, LEDGE → LedgeHang…).
+const ANCHOR_STATES: Dictionary = {
+	Anchor.Type.SPIRE: &"Perch",
+}
+
 var player: Player
 var machine: PlayerStateMachine
 
@@ -48,3 +53,15 @@ func jump_velocity(height: float) -> float:
 
 func horizontal_speed() -> float:
 	return Vector2(player.velocity.x, player.velocity.z).length()
+
+
+## Pokusí se přicvaknout na nejlepší kotvu v dosahu. Vrací true, pokud stav přepnul.
+func try_enter_anchor() -> bool:
+	var a: Anchor = player.anchor_detector.best_anchor()
+	if a == null or not ANCHOR_STATES.has(a.type):
+		return false
+	var target: StringName = ANCHOR_STATES[a.type]
+	if not machine.has_state(target):
+		return false
+	machine.transition_to(target, {"anchor": a})
+	return true
