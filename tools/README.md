@@ -20,3 +20,8 @@ C:\Projekty\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script .
 Scény v `game/` byly poprvé vytvořeny těmito skripty přes Godot API (100% platný formát `.tscn`).
 **Po ručních úpravách scén v editoru je znovu nespouštěj** – přepsaly by tvoje změny.
 `build_step_e.gd` obsahuje aktuální stav (hráč, kamera, špičky, tenisák, zvon, brána, ulice).
+
+## Přísná kontrola varování
+Godot v headless režimu GDScript varování nevypisuje. Pro kontrolu dočasně zkopíruj
+`tools/strict_warnings.cfg` jako `game/override.cfg` (varování se změní na chyby), spusť
+`--headless --path . --editor --quit` a pak `override.cfg` zase smaž. Výstup musí být prázdný.

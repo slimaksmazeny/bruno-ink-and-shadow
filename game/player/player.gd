@@ -134,4 +134,4 @@ func _debug_watch() -> void:
 	DebugOverlay.watch("Speed", "%.2f m/s  (vy %.2f)" % [h_speed, velocity.y])
 	DebugOverlay.watch("On floor", "%s   jumps %d   coyote %.2f" % [is_on_floor(), jumps_used, coyote_timer])
 	var a: Anchor = anchor_detector.best_anchor()
-	DebugOverlay.watch("Anchor", a.name if a != null else "-")
+	DebugOverlay.watch("Anchor", String(a.name) if a != null else "-")

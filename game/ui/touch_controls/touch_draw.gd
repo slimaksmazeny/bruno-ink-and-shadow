@@ -17,9 +17,9 @@ func _draw() -> void:
 	if ctl == null:
 		return
 	var joy: TouchStick = ctl.get("joystick")
-	var size: Vector2 = get_viewport_rect().size
+	var vs: Vector2 = get_viewport_rect().size
 	# Joystick: když není prst dole, ukáže se „klidová“ pozice vlevo dole.
-	var rest := Vector2(size.x * 0.14, size.y * 0.74)
+	var rest := Vector2(vs.x * 0.14, vs.y * 0.74)
 	var origin: Vector2 = joy.origin if joy.is_active() else rest
 	var knob: Vector2 = origin + joy.value() * joy.radius
 	draw_circle(origin, joy.radius, FILL)
