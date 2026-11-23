@@ -15,6 +15,7 @@ C:\Projekty\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script .
 | `test_step_c.gd` | ušní vrtulník (pád 2,5 m/s), přicvaknutí na cvičnou špičku, trasa přes 3 špičky na střechách |
 | `test_step_d.gd` | dotyk: joystick, tlačítko sprintu a skoku, rozhlížení, vypnutí myších akcí v dotykovém režimu |
 | `test_step_e.gd` | odpal tenisáku, zásah zvonu, otevření brány, míček neprolétá zdí |
+| `test_step_e2_aim.gd` | míření (kamera, úkroky, výstřel, sprint potlačen), útok holí, přichycení jen ke kotvě, na kterou se díváš |
 
 ## Generátory scén
 Scény v `game/` byly poprvé vytvořeny těmito skripty přes Godot API (100% platný formát `.tscn`).

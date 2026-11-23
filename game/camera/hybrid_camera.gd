@@ -7,6 +7,7 @@ extends Node3D
 @export var target: Node3D
 @export var fov_3d: float = 70.0
 @export var fov_2d: float = 32.0
+@export var fov_aim: float = 55.0
 @export_range(0.0, 1.0) var blend: float = 0.0
 
 @onready var rig_3d: ThirdPersonRig = $ThirdPersonRig
@@ -29,20 +30,25 @@ func _process(_delta: float) -> void:
 
 func _apply() -> void:
 	var a: Transform3D = rig_3d.camera_point.global_transform
+	var fov_now: float = lerpf(fov_3d, fov_aim, rig_3d.aim_blend)
 	if rig_2d == null or blend <= 0.0:
 		cam.global_transform = a
-		cam.fov = fov_3d
+		cam.fov = fov_now
 		return
 	var b: Transform3D = (rig_2d.get_node("CameraPoint") as Node3D).global_transform
 	var rot := Quaternion(a.basis.orthonormalized()).slerp(Quaternion(b.basis.orthonormalized()), blend)
 	cam.global_transform = Transform3D(Basis(rot), a.origin.lerp(b.origin, blend))
-	cam.fov = lerpf(fov_3d, fov_2d, blend)
+	cam.fov = lerpf(fov_now, fov_2d, blend)
 
 
 ## Směr „dopředu“ pro ovládání ve 3D – vždy z 3D rigu, nikdy ze skutečné kamery,
 ## takže se během přechodu do 2D ovládání nepřetočí.
 func get_control_yaw() -> float:
 	return rig_3d.get_yaw()
+
+
+func set_aiming(on: bool) -> void:
+	rig_3d.set_aiming(on)
 
 
 func snap_to_target() -> void:

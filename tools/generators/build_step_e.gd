@@ -164,12 +164,19 @@ func _build_player() -> void:
 	_mesh(stand, "Head", _sphere(0.23), Vector3(0, 1.13, -0.04), Vector3.ZERO, black)
 	_mesh(stand, "Snout", _capsule(0.1, 0.36), Vector3(0, 1.08, -0.3), Vector3(90, 0, 0), tan)
 	_mesh(stand, "Nose", _sphere(0.05), Vector3(0, 1.1, -0.48), Vector3.ZERO, black)
+	# Uši na temeni hlavy: každé visí z kloubu (EarHinge) – pro ušní vrtulník se zvednou
+	# do vodorovné polohy a celý EarsPivot se točí nad hlavou jako vrtule.
 	var ears := Node3D.new()
 	ears.name = "EarsPivot"
-	ears.position = Vector3(0, 1.2, -0.02)
+	ears.position = Vector3(0, 1.33, -0.02)
 	stand.add_child(ears)
-	_mesh(ears, "EarL", _boxm(Vector3(0.05, 0.42, 0.18)), Vector3(-0.24, -0.2, 0.0), Vector3(0, 0, -12), black)
-	_mesh(ears, "EarR", _boxm(Vector3(0.05, 0.42, 0.18)), Vector3(0.24, -0.2, 0.0), Vector3(0, 0, 12), black)
+	for side: Array in [["L", -1.0], ["R", 1.0]]:
+		var hinge := Node3D.new()
+		hinge.name = "EarHinge" + side[0]
+		hinge.position = Vector3(0.16 * side[1], 0.0, 0.0)
+		hinge.rotation_degrees = Vector3(0, 0, 20.0 * side[1])
+		ears.add_child(hinge)
+		_mesh(hinge, "Ear" + side[0], _boxm(Vector3(0.05, 0.42, 0.2)), Vector3(0, -0.2, 0.0), Vector3.ZERO, black)
 	var collar := TorusMesh.new()
 	collar.inner_radius = 0.17
 	collar.outer_radius = 0.23
@@ -212,7 +219,7 @@ func _build_player() -> void:
 	sm.set_script(load("res://core/state_machine/player_state_machine.gd"))
 	root.add_child(sm)
 	var idle: Node = null
-	for state_name: String in ["Idle", "Move", "Sprint", "Air", "Glide", "Perch", "Swing"]:
+	for state_name: String in ["Idle", "Move", "Sprint", "Air", "Glide", "Perch", "Swing", "Aim"]:
 		var st := Node.new()
 		st.name = state_name
 		st.set_script(load("res://player/states/state_%s.gd" % state_name.to_lower()))

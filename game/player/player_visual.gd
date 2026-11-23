@@ -12,6 +12,8 @@ enum Posture { STAND, SPRINT }
 var posture: Posture = Posture.STAND
 var gliding: bool = false
 var perched: bool = false
+## Při míření se Bruno neotáčí do směru pohybu (úkroky do stran), ale drží směr kamery.
+var facing_locked: bool = false
 var _yaw: float = 0.0
 var _squash: float = 1.0
 var _ear_spin: float = 0.0
@@ -23,15 +25,13 @@ func set_posture(new_posture: Posture) -> void:
 	_sprint.visible = posture == Posture.SPRINT
 
 
-## Ušní vrtulník: uši se roztáhnou do stran a točí se.
+## Ušní vrtulník: uši se zvednou do vodorovné polohy a točí se nad hlavou jako vrtule.
 func set_gliding(on: bool) -> void:
 	gliding = on
 	if on:
 		set_posture(Posture.STAND)
 	else:
 		_ears.rotation = Vector3.ZERO
-		for ear: Node3D in [_ears.get_node("EarL") as Node3D, _ears.get_node("EarR") as Node3D]:
-			ear.rotation_degrees.x = 0.0
 
 
 func set_perched(on: bool) -> void:
@@ -70,21 +70,21 @@ func land_squash(amount: float = 0.75) -> void:
 
 func update_visual(delta: float, player: Player) -> void:
 	var horizontal := Vector3(player.velocity.x, 0.0, player.velocity.z)
-	if horizontal.length() > 0.3:
+	if horizontal.length() > 0.3 and not facing_locked:
 		var target_yaw: float = atan2(-horizontal.x, -horizontal.z)
 		_yaw = lerp_angle(_yaw, target_yaw, 1.0 - exp(-player.profile.turn_speed * delta))
 	rotation.y = _yaw
 
+	var hinge_l: Node3D = _ears.get_node("EarHingeL") as Node3D
+	var hinge_r: Node3D = _ears.get_node("EarHingeR") as Node3D
 	if gliding:
 		_ear_spin += delta * 22.0
 		_ears.rotation.y = _ear_spin
-		for ear: Node3D in [_ears.get_node("EarL") as Node3D, _ears.get_node("EarR") as Node3D]:
-			ear.rotation_degrees.x = 0.0
-		(_ears.get_node("EarL") as Node3D).rotation_degrees.z = -80.0
-		(_ears.get_node("EarR") as Node3D).rotation_degrees.z = 80.0
+		hinge_l.rotation_degrees.z = lerpf(hinge_l.rotation_degrees.z, -95.0, 1.0 - exp(-25.0 * delta))
+		hinge_r.rotation_degrees.z = lerpf(hinge_r.rotation_degrees.z, 95.0, 1.0 - exp(-25.0 * delta))
 	else:
-		(_ears.get_node("EarL") as Node3D).rotation_degrees.z = -12.0
-		(_ears.get_node("EarR") as Node3D).rotation_degrees.z = 12.0
+		hinge_l.rotation_degrees.z = lerpf(hinge_l.rotation_degrees.z, -20.0, 1.0 - exp(-15.0 * delta))
+		hinge_r.rotation_degrees.z = lerpf(hinge_r.rotation_degrees.z, 20.0, 1.0 - exp(-15.0 * delta))
 
 	if perched:
 		# Jemné balancování na špičce.

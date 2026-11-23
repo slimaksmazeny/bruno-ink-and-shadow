@@ -11,6 +11,10 @@ signal locale_changed(locale: String)
 @warning_ignore("unused_signal")
 signal player_mode_changed(mode: int)
 
+## Hráč začal / přestal mířit tenisákem (zaměřovač, kamera).
+@warning_ignore("unused_signal")
+signal aim_changed(aiming: bool)
+
 ## Zvon / terč zasažený tenisákem (od Kroku E).
 @warning_ignore("unused_signal")
 signal bell_hit(bell_id: StringName)

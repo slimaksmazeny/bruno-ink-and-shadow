@@ -1110,12 +1110,14 @@
                 <thead><tr><th>InputMap Akce</th><th>PC (Klávesnice + Myš)</th><th>Gamepad (PS / Xbox)</th><th>Mobilní dotykový HUD</th></tr></thead>
                 <tbody>
                   <tr><td><code>move_left/right/forward/back</code></td><td>WASD / Šipky (fyzické klávesy – funguje i na QWERTZ)</td><td>Levá páčka</td><td>Virtuální joystick</td></tr>
-                  <tr><td><code>look_left/right/up/down</code></td><td>Myš (po kliknutí zachycená, Esc uvolní)</td><td>Pravá páčka</td><td>Tah prstem v pravé polovině</td></tr>
-                  <tr><td><code>jump</code></td><td>Mezerník (podržet ve vzduchu = uši)</td><td>✕ / A</td><td>Tlačítko Skok</td></tr>
-                  <tr><td><code>sprint</code></td><td>Shift (držet)</td><td>R2 / RT (držet)</td><td>Tlačítko Sprint</td></tr>
-                  <tr><td><code>action</code></td><td>E / Levé tlačítko myši</td><td>○ / B</td><td>Tlačítko Hůl (kotva / kontext)</td></tr>
-                  <tr><td><code>tennis</code></td><td>Q / Pravé tlačítko myši</td><td>△ / Y</td><td>Tlačítko Tenisák</td></tr>
+                  <tr><td><code>look_*</code></td><td>Myš (po kliknutí zachycená, Esc uvolní)</td><td>Pravá páčka</td><td>Tah prstem v pravé polovině</td></tr>
+                  <tr><td><code>jump</code></td><td>Mezerník (znovu = dvojskok, držet při pádu = ušní vrtulník)</td><td>✕ / A</td><td>Tlačítko Skok</td></tr>
+                  <tr><td><code>sprint</code></td><td>Shift (držet)</td><td>R1 nebo R2 / RB nebo RT (držet; R2 jen když nemíříš)</td><td>Tlačítko Sprint</td></tr>
                   <tr><td><code>sneak</code> / <code>sneak_toggle</code></td><td>Ctrl (držet)</td><td>L3 – stisk levé páčky (přepínač)</td><td>Podle vychýlení joysticku</td></tr>
+                  <tr><td><code>attack</code></td><td>Levé tlačítko myši / F</td><td>□ / X</td><td>Tlačítko Hůl (když není kotva v dosahu)</td></tr>
+                  <tr><td><code>action</code> (přichycení)</td><td>E / prostřední tlačítko myši</td><td>○ / B</td><td>Tlačítko Hůl (kotva v dosahu)</td></tr>
+                  <tr><td><code>aim</code> + <code>fire</code></td><td>Pravé tlačítko myši (držet) + levé tlačítko</td><td>L2 / LT (držet) + R2 / RT</td><td>—</td></tr>
+                  <tr><td><code>tennis</code> (rychlý odpal)</td><td>Q</td><td>—</td><td>Tlačítko Tenisák</td></tr>
                   <tr><td><code>pause</code></td><td>Esc</td><td>Options / Menu</td><td>Ikona pauzy</td></tr>
                   <tr><td><code>debug_*</code></td><td>F3 = ladicí panel · L = jazyk · M = dotykový HUD</td><td>—</td><td>—</td></tr>
                 </tbody>
@@ -1881,6 +1883,7 @@
       ];
 
       const DEFAULT_LOGS = [
+        { id: "log_025", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "Ovládání podle Tomáše (inspirace Sly + Rayman): míření L2 / pravé tl. myši (kamera se přiblíží přes rameno, Bruno drží směr pohledu, úkroky 3 m/s) + výstřel R2 / levé tl.; útok holí □ / levé tl. myši; přichycení ○ / E / prostřední tl. myši – nově jen ke kotvě ve směru pohledu kamery (±50°); sprint navíc i na R1. Uši přesunuty na temeno hlavy s kloubem – při vrtulníku se zvednou a točí nad hlavou. PR #3 přesměrován na main (obsahuje Kroky B–E)." },
         { id: "log_024", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok E (W2-07): stav Swing (švih holí, Bruno se natočí ve směru míření), neonový tenisák (RigidBody3D s CCD, svítící stopa, max. 3 najednou), zvon na věži (zásah → rozhoupání, rozsvícení, Events.bell_hit) a brána před obrazem, která zajede do země. Míří se na zaměřovač „+“ uprostřed obrazovky; kamera je nově lehce přes pravé rameno. Testy a generátory scén uloženy do tools/ – všech 5 sad (A–E) prochází." },
         { id: "log_023", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok D (W2-06): dotykové ovládání jako globální autoload TouchControls – plovoucí joystick vlevo, 4 tlačítka podle HUD mockupu (hůl, skok, sprint, tenisák), pauza, rozhlížení tahem prstu, plný multi-touch. Tlačítka jen mačkají akce z InputMap. Na PC přepínač M (myš = prst, akce na tlačítkách myši se dočasně vypnou). Pozn.: Godot 4.7 má vestavěnou třídu VirtualJoystick, naše se proto jmenuje TouchStick." },
         { id: "log_022", date: "2026-11-23", author: "Claude", status: "info", version: "v0.2.0", text: "Krok C (W2-05): ušní vrtulník (držet skok při pádu → pád 2,5 m/s, uši se roztočí), systém kotev Anchor + AnchorDetector s modrými jiskrami, stav Perch (magnetické přitažení a balancování na špičce, skok z ní zachová dvojskok). V ulici cvičná špička + cesta na střechy (schod → bedna → střecha) a 3 špičky. Ovladač: sprint R2/RT, plížení přepínačem L3. Automatický test celé trasy přes 3 špičky prošel." },

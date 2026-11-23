@@ -7,6 +7,10 @@ extends Area3D
 @export var max_rise: float = 3.6
 @export var max_drop: float = 2.5
 @export var max_horizontal: float = 4.2
+## Kotva musí být v tomto úhlu od směru kamery (kam se díváš), jinak se nenabídne.
+@export var max_view_angle_deg: float = 50.0
+## Kotva blíž než tohle se nabídne i mimo úhel pohledu (stojíš přímo u ní).
+@export var always_ok_distance: float = 1.0
 
 var player: Player
 var _candidates: Array[Anchor] = []
@@ -40,7 +44,10 @@ func _pick(allowed_types: Array) -> Anchor:
 	if player == null:
 		return null
 	var origin: Vector3 = player.global_position
+	# Směr pohledu kamery (vodorovně) – Bruno se přichytí tam, kam se hráč dívá.
 	var forward: Vector3 = player.visual.get_forward()
+	if player.camera != null:
+		forward = Basis(Vector3.UP, player.camera.get_control_yaw()) * Vector3.FORWARD
 	var best: Anchor = null
 	var best_score: float = INF
 	for a: Anchor in _candidates:
@@ -57,10 +64,12 @@ func _pick(allowed_types: Array) -> Anchor:
 		# Kotva, na které už Bruno stojí, se nenabízí.
 		if flat.length() < 0.2 and absf(rise) < 0.2:
 			continue
-		var facing_bonus: float = 0.0
+		var angle_deg: float = 0.0
 		if flat.length() > 0.1:
-			facing_bonus = -flat.normalized().dot(forward) * 1.5
-		var score: float = to.length() + facing_bonus
+			angle_deg = rad_to_deg(flat.normalized().angle_to(forward))
+		if angle_deg > max_view_angle_deg and flat.length() > always_ok_distance:
+			continue
+		var score: float = to.length() + angle_deg * 0.06
 		if score < best_score:
 			best_score = score
 			best = a

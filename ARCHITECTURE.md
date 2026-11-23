@@ -256,7 +256,7 @@ func get_snap_position(_from: Vector3) -> Vector3:
 	return snap_point.global_position   # LEDGE/ROPE v0.2.1 přepíšou na nejbližší bod úsečky
 ```
 
-- `AnchorDetector` (Area3D koule ~4 m na hráči) drží seznam kotev v dosahu a vybírá **nejlepší** (vzdálenost + směr pohledu + kotva nad/před hráčem). Nejlepší kotvě zapne modré jiskry (zvýraznění).
+- `AnchorDetector` (Area3D koule ~4 m na hráči) drží seznam kotev v dosahu a vybírá **nejlepší** podle **směru kamery** (kotva mimo 50° od pohledu se nenabídne, pokud nestojíš přímo u ní) a vzdálenosti – Bruno se přichytí tam, kam se hráč dívá. Nejlepší kotvě zapne modré jiskry (zvýraznění).
 - `GroundedState` i `AirborneState` při `action` zavolají jednu sdílenou funkci:
 
 ```gdscript
@@ -351,9 +351,11 @@ func blend_to(target: float, duration: float = 0.9) -> void:
 | `move_left/right/forward/back` | A / D / W / S | levá páčka | levá páčka | virtuální joystick |
 | `look_left/right/up/down` | myš (delta) | pravá páčka | pravá páčka | tah prstem v pravé polovině |
 | `jump` | Mezerník | A | ✕ | tlačítko šipka ↑ |
-| `sprint` (držet) | Shift | RT | R2 | tlačítko běžícího Bruna |
-| `action` (hůl: kotva / kontext) | E / levé tlačítko myši | B | ○ | tlačítko hole |
-| `tennis` (odpal tenisáku) | Q / pravé tlačítko myši | Y | △ | tlačítko tenisáku |
+| `sprint` (držet) | Shift | RB nebo RT | R1 nebo R2 (R2 jen když nemíříš) | tlačítko běžícího Bruna |
+| `attack` (útok holí) | levé tl. myši / F | X | □ | tlačítko hole (bez kotvy v dosahu) |
+| `action` (přichycení ke kotvě) | E / prostřední tl. myši | B | ○ | tlačítko hole (kotva v dosahu) |
+| `aim` (držet) + `fire` | pravé tl. myši + levé tl. myši | LT + RT | L2 + R2 | — |
+| `tennis` (rychlý odpal) | Q | — | — | tlačítko tenisáku |
 | `sneak` (držet) / `sneak_toggle` (přepnout) | Ctrl (držet) | L3 – stisk páčky | L3 – stisk páčky | (automaticky podle vychýlení joysticku) |
 | `pause` | Esc | Menu | Options | ikona pauzy |
 | `debug_toggle_touch` | M | — | — | — |

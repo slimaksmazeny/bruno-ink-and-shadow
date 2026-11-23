@@ -9,6 +9,17 @@ extends Node3D
 @export_range(-89.0, 0.0) var min_pitch_deg: float = -65.0
 @export_range(0.0, 89.0) var max_pitch_deg: float = 30.0
 @export var default_pitch_deg: float = -18.0
+@export_group("Shoulder & Aim")
+## Posun kamery přes pravé rameno (aby Bruno nezakrýval zaměřovač).
+@export var shoulder_offset: float = 0.55
+@export var aim_distance: float = 2.6
+@export var aim_shoulder_offset: float = 0.85
+## Citlivost rozhlížení při míření (násobek).
+@export var aim_look_scale: float = 0.6
+
+## 0 = normální kamera, 1 = míření (tweenuje se v set_aiming).
+var aim_blend: float = 0.0
+var _aim_tween: Tween
 
 var target: Node3D
 var input_enabled: bool = true
@@ -33,7 +44,7 @@ func _process(delta: float) -> void:
 	if target == null:
 		return
 	if input_enabled:
-		var look: Vector2 = InputManager.consume_look(delta)
+		var look: Vector2 = InputManager.consume_look(delta) * lerpf(1.0, aim_look_scale, aim_blend)
 		yaw -= look.x
 		pitch = clampf(pitch - look.y, deg_to_rad(min_pitch_deg), deg_to_rad(max_pitch_deg))
 
@@ -41,6 +52,15 @@ func _process(delta: float) -> void:
 	global_position = global_position.lerp(goal, 1.0 - exp(-follow_sharpness * delta))
 	yaw_pivot.rotation.y = yaw
 	pitch_pivot.rotation.x = pitch
+	spring_arm.spring_length = lerpf(distance, aim_distance, aim_blend)
+	spring_arm.position.x = lerpf(shoulder_offset, aim_shoulder_offset, aim_blend)
+
+
+func set_aiming(on: bool) -> void:
+	if _aim_tween != null and _aim_tween.is_valid():
+		_aim_tween.kill()
+	_aim_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_aim_tween.tween_property(self, "aim_blend", 1.0 if on else 0.0, 0.18)
 
 
 ## Okamžitě skočí na cíl (po respawnu, po načtení levelu).
