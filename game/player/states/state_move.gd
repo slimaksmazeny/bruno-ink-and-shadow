@@ -16,7 +16,7 @@ func physics_update(delta: float) -> void:
 		return
 	var p: MovementProfile = player.profile
 	var strength: float = player.get_move_strength()
-	player.is_sneaking = Input.is_action_pressed(&"sneak") or strength < p.sneak_stick_threshold
+	player.is_sneaking = player.wants_sneak() or strength < p.sneak_stick_threshold
 
 	var speed: float = p.sneak_speed if player.is_sneaking else p.walk_speed * strength
 	var dir: Vector3 = player.get_move_dir().normalized()

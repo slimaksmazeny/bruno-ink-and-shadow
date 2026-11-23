@@ -350,10 +350,10 @@ func blend_to(target: float, duration: float = 0.9) -> void:
 | `move_left/right/forward/back` | A / D / W / S | levá páčka | levá páčka | virtuální joystick |
 | `look_left/right/up/down` | myš (delta) | pravá páčka | pravá páčka | tah prstem v pravé polovině |
 | `jump` | Mezerník | A | ✕ | tlačítko šipka ↑ |
-| `sprint` (držet) | Shift | LB / L3 | L1 / L3 | tlačítko běžícího Bruna |
+| `sprint` (držet) | Shift | RT | R2 | tlačítko běžícího Bruna |
 | `action` (hůl: kotva / kontext) | E / levé tlačítko myši | B | ○ | tlačítko hole |
 | `tennis` (odpal tenisáku) | Q / pravé tlačítko myši | Y | △ | tlačítko tenisáku |
-| `sneak` (držet, plížení) | Ctrl | LT | L2 | (automaticky podle vychýlení joysticku) |
+| `sneak` (držet) / `sneak_toggle` (přepnout) | Ctrl (držet) | L3 – stisk páčky | L3 – stisk páčky | (automaticky podle vychýlení joysticku) |
 | `pause` | Esc | Menu | Options | ikona pauzy |
 | `debug_toggle_touch` | M | — | — | — |
 | `debug_overlay` | F3 | — | — | — |

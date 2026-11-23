@@ -5,7 +5,7 @@ extends Node
 
 enum Device { KEYBOARD_MOUSE, GAMEPAD, TOUCH }
 ## Rodina ovladače – jen pro ikonky tlačítek v UI (✕○△□ vs. A B X Y). Mapování tlačítek je pro všechny stejné:
-## ✕ = A (skok), ○ = B (hůl), △ = Y (tenisák), L1 = LB (sprint), L2 = LT (plížení), Options = Menu (pauza).
+## ✕ = A (skok), ○ = B (hůl), △ = Y (tenisák), R2 = RT (sprint), L3 = stisk levé páčky (plížení přepínačem), Options = Menu (pauza).
 enum PadFamily { NONE, XBOX, PLAYSTATION, NINTENDO, GENERIC }
 
 signal device_changed(device: Device)

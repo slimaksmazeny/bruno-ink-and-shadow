@@ -21,6 +21,8 @@ var jumps_used: int = 0
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 var is_sneaking: bool = false
+## Plížení přepnuté tlačítkem L3 (na ovladači). Zruší ho sprint nebo další stisk L3.
+var sneak_toggled: bool = false
 
 var _spawn_transform: Transform3D
 
@@ -58,6 +60,11 @@ func _update_timers(delta: float) -> void:
 	else:
 		coyote_timer = maxf(coyote_timer - delta, 0.0)
 
+	if Input.is_action_just_pressed(&"sneak_toggle"):
+		sneak_toggled = not sneak_toggled
+	if Input.is_action_pressed(&"sprint"):
+		sneak_toggled = false
+
 	if Input.is_action_just_pressed(&"jump"):
 		jump_buffer_timer = profile.jump_buffer_time
 	else:
@@ -77,6 +84,11 @@ func get_move_dir() -> Vector3:
 ## Síla vychýlení páčky / kláves (0–1) – podle ní chůze vs. plížení.
 func get_move_strength() -> float:
 	return minf(InputManager.get_move_vector().length(), 1.0)
+
+
+## Chce hráč plížit? (Ctrl držením na klávesnici, nebo L3 přepínačem na ovladači)
+func wants_sneak() -> bool:
+	return sneak_toggled or Input.is_action_pressed(&"sneak")
 
 
 func consume_jump_buffer() -> bool:

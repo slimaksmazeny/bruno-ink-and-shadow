@@ -29,6 +29,6 @@ static func pick_ground_state(p: Player) -> StringName:
 	var strength: float = p.get_move_strength()
 	if strength < 0.05:
 		return &"Idle"
-	if Input.is_action_pressed(&"sprint") and not Input.is_action_pressed(&"sneak"):
+	if Input.is_action_pressed(&"sprint"):
 		return &"Sprint"
 	return &"Move"
