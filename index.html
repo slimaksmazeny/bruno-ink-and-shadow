@@ -1420,10 +1420,10 @@
           title: "Instalace Godot 4.7.x stable na PC",
           owner: "Tomáš", status: "done", priority: "Kritické", estimate: "1 hodina",
           dependsOn: [],
-          files: ["C:\\Godot\\godot.exe"],
+          files: ["C:\\Projekty\\Godot_v4.7.2-stable_win64.exe"],
           steps: [
             "Stáhnout standardní Godot 4.7.x stable (NE .NET, NE 4.8 beta)",
-            "Rozbalit do C:\\Godot\\godot.exe",
+            "Rozbalit do C:\\Projekty\\ (Godot_v4.7.2-stable_win64.exe)",
             "Ověřit spuštění Project Manageru"
           ],
           acceptance: "Godot 4.7.x běží na PC a je připraven otevřít game/project.godot.",
@@ -1915,7 +1915,7 @@
       const CLAUDE_PROMPT = `Ahoj Claude! Pokračujeme na mé hře „Bruno: Ink & Shadow“ (Godot 4.7.x stable, GDScript, Jolt). Jsi hlavní vývojář: píšeš kód přímo v repozitáři.
 
 KONTEXT:
-- GitHub: slimaksmazeny/bruno-ink-and-shadow · lokálně: C:\\Projekty\\bruno-ink-and-shadow · Godot: C:\\Godot\\godot.exe
+- GitHub: slimaksmazeny/bruno-ink-and-shadow · lokálně: C:\\Projekty\\bruno-ink-and-shadow · Godot: C:\\Projekty\\Godot_v4.7.2-stable_win64.exe
 - ARCHITECTURE.md = závazná technická architektura (State Machine, kotvy, hybridní kamera, InputMap, lokalizace, save, struktura game/, pravidla kódu).
 - DESIGN.md = herní design. index.html = Projektové centrum (Roadmapa, Kanban, Deník práce; localStorage klíče bruno_ink_shadow_v1 + bruno_roadmap_v015 se NESMÍ měnit).
 - Aktuální cíl: v0.2.0 rozděleno na kroky A–F (W2-03 až W2-08), pak v0.2.1 (W2-09 Parkour, W2-10 2D Kit).
@@ -1930,7 +1930,7 @@ PRAVIDLA:
 Úkol pro toto vlákno: `;
 
       const AGY_PROMPT = `Záložní kontext projektu „Bruno: Ink & Shadow“ (verze v0.1.7) — Antigravity je od v0.1.7 jen záloha, hlavní vývoj dělá Claude.
-- Kořenová složka: c:\\Projekty\\bruno-ink-and-shadow · Godot 4.7.x: C:\\Godot\\godot.exe
+- Kořenová složka: c:\\Projekty\\bruno-ink-and-shadow · Godot 4.7.x: C:\\Projekty\\Godot_v4.7.2-stable_win64.exe
 - Závazná technická architektura: ARCHITECTURE.md (přečti před jakoukoli změnou kódu). Herní design: DESIGN.md.
 - Projektové centrum & Roadmapa: index.html (v0.1.7, 6 vln / 30 úkolů, localStorage klíče bruno_ink_shadow_v1 + bruno_roadmap_v015 — neměnit).
 - Vizuální knihovna: vis/ (30 schválených concept artů).
@@ -1939,7 +1939,7 @@ PRAVIDLA:
 - Závazná pravidla:
   1. Dodržuj sekci 10 v ARCHITECTURE.md (Godot 4 syntaxe, typovaný GDScript, žádné texty natvrdo, jen InputMap akce).
   2. Pracuj jen na zadaném kroku a jen v souborech, které k němu patří.
-  3. Po změně spusť: C:\\Godot\\godot.exe --headless --path game --editor --quit a oprav všechny chyby.
+  3. Po změně spusť: C:\\Projekty\\Godot_v4.7.2-stable_win64_console.exe --headless --path game --editor --quit a oprav všechny chyby.
   4. Nic necommituj ani nepushuj, dokud o to výslovně nepožádám.`;
 
       /* ====== STATE (PRESERVING LEGACY + NEW ROADMAP KEY) ====== */
