@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="MovementProfile" format=3]
+
+[ext_resource type="Script" path="res://player/movement_profile.gd" id="1_fyk5i"]
+
+[resource]
+resource_name = "Profile 2D (Rayman)"
+script = ExtResource("1_fyk5i")
+walk_speed = 6.5
+sneak_speed = 2.5
+sprint_speed = 11.0
+ground_accel = 70.0
+ground_decel = 80.0
+jump_height = 2.6
+double_jump_height = 1.9
+gravity = 42.0
+fall_gravity_mult = 1.8
+jump_cut_gravity_mult = 3.0
+air_accel = 45.0
+max_fall_speed = 34.0
+glide_fall_speed = 3.0
+glide_air_speed = 7.0
+coyote_time = 0.1
+turn_speed = 25.0

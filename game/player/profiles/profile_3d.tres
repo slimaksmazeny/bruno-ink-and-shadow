@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="MovementProfile" format=3]
+
+[ext_resource type="Script" path="res://player/movement_profile.gd" id="1_bvtyk"]
+
+[resource]
+resource_name = "Profile 3D (Sly)"
+script = ExtResource("1_bvtyk")
