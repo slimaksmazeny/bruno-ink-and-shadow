@@ -92,14 +92,19 @@ func _on_new_game() -> void:
 
 
 func _on_continue() -> void:
+	var level: String = FIRST_LEVEL
 	if SaveManager.load_game(1):
-		GameState.resume_checkpoint = str(GameState.data.get("progress", {}).get("last_checkpoint", ""))
+		var progress: Dictionary = GameState.data.get("progress", {})
+		GameState.resume_checkpoint = str(progress.get("last_checkpoint", ""))
+		var last: String = str(progress.get("last_level", ""))
+		if not last.is_empty() and ResourceLoader.exists(last):
+			level = last
 	else:
 		GameState.reset()
-	start_game()
+	_start_scene(level)
 
 
-## Kapitoly: zatím jedna hratelná (testovací ulice), další jsou zamčené náhledy.
+## Kapitoly (+ testovací hřiště). Prázdná scéna = zamčená kapitola.
 const CHAPTERS: Array[Dictionary] = [
 	{"id": "greybox", "title": "CHAPTER_1", "scene": FIRST_LEVEL},
 	{"id": "canyon", "title": "CHAPTER_2", "scene": "res://levels/ch2_canyon/canyon.tscn"},

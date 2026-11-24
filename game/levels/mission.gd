@@ -32,6 +32,14 @@ static func chapter_of(node: Node) -> String:
 
 func _ready() -> void:
 	_start_ms = Time.get_ticks_msec()
+	# „Pokračovat“ v menu otevře naposledy hranou kapitolu (testovací hřiště ne).
+	var scene: Node = get_tree().current_scene if get_tree() != null else null
+	if scene != null and not scene.scene_file_path.is_empty() and chapter_id != "gym":
+		if not GameState.data.has("progress"):
+			GameState.data["progress"] = {}
+		if str(GameState.data["progress"].get("last_level", "")) != scene.scene_file_path:
+			GameState.data["progress"]["last_level"] = scene.scene_file_path
+			GameState.data["progress"]["last_checkpoint"] = ""
 	GameState.keys.clear()
 	Events.key_obtained.connect(func(k: String) -> void:
 		if k == key_id:
