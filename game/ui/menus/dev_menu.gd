@@ -6,6 +6,7 @@ extends CanvasLayer
 const LEVELS: Array[Array] = [
 	["Ulice (kap. 1)", "res://levels/greybox/greybox_street.tscn"],
 	["Kaňon (kap. 2)", "res://levels/ch2_canyon/canyon.tscn"],
+	["Pouť (kap. 3)", "res://levels/ch3_carnival/carnival.tscn"],
 	["Tréninkové hřiště", "res://levels/test/gym.tscn"],
 	["Hlavní menu", "res://ui/menus/main_menu.tscn"],
 ]

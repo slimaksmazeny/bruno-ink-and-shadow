@@ -52,7 +52,7 @@ func _physics_process(_d: float) -> bool:
 		check("chapters_listed", n == 5, "children=%d" % n)
 		check("chapter1_playable", not box.get_child(0).disabled and box.get_child(0).text.contains("1:35"), box.get_child(0).text)
 		check("chapter2_playable", not box.get_child(1).disabled)
-		check("chapter3_locked", box.get_child(2).disabled)
+		check("chapter3_playable", not box.get_child(2).disabled)
 		print("RESULT: %d fails" % fails)
 		quit(1 if fails > 0 else 0)
 	return false
