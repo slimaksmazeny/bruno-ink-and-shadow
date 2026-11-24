@@ -16,6 +16,9 @@ extends Node3D
 @export var vertical_dead_zone: float = 2.2
 ## Mírný pohled shora (stupně) – plošiny pod Brunem jsou lépe vidět.
 @export var tilt_deg: float = 4.0
+## Rychlý svislý pohyb (odraz z houby, pád): od této rychlosti kamera
+## zmenší mrtvou zónu a zrychlí, aby Bruno neutekl z obrazu.
+@export var fast_vertical_speed: float = 7.0
 
 @export_group("Situační pohled")
 ## Jak daleko před Brunem kamera „ohmatává“ terén (sráz, díra).
@@ -34,6 +37,8 @@ var _ahead: float = 0.0
 var _ground_y: float = 0.0
 var _peek_down: float = 0.0
 var _peek_zoom: float = 0.0
+var _want_down: float = 0.0
+var _want_zoom: float = 0.0
 var _manual: float = 0.0
 ## Pro ladicí panel / testy: jak hluboko je terén před Brunem.
 var last_drop: float = 0.0
@@ -52,6 +57,8 @@ func snap() -> void:
 		_ground_y = target.global_position.y
 		_peek_down = 0.0
 		_peek_zoom = 0.0
+		_want_down = 0.0
+		_want_zoom = 0.0
 		_update(0.0, true)
 
 
@@ -67,22 +74,29 @@ func _update(delta: float, instant: bool) -> void:
 	_ahead = lerpf(_ahead, want, 1.0 - exp(-look_ahead_speed * delta))
 
 	# Svislá referenční výška: na zemi = aktuální výška, ve vzduchu jen mimo mrtvou zónu.
+	var fast: bool = not target.is_on_floor() and absf(target.velocity.y) > fast_vertical_speed
+	var dz: float = vertical_dead_zone * (0.35 if fast else 1.0)
 	if target.is_on_floor():
 		_ground_y = t.y
-	elif t.y > _ground_y + vertical_dead_zone:
-		_ground_y = t.y - vertical_dead_zone
-	elif t.y < _ground_y - vertical_dead_zone * 0.5:
-		_ground_y = t.y + vertical_dead_zone * 0.5
+	elif t.y > _ground_y + dz:
+		_ground_y = t.y - dz
+	elif t.y < _ground_y - dz * 0.5:
+		_ground_y = t.y + dz * 0.5
 
 	# Situační pohled: co je před Brunem dole? Sráz / díra → podívat se dolů a oddálit.
-	var dir: float = signf(_ahead) if absf(_ahead) > 0.3 else facing
-	last_drop = _probe_drop(t, right * dir)
-	var want_down: float = 0.0
-	var want_zoom: float = 0.0
-	if last_drop > drop_threshold:
-		var k: float = clampf((last_drop - drop_threshold) / 6.0, 0.0, 1.0)
-		want_down = max_peek_down * k
-		want_zoom = max_peek_zoom * k
+	# Vyhodnocuje se jen na zemi – ve skoku / odrazu od houby si kamera drží
+	# poslední rozhodnutí, jinak by z výšky výskoku „viděla díru“ všude.
+	if target.is_on_floor() or instant:
+		var dir: float = signf(_ahead) if absf(_ahead) > 0.3 else facing
+		last_drop = _probe_drop(t, right * dir)
+		_want_down = 0.0
+		_want_zoom = 0.0
+		if last_drop > drop_threshold:
+			var k: float = clampf((last_drop - drop_threshold) / 6.0, 0.0, 1.0)
+			_want_down = max_peek_down * k
+			_want_zoom = max_peek_zoom * k
+	var want_down: float = _want_down
+	var want_zoom: float = _want_zoom
 	var blend_k: float = 1.0 if instant else 1.0 - exp(-peek_speed * delta)
 	_peek_down = lerpf(_peek_down, want_down, blend_k)
 	_peek_zoom = lerpf(_peek_zoom, want_zoom, blend_k)
@@ -105,7 +119,8 @@ func _update(delta: float, instant: bool) -> void:
 	else:
 		var p: Vector3 = global_position
 		var h: float = 1.0 - exp(-follow_sharpness * delta)
-		var v: float = 1.0 - exp(-vertical_sharpness * delta)
+		var vs: float = vertical_sharpness * (2.2 if fast or absf(desired.y - p.y) > 3.0 else 1.0)
+		var v: float = 1.0 - exp(-vs * delta)
 		var next: Vector3 = p.lerp(desired, h)
 		next.y = lerpf(p.y, desired.y, v)
 		global_position = next
