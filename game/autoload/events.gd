@@ -62,3 +62,7 @@ signal guard_knocked_out()
 ## Mise levelu postoupila na další krok (Mission.Step jako int).
 @warning_ignore("unused_signal")
 signal mission_step_changed(step: int)
+
+## Bruno spustil laserový poplach.
+@warning_ignore("unused_signal")
+signal laser_alarm(position: Vector3)

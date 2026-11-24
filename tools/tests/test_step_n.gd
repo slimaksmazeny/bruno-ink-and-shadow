@@ -50,7 +50,7 @@ func _physics_process(_d: float) -> bool:
 			p.state_machine.current._try_pickpocket()
 			check("key_stolen", gs.has_key("vault_key") and m.step == 1, "step=%d" % m.step)
 			p.sneak_toggled = false
-			put(Vector3(37.2, 0.05, 7))
+			put(Vector3(37.75, 0.05, 7))
 		20:
 			check("vault_prompt", hud._prompt.visible, hud._prompt.text)
 			p.state_machine.current._try_interact()

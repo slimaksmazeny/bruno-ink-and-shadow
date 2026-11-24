@@ -68,6 +68,7 @@ func _ready() -> void:
 	Events.mission_step_changed.connect(func(_s: int) -> void:
 		_refresh_objective()
 		show_toast(tr(_objective_key())))
+	Events.laser_alarm.connect(func(_p: Vector3) -> void: show_toast(tr("HUD_LASER")))
 	Events.key_obtained.connect(func(_k: String) -> void: show_toast(tr("HUD_KEY")))
 	_refresh_objective.call_deferred()
 

@@ -39,6 +39,7 @@
 [ext_resource type="Script" path="res://levels/mission.gd" id="37_ovqxi"]
 [ext_resource type="Script" path="res://world/gameplay/vault.gd" id="38_osep5"]
 [ext_resource type="Script" path="res://world/gameplay/getaway.gd" id="39_jbgy0"]
+[ext_resource type="Script" path="res://world/gameplay/laser_tripwire.gd" id="40_osep5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yy3x5"]
 sky_top_color = Color(0.06, 0.07, 0.2, 1)
@@ -1133,3 +1134,27 @@ script = ExtResource("38_osep5")
 [node name="GetawayVan" type="Node3D" parent="Heist" unique_id=2136491024]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 9.5)
 script = ExtResource("39_jbgy0")
+
+[node name="Lasers" type="Node3D" parent="." unique_id=190564156]
+
+[node name="LaserHigh" type="Area3D" parent="Lasers" unique_id=971436454]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 36.7, 0, -12)
+script = ExtResource("40_osep5")
+length = 24.0
+
+[node name="LaserBlink" type="Area3D" parent="Lasers" unique_id=2080688092]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 37.3, 0, -12)
+script = ExtResource("40_osep5")
+length = 24.0
+beam_height = 0.35
+block_standing = false
+blink_period = 1.6
+
+[node name="SignLaser" type="Label3D" parent="Lasers" unique_id=918742295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5, 2.2, 10.5)
+pixel_size = 0.008
+billboard = 2
+modulate = Color(1, 0.6, 0.6, 1)
+text = "GB_SIGN_LASER"
+font_size = 56
+outline_size = 14
