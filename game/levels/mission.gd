@@ -51,6 +51,10 @@ func objective_position() -> Variant:
 				var g: Guard = n as Guard
 				if g != null and g.carries_key == key_id:
 					return g.global_position
+			for n: Node in get_tree().get_nodes_in_group(&"key_pickup"):
+				var k: KeyPickup = n as KeyPickup
+				if k != null and k.key_id == key_id and not k.taken:
+					return k.global_position
 		Step.OPEN_VAULT, Step.TAKE_TREASURE:
 			var v: Node3D = get_tree().get_first_node_in_group(&"vault") as Node3D
 			if v != null:

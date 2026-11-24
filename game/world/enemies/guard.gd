@@ -380,6 +380,7 @@ func _knock_out() -> void:
 	if was_alert:
 		Events.guard_alert_changed.emit(false)
 	Events.guard_knocked_out.emit()
+	_drop_loot()
 	collision_layer = 0
 	remove_from_group(&"hittable")
 	_cone.visible = false
@@ -390,6 +391,24 @@ func _knock_out() -> void:
 	tw.tween_interval(2.0)
 	tw.tween_property(self, "scale", Vector3(1, 0.01, 1), 0.3)
 	tw.tween_callback(queue_free)
+
+
+## Vyřazený strážný upustí klíč (jinak by loupež nešla dohrát) a polovinu mincí.
+## Kapsářství se tak pořád vyplatí víc.
+func _drop_loot() -> void:
+	var half: int = int(float(loot) * 0.5)
+	if carries_key.is_empty() and half <= 0:
+		return
+	var k := KeyPickup.new()
+	k.key_id = carries_key
+	k.coins = half
+	get_parent().add_child(k)
+	k.global_position = global_position + _forward() * -0.6
+	carries_key = ""
+	loot = 0
+	if _key_mesh != null:
+		_key_mesh.visible = false
+	_bag.visible = false
 
 
 func _swing() -> void:
