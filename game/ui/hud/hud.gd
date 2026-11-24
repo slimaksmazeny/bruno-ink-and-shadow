@@ -9,6 +9,9 @@ var _health: HealthPips
 var _ink_label: Label
 var _ink_box: Control
 var _coin_label: Label
+var _objective: Label
+var _prompt: Label
+var _player: Player
 var _toast: Label
 var _alert: Label
 var _idle: float = 0.0
@@ -45,6 +48,24 @@ func _ready() -> void:
 	_set_coins(GameState.get_coins(), false)
 	Events.coins_changed.connect(func(total: int) -> void: _set_coins(total, true))
 
+	_objective = _make_label(24)
+	_objective.position = Vector2(28, 74)
+	_objective.add_theme_color_override("font_color", Color(0.85, 0.9, 1.0))
+	root.add_child(_objective)
+	_prompt = _make_label(30)
+	_prompt.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	_prompt.position = Vector2(-300, -190)
+	_prompt.custom_minimum_size.x = 600
+	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_prompt.add_theme_color_override("font_color", UiStyle.GOLD)
+	_prompt.visible = false
+	root.add_child(_prompt)
+	Events.mission_step_changed.connect(func(_s: int) -> void:
+		_refresh_objective()
+		show_toast(tr(_objective_key())))
+	Events.key_obtained.connect(func(_k: String) -> void: show_toast(tr("HUD_KEY")))
+	_refresh_objective.call_deferred()
+
 	_toast = _make_label(40)
 	_toast.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	_toast.position = Vector2(-300, 110)
@@ -77,6 +98,12 @@ func _process(delta: float) -> void:
 	_idle += delta
 	var target_a: float = 0.45 if _idle > FADE_AFTER else 1.0
 	_ink_box.modulate.a = move_toward(_ink_box.modulate.a, target_a, delta * 2.0)
+	if _player == null or not is_instance_valid(_player):
+		_player = get_tree().get_first_node_in_group(&"player") as Player
+	var it: Node = Interact.nearest(_player) if _player != null else null
+	_prompt.visible = it != null
+	if it != null:
+		_prompt.text = "E / ○  " + tr(String(it.call("get_prompt")))
 	if _alert.visible:
 		_alert.modulate.a = 0.6 + 0.4 * sin(Time.get_ticks_msec() * 0.012)
 
@@ -130,6 +157,18 @@ func _make_label(size: int) -> Label:
 	l.add_theme_constant_override("outline_size", 10)
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return l
+
+
+func _objective_key() -> String:
+	var m: Mission = get_tree().get_first_node_in_group(&"mission") as Mission
+	return m.objective_key() if m != null else ""
+
+
+func _refresh_objective() -> void:
+	var k: String = _objective_key()
+	_objective.visible = not k.is_empty()
+	if not k.is_empty():
+		_objective.text = tr("HUD_OBJECTIVE") + " " + tr(k)
 
 
 func _set_coins(total: int, pop: bool) -> void:

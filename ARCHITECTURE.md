@@ -780,3 +780,9 @@ Necommituj — commit udělám já po otestování.
 - Hluk: `Events.noise_made(pos, radius)` (tenisák při prvním dopadu) → `Guard.investigate()`. Poplach: `Events.guard_called_help` → strážní do `help_radius` jdou hledat (pokud je místo výš/níž o > 2 m, jen se dívají).
 - Komiksový vzhled: `camera/ink_post.gd` přidá do kamery čtverec přes obrazovku se `shaders/ink_comic.gdshader` (hloubkové obrysy, stupně jasu). Vypíná se `Settings.comic_shading`; v Compatibility rendereru (web) je vypnutý.
 - 2D pozadí: `BackdropLayer` generuje siluetu ze `seed`; parallax dělá perspektiva kamery (vrstvy v různé hloubce z).
+
+## Dodatek v0.2.6 — Loupež (Claude, 2026-11-24)
+
+- **Interakce:** objekty ve skupině `interactable` mají `can_interact(player)`, `interact(player)`, `get_prompt()` (překladový klíč) a volitelně `interact_range`. `Interact.nearest()` vybere nejbližší; `GroundedState` ji zkusí po kotvách a před kapsářstvím. HUD ukazuje nápovědu.
+- **Mise:** uzel `Mission` (skupina `mission`) – kroky STEAL_KEY → OPEN_VAULT → TAKE_TREASURE → ESCAPE → DONE. Objekty hlásí `notify(&"key" | &"vault_opened" | &"treasure_taken" | &"escaped")`. Na konci `ResultsScreen`.
+- Klíče jsou v `GameState.keys` (jen během levelu, neukládají se). `Guard.carries_key` se ukradne kapsářstvím.

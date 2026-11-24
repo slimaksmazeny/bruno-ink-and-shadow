@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Bruno: Ink & Shadow"
 config/description="3D stealth/parkour + 2D platformer hybrid."
-config/version="0.2.5"
+config/version="0.2.6"
 run/main_scene="res://ui/menus/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"

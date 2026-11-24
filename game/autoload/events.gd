@@ -50,3 +50,15 @@ signal noise_made(position: Vector3, radius: float)
 ## Strážný spustil poplach a volá posily (ostatní strážní v okolí přijdou hledat).
 @warning_ignore("unused_signal")
 signal guard_called_help(caller: Node, position: Vector3)
+
+## Bruno získal klíč (kapsářstvím).
+@warning_ignore("unused_signal")
+signal key_obtained(key_id: String)
+
+## Strážný byl vyřazen.
+@warning_ignore("unused_signal")
+signal guard_knocked_out()
+
+## Mise levelu postoupila na další krok (Mission.Step jako int).
+@warning_ignore("unused_signal")
+signal mission_step_changed(step: int)

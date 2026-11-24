@@ -29,6 +29,20 @@ func is_collected(chapter_id: String, category: String, collectible_id: String) 
 	return list.has(collectible_id)
 
 
+## Klíče (z kapsářství) – drží se jen během hraní levelu, neukládají se.
+var keys: Array[String] = []
+
+
+func add_key(key_id: String) -> void:
+	if key_id not in keys:
+		keys.append(key_id)
+	Events.key_obtained.emit(key_id)
+
+
+func has_key(key_id: String) -> bool:
+	return key_id in keys
+
+
 ## Mince (z kapsářství). Ukládají se do progress.coins.
 func get_coins() -> int:
 	return int(data.get("progress", {}).get("coins", 0))

@@ -14,6 +14,8 @@ func handle_common(_delta: float) -> bool:
 	if Input.is_action_just_pressed(&"action"):
 		if try_enter_anchor():
 			return true
+		if _try_interact():
+			return false
 		if _try_pickpocket():
 			return false
 		# Na dotyku je hůl jedno tlačítko: kotva v dosahu = přichycení, jinak útok.
@@ -75,3 +77,12 @@ func _try_pickpocket() -> bool:
 			g.pickpocket(player)
 			return true
 	return false
+
+
+## Věci ve skupině "interactable" (trezor, únikové auto…): akce u nejbližší, která to dovolí.
+func _try_interact() -> bool:
+	var best: Node = Interact.nearest(player)
+	if best == null:
+		return false
+	best.call("interact", player)
+	return true

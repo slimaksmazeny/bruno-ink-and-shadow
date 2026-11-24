@@ -36,6 +36,9 @@
 [ext_resource type="Script" path="res://world/anchors/ring_anchor.gd" id="34_srukj"]
 [ext_resource type="Script" path="res://world/platforms_2d/piston.gd" id="35_3ge00"]
 [ext_resource type="Script" path="res://world/platforms_2d/backdrop_layer.gd" id="36_3ge00"]
+[ext_resource type="Script" path="res://levels/mission.gd" id="37_ovqxi"]
+[ext_resource type="Script" path="res://world/gameplay/vault.gd" id="38_osep5"]
+[ext_resource type="Script" path="res://world/gameplay/getaway.gd" id="39_jbgy0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yy3x5"]
 sky_top_color = Color(0.06, 0.07, 0.2, 1)
@@ -769,6 +772,7 @@ size = Vector3(2.5, 0.4, 4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.05, 1.5)
 script = ExtResource("28_tkqkx")
 patrol_points = PackedVector3Array(-6, 0, 0, 7, 0, 0)
+carries_key = "vault_key"
 
 [node name="SignGuard" type="Label3D" parent="." unique_id=748974913]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 2.6, 9.5)
@@ -1116,3 +1120,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 265, 30, -90)
 layers = 2
 material_override = SubResource("StandardMaterial3D_y72es")
 mesh = SubResource("SphereMesh_ovqxi")
+
+[node name="Mission" type="Node" parent="." unique_id=15049281]
+script = ExtResource("37_ovqxi")
+
+[node name="Heist" type="Node3D" parent="." unique_id=1964110606]
+
+[node name="Vault" type="Node3D" parent="Heist" unique_id=1778389172]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 38.5, 0, 7)
+script = ExtResource("38_osep5")
+
+[node name="GetawayVan" type="Node3D" parent="Heist" unique_id=2136491024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 9.5)
+script = ExtResource("39_jbgy0")

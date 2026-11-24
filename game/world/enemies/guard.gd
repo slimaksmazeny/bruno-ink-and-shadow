@@ -51,6 +51,8 @@ enum State { PATROL, SUSPICIOUS, ALERT, SEARCH, STUNNED, KNOCKED_OUT }
 @export_group("Kapsářství")
 ## Kolik mincí má strážný u pasu (0 = nic).
 @export var loot: int = 25
+## Klíč, který strážný nosí u pasu (prázdné = žádný). Ukradne se spolu s mincemi.
+@export var carries_key: String = ""
 ## Jak blízko za zády musí Bruno být.
 @export var pickpocket_range: float = 1.7
 
@@ -75,6 +77,7 @@ var _label: Label3D
 var _meter: MeshInstance3D
 var _bag: MeshInstance3D
 var _hint: Label3D
+var _key_mesh: MeshInstance3D
 
 
 func _ready() -> void:
@@ -142,7 +145,7 @@ func _physics_process(delta: float) -> void:
 
 ## Bruno je zezadu blízko, strážný nic netuší a má co ukrást?
 func can_be_pickpocketed_by(p: Player) -> bool:
-	if loot <= 0 or not (state == State.PATROL or state == State.SUSPICIOUS) or p == null:
+	if (loot <= 0 and carries_key.is_empty()) or not (state == State.PATROL or state == State.SUSPICIOUS) or p == null:
 		return false
 	var to: Vector3 = p.global_position - global_position
 	to.y = 0.0
@@ -157,7 +160,13 @@ func pickpocket(p: Player) -> void:
 	loot = 0
 	_bag.visible = false
 	_hint.visible = false
-	GameState.add_coins(amount)
+	if amount > 0:
+		GameState.add_coins(amount)
+	if not carries_key.is_empty():
+		GameState.add_key(carries_key)
+		carries_key = ""
+		if _key_mesh != null:
+			_key_mesh.visible = false
 	AudioManager.play(&"pickup", 0.0, 0.75, 0.0)
 	AudioManager.play(&"pickup", -4.0, 1.25, 0.0)
 	p.visual.play_swing(0.2)
@@ -353,6 +362,7 @@ func _knock_out() -> void:
 	state = State.KNOCKED_OUT
 	if was_alert:
 		Events.guard_alert_changed.emit(false)
+	Events.guard_knocked_out.emit()
 	collision_layer = 0
 	remove_from_group(&"hittable")
 	_cone.visible = false
@@ -499,6 +509,20 @@ func _build() -> void:
 	_bag.position = Vector3(0.3, 0.85, 0.35)
 	_bag.set_meta(&"generated", true)
 	add_child(_bag)
+
+	_key_mesh = MeshInstance3D.new()
+	var km := BoxMesh.new()
+	km.size = Vector3(0.08, 0.32, 0.04)
+	_key_mesh.mesh = km
+	var kmat := StandardMaterial3D.new()
+	kmat.albedo_color = Color(1, 0.85, 0.2)
+	kmat.emission_enabled = true
+	kmat.emission = Color(1, 0.75, 0.1)
+	_key_mesh.material_override = kmat
+	_key_mesh.position = Vector3(-0.32, 0.85, 0.33)
+	_key_mesh.visible = not carries_key.is_empty()
+	_key_mesh.set_meta(&"generated", true)
+	add_child(_key_mesh)
 
 	_hint = Label3D.new()
 	_hint.text = "E / ○  ¤"

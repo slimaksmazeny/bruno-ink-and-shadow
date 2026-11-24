@@ -10,7 +10,7 @@ HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
 HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
 HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
 HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
-GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.5)","Bruno: Ink & Shadow — test street (v0.2.5)"
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.6)","Bruno: Ink & Shadow — test street (v0.2.6)"
 GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
 GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc / Start = pauza","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc / Start = pause"
 GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog
@@ -45,3 +45,20 @@ GB_SIGN_PARKOUR,"Parkour: E / ○ u modrých jisker – trubka nahoru, lano na s
 HUD_PICKPOCKET,Ukradeno! ¤,Pickpocketed! ¤
 GB_SIGN_CRAWL,"Plazení: drž plížení (Ctrl / L3) u nízké překážky","Crawl: hold sneak (Ctrl / L3) at a low obstacle"
 UI_SETTINGS_COMIC,Komiksový vzhled,Comic look
+MISSION_STEAL_KEY,Ukradni klíč od trezoru strážnému v ulici (zezadu E / ○),Steal the vault key from the street guard (from behind E / ○)
+MISSION_OPEN_VAULT,Otevři trezor na konci ulice,Open the vault at the end of the street
+MISSION_TAKE_TREASURE,Vezmi inkoustový krystal,Take the ink crystal
+MISSION_ESCAPE,Uteč k dodávce u startu!,Escape to the van near the start!
+MISSION_DONE,Loupež dokončena,Heist complete
+HUD_OBJECTIVE,Cíl:,Goal:
+HUD_KEY,Máš klíč!,Got the key!
+PROMPT_VAULT_OPEN,otevřít trezor,open the vault
+PROMPT_VAULT_LOCKED,zamčeno – chybí klíč,locked – no key
+PROMPT_TREASURE,vzít krystal,take the crystal
+PROMPT_GETAWAY,ujet,drive away
+RESULTS_TITLE,Loupež dokončena!,Heist complete!
+RESULTS_TIME,Čas,Time
+RESULTS_INK,Kapky inkoustu,Ink drops
+RESULTS_COINS,Mince,Coins
+RESULTS_KO,Vyřazení strážní,Guards knocked out
+RESULTS_AGAIN,Hrát znovu,Play again
