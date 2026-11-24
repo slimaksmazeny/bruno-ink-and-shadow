@@ -70,3 +70,11 @@ signal laser_alarm(position: Vector3)
 ## Při útěku vypršel čas – strážní Bruna chytili.
 @warning_ignore("unused_signal")
 signal mission_caught()
+
+## Boss: začátek souboje, změna zdraví, poražen.
+@warning_ignore("unused_signal")
+signal boss_started(boss: Node)
+@warning_ignore("unused_signal")
+signal boss_health_changed(boss: Node, health: int, max_health: int)
+@warning_ignore("unused_signal")
+signal boss_defeated(boss: Node)

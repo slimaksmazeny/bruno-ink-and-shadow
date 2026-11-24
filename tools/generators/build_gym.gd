@@ -34,6 +34,7 @@ func _initialize() -> void:
 	_guard_pen(Vector3(75, 0, 10))
 	_platforms(Vector3(75, 0, -20))
 	_heist(Vector3(105, 0, 0))
+	_boss(Vector3(60, 0, 45))
 	var packed := PackedScene.new()
 	var err: Error = packed.pack(lvl)
 	if err == OK:
@@ -215,6 +216,18 @@ func _guard_pen(o: Vector3) -> void:
 	g.position = o + Vector3(4, 0.05, 0)
 	g.set("patrol_points", PackedVector3Array([Vector3(-3, 0, -3), Vector3(5, 0, -3), Vector3(5, 0, 3), Vector3(-3, 0, 3)]))
 	_add(lvl, g)
+
+
+func _boss(o: Vector3) -> void:
+	_box(lvl, "BossFloor", o + Vector3(0, -0.5, 0), Vector3(30, 1, 22), _grid)
+	_station("Boss", o + Vector3(-6, 0, 0), Vector3.RIGHT)
+	_sign(o + Vector3(0, 6, -9), "0 · BOSS: přeskoč rázovou vlnu, bij ho jen když funí (z z); tenisák při nápřahu = únava")
+	var b := CharacterBody3D.new()
+	b.name = "BossWarden"
+	b.set_script(load("res://world/enemies/boss_warden.gd"))
+	b.position = o + Vector3(4, 0.05, 0)
+	b.set("arena_radius", 11.0)
+	_add(lvl, b)
 
 
 func _platforms(o: Vector3) -> void:

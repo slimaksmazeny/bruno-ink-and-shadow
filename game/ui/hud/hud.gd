@@ -14,6 +14,7 @@ var _objective: Label
 var _prompt: Label
 var _player: Player
 var _escape: Label
+var _boss_bar: Label
 var _toast: Label
 var _alert: Label
 var _idle: float = 0.0
@@ -86,6 +87,20 @@ func _ready() -> void:
 	_escape.add_theme_color_override("font_color", Color(1, 0.35, 0.25))
 	_escape.visible = false
 	root.add_child(_escape)
+	_boss_bar = _make_label(30)
+	_boss_bar.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	_boss_bar.position = Vector2(-300, -150)
+	_boss_bar.custom_minimum_size.x = 600
+	_boss_bar.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_boss_bar.add_theme_color_override("font_color", Color(1, 0.8, 0.4))
+	_boss_bar.visible = false
+	root.add_child(_boss_bar)
+	Events.boss_started.connect(func(b: Node) -> void:
+		_set_boss_bar(b, int(b.get("health")), int(b.get("max_health"))))
+	Events.boss_health_changed.connect(_set_boss_bar)
+	Events.boss_defeated.connect(func(_b: Node) -> void:
+		_boss_bar.visible = false
+		show_toast(tr("HUD_BOSS_DOWN")))
 	Events.mission_caught.connect(func() -> void: show_toast(tr("HUD_CAUGHT")))
 	Events.laser_alarm.connect(func(_p: Vector3) -> void: show_toast(tr("HUD_LASER")))
 	Events.key_obtained.connect(func(_k: String) -> void: show_toast(tr("HUD_KEY")))
@@ -252,3 +267,8 @@ class InkIcon extends Control:
 		draw_circle(c, 13, Color(0.2, 0.4, 1.0))
 		draw_colored_polygon(PackedVector2Array([c + Vector2(-11, -6), c + Vector2(11, -6), c + Vector2(0, -24)]), Color(0.2, 0.4, 1.0))
 		draw_circle(c + Vector2(-4, -2), 4, Color(0.7, 0.85, 1.0))
+
+
+func _set_boss_bar(b: Node, hp: int, mx: int) -> void:
+	_boss_bar.visible = hp > 0
+	_boss_bar.text = "%s  %s%s" % [tr(String(b.get("display_name"))), "■".repeat(maxi(hp, 0)), "□".repeat(maxi(mx - hp, 0))]

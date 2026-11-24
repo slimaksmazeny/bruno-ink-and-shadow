@@ -11,6 +11,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		var k: int = (event as InputEventKey).physical_keycode
 		if k >= KEY_1 and k <= KEY_9:
 			target = k - KEY_1
+		elif k == KEY_0:
+			target = 9
 	elif event is InputEventJoypadButton and event.pressed:
 		var b: int = (event as InputEventJoypadButton).button_index
 		if b == JOY_BUTTON_DPAD_RIGHT:

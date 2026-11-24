@@ -32,7 +32,7 @@ func _physics_process(_d: float) -> bool:
 		30:
 			check("gym_on_floor", p.is_on_floor(), str(p.global_position))
 			var st = current_scene.get_node("Stations")
-			check("gym_9_stations", st.get_child_count() == 9, str(st.get_child_count()))
+			check("gym_10_stations", st.get_child_count() == 10, str(st.get_child_count()))
 			st.go_to(8)
 		35:
 			check("teleport_station_9", p.global_position.distance_to(current_scene.get_node("Stations").get_child(8).global_position) < 0.5)
