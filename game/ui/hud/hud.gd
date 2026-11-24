@@ -9,6 +9,7 @@ var _health: HealthPips
 var _ink_label: Label
 var _ink_box: Control
 var _coin_label: Label
+var _fly_label: Label
 var _objective: Label
 var _prompt: Label
 var _player: Player
@@ -46,6 +47,13 @@ func _ready() -> void:
 	_coin_label.add_theme_color_override("font_color", Color(1, 0.82, 0.3))
 	root.add_child(_coin_label)
 	_set_coins(GameState.get_coins(), false)
+	_fly_label = _make_label(26)
+	_fly_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_fly_label.position = Vector2(-200, 108)
+	_fly_label.add_theme_color_override("font_color", Color(1, 0.95, 0.5))
+	root.add_child(_fly_label)
+	_refresh_flies.call_deferred()
+	Events.collectible_collected.connect(func(_id: String) -> void: _refresh_flies())
 	Events.coins_changed.connect(func(total: int) -> void: _set_coins(total, true))
 
 	var radar := Radar.new()
@@ -175,6 +183,13 @@ func _refresh_objective() -> void:
 	_objective.visible = not k.is_empty()
 	if not k.is_empty():
 		_objective.text = tr("HUD_OBJECTIVE") + " " + tr(k)
+
+
+func _refresh_flies() -> void:
+	var total: int = get_tree().get_nodes_in_group(&"firefly_jar").size()
+	var got: int = GameState.count_collected(InkDrop.CHAPTER_ID, FireflyJar.CATEGORY)
+	_fly_label.visible = total > 0
+	_fly_label.text = "✦ %d / %d" % [got, total]
 
 
 func _set_coins(total: int, pop: bool) -> void:

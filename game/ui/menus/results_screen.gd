@@ -43,6 +43,9 @@ func _ready() -> void:
 	_row(box, tr("RESULTS_TIME"), "%d:%02d" % [int(secs / 60.0), int(secs) % 60])
 	_row(box, tr("RESULTS_INK"), "%d / %d" % [got, total])
 	_row(box, tr("RESULTS_COINS"), "¤ %d" % GameState.get_coins())
+	var jars: int = get_tree().get_nodes_in_group(&"firefly_jar").size()
+	if jars > 0:
+		_row(box, tr("RESULTS_FIREFLIES"), "✦ %d / %d" % [GameState.count_collected(InkDrop.CHAPTER_ID, FireflyJar.CATEGORY), jars])
 	_row(box, tr("RESULTS_KO"), str(mission.knockouts if mission != null else 0))
 	var again := UiStyle.make_button("RESULTS_AGAIN")
 	again.pressed.connect(_again)

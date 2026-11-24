@@ -40,6 +40,9 @@
 [ext_resource type="Script" path="res://world/gameplay/vault.gd" id="38_osep5"]
 [ext_resource type="Script" path="res://world/gameplay/getaway.gd" id="39_jbgy0"]
 [ext_resource type="Script" path="res://world/gameplay/laser_tripwire.gd" id="40_osep5"]
+[ext_resource type="Script" path="res://world/enemies/ink_blob.gd" id="41_u41e0"]
+[ext_resource type="Script" path="res://world/gameplay/firefly_jar.gd" id="42_fudyk"]
+[ext_resource type="Script" path="res://world/gameplay/treat.gd" id="43_nrgif"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yy3x5"]
 sky_top_color = Color(0.06, 0.07, 0.2, 1)
@@ -1158,3 +1161,47 @@ modulate = Color(1, 0.6, 0.6, 1)
 text = "GB_SIGN_LASER"
 font_size = 56
 outline_size = 14
+
+[node name="Critters" type="Node3D" parent="." unique_id=2008529099]
+
+[node name="BlobFloor3" type="CharacterBody3D" parent="Critters" unique_id=1962189222]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 238.5, 0.05, 0)
+script = ExtResource("41_u41e0")
+patrol_half_width = 2.0
+
+[node name="BlobFloor4" type="CharacterBody3D" parent="Critters" unique_id=404975167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 260, 5.05, 0)
+script = ExtResource("41_u41e0")
+start_dir = -1.0
+patrol_half_width = 3.0
+
+[node name="BlobEndDeck" type="CharacterBody3D" parent="Critters" unique_id=649660936]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 283, 15.05, 0)
+script = ExtResource("41_u41e0")
+
+[node name="JarOneWay" type="StaticBody3D" parent="Critters" unique_id=2010239921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.5, 2.35, 0)
+script = ExtResource("42_fudyk")
+jar_id = "jar_oneway"
+
+[node name="JarHighLedge" type="StaticBody3D" parent="Critters" unique_id=1490710189]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 221.3, 4.5, 0)
+script = ExtResource("42_fudyk")
+jar_id = "jar_highledge"
+
+[node name="JarTopDeck" type="StaticBody3D" parent="Critters" unique_id=699250246]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 273.4, 15, 0)
+script = ExtResource("42_fudyk")
+jar_id = "jar_topdeck"
+
+[node name="TreatFloor3" type="Area3D" parent="Critters" unique_id=1953842611]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 236, 0, 0)
+script = ExtResource("43_nrgif")
+
+[node name="TreatStreetB" type="Area3D" parent="Critters" unique_id=538486223]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, 10.5)
+script = ExtResource("43_nrgif")
+
+[node name="TreatRoofLeft" type="Area3D" parent="Critters" unique_id=25814019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 8, -11)
+script = ExtResource("43_nrgif")
