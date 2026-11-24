@@ -57,6 +57,8 @@ func _ready() -> void:
 	profile = profile_3d
 	add_to_group(&"player")
 	level_start = global_position
+	if Upgrades.has(Upgrades.EXTRA_HEART):
+		max_health += 1
 	health = max_health
 	_spawn_transform = global_transform
 	anchor_detector.player = self

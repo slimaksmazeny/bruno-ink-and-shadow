@@ -41,6 +41,7 @@ func _physics_process(_d: float) -> bool:
 		check("record_first", gs.record_result("greybox", 120.0))
 		check("record_slower_no", not gs.record_result("greybox", 130.0))
 		check("record_faster_yes", gs.record_result("greybox", 95.0) and absf(gs.best_time("greybox") - 95.0) < 0.01)
+		get_root().get_node("SaveManager").save_game() # menu po startu načte uloženou hru
 		stage = 1
 		change_scene_to_file("res://ui/menus/main_menu.tscn")
 		f = 0

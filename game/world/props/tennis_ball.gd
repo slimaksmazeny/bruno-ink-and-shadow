@@ -14,6 +14,8 @@ func _ready() -> void:
 	add_to_group(&"tennis_ball")
 	collision_layer = 32 # projectiles
 	collision_mask = 1 | 16 # world + props
+	if Upgrades.has(Upgrades.STUN_BALL):
+		collision_mask |= 4 # Omračující tenisák: zasáhne i strážné
 	continuous_cd = true
 	gravity_scale = 0.15
 	contact_monitor = true
@@ -39,7 +41,7 @@ func _on_body_entered(body: Node) -> void:
 		if target != null and not target.is_in_group(&"hittable"):
 			target = target.get_parent()
 		if target != null and target.is_in_group(&"hittable") and target.has_method("on_cane_hit"):
-			target.call("on_cane_hit", {"damage": 1, "knockback": 3.0, "combo": 1, "dir": linear_velocity.normalized(), "from": global_position})
+			target.call("on_cane_hit", {"damage": 1, "knockback": 3.0, "combo": 1, "dir": linear_velocity.normalized(), "from": global_position, "ball": true})
 	# První dopad udělá hluk – strážní v okolí se jdou podívat (odlákání).
 	if gravity_scale < 1.0:
 		Events.noise_made.emit(global_position, NOISE_RADIUS)

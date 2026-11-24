@@ -20,7 +20,8 @@ func exit() -> void:
 func physics_update(delta: float) -> void:
 	var dir: Vector3 = player.get_move_dir().normalized()
 	var strength: float = player.get_move_strength()
-	accelerate_horizontal(dir * CRAWL_SPEED * minf(strength * 1.5, 1.0), player.profile.ground_accel, delta)
+	var speed: float = CRAWL_SPEED * (1.6 if Upgrades.has(Upgrades.FAST_CRAWL) else 1.0)
+	accelerate_horizontal(dir * speed * minf(strength * 1.5, 1.0), player.profile.ground_accel, delta)
 	stick_to_floor()
 	if not player.is_on_floor():
 		machine.transition_to(&"Air", {})

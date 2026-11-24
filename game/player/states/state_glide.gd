@@ -24,9 +24,14 @@ func physics_update(delta: float) -> void:
 		player.velocity.y = move_toward(player.velocity.y, player.wind_lift, p.gravity * 1.2 * delta)
 	else:
 		# Plynule zbrzdit pád na rychlost plachtění.
-		player.velocity.y = move_toward(player.velocity.y, -p.glide_fall_speed, p.gravity * 2.0 * delta)
-	if player.velocity.y > -p.glide_fall_speed and player.wind_lift <= 0.0:
-		player.velocity.y = maxf(player.velocity.y - p.gravity * 0.25 * delta, -p.glide_fall_speed)
+		player.velocity.y = move_toward(player.velocity.y, -_fall_speed(), p.gravity * 2.0 * delta)
+	if player.velocity.y > -_fall_speed() and player.wind_lift <= 0.0:
+		player.velocity.y = maxf(player.velocity.y - p.gravity * 0.25 * delta, -_fall_speed())
 	air_control(delta, carried_speed)
 	carried_speed = move_toward(carried_speed, p.glide_air_speed, 2.0 * delta)
 	check_landing()
+
+
+## Vylepšení „Dlouhé plachtění“ zpomalí pád o 35 %.
+func _fall_speed() -> float:
+	return player.profile.glide_fall_speed * (0.65 if Upgrades.has(Upgrades.LONG_GLIDE) else 1.0)

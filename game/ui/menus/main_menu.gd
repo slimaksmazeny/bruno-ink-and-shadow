@@ -3,6 +3,8 @@ extends Control
 
 const FIRST_LEVEL: String = "res://levels/greybox/greybox_street.tscn"
 
+static var _save_loaded: bool = false
+
 var _menu: VBoxContainer
 var _settings: SettingsPanel
 var _first: Button
@@ -14,6 +16,11 @@ func _ready() -> void:
 	theme = UiStyle.make_theme()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	InputManager.release_mouse()
+	# Po spuštění hry načíst uloženou hru jednou (mince, vylepšení do obchodu); později
+	# už je GameState v paměti aktuálnější než soubor.
+	if not _save_loaded and SaveManager.has_save(1):
+		SaveManager.load_game(1)
+	_save_loaded = true
 	AudioManager.play_music(&"sneak_loop", 1.5, 0.9)
 	var bg := ColorRect.new()
 	bg.color = Color(0.06, 0.05, 0.13)
@@ -52,6 +59,7 @@ func _ready() -> void:
 	else:
 		_first = _add("UI_MENU_PLAY", _on_new_game)
 	_add("UI_MENU_CHAPTERS", _on_chapters)
+	_add("UI_MENU_SHOP", _on_shop)
 	_add("UI_MENU_SETTINGS", _on_settings)
 	if OS.get_name() not in ["Web", "iOS"]:
 		_add("UI_MENU_QUIT", func() -> void: get_tree().quit())
@@ -151,6 +159,54 @@ func _on_chapters() -> void:
 		_first.grab_focus.call_deferred())
 	_chapters_box.add_child(back)
 	_chapters_box.visible = true
+	(first if first != null else back).grab_focus.call_deferred()
+
+
+var _shop_box: VBoxContainer
+
+
+## Brunova bouda: obchod s vylepšeními za mince.
+func _on_shop() -> void:
+	_menu.visible = false
+	if _shop_box == null:
+		_shop_box = VBoxContainer.new()
+		_shop_box.alignment = BoxContainer.ALIGNMENT_CENTER
+		_menu.get_parent().add_child(_shop_box)
+	_fill_shop()
+	_shop_box.visible = true
+
+
+func _fill_shop() -> void:
+	for c: Node in _shop_box.get_children():
+		c.queue_free()
+	var head := Label.new()
+	head.text = "%s   ¤ %d" % [tr("UI_MENU_SHOP"), GameState.get_coins()]
+	head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	head.add_theme_color_override("font_color", UiStyle.GOLD)
+	head.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_shop_box.add_child(head)
+	var first: Button = null
+	for u: Array in Upgrades.ALL:
+		var id: String = String(u[0])
+		var owned: bool = Upgrades.has(id)
+		var label: String = "%s – %s   %s" % [tr(String(u[1])), tr(String(u[2])), ("✔ " + tr("SHOP_OWNED")) if owned else ("¤ %d" % int(u[3]))]
+		var b := UiStyle.make_button(label, 760.0)
+		b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		b.add_theme_font_size_override("font_size", 20)
+		b.disabled = owned or GameState.get_coins() < int(u[3])
+		b.pressed.connect(func() -> void:
+			if Upgrades.buy(id):
+				AudioManager.play(&"checkpoint", 0.0, 1.2, 0.0)
+				_fill_shop())
+		_shop_box.add_child(b)
+		if first == null and not b.disabled:
+			first = b
+	var back := UiStyle.make_button("UI_BACK", 760.0)
+	back.pressed.connect(func() -> void:
+		_shop_box.visible = false
+		_menu.visible = true
+		_first.grab_focus.call_deferred())
+	_shop_box.add_child(back)
 	(first if first != null else back).grab_focus.call_deferred()
 
 

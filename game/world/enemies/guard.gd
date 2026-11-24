@@ -363,6 +363,12 @@ func on_cane_hit(info: Dictionary) -> void:
 	_windup = -1.0
 	_body.rotation.x = 0.0
 	var unaware: bool = state == State.PATROL or state == State.SUSPICIOUS
+	if bool(info.get("ball", false)):
+		# Omračující tenisák: jen omráčí (delší dobu), nezraní.
+		_timer = stun_time * 1.8
+		_set_state(State.STUNNED)
+		AudioManager.play_at(&"hit", global_position, 0.0, 1.5)
+		return
 	health -= max_health if unaware else int(info.get("damage", 1))
 	var dir: Vector3 = info.get("dir", -_forward())
 	velocity += Vector3(dir.x, 0.0, dir.z).normalized() * 5.0 + Vector3.UP * 2.5

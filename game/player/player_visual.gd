@@ -241,4 +241,5 @@ func _footsteps(player: Player, moving: float) -> void:
 	var vol: float = -26.0 if player.is_sneaking else (-8.0 if sprinting else -16.0)
 	AudioManager.play(&"step", vol, 1.0 if sprinting else 1.15, 0.12)
 	if sprinting:
-		Events.noise_made.emit(player.global_position, 5.0)
+		# Vylepšení „Tiché tlapky“: sprint je slyšet jen na 1,5 m.
+		Events.noise_made.emit(player.global_position, 1.5 if Upgrades.has(Upgrades.SILENT_PAWS) else 5.0)

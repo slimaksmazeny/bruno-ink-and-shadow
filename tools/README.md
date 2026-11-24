@@ -38,6 +38,7 @@ C:\Projekty\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script .
 | `test_key_drop.gd` | vyřazený strážný upustí klíč + půlku mincí (4 kontroly) |
 | `test_continue_level.gd` | Pokračovat otevře naposledy hranou kapitolu (2 kontroly) |
 | `test_ch3_painting.gd` | pouť: cirkusový plakát – vstup, vítr, výstup (3 kontroly) |
+| `test_shop.gd` | Brunova bouda: nákup vylepšení a jejich účinky (9 kontrol) |
 | `test_attack.gd` | kombo holí 1→2→3 (výpad, auto-cíl na figurínu), rozbití bedny, útok ve vzduchu jednou za skok, obnovení času po zastavení |
 | `test_step_e2_aim.gd` | míření (kamera, úkroky, výstřel, sprint potlačen), útok holí, přichycení jen ke kotvě, na kterou se díváš |
 
