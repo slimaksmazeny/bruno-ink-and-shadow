@@ -90,7 +90,9 @@ func _on_new_game() -> void:
 
 
 func _on_continue() -> void:
-	if not SaveManager.load_game(1):
+	if SaveManager.load_game(1):
+		GameState.resume_checkpoint = str(GameState.data.get("progress", {}).get("last_checkpoint", ""))
+	else:
 		GameState.reset()
 	start_game()
 

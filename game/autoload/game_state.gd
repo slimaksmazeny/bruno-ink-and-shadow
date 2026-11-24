@@ -4,6 +4,8 @@
 extends Node
 
 var data: Dictionary = {}
+## Nastaví hlavní menu při „Pokračovat“; Checkpoint s tímto id po načtení levelu přesune Bruna k sobě.
+var resume_checkpoint: String = ""
 
 
 func _ready() -> void:

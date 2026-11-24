@@ -6,6 +6,9 @@ extends Area3D
 @export var checkpoint_id: String = ""
 ## Doplnit zdraví při aktivaci.
 @export var heal_on_activate: bool = true
+## Checkpoint leží ve 2D světě (obraz) – při „Pokračovat“ se Bruno obnoví ve 2D.
+@export var plane_2d: bool = false
+@export var plane_normal: Vector3 = Vector3.BACK
 
 var active: bool = false
 var _flag: MeshInstance3D
@@ -21,6 +24,34 @@ func _ready() -> void:
 		return
 	add_to_group(&"checkpoint")
 	body_entered.connect(_on_body_entered)
+	if not checkpoint_id.is_empty() and GameState.resume_checkpoint == checkpoint_id:
+		_restore.call_deferred()
+
+
+## „Pokračovat“ z hlavního menu: Bruno se objeví tady (bez zvuku a bez nového uložení).
+func _restore() -> void:
+	GameState.resume_checkpoint = ""
+	var p: Player = get_tree().get_first_node_in_group(&"player") as Player
+	if p == null:
+		return
+	for other: Node in get_tree().get_nodes_in_group(&"checkpoint"):
+		if other is Checkpoint:
+			(other as Checkpoint).set_active(other == self)
+	p.global_position = global_position + Vector3.UP * 0.1
+	p.velocity = Vector3.ZERO
+	p.set_checkpoint(global_transform.translated(Vector3.UP * 0.1))
+	p.reset_physics_interpolation()
+	var cam: HybridCamera = p.camera
+	if plane_2d:
+		p.enter_2d(global_position, plane_normal)
+		p.visual.face_direction(Vector3.UP.cross(plane_normal))
+		if cam != null:
+			cam.side_rig.target = p
+			cam.side_rig.snap()
+			cam.set_blend_target(cam.side_rig, cam.fov_2d)
+			cam.blend = 1.0
+	elif cam != null:
+		cam.snap_to_target()
 
 
 func _on_body_entered(body: Node) -> void:

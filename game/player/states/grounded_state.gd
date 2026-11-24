@@ -28,6 +28,12 @@ func handle_common(_delta: float) -> bool:
 		machine.transition_to(&"Swing", {"ball": true})
 		return true
 	if player.consume_jump_buffer():
+		# Dolů + skok na průchozí plošině = seskok skrz (Rayman), ne skok.
+		var one_way: OneWayPlatform = player.get_floor_body() as OneWayPlatform
+		if one_way != null and Input.is_action_pressed(&"move_back"):
+			one_way.drop_through()
+			machine.transition_to(&"Air", {})
+			return true
 		machine.transition_to(&"Air", {"jump": true})
 		return true
 	if not player.is_on_floor():

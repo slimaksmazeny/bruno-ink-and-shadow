@@ -4,7 +4,7 @@
 extends SceneTree
 
 const LEVEL: String = "res://levels/greybox/greybox_street.tscn"
-const GROUP_NAMES: Array[String] = ["Hud", "Checkpoints", "InkDrops", "Hazards", "Guards", "SignGuard", "SignHazard"]
+const GROUP_NAMES: Array[String] = ["Platforms2D", "Hud", "Checkpoints", "InkDrops", "Hazards", "Guards", "SignGuard", "SignHazard"]
 
 var lvl: Node
 
@@ -24,7 +24,7 @@ func _initialize() -> void:
 
 	var cps: Node3D = _group("Checkpoints")
 	_checkpoint(cps, "cp_street_b", Vector3(19.5, 0, 9))
-	_checkpoint(cps, "cp_painting_floor3", Vector3(229.5, 0, 0))
+	_checkpoint(cps, "cp_painting_floor3", Vector3(229.5, 0, 0), true)
 
 	var drops: Node3D = _group("InkDrops")
 	var pts: Array[Vector3] = [
@@ -44,6 +44,8 @@ func _initialize() -> void:
 		Vector3(216, 5.3, 0), Vector3(218.5, 5.3, 0), Vector3(224.5, 5.2, 0),
 		Vector3(231, 0.8, 0), Vector3(233, 0.8, 0),
 		Vector3(238, 5.0, 0), Vector3(238, 7.0, 0), Vector3(243.5, 5.8, 0),
+		# 2D kit: průchozí plošina, pohyblivá plošina
+		Vector3(200.5, 3.1, 0), Vector3(233.5, 6.2, 0),
 	]
 	for i: int in pts.size():
 		var d := Area3D.new()
@@ -56,6 +58,14 @@ func _initialize() -> void:
 	var hz: Node3D = _group("Hazards")
 	_hazard(hz, "InkPuddle", Vector3(34, 0, 3), Vector3(3.2, 0.3, 3.2), 0)
 	_hazard(hz, "Spikes2D", Vector3(203.5, 0, 0), Vector3(1.5, 0.6, 1.5), 1)
+
+	# 2D Rayman kit (v0.2.1 – W2-10, první díly).
+	var plats: Node3D = _group("Platforms2D")
+	_platform(plats, "OneWay1", "one_way_platform", Vector3(200.5, 2.2, 0), Vector3(3, 0.3, 4))
+	_platform(plats, "Crumble1", "crumbling_platform", Vector3(223.3, 3.2, 0), Vector3(1.4, 0.35, 4))
+	_platform(plats, "Crumble2", "crumbling_platform", Vector3(225.7, 2.2, 0), Vector3(1.4, 0.35, 4))
+	var mp: Node3D = _platform(plats, "Lift1", "moving_platform", Vector3(233.5, 0.2, 0), Vector3(2.5, 0.4, 4))
+	mp.set("travel", Vector3(0, 4.6, 0))
 
 	var guards: Node3D = _group("Guards")
 	var g := CharacterBody3D.new()
@@ -84,13 +94,24 @@ func _group(n: String) -> Node3D:
 	return g
 
 
-func _checkpoint(parent: Node, id: String, pos: Vector3) -> void:
+func _checkpoint(parent: Node, id: String, pos: Vector3, in_2d: bool = false) -> void:
 	var c := Area3D.new()
 	c.name = id.to_pascal_case()
 	c.set_script(load("res://world/gameplay/checkpoint.gd"))
 	c.set("checkpoint_id", id)
+	c.set("plane_2d", in_2d)
 	c.position = pos
 	_add(parent, c)
+
+
+func _platform(parent: Node, n: String, script_name: String, pos: Vector3, size: Vector3) -> Node3D:
+	var b := AnimatableBody3D.new()
+	b.name = n
+	b.set_script(load("res://world/platforms_2d/%s.gd" % script_name))
+	b.set("size", size)
+	b.position = pos
+	_add(parent, b)
+	return b
 
 
 func _hazard(parent: Node, n: String, pos: Vector3, size: Vector3, look: int) -> void:

@@ -196,6 +196,17 @@ func take_damage(amount: int, from: Vector3) -> bool:
 	return true
 
 
+## Těleso, na kterém Bruno stojí (nebo null).
+func get_floor_body() -> Object:
+	if not is_on_floor():
+		return null
+	for i: int in get_slide_collision_count():
+		var c: KinematicCollision3D = get_slide_collision(i)
+		if c.get_normal().y > 0.6:
+			return c.get_collider()
+	return null
+
+
 func heal(amount: int) -> void:
 	health = mini(health + amount, max_health)
 	Events.player_health_changed.emit(health, max_health)
