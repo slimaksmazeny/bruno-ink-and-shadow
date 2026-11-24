@@ -187,7 +187,7 @@ func _refresh_objective() -> void:
 
 func _refresh_flies() -> void:
 	var total: int = get_tree().get_nodes_in_group(&"firefly_jar").size()
-	var got: int = GameState.count_collected(InkDrop.CHAPTER_ID, FireflyJar.CATEGORY)
+	var got: int = GameState.count_collected(Mission.chapter_of(self), FireflyJar.CATEGORY)
 	_fly_label.visible = total > 0
 	_fly_label.text = "✦ %d / %d" % [got, total]
 

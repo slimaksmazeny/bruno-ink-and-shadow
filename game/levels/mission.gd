@@ -9,14 +9,28 @@ enum Step { STEAL_KEY, OPEN_VAULT, TAKE_TREASURE, ESCAPE, DONE }
 const STEP_KEYS: Array[String] = ["MISSION_STEAL_KEY", "MISSION_OPEN_VAULT", "MISSION_TAKE_TREASURE", "MISSION_ESCAPE", "MISSION_DONE"]
 
 @export var key_id: String = "vault_key"
+## Jméno kapitoly – pod ním se ukládají kapky, světlušky a rekordy.
+@export var chapter_id: String = "greybox"
 
 var step: Step = Step.STEAL_KEY
 var knockouts: int = 0
 var _start_ms: int = 0
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
+	# Už při vstupu do stromu (před _ready kapek), ať si kapky zjistí kapitolu.
 	add_to_group(&"mission")
+
+
+## Kapitola levelu, ve kterém je `node` (bez mise = "greybox").
+static func chapter_of(node: Node) -> String:
+	if node == null or not node.is_inside_tree():
+		return "greybox"
+	var m: Mission = node.get_tree().get_first_node_in_group(&"mission") as Mission
+	return m.chapter_id if m != null else "greybox"
+
+
+func _ready() -> void:
 	_start_ms = Time.get_ticks_msec()
 	GameState.keys.clear()
 	Events.key_obtained.connect(func(k: String) -> void:

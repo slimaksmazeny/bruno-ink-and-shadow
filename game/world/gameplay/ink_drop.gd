@@ -5,7 +5,7 @@
 class_name InkDrop
 extends Area3D
 
-const CHAPTER_ID: String = "greybox"
+## Kapitola se bere z mise levelu (Mission.chapter_of).
 const CATEGORY: String = "ink"
 const STREAK_TIME: float = 0.9
 
@@ -41,7 +41,7 @@ func _ready() -> void:
 	add_to_group(&"ink_drop")
 	if collectible_id.is_empty():
 		push_warning("InkDrop %s nemá collectible_id – nebude se ukládat." % get_path())
-	elif GameState.is_collected(CHAPTER_ID, CATEGORY, collectible_id):
+	elif GameState.is_collected(Mission.chapter_of(self), CATEGORY, collectible_id):
 		collected = true
 		visible = false
 		set_deferred("monitoring", false)
@@ -68,7 +68,7 @@ func _on_body_entered(body: Node) -> void:
 		AudioManager.play(&"checkpoint", 0.0, 1.3, 0.0)
 	AudioManager.play(&"pickup", 0.0, 1.0 + minf(float(_streak), 8.0) * 0.06, 0.0)
 	if not collectible_id.is_empty():
-		GameState.mark_collected(CHAPTER_ID, CATEGORY, collectible_id) # vyšle Events.collectible_collected
+		GameState.mark_collected(Mission.chapter_of(self), CATEGORY, collectible_id) # vyšle Events.collectible_collected
 	else:
 		Events.collectible_collected.emit(collectible_id)
 	set_deferred("monitoring", false)

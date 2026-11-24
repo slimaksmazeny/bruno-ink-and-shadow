@@ -102,7 +102,7 @@ func _on_continue() -> void:
 ## Kapitoly: zatím jedna hratelná (testovací ulice), další jsou zamčené náhledy.
 const CHAPTERS: Array[Dictionary] = [
 	{"id": "greybox", "title": "CHAPTER_1", "scene": FIRST_LEVEL},
-	{"id": "ch2", "title": "CHAPTER_2", "scene": ""},
+	{"id": "canyon", "title": "CHAPTER_2", "scene": "res://levels/ch2_canyon/canyon.tscn"},
 	{"id": "ch3", "title": "CHAPTER_3", "scene": ""},
 ]
 

@@ -786,3 +786,9 @@ Necommituj — commit udělám já po otestování.
 - **Interakce:** objekty ve skupině `interactable` mají `can_interact(player)`, `interact(player)`, `get_prompt()` (překladový klíč) a volitelně `interact_range`. `Interact.nearest()` vybere nejbližší; `GroundedState` ji zkusí po kotvách a před kapsářstvím. HUD ukazuje nápovědu.
 - **Mise:** uzel `Mission` (skupina `mission`) – kroky STEAL_KEY → OPEN_VAULT → TAKE_TREASURE → ESCAPE → DONE. Objekty hlásí `notify(&"key" | &"vault_opened" | &"treasure_taken" | &"escaped")`. Na konci `ResultsScreen`.
 - Klíče jsou v `GameState.keys` (jen během levelu, neukládají se). `Guard.carries_key` se ukradne kapsářstvím.
+
+## Dodatek v0.3.0 — Kapitoly (Claude, 2026-11-24)
+
+- Každý level má uzel `Mission` s `chapter_id`; `Mission.chapter_of(node)` vrací kapitolu (bez mise „greybox“). Kapky, světlušky a rekordy se ukládají pod ní. Mise se přidává do skupiny už v `_enter_tree`.
+- Kapitola 2: `levels/ch2_canyon/canyon.tscn`, celá scéna se generuje `tools/generators/build_ch2_canyon.gd` (exportované uzly – kamera/target – se při generování nastavují objektem, ne NodePath).
+- Seznam kapitol je v `ui/menus/main_menu.gd` (`CHAPTERS`).

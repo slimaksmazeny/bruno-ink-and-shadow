@@ -40,16 +40,16 @@ func _ready() -> void:
 		total += d.value()
 		if d.collected:
 			got += d.value()
-	var record: bool = GameState.record_result(InkDrop.CHAPTER_ID, secs)
+	var record: bool = GameState.record_result(Mission.chapter_of(self), secs)
 	_row(box, tr("RESULTS_TIME"), _fmt(secs) + ("   ★ " + tr("RESULTS_RECORD") if record else ""))
-	var best: float = GameState.best_time(InkDrop.CHAPTER_ID)
+	var best: float = GameState.best_time(Mission.chapter_of(self))
 	if not record and best > 0.0:
 		_row(box, tr("RESULTS_BEST"), _fmt(best))
 	_row(box, tr("RESULTS_INK"), "%d / %d" % [got, total])
 	_row(box, tr("RESULTS_COINS"), "¤ %d" % GameState.get_coins())
 	var jars: int = get_tree().get_nodes_in_group(&"firefly_jar").size()
 	if jars > 0:
-		_row(box, tr("RESULTS_FIREFLIES"), "✦ %d / %d" % [GameState.count_collected(InkDrop.CHAPTER_ID, FireflyJar.CATEGORY), jars])
+		_row(box, tr("RESULTS_FIREFLIES"), "✦ %d / %d" % [GameState.count_collected(Mission.chapter_of(self), FireflyJar.CATEGORY), jars])
 	_row(box, tr("RESULTS_KO"), str(mission.knockouts if mission != null else 0))
 	var again := UiStyle.make_button("RESULTS_AGAIN")
 	again.pressed.connect(_again)

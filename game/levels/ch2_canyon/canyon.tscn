@@ -1,0 +1,448 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="1_tp80n"]
+[ext_resource type="Script" path="res://player/player.gd" id="2_0yt1v"]
+[ext_resource type="Resource" path="res://player/profiles/profile_3d.tres" id="3_0iwuv"]
+[ext_resource type="Resource" path="res://player/profiles/profile_2d.tres" id="4_feyt3"]
+[ext_resource type="PackedScene" path="res://camera/hybrid_camera.tscn" id="5_omspx"]
+[ext_resource type="Script" path="res://camera/hybrid_camera.gd" id="6_cp4hr"]
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="7_2vo3x"]
+[ext_resource type="Script" path="res://levels/mission.gd" id="8_rdptn"]
+[ext_resource type="Script" path="res://world/anchors/line_anchor.gd" id="9_8brcc"]
+[ext_resource type="PackedScene" path="res://world/anchors/spire_anchor.tscn" id="10_dlylc"]
+[ext_resource type="Script" path="res://world/anchors/anchor.gd" id="11_4q48k"]
+[ext_resource type="Script" path="res://world/anchors/ring_anchor.gd" id="12_ux8gv"]
+[ext_resource type="Script" path="res://world/enemies/guard.gd" id="13_62r81"]
+[ext_resource type="Script" path="res://world/gameplay/laser_tripwire.gd" id="14_c6xno"]
+[ext_resource type="Script" path="res://world/gameplay/vault.gd" id="15_ya6jq"]
+[ext_resource type="Script" path="res://world/gameplay/getaway.gd" id="16_dyp5b"]
+[ext_resource type="Script" path="res://world/gameplay/checkpoint.gd" id="17_lgl17"]
+[ext_resource type="Script" path="res://world/gameplay/hazard.gd" id="18_m3u26"]
+[ext_resource type="Script" path="res://world/gameplay/treat.gd" id="19_mry68"]
+[ext_resource type="Script" path="res://world/gameplay/firefly_jar.gd" id="20_lnlvh"]
+[ext_resource type="Script" path="res://world/gameplay/ink_drop.gd" id="21_do1v8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_b1qkt"]
+sky_top_color = Color(0.32, 0.36, 0.62, 1)
+sky_horizon_color = Color(0.98, 0.62, 0.4, 1)
+ground_bottom_color = Color(0.3, 0.2, 0.18, 1)
+ground_horizon_color = Color(0.85, 0.55, 0.4, 1)
+sun_angle_max = 20.0
+
+[sub_resource type="Sky" id="Sky_wtxh4"]
+sky_material = SubResource("ProceduralSkyMaterial_b1qkt")
+
+[sub_resource type="Environment" id="Environment_rbx4k"]
+background_mode = 2
+sky = SubResource("Sky_wtxh4")
+ambient_light_source = 3
+ambient_light_energy = 0.7
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.95, 0.65, 0.45, 1)
+fog_density = 0.006
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yyuif"]
+albedo_color = Color(0.82, 0.55, 0.36, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dgdcr"]
+albedo_color = Color(0.62, 0.34, 0.24, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ew0as"]
+albedo_color = Color(0.45, 0.3, 0.18, 1)
+
+[node name="CanyonLevel" type="Node3D" unique_id=832578079]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1765164595]
+environment = SubResource("Environment_rbx4k")
+
+[node name="DuskSun" type="DirectionalLight3D" parent="." unique_id=1581380808]
+transform = Transform3D(0.81915206, 0.23329456, -0.5239881, 0, 0.9135454, 0.40673664, 0.57357645, -0.33317915, 0.7483326, 0, 0, 0)
+light_color = Color(1, 0.78, 0.55, 1)
+light_energy = 1.25
+shadow_enabled = true
+
+[node name="Geometry" type="Node3D" parent="." unique_id=282405024]
+
+[node name="FloorWest" type="CSGBox3D" parent="Geometry" unique_id=219400593]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, -0.5, 0)
+use_collision = true
+size = Vector3(37, 1, 26)
+material = SubResource("StandardMaterial3D_yyuif")
+
+[node name="FloorEast" type="CSGBox3D" parent="Geometry" unique_id=947131830]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.5, -0.5, 0)
+use_collision = true
+size = Vector3(55, 1, 26)
+material = SubResource("StandardMaterial3D_yyuif")
+
+[node name="RiverBed" type="CSGBox3D" parent="Geometry" unique_id=1105817924]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, -14, 0)
+use_collision = true
+size = Vector3(8, 1, 26)
+material = SubResource("StandardMaterial3D_dgdcr")
+
+[node name="WallNorth" type="CSGBox3D" parent="Geometry" unique_id=1963655060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 7, -13.5)
+use_collision = true
+size = Vector3(100, 16, 1)
+material = SubResource("StandardMaterial3D_dgdcr")
+
+[node name="WallSouth" type="CSGBox3D" parent="Geometry" unique_id=68602663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 7, 13.5)
+use_collision = true
+size = Vector3(100, 16, 1)
+material = SubResource("StandardMaterial3D_dgdcr")
+
+[node name="WallWest" type="CSGBox3D" parent="Geometry" unique_id=949230821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 7, 0)
+use_collision = true
+size = Vector3(1, 16, 28)
+material = SubResource("StandardMaterial3D_dgdcr")
+
+[node name="WallEast" type="CSGBox3D" parent="Geometry" unique_id=421003139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.5, 7, 0)
+use_collision = true
+size = Vector3(1, 16, 28)
+material = SubResource("StandardMaterial3D_dgdcr")
+
+[node name="MesaA" type="CSGBox3D" parent="Geometry" unique_id=154738758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2, -6)
+use_collision = true
+size = Vector3(6, 4, 6)
+material = SubResource("StandardMaterial3D_dgdcr")
+
+[node name="MesaB" type="CSGBox3D" parent="Geometry" unique_id=183720142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 3, 5)
+use_collision = true
+size = Vector3(5, 6, 5)
+material = SubResource("StandardMaterial3D_dgdcr")
+
+[node name="MesaC" type="CSGBox3D" parent="Geometry" unique_id=1523928999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 2.5, -7.5)
+use_collision = true
+size = Vector3(8, 5, 6)
+material = SubResource("StandardMaterial3D_dgdcr")
+
+[node name="StepCrate" type="CSGBox3D" parent="Geometry" unique_id=1594409949]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0.75, -3.3)
+use_collision = true
+size = Vector3(1.5, 1.5, 1.5)
+material = SubResource("StandardMaterial3D_ew0as")
+
+[node name="ShackBack" type="CSGBox3D" parent="Geometry" unique_id=536224614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.75, 0)
+use_collision = true
+size = Vector3(0.4, 3.5, 8)
+material = SubResource("StandardMaterial3D_ew0as")
+
+[node name="ShackSideN" type="CSGBox3D" parent="Geometry" unique_id=2085776055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 1.75, -4)
+use_collision = true
+size = Vector3(8, 3.5, 0.4)
+material = SubResource("StandardMaterial3D_ew0as")
+
+[node name="ShackSideS" type="CSGBox3D" parent="Geometry" unique_id=1403129366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 1.75, 4)
+use_collision = true
+size = Vector3(8, 3.5, 0.4)
+material = SubResource("StandardMaterial3D_ew0as")
+
+[node name="ShackRoof" type="CSGBox3D" parent="Geometry" unique_id=423024813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 3.6, 0)
+use_collision = true
+size = Vector3(8.4, 0.3, 8.4)
+material = SubResource("StandardMaterial3D_ew0as")
+
+[node name="CartTop" type="CSGBox3D" parent="Geometry" unique_id=507730095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 1.05, 6)
+use_collision = true
+size = Vector3(4, 0.5, 2.4)
+material = SubResource("StandardMaterial3D_ew0as")
+
+[node name="CartLegA" type="CSGBox3D" parent="Geometry" unique_id=1502229199]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.1, 0.4, 5)
+use_collision = true
+size = Vector3(0.2, 0.8, 0.2)
+material = SubResource("StandardMaterial3D_ew0as")
+
+[node name="CartLegB" type="CSGBox3D" parent="Geometry" unique_id=1101402499]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9, 0.4, 7)
+use_collision = true
+size = Vector3(0.2, 0.8, 0.2)
+material = SubResource("StandardMaterial3D_ew0as")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1050422969 node_paths=PackedStringArray("camera") instance=ExtResource("1_tp80n")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0.05, 0)
+collision_layer = 2
+collision_mask = 17
+floor_max_angle = 0.80285144
+floor_snap_length = 0.35
+script = ExtResource("2_0yt1v")
+profile_3d = ExtResource("3_0iwuv")
+profile_2d = ExtResource("4_feyt3")
+camera = NodePath("../HybridCamera")
+
+[node name="HybridCamera" type="Node3D" parent="." unique_id=2041024275 node_paths=PackedStringArray("target") instance=ExtResource("5_omspx")]
+physics_interpolation_mode = 2
+script = ExtResource("6_cp4hr")
+target = NodePath("../Player")
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=1390858202]
+script = ExtResource("7_2vo3x")
+
+[node name="Mission" type="Node" parent="." unique_id=577917549]
+script = ExtResource("8_rdptn")
+key_id = "mine_key"
+chapter_id = "canyon"
+
+[node name="Content" type="Node3D" parent="." unique_id=1843236839]
+
+[node name="PoleMesaA" type="Area3D" parent="Content" unique_id=1572063316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.85, 0, -6)
+script = ExtResource("9_8brcc")
+length = 4.0
+axis = Vector3(0, 1, 0)
+outward = Vector3(-1, 0, 0)
+type = 1
+
+[node name="RopeAB" type="Area3D" parent="Content" unique_id=1053137808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -3.4)
+script = ExtResource("9_8brcc")
+length = 7.5179787
+axis = Vector3(0.4522492, 0.26602897, 0.8512927)
+type = 3
+
+[node name="SpireMesaB" type="Area3D" parent="Content" unique_id=777438041 node_paths=PackedStringArray("snap_point") instance=ExtResource("10_dlylc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 6.4, 5)
+script = ExtResource("11_4q48k")
+snap_point = NodePath("SnapPoint")
+
+[node name="RopeRiver" type="Area3D" parent="Content" unique_id=2051587959]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6, 0.02, 7)
+script = ExtResource("9_8brcc")
+length = 8.8
+type = 3
+
+[node name="RingRiver" type="Area3D" parent="Content" unique_id=1654440303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 5.3, -3)
+script = ExtResource("12_ux8gv")
+type = 5
+only_in_3d = false
+
+[node name="LedgeMesaC" type="Area3D" parent="Content" unique_id=1700504764]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.3, 5, -4.48)
+script = ExtResource("9_8brcc")
+length = 7.4
+type = 2
+
+[node name="GuardRiver" type="CharacterBody3D" parent="Content" unique_id=901740868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.05, 0)
+script = ExtResource("13_62r81")
+patrol_points = PackedVector3Array(-6, 0, 0, 8, 0, 0)
+loot = 20
+carries_key = "mine_key"
+
+[node name="GuardCamp" type="CharacterBody3D" parent="Content" unique_id=1790985218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 0.05, 3)
+script = ExtResource("13_62r81")
+patrol_points = PackedVector3Array(-8, 0, 0, 5, 0, 0)
+loot = 30
+
+[node name="GuardMesaC" type="CharacterBody3D" parent="Content" unique_id=1801078218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5.05, -8)
+script = ExtResource("13_62r81")
+patrol_points = PackedVector3Array(-3, 0, 0, 3, 0, 0)
+loot = 45
+
+[node name="LaserHigh" type="Area3D" parent="Content" unique_id=686905991]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 68.5, 0, -13)
+script = ExtResource("14_c6xno")
+length = 26.0
+
+[node name="LaserBlink" type="Area3D" parent="Content" unique_id=1285739712]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 69.3, 0, -13)
+script = ExtResource("14_c6xno")
+length = 26.0
+beam_height = 0.35
+block_standing = false
+blink_period = 1.5
+
+[node name="Vault" type="Node3D" parent="Content" unique_id=309571233]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 78.6, 0, 0)
+script = ExtResource("15_ya6jq")
+key_id = "mine_key"
+
+[node name="GetawayVan" type="Node3D" parent="Content" unique_id=1243541226]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8)
+script = ExtResource("16_dyp5b")
+
+[node name="CpRiverEast" type="Area3D" parent="Content" unique_id=369980115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 8)
+script = ExtResource("17_lgl17")
+checkpoint_id = "cp_canyon_river"
+
+[node name="CpCamp" type="Area3D" parent="Content" unique_id=750005490]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 9)
+script = ExtResource("17_lgl17")
+checkpoint_id = "cp_canyon_camp"
+
+[node name="Quicksand" type="Area3D" parent="Content" unique_id=694044533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 5.5)
+script = ExtResource("18_m3u26")
+
+[node name="TreatRiver" type="Area3D" parent="Content" unique_id=552697278]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, -8)
+script = ExtResource("19_mry68")
+
+[node name="TreatMesaB" type="Area3D" parent="Content" unique_id=389082851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 6, 6.2)
+script = ExtResource("19_mry68")
+
+[node name="JarMesaC" type="StaticBody3D" parent="Content" unique_id=1388377393]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 5, -9.5)
+script = ExtResource("20_lnlvh")
+jar_id = "jar_canyon_mesac"
+
+[node name="Ink00" type="Area3D" parent="Content" unique_id=8977821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.8, 0)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_00"
+
+[node name="Ink01" type="Area3D" parent="Content" unique_id=952779271]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.8, 0)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_01"
+
+[node name="Ink02" type="Area3D" parent="Content" unique_id=1775480732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.8, 0)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_02"
+
+[node name="Ink03" type="Area3D" parent="Content" unique_id=2326212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.8, 0)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_03"
+
+[node name="Ink04" type="Area3D" parent="Content" unique_id=1719609724]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.45, 5.22, -1.8000001)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_04"
+
+[node name="Ink05" type="Area3D" parent="Content" unique_id=1548858305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3, 5.72, -0.20000005)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_05"
+
+[node name="Ink06" type="Area3D" parent="Content" unique_id=189363191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.15, 6.22, 1.4000001)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_06"
+
+[node name="Ink07" type="Area3D" parent="Content" unique_id=735608213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 4.8, -6)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_07"
+
+[node name="Gold08" type="Area3D" parent="Content" unique_id=1400872681]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 7.6, 5)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_08"
+golden = true
+
+[node name="Ink09" type="Area3D" parent="Content" unique_id=946868436]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0.8, 7)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_09"
+
+[node name="Ink10" type="Area3D" parent="Content" unique_id=2089189713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.8, 7)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_10"
+
+[node name="Ink11" type="Area3D" parent="Content" unique_id=875092597]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5, 0.8, 7)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_11"
+
+[node name="Ink12" type="Area3D" parent="Content" unique_id=419221302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 3.2, -3)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_12"
+
+[node name="Ink13" type="Area3D" parent="Content" unique_id=267223693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0.8, 0)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_13"
+
+[node name="Ink14" type="Area3D" parent="Content" unique_id=17421576]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 0.8, 0)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_14"
+
+[node name="Ink15" type="Area3D" parent="Content" unique_id=892999668]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.3, 0.4, 6)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_15"
+
+[node name="Ink16" type="Area3D" parent="Content" unique_id=1368293891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.7, 0.4, 6)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_16"
+
+[node name="Ink17" type="Area3D" parent="Content" unique_id=871996615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4, -4)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_17"
+
+[node name="Ink18" type="Area3D" parent="Content" unique_id=794303966]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 4, -4)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_18"
+
+[node name="Ink19" type="Area3D" parent="Content" unique_id=1218736229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 4, -4)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_19"
+
+[node name="Gold20" type="Area3D" parent="Content" unique_id=1498218937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5.8, -6)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_20"
+golden = true
+
+[node name="Ink21" type="Area3D" parent="Content" unique_id=1875574079]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62, 0.8, -6)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_21"
+
+[node name="Ink22" type="Area3D" parent="Content" unique_id=381895014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0.8, -6)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_22"
+
+[node name="Ink23" type="Area3D" parent="Content" unique_id=1485924421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 0.8, 0)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_23"
+
+[node name="Ink24" type="Area3D" parent="Content" unique_id=776003085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.8, -10)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_24"
+
+[node name="Ink25" type="Area3D" parent="Content" unique_id=432942646]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, 0.8, 9)
+script = ExtResource("21_do1v8")
+collectible_id = "cn_ink_25"
+
+[node name="SignStart" type="Label3D" parent="Content" unique_id=16746944]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.6, -3)
+pixel_size = 0.008
+billboard = 2
+modulate = Color(1, 0.9, 0.7, 1)
+text = "CH2_SIGN_START"
+font_size = 60
+outline_size = 14

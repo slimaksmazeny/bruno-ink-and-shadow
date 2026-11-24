@@ -21,7 +21,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	add_to_group(&"firefly_jar")
-	if not jar_id.is_empty() and GameState.is_collected(InkDrop.CHAPTER_ID, CATEGORY, jar_id):
+	if not jar_id.is_empty() and GameState.is_collected(Mission.chapter_of(self), CATEGORY, jar_id):
 		broken = true
 		visible = false
 		collision_layer = 0
@@ -47,7 +47,7 @@ func on_cane_hit(_info: Dictionary) -> void:
 	AudioManager.play_at(&"crate_break", global_position, -4.0, 1.8)
 	AudioManager.play(&"checkpoint", -2.0, 1.4, 0.0)
 	if not jar_id.is_empty():
-		GameState.mark_collected(InkDrop.CHAPTER_ID, CATEGORY, jar_id)
+		GameState.mark_collected(Mission.chapter_of(self), CATEGORY, jar_id)
 	_glass.visible = false
 	for i: int in _flies.size():
 		var f: MeshInstance3D = _flies[i]
