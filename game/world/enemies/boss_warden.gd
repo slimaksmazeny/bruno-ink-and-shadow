@@ -33,6 +33,8 @@ func _ready() -> void:
 	loot = 80
 	super._ready()
 	_body.scale = Vector3.ONE * 1.6
+	# Vrstva 5 (16) = překážka kamery: kamera se o bosse zastaví a nevleze dovnitř.
+	collision_layer = 4 | 16
 	for c: Node in get_children():
 		if c is CollisionShape3D:
 			var cap := CapsuleShape3D.new()
@@ -84,9 +86,11 @@ func _physics_process(delta: float) -> void:
 				_move_towards(_player.global_position, _speed(), delta)
 			else:
 				_stop(delta)
-			if dist < 1.4 and _touch_cd <= 0.0:
-				_touch_cd = 1.0
-				_player.take_damage(1, global_position)
+			if dist < 1.6 and _touch_cd <= 0.0:
+				# Dotyk jen odstrčí (životy bere až vlna) – férovější souboj.
+				_touch_cd = 0.6
+				var away: Vector3 = Vector3(to.x, 0.0, to.z).normalized()
+				_player.velocity += away * 7.0 + Vector3.UP * 3.0
 			if dist < slam_radius - 0.5 and _slam_cd <= 0.0:
 				_begin_windup()
 		Phase.WINDUP:

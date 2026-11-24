@@ -8,7 +8,11 @@ var _index: int = 0
 func _unhandled_input(event: InputEvent) -> void:
 	var target: int = -1
 	if event is InputEventKey and event.pressed and not event.echo:
-		var k: int = (event as InputEventKey).physical_keycode
+		var ke := event as InputEventKey
+		# Fyzická klávesa (nezávislá na rozložení), jinak záložně logická (i numpad).
+		var k: int = ke.physical_keycode if ke.physical_keycode != KEY_NONE else ke.keycode
+		if k >= KEY_KP_0 and k <= KEY_KP_9:
+			k = KEY_0 + (k - KEY_KP_0)
 		if k >= KEY_1 and k <= KEY_9:
 			target = k - KEY_1
 		elif k == KEY_0:
