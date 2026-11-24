@@ -1,0 +1,425 @@
+## Strážný s baterkou (inspirace Sly Cooper). Kostra stealth nepřítele.
+##
+## Vnímání: kužel baterky (úhel + dosah) a přímá viditelnost (paprsek na zdi).
+## Detekce je „rozmazaná“: ukazatel podezření se plní tím rychleji, čím blíž Bruno je.
+## Plížení zmenší dosah. Zblízka (close_radius) strážný Bruna ucítí i zezadu – jako ve Slyovi.
+##
+## Stavy: PATROL → SUSPICIOUS („?“, otočí se za Brunem) → ALERT („!“, honí a útočí)
+##        → SEARCH (ztratil ho, chvíli hledá) → zpět PATROL.  Zásah holí → STUNNED.
+## Nepozorovaný zásah zezadu = okamžité knockout (odměna za stealth), jinak 3 zásahy.
+@tool
+class_name Guard
+extends CharacterBody3D
+
+enum State { PATROL, SUSPICIOUS, ALERT, SEARCH, STUNNED, KNOCKED_OUT }
+
+@export_group("Hlídka")
+## Body hlídky relativně k výchozí pozici strážného (aspoň 2 body).
+@export var patrol_points: PackedVector3Array = PackedVector3Array([Vector3(-4, 0, 0), Vector3(4, 0, 0)])
+@export var patrol_speed: float = 1.8
+@export var chase_speed: float = 4.6
+## Jak dlouho stojí a rozhlíží se na konci trasy.
+@export var wait_time: float = 1.4
+
+@export_group("Vnímání")
+@export var view_angle_deg: float = 32.0:
+	set(v):
+		view_angle_deg = v
+		if is_inside_tree():
+			_build()
+@export var view_range: float = 9.0:
+	set(v):
+		view_range = v
+		if is_inside_tree():
+			_build()
+## Násobek dosahu, když se Bruno plíží.
+@export var sneak_range_mult: float = 0.55
+## Na tuto vzdálenost strážný Bruna vždy ucítí (i zezadu), pokud se neplíží.
+@export var close_radius: float = 1.6
+## Sekundy plného podezření potřebné k poplachu (zblízka rychleji).
+@export var detect_time: float = 0.9
+@export var lose_time: float = 3.0
+
+@export_group("Boj")
+@export var max_health: int = 3
+@export var attack_range: float = 1.3
+@export var attack_cooldown: float = 1.1
+@export var stun_time: float = 1.6
+
+var state: State = State.PATROL
+var suspicion: float = 0.0
+var health: int = 3
+
+var _origin: Vector3
+var _patrol_idx: int = 0
+var _wait: float = 0.0
+var _timer: float = 0.0
+var _attack_cd: float = 0.0
+var _last_seen: Vector3
+var _player: Player
+
+var _body: Node3D
+var _cone: MeshInstance3D
+var _cone_mat: StandardMaterial3D
+var _label: Label3D
+var _meter: MeshInstance3D
+
+
+func _ready() -> void:
+	collision_layer = 4
+	collision_mask = 1
+	_build()
+	if Engine.is_editor_hint():
+		return
+	add_to_group(&"hittable")
+	add_to_group(&"guard")
+	health = max_health
+	_origin = global_position
+	_last_seen = global_position
+
+
+func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+	if _player == null or not is_instance_valid(_player):
+		_player = get_tree().get_first_node_in_group(&"player") as Player
+	_attack_cd = maxf(_attack_cd - delta, 0.0)
+
+	var sees: bool = _can_see_player()
+	match state:
+		State.PATROL:
+			_patrol(delta)
+			_update_suspicion(delta, sees)
+		State.SUSPICIOUS:
+			_stop(delta)
+			_face(_last_seen, delta, 5.0)
+			_update_suspicion(delta, sees)
+		State.ALERT:
+			_alert(delta, sees)
+		State.SEARCH:
+			_timer -= delta
+			_move_towards(_last_seen, patrol_speed * 1.3, delta)
+			if sees:
+				_set_state(State.ALERT)
+			elif _timer <= 0.0:
+				_set_state(State.PATROL)
+		State.STUNNED:
+			_stop(delta)
+			_timer -= delta
+			_body.rotation.z = sin(_timer * 30.0) * 0.12
+			if _timer <= 0.0:
+				_body.rotation.z = 0.0
+				_set_state(State.ALERT)
+		State.KNOCKED_OUT:
+			_stop(delta)
+
+	if not is_on_floor():
+		velocity.y -= 24.0 * delta
+	else:
+		velocity.y = -0.5
+	move_and_slide()
+	_update_visuals()
+
+
+# --- Vnímání ---------------------------------------------------------------
+
+func _can_see_player() -> bool:
+	if _player == null or _player.health <= 0:
+		return false
+	var eye: Vector3 = global_position + Vector3.UP * 1.5
+	var target: Vector3 = _player.global_position + Vector3.UP * 0.5
+	var to: Vector3 = target - eye
+	var dist: float = to.length()
+	var sneaking: bool = _player.is_sneaking
+	var in_close: bool = dist < close_radius and not sneaking
+	var range_now: float = view_range * (sneak_range_mult if sneaking else 1.0)
+	if not in_close:
+		if dist > range_now:
+			return false
+		var fwd: Vector3 = _forward()
+		var flat: Vector3 = Vector3(to.x, 0.0, to.z).normalized()
+		if fwd.angle_to(flat) > deg_to_rad(view_angle_deg):
+			return false
+	# Přímá viditelnost (zdi, bedny – vrstva world).
+	var q := PhysicsRayQueryParameters3D.create(eye, target, 1)
+	q.exclude = [get_rid()]
+	if not get_world_3d().direct_space_state.intersect_ray(q).is_empty():
+		return false
+	_last_seen = _player.global_position
+	return true
+
+
+func _update_suspicion(delta: float, sees: bool) -> void:
+	if sees:
+		var dist: float = global_position.distance_to(_player.global_position)
+		var closeness: float = clampf(1.0 - dist / view_range, 0.15, 1.0)
+		suspicion += delta / detect_time * (0.5 + closeness * 1.5)
+		if state == State.PATROL and suspicion > 0.2:
+			_set_state(State.SUSPICIOUS)
+		if suspicion >= 1.0:
+			_set_state(State.ALERT)
+	else:
+		suspicion -= delta * 0.4
+		if suspicion <= 0.0 and state == State.SUSPICIOUS:
+			_set_state(State.PATROL)
+	suspicion = clampf(suspicion, 0.0, 1.0)
+
+
+# --- Chování ---------------------------------------------------------------
+
+func _patrol(delta: float) -> void:
+	if patrol_points.size() < 2:
+		_stop(delta)
+		return
+	if _wait > 0.0:
+		_wait -= delta
+		_stop(delta)
+		# Rozhlížení na místě.
+		rotation.y += sin(_wait * 2.5) * delta * 0.9
+		return
+	var target: Vector3 = _origin + patrol_points[_patrol_idx]
+	if _move_towards(target, patrol_speed, delta):
+		_patrol_idx = (_patrol_idx + 1) % patrol_points.size()
+		_wait = wait_time
+
+
+func _alert(delta: float, sees: bool) -> void:
+	if sees:
+		_timer = lose_time
+	else:
+		_timer -= delta
+		if _timer <= 0.0:
+			_set_state(State.SEARCH)
+			return
+	var dist: float = global_position.distance_to(_player.global_position)
+	if dist > attack_range * 0.8:
+		_move_towards(_last_seen, chase_speed, delta)
+	else:
+		_stop(delta)
+		_face(_player.global_position, delta, 10.0)
+	if dist <= attack_range and _attack_cd <= 0.0 and sees:
+		_attack_cd = attack_cooldown
+		_swing()
+		_player.take_damage(1, global_position)
+
+
+## Vrací true, když dorazil.
+func _move_towards(target: Vector3, speed: float, delta: float) -> bool:
+	var to: Vector3 = target - global_position
+	to.y = 0.0
+	if to.length() < 0.35:
+		_stop(delta)
+		return true
+	var dir: Vector3 = to.normalized()
+	velocity.x = move_toward(velocity.x, dir.x * speed, 20.0 * delta)
+	velocity.z = move_toward(velocity.z, dir.z * speed, 20.0 * delta)
+	_face(global_position + dir, delta, 6.0)
+	return false
+
+
+func _stop(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, 0.0, 25.0 * delta)
+	velocity.z = move_toward(velocity.z, 0.0, 25.0 * delta)
+
+
+func _face(point: Vector3, delta: float, speed: float) -> void:
+	var to: Vector3 = point - global_position
+	if Vector2(to.x, to.z).length() < 0.05:
+		return
+	var want: float = atan2(-to.x, -to.z)
+	rotation.y = lerp_angle(rotation.y, want, 1.0 - exp(-speed * delta))
+
+
+func _forward() -> Vector3:
+	return -global_transform.basis.z
+
+
+func _set_state(s: State) -> void:
+	if s == state:
+		return
+	var was_alert: bool = state == State.ALERT
+	state = s
+	match s:
+		State.SUSPICIOUS:
+			AudioManager.play_at(&"suspicious", global_position)
+		State.ALERT:
+			suspicion = 1.0
+			_timer = lose_time
+			AudioManager.play_at(&"alert", global_position)
+			Events.guard_alert_changed.emit(true)
+		State.SEARCH:
+			_timer = 4.0
+			suspicion = 0.5
+		State.PATROL:
+			suspicion = 0.0
+	if was_alert and s != State.ALERT:
+		Events.guard_alert_changed.emit(false)
+
+
+# --- Zásah holí ------------------------------------------------------------
+
+func on_cane_hit(info: Dictionary) -> void:
+	if state == State.KNOCKED_OUT:
+		return
+	var unaware: bool = state == State.PATROL or state == State.SUSPICIOUS
+	health -= max_health if unaware else int(info.get("damage", 1))
+	var dir: Vector3 = info.get("dir", -_forward())
+	velocity += Vector3(dir.x, 0.0, dir.z).normalized() * 5.0 + Vector3.UP * 2.5
+	_flash()
+	if health <= 0:
+		_knock_out()
+		return
+	_timer = stun_time
+	_set_state(State.STUNNED)
+
+
+func _knock_out() -> void:
+	var was_alert: bool = state == State.ALERT
+	state = State.KNOCKED_OUT
+	if was_alert:
+		Events.guard_alert_changed.emit(false)
+	collision_layer = 0
+	remove_from_group(&"hittable")
+	_cone.visible = false
+	_label.text = "✶"
+	_label.modulate = Color(1, 0.9, 0.3)
+	var tw: Tween = create_tween()
+	tw.tween_property(_body, "rotation:x", -PI * 0.5, 0.35).set_trans(Tween.TRANS_BOUNCE)
+	tw.tween_interval(2.0)
+	tw.tween_property(self, "scale", Vector3(1, 0.01, 1), 0.3)
+	tw.tween_callback(queue_free)
+
+
+func _swing() -> void:
+	var tw: Tween = create_tween()
+	tw.tween_property(_body, "rotation:x", 0.35, 0.08)
+	tw.tween_property(_body, "rotation:x", 0.0, 0.2)
+
+
+func _flash() -> void:
+	var m: MeshInstance3D = _body.get_child(0) as MeshInstance3D
+	if m == null:
+		return
+	var mat: StandardMaterial3D = m.material_override as StandardMaterial3D
+	mat.emission_enabled = true
+	mat.emission = Color(1, 1, 1)
+	var tw: Tween = create_tween()
+	tw.tween_property(mat, "emission_energy_multiplier", 0.0, 0.18).from(2.0)
+
+
+# --- Vzhled ----------------------------------------------------------------
+
+func _update_visuals() -> void:
+	if state == State.KNOCKED_OUT:
+		return
+	var c: Color
+	match state:
+		State.ALERT: c = Color(1.0, 0.15, 0.1, 0.22)
+		State.SUSPICIOUS, State.SEARCH: c = Color(1.0, 0.6, 0.1, 0.18)
+		State.STUNNED: c = Color(0.6, 0.6, 0.6, 0.05)
+		_: c = Color(1.0, 0.95, 0.55, 0.13)
+	_cone_mat.albedo_color = c
+	_cone.visible = state != State.STUNNED
+	match state:
+		State.ALERT: _label.text = "!"
+		State.SUSPICIOUS, State.SEARCH: _label.text = "?"
+		State.STUNNED: _label.text = "✶"
+		_: _label.text = ""
+	_label.modulate = Color(1, 0.2, 0.15) if state == State.ALERT else Color(1, 0.8, 0.2)
+	_meter.visible = suspicion > 0.01 and state != State.ALERT
+	_meter.scale.x = maxf(suspicion, 0.01)
+
+
+func _build() -> void:
+	for c: Node in get_children():
+		if c.has_meta(&"generated"):
+			c.free()
+	var shape := CollisionShape3D.new()
+	var cap := CapsuleShape3D.new()
+	cap.radius = 0.4
+	cap.height = 1.8
+	shape.shape = cap
+	shape.position.y = 0.9
+	shape.set_meta(&"generated", true)
+	add_child(shape)
+
+	_body = Node3D.new()
+	_body.set_meta(&"generated", true)
+	add_child(_body)
+	var torso := MeshInstance3D.new()
+	var cm := CapsuleMesh.new()
+	cm.radius = 0.4
+	cm.height = 1.8
+	torso.mesh = cm
+	torso.position.y = 0.9
+	var tm := StandardMaterial3D.new()
+	tm.albedo_color = Color(0.45, 0.12, 0.15)
+	torso.material_override = tm
+	_body.add_child(torso)
+	var hat := MeshInstance3D.new()
+	var hm := CylinderMesh.new()
+	hm.top_radius = 0.28
+	hm.bottom_radius = 0.42
+	hm.height = 0.25
+	hat.mesh = hm
+	hat.position.y = 1.9
+	var hmat := StandardMaterial3D.new()
+	hmat.albedo_color = Color(0.1, 0.1, 0.18)
+	hat.material_override = hmat
+	_body.add_child(hat)
+	var lamp := MeshInstance3D.new()
+	var lm := BoxMesh.new()
+	lm.size = Vector3(0.14, 0.14, 0.3)
+	lamp.mesh = lm
+	lamp.position = Vector3(0.32, 1.35, -0.4)
+	var lmat := StandardMaterial3D.new()
+	lmat.albedo_color = Color(1, 0.95, 0.6)
+	lmat.emission_enabled = true
+	lmat.emission = Color(1, 0.9, 0.5)
+	lamp.material_override = lmat
+	_body.add_child(lamp)
+
+	# Kužel baterky – průhledný, ukazuje, kam strážný vidí.
+	_cone = MeshInstance3D.new()
+	var cone := CylinderMesh.new()
+	cone.top_radius = 0.05
+	cone.bottom_radius = tan(deg_to_rad(view_angle_deg)) * view_range
+	cone.height = view_range
+	cone.radial_segments = 24
+	cone.cap_top = false
+	cone.cap_bottom = false
+	_cone.mesh = cone
+	_cone.rotation.x = -PI * 0.5
+	_cone.position = Vector3(0, 1.0, -view_range * 0.5)
+	_cone_mat = StandardMaterial3D.new()
+	_cone_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_cone_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	_cone_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	_cone_mat.albedo_color = Color(1.0, 0.95, 0.55, 0.13)
+	_cone.material_override = _cone_mat
+	_cone.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_cone.set_meta(&"generated", true)
+	add_child(_cone)
+
+	_label = Label3D.new()
+	_label.position.y = 2.55
+	_label.font_size = 96
+	_label.outline_size = 18
+	_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	_label.no_depth_test = true
+	_label.set_meta(&"generated", true)
+	add_child(_label)
+
+	_meter = MeshInstance3D.new()
+	var bm := BoxMesh.new()
+	bm.size = Vector3(0.9, 0.08, 0.02)
+	_meter.mesh = bm
+	_meter.position.y = 2.25
+	var mm := StandardMaterial3D.new()
+	mm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mm.albedo_color = Color(1, 0.7, 0.1)
+	mm.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	_meter.material_override = mm
+	_meter.visible = false
+	_meter.set_meta(&"generated", true)
+	add_child(_meter)

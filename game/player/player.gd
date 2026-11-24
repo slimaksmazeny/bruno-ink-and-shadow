@@ -11,6 +11,10 @@ enum Mode { MODE_3D, MODE_2D }
 @export var camera: HybridCamera
 ## Pod touto výškou se Bruno vrátí na start (pád do propasti).
 @export var kill_y: float = -25.0
+## Počet životů (Sly-style: málo, ale rychlý návrat na checkpoint).
+@export var max_health: int = 3
+## Jak dlouho po zásahu nejde Bruno znovu zranit (bliká).
+@export var invulnerable_time: float = 1.2
 
 var mode: Mode = Mode.MODE_3D
 var profile: MovementProfile
@@ -26,6 +30,11 @@ var sneak_toggled: bool = false
 ## Útok ve vzduchu jde jednou za skok (obnoví se po dopadu).
 var air_attack_used: bool = false
 
+var health: int = 3
+var _invulnerable: float = 0.0
+var _was_on_floor: bool = true
+var _dying: bool = false
+
 var _spawn_transform: Transform3D
 
 @onready var state_machine: PlayerStateMachine = $StateMachine
@@ -38,6 +47,8 @@ var _hit_stop_running: bool = false
 
 func _ready() -> void:
 	profile = profile_3d
+	add_to_group(&"player")
+	health = max_health
 	_spawn_transform = global_transform
 	anchor_detector.player = self
 	cane_hitbox.hit_landed.connect(_on_cane_hit_landed)
@@ -48,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	_update_timers(delta)
 	anchor_detector.refresh(PlayerState.ANCHOR_STATES.keys())
 	state_machine.physics_update(delta)
+	var fall_speed: float = -velocity.y
 
 	if mode == Mode.MODE_2D:
 		velocity -= plane_normal * velocity.dot(plane_normal)
@@ -56,8 +68,24 @@ func _physics_process(delta: float) -> void:
 		var offset: float = (global_position - plane_origin).dot(plane_normal)
 		global_position -= plane_normal * offset
 
-	if global_position.y < kill_y:
-		respawn()
+	var on_floor: bool = is_on_floor()
+	if on_floor and not _was_on_floor and fall_speed > 4.0:
+		AudioManager.play(&"land", linear_to_db(clampf(fall_speed / 14.0, 0.3, 1.0)))
+	_was_on_floor = on_floor
+
+	if _invulnerable > 0.0:
+		_invulnerable -= delta
+		visual.visible = _invulnerable <= 0.0 or fmod(_invulnerable, 0.16) > 0.07
+
+	if global_position.y < kill_y and not _dying:
+		# Pád do propasti stojí jeden život (Rayman), pak návrat na checkpoint.
+		health -= 1
+		Events.player_health_changed.emit(health, max_health)
+		if health <= 0:
+			die()
+		else:
+			AudioManager.play(&"hurt")
+			respawn(false)
 
 	visual.update_visual(delta, self)
 	# Hitbox není pod Visual (ten se při dopadu škáluje – Jolt nepodporuje nerovnoměrné škálování tvarů).
@@ -112,6 +140,7 @@ func consume_jump_buffer() -> bool:
 ## Zásah holí: krátké „zastavení času“ a zatřesení kamery – zásah je cítit (Sly feel).
 func _on_cane_hit_landed(_target: Node, info: Dictionary) -> void:
 	var strong: bool = int(info.get("combo", 1)) >= 3
+	AudioManager.play(&"hit", 0.0, 0.85 if strong else 1.0)
 	hit_stop(0.09 if strong else 0.05)
 	if camera != null:
 		camera.shake(0.18 if strong else 0.09, 0.2)
@@ -136,12 +165,69 @@ func set_checkpoint(t: Transform3D) -> void:
 func bounce(up_velocity: float) -> void:
 	velocity.y = up_velocity
 	jumps_used = 1
+	AudioManager.play(&"bounce")
 	air_attack_used = false
 	visual.land_squash(0.7)
 	state_machine.transition_to(&"Air", {"bounce": true, "force": true})
 
 
-func respawn() -> void:
+## Zásah (strážný, nebezpečná oblast). from = odkud rána přišla (pro odhození).
+## Vrací true, pokud zásah prošel (Bruno nebyl chráněný).
+func take_damage(amount: int, from: Vector3) -> bool:
+	if _invulnerable > 0.0 or _dying or health <= 0:
+		return false
+	health = maxi(health - amount, 0)
+	_invulnerable = invulnerable_time
+	Events.player_health_changed.emit(health, max_health)
+	if health <= 0:
+		die()
+		return true
+	AudioManager.play(&"hurt")
+	if camera != null:
+		camera.shake(0.15, 0.25)
+	# Odhození od zdroje zásahu.
+	var away: Vector3 = global_position - from
+	away.y = 0.0
+	away = away.normalized() if away.length() > 0.01 else -visual.get_forward()
+	if mode == Mode.MODE_2D:
+		away -= plane_normal * away.dot(plane_normal)
+	velocity = away * 6.0 + Vector3.UP * 5.5
+	state_machine.transition_to(&"Air", {"force": true})
+	return true
+
+
+func heal(amount: int) -> void:
+	health = mini(health + amount, max_health)
+	Events.player_health_changed.emit(health, max_health)
+
+
+func is_invulnerable() -> bool:
+	return _invulnerable > 0.0
+
+
+## Konec životů: inkoustová clona, návrat na checkpoint s plným zdravím.
+func die() -> void:
+	if _dying:
+		return
+	_dying = true
+	AudioManager.play(&"death")
+	Events.player_died.emit()
+	state_machine.transition_to(&"Locked", {"force": true})
+	velocity = Vector3.ZERO
+	if is_inside_tree():
+		await InkWipe.cover(0.35)
+	respawn(true)
+	if is_inside_tree():
+		await InkWipe.reveal(0.4)
+	_dying = false
+
+
+func respawn(full_heal: bool = true) -> void:
+	if full_heal:
+		health = max_health
+		Events.player_health_changed.emit(health, max_health)
+	_invulnerable = 0.0
+	visual.visible = true
 	global_transform = _spawn_transform
 	velocity = Vector3.ZERO
 	jumps_used = 0

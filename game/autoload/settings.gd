@@ -8,6 +8,8 @@ const FALLBACK_LOCALE: String = "en"
 
 var locale: String = FALLBACK_LOCALE
 var master_volume: float = 1.0
+var music_volume: float = 0.7
+var sfx_volume: float = 0.9
 var mouse_sensitivity: float = 0.003
 
 var _config: ConfigFile = ConfigFile.new()
@@ -24,6 +26,8 @@ func load_settings() -> void:
 	if err == OK:
 		locale = str(_config.get_value("general", "locale", _detect_os_locale()))
 		master_volume = float(_config.get_value("audio", "master_volume", 1.0))
+		music_volume = float(_config.get_value("audio", "music_volume", 0.7))
+		sfx_volume = float(_config.get_value("audio", "sfx_volume", 0.9))
 		mouse_sensitivity = float(_config.get_value("input", "mouse_sensitivity", 0.003))
 	else:
 		# První spuštění: čeština, pokud je systém česky, jinak angličtina.
@@ -36,6 +40,8 @@ func load_settings() -> void:
 func save_settings() -> void:
 	_config.set_value("general", "locale", locale)
 	_config.set_value("audio", "master_volume", master_volume)
+	_config.set_value("audio", "music_volume", music_volume)
+	_config.set_value("audio", "sfx_volume", sfx_volume)
 	_config.set_value("input", "mouse_sensitivity", mouse_sensitivity)
 	var err: Error = _config.save(SETTINGS_PATH)
 	if err != OK:
@@ -64,3 +70,22 @@ func _apply_locale(new_locale: String) -> void:
 
 func _detect_os_locale() -> String:
 	return "cs" if OS.get_locale_language() == "cs" else FALLBACK_LOCALE
+
+
+## Hlasitost 0..1 pro "master" / "music" / "sfx". Okamžitě se projeví a uloží.
+func set_volume(kind: String, value: float) -> void:
+	value = clampf(value, 0.0, 1.0)
+	match kind:
+		"master": master_volume = value
+		"music": music_volume = value
+		"sfx": sfx_volume = value
+		_: push_warning("Settings: neznámá hlasitost '%s'" % kind)
+	if is_instance_valid(AudioManager):
+		AudioManager.apply_volumes()
+	save_settings()
+
+
+func set_mouse_sensitivity(value: float) -> void:
+	mouse_sensitivity = clampf(value, 0.0005, 0.01)
+	InputManager.mouse_sensitivity = mouse_sensitivity
+	save_settings()

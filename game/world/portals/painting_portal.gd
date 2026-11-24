@@ -37,6 +37,7 @@ func _on_body_entered(body: Node) -> void:
 
 func enter_painting(p: Player) -> void:
 	busy = true
+	AudioManager.play(&"portal")
 	p.state_machine.transition_to(&"Locked")
 	var cam: HybridCamera = p.camera
 	# 1) Kamera vplave do obrazu (dolly + zúžení záběru) – „zploštění do malby“.
@@ -65,6 +66,7 @@ func enter_painting(p: Player) -> void:
 ## Návrat zpět do 3D (volá ExitPortal na konci 2D úrovně).
 func return_to_3d(p: Player) -> void:
 	busy = true
+	AudioManager.play(&"portal")
 	p.state_machine.transition_to(&"Locked")
 	var cam: HybridCamera = p.camera
 	await InkWipe.cover(0.3)

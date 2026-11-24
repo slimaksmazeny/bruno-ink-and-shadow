@@ -620,7 +620,7 @@ Player (CharacterBody3D, player.gd)            vrstva: player
 **Klíčová nastavení `project.godot`:**
 ```ini
 [application]
-run/main_scene="res://levels/greybox/greybox_street.tscn"
+run/main_scene="res://ui/menus/main_menu.tscn"   ; od v0.2.2 (dřív greybox_street)
 config/features=PackedStringArray("4.7")
 
 [autoload]
@@ -629,7 +629,11 @@ InputManager="*res://autoload/input_manager.gd"
 Settings="*res://autoload/settings.gd"
 GameState="*res://autoload/game_state.gd"
 SaveManager="*res://autoload/save_manager.gd"
+AudioManager="*res://autoload/audio_manager.gd"     ; od v0.2.2: AudioManager.play(&"jump") / play_at(&"bell", pos)
 DebugOverlay="*res://ui/debug/debug_overlay.tscn"   ; jen debug buildy, v exportu se sám odstraní
+TouchControls="*res://ui/touch_controls/touch_controls.tscn"
+InkWipe="*res://ui/transitions/ink_wipe.tscn"
+PauseMenu="*res://ui/menus/pause_menu.gd"            ; od v0.2.2
 
 [display]
 window/size/viewport_width=1920
@@ -743,3 +747,14 @@ Necommituj — commit udělám já po otestování.
 - `v0.3.0`: cel shader (`diffuse_light` v krocích + rim) a inverted-hull obrysy, rozpočet výkonu pro Android.
 - `v0.3.2`: AI hlídek (kužel vidění = `ShapeCast3D`/raycasty, ne fyzický kužel), zvuková detekce.
 - `v0.4.0`: načítání hubu a interiérů (`SceneRouter` + inkoustový střih, `ResourceLoader.load_threaded_request`).
+
+---
+
+## Dodatek v0.2.2 — Kostra hry (Claude, 2026-11-24)
+
+- **Zvuk:** `AudioManager` (autoload) vlastní sběrnice `Music` a `SFX` a malý pool přehrávačů. Volání jen `AudioManager.play(&"jméno")` nebo `play_at(&"jméno", pozice)`; soubory `res://audio/sfx/<jméno>.wav`. Hlasitosti v `Settings` (`master/music/sfx`).
+- **Zdraví:** jen v `Player` (`health`, `take_damage(amount, from)`, `heal`, `die`). Ostatní poslouchají `Events.player_health_changed` / `player_died`.
+- **Herní objekty** (`world/gameplay/`): `InkDrop` (sbírka, ukládá přes `GameState.mark_collected`), `Checkpoint` (nový respawn + léčení + `SaveManager.save_game()`), `Hazard` (louže / bodliny). Jsou `@tool` a vzhled si staví z kódu – v editoru jsou vidět, bez grafiky.
+- **Nepřátelé** (`world/enemies/`): `Guard` – vlastní `move_and_slide` (pravidlo „jen player.gd“ platí pro hráče). Vnímání = kužel + paprsek na vrstvu world, rozmazaná detekce `suspicion` 0..1. Zásah holí přes skupinu `hittable`.
+- **UI:** `Hud` (CanvasLayer v levelu), `PauseMenu` (autoload, `get_tree().paused`), `MainMenu` (hlavní scéna), `SettingsPanel` sdílený. Texty jsou překladové klíče → Godot je překládá automaticky.
+- **Testy v režimu `--script`:** testovací skript nesmí používat typy `Player`/`Guard` (v tu chvíli ještě nejsou známé autoloady) – používat netypované proměnné.

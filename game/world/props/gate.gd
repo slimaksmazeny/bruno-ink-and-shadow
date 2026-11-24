@@ -17,5 +17,6 @@ func _on_bell_hit(id: StringName) -> void:
 	if id != bell_id or is_open:
 		return
 	is_open = true
+	AudioManager.play_at(&"gate", global_position)
 	var tw: Tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_property(self, "position:y", position.y - open_depth, open_time)

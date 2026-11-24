@@ -1589,6 +1589,24 @@
           note: ""
         },
 
+        {
+          id: "W2-11", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.2",
+          title: "Kostra hry: zvuky, zdraví, kapky inkoustu, checkpointy, strážný, HUD, pauza, hlavní menu",
+          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "1 den",
+          dependsOn: ["W2-08"],
+          files: ["game/autoload/audio_manager.gd", "game/audio/sfx/*.wav", "game/world/gameplay/*.gd", "game/world/enemies/guard.gd", "game/ui/hud/hud.gd", "game/ui/menus/*", "tools/generators/build_step_g.gd", "tools/tests/test_step_g.gd"],
+          steps: [
+            "AudioManager (sběrnice Music/SFX) + 21 generovaných zástupných zvuků, napojení na skoky, útoky a objekty",
+            "Bruno: 3 životy, nesmrtelnost po zásahu, odhození, pád do propasti = −1 život, smrt → inkoust → checkpoint",
+            "Kapky inkoustu (31 v greyboxu, ukládají se, série = vyšší tón), checkpoint s praporkem (léčí + ukládá), louže inkoustu a bodliny",
+            "Strážný s baterkou: kužel vidění, rozmazaná detekce (ukazatel ?/!), plížení zkracuje dosah, zblízka cítí i zezadu, nepozorovaná rána zezadu = knockout",
+            "HUD (životy, kapky, hlášky, poplach), pauza (Esc/Start), hlavní menu jako start hry, nastavení (hlasitosti, citlivost, jazyk, dotyk)",
+            "Doladit doma na PC: hratelnost strážného, hlasitosti, rozmístění kapek"
+          ],
+          acceptance: "test_step_g: 21/21 PASS; F5 spustí hlavní menu → Hrát → ulice s HUD; strážný reaguje; pauza funguje myší i ovladačem.",
+          note: "Zvuky jsou zástupné (syntéza v tools/generators/gen_sfx.py) – později nahradit opravdovými."
+        },
+
         // --- VLNA 3 (4) ---
         {
           id: "W3-01", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.0",
@@ -1915,6 +1933,7 @@
       ];
 
       const DEFAULT_LOGS = [
+        { id: "log_031", date: "2026-11-24", author: "Claude", status: "done", version: "v0.2.2", text: "Velká vlna „Kostra hry“ (W2-11): zvuky (AudioManager + 21 zástupných efektů), zdraví (3 životy, nesmrtelnost, smrt → checkpoint), kapky inkoustu (31, ukládají se), checkpointy, louže inkoustu a bodliny, strážný s baterkou (Sly: rozmazaná detekce, plížení, knockout zezadu), testovací HUD, pauza a hlavní menu s nastavením. Hra teď startuje v hlavním menu. 2D kamera: pohled dolů jen na zemi, rychlejší sledování při odrazu z houby." },
         { id: "log_030", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "2D kamera: situační pohled – kamera ohmatává terén ~3,5 m před Brunem; nad srázem nebo dírou se sama sníží (až 4 m) a oddálí (až +5 m), takže je vidět místo dopadu. Ruční nahlédnutí nahoru/dolů pravou páčkou nebo myší. Vše laditelné v Inspectoru u SideScrollRig (skupina Situační pohled)." },
         { id: "log_029", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "2D kamera doladěna (Rayman styl): svisle drží výšku poslední země s mrtvou zónou – při běžném skoku se nehoupe (0,4 m místo celé výšky skoku), posune se jen při odrazu z houby nebo pádu; plynulejší výhled dopředu podle směru běhu; záběr blíž (12,5 m) s mírným pohledem shora." },
         { id: "log_028", date: "2026-11-23", author: "Claude", status: "done", version: "v0.1.8", text: "Projektové centrum zpřehledněno: navigace ve 3 skupinách (Vývoj / Hra / Nástroje), přehled „Dnes“ s jedním velkým panelem aktuálního úkolu (kroky + jak ověřit), „Pak na řadě“, rychlé odkazy (PR, repo, ARCHITECTURE, DESIGN, testy) a kompaktní vlny; panely Fáze a Role odstraněny. Roadmapa skrývá hotové úkoly (přepínač) a rozbaluje jen rozpracované. Dlouhé záznamy deníku se zkracují. Mechaniky: ovládání nahoře, aktuální tabulka stavů Bruna. Data i klíče localStorage beze změny." },

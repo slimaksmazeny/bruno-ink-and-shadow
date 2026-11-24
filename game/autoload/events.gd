@@ -22,3 +22,19 @@ signal bell_hit(bell_id: StringName)
 ## Sebrán sběratelský předmět (od v0.3+).
 @warning_ignore("unused_signal")
 signal collectible_collected(collectible_id: String)
+
+## Zdraví hráče se změnilo (zásah, vyléčení, respawn).
+@warning_ignore("unused_signal")
+signal player_health_changed(health: int, max_health: int)
+
+## Hráč přišel o všechny životy (před respawnem na checkpointu).
+@warning_ignore("unused_signal")
+signal player_died()
+
+## Hráč dosáhl checkpointu.
+@warning_ignore("unused_signal")
+signal checkpoint_reached(checkpoint_id: String)
+
+## Strážný zpozoroval hráče (alert = true) / ztratil ho (false).
+@warning_ignore("unused_signal")
+signal guard_alert_changed(alerted: bool)

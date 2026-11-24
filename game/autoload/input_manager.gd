@@ -54,7 +54,8 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	# Kliknutí do hry zachytí kurzor (jen na PC a jen když není zapnutý dotykový HUD).
 	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
-		if not touch_controls_visible and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		var in_game: bool = not get_tree().paused and get_tree().get_first_node_in_group(&"player") != null
+		if in_game and not touch_controls_visible and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 			capture_mouse()
 
 

@@ -16,6 +16,7 @@ func enter(_previous: StringName, _msg: Dictionary = {}) -> void:
 	carried_speed = maxf(horizontal_speed(), player.profile.walk_speed)
 	player.velocity.y = maxf(player.velocity.y, 2.5)
 	player.visual.play_air_attack(DURATION)
+	AudioManager.play(&"swish", 0.0, 0.85)
 
 
 func exit() -> void:

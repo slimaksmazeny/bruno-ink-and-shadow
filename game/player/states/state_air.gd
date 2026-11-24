@@ -48,6 +48,7 @@ func physics_update(delta: float) -> void:
 
 
 func _ground_jump() -> void:
+	AudioManager.play(&"jump")
 	player.velocity.y = jump_velocity(player.profile.jump_height)
 	player.jumps_used = 1
 	player.coyote_timer = 0.0
@@ -55,6 +56,7 @@ func _ground_jump() -> void:
 
 
 func _double_jump() -> void:
+	AudioManager.play(&"double_jump")
 	_bounce_rise = false
 	player.velocity.y = jump_velocity(player.profile.double_jump_height)
 	# Po pádu z hrany bez skoku je dvojskok poslední možný skok.

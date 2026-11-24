@@ -33,6 +33,7 @@ func enter(previous: StringName, msg: Dictionary = {}) -> void:
 	_dir = _pick_direction()
 	player.visual.face_direction(_dir)
 	player.visual.play_attack(combo, _step()[2])
+	AudioManager.play(&"swish", 0.0, 1.0 + 0.08 * float(combo - 1))
 	# Výpad dopředu
 	var lunge: float = _step()[3]
 	player.velocity.x = _dir.x * lunge

@@ -28,6 +28,7 @@ static func compute_aim_dir(player: Player) -> Vector3:
 
 
 static func launch(player: Player, dir: Vector3) -> void:
+	AudioManager.play(&"shoot")
 	var balls: Array[Node] = player.get_tree().get_nodes_in_group(&"tennis_ball")
 	if balls.size() >= MAX_BALLS:
 		balls[0].queue_free()

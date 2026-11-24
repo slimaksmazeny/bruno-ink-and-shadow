@@ -5,6 +5,7 @@ extends AirborneState
 func enter(_previous: StringName, _msg: Dictionary = {}) -> void:
 	carried_speed = maxf(horizontal_speed(), player.profile.glide_air_speed)
 	player.visual.set_gliding(true)
+	AudioManager.play(&"glide", -6.0)
 
 
 func exit() -> void:

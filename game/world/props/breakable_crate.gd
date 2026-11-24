@@ -31,6 +31,7 @@ func on_cane_hit(info: Dictionary) -> void:
 
 func _break(dir: Vector3, force: float) -> void:
 	broken = true
+	AudioManager.play_at(&"crate_break", global_position)
 	_mesh.visible = false
 	_shape.set_deferred("disabled", true)
 	var mat: Material = _mesh.material_override

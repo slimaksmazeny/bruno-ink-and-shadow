@@ -27,6 +27,7 @@ func _on_body_entered(body: Node) -> void:
 
 func _ring() -> void:
 	var first: bool = not rung
+	AudioManager.play_at(&"bell", global_position)
 	rung = true
 	var tw: Tween = create_tween()
 	tw.tween_property(_bell, "rotation_degrees:x", 28.0, 0.12).set_trans(Tween.TRANS_SINE)
