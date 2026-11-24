@@ -13,6 +13,17 @@ static var _streak: int = 0
 static var _streak_time_ms: int = 0
 
 @export var collectible_id: String = ""
+## Zlatá kapka (Rayman „zlaté lumy“): větší, zlatá, má hodnotu 5. Bývá schovaná v obloucích skoků.
+@export var golden: bool = false:
+	set(v):
+		golden = v
+		if is_inside_tree():
+			_build()
+
+
+## Kolik kapek tahle kapka „váží“ v počítadle.
+func value() -> int:
+	return 5 if golden else 1
 
 var collected: bool = false
 var _mesh: Node3D
@@ -53,6 +64,8 @@ func _on_body_entered(body: Node) -> void:
 	var now: int = Time.get_ticks_msec()
 	_streak = _streak + 1 if now - _streak_time_ms < int(STREAK_TIME * 1000.0) else 0
 	_streak_time_ms = now
+	if golden:
+		AudioManager.play(&"checkpoint", 0.0, 1.3, 0.0)
 	AudioManager.play(&"pickup", 0.0, 1.0 + minf(float(_streak), 8.0) * 0.06, 0.0)
 	if not collectible_id.is_empty():
 		GameState.mark_collected(CHAPTER_ID, CATEGORY, collectible_id) # vyšle Events.collectible_collected
@@ -79,9 +92,9 @@ func _build() -> void:
 	_mesh.set_meta(&"generated", true)
 	add_child(_mesh)
 	var mat := StandardMaterial3D.new()
-	mat.albedo_color = Color(0.12, 0.22, 0.75)
+	mat.albedo_color = Color(1.0, 0.75, 0.15) if golden else Color(0.12, 0.22, 0.75)
 	mat.emission_enabled = true
-	mat.emission = Color(0.2, 0.4, 1.0)
+	mat.emission = Color(1.0, 0.7, 0.1) if golden else Color(0.2, 0.4, 1.0)
 	mat.emission_energy_multiplier = 0.8
 	mat.roughness = 0.15
 	var body := MeshInstance3D.new()
@@ -91,6 +104,8 @@ func _build() -> void:
 	body.mesh = s
 	body.material_override = mat
 	_mesh.add_child(body)
+	if golden:
+		_mesh.scale = Vector3.ONE * 1.7
 	var tip := MeshInstance3D.new()
 	var c := CylinderMesh.new()
 	c.top_radius = 0.0

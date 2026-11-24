@@ -1560,7 +1560,7 @@
         {
           id: "W2-09", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.1",
           title: "Sly Parkour Update (nové typy kotev + stavy)",
-          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "4 dny",
           dependsOn: ["W2-05"],
           files: ["game/player/states/state_climb.gd", "game/player/states/state_crawl.gd", "game/player/states/state_ledge_hang.gd", "game/player/states/state_wall_sneak.gd", "game/player/states/state_path_follow.gd", "game/player/states/state_hook_swing.gd", "game/world/anchors/"],
           steps: [
@@ -1933,6 +1933,7 @@
       ];
 
       const DEFAULT_LOGS = [
+        { id: "log_033", date: "2026-11-24", author: "Claude", status: "done", version: "v0.2.3", text: "Sly parkour (W2-09, 1. část): kotvy ve tvaru úsečky (LineAnchor) – trubka → stav Climb (nahoru/dolů, obcházení, vylezení na střechu), římsa → LedgeHang (ručkování podle kamery, vytažení nahoru), lano → RopeWalk (chůze s balancováním, sestup na konci). V ulici: trubka na levém domě, lano na nový sloup, římsa na pravém domě. 2D: stoupavý vítr pro ušní vrtulník (WindColumn) a zlaté kapky (hodnota 5). Test test_step_i 9/9." },
         { id: "log_032", date: "2026-11-24", author: "Claude", status: "done", version: "v0.2.2", text: "„Pokračovat“ vrací na poslední checkpoint (i ve 2D obrazu). 2D Rayman kit – první díly (W2-10): průchozí plošina (dolů + skok = seskok), rozpadající se inkoustová plošina (obnoví se po 3 s), pohyblivá zvedací plošina; rozmístěno v obraze + 2 kapky. Test test_step_h 6/6." },
         { id: "log_031", date: "2026-11-24", author: "Claude", status: "done", version: "v0.2.2", text: "Velká vlna „Kostra hry“ (W2-11): zvuky (AudioManager + 21 zástupných efektů), zdraví (3 životy, nesmrtelnost, smrt → checkpoint), kapky inkoustu (31, ukládají se), checkpointy, louže inkoustu a bodliny, strážný s baterkou (Sly: rozmazaná detekce, plížení, knockout zezadu), testovací HUD, pauza a hlavní menu s nastavením. Hra teď startuje v hlavním menu. 2D kamera: pohled dolů jen na zemi, rychlejší sledování při odrazu z houby." },
         { id: "log_030", date: "2026-11-23", author: "Claude", status: "done", version: "v0.2.0", text: "2D kamera: situační pohled – kamera ohmatává terén ~3,5 m před Brunem; nad srázem nebo dírou se sama sníží (až 4 m) a oddálí (až +5 m), takže je vidět místo dopadu. Ruční nahlédnutí nahoru/dolů pravou páčkou nebo myší. Vše laditelné v Inspectoru u SideScrollRig (skupina Situační pohled)." },

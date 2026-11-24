@@ -7,6 +7,9 @@ extends Node
 ## Typ kotvy → stav, který ji obslouží. v0.2.1 sem jen přidá řádky (PIPE → Climb, LEDGE → LedgeHang…).
 const ANCHOR_STATES: Dictionary = {
 	Anchor.Type.SPIRE: &"Perch",
+	Anchor.Type.PIPE: &"Climb",
+	Anchor.Type.LEDGE: &"LedgeHang",
+	Anchor.Type.ROPE: &"RopeWalk",
 }
 
 var player: Player

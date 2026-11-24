@@ -34,6 +34,8 @@ var health: int = 3
 var _invulnerable: float = 0.0
 var _was_on_floor: bool = true
 var _dying: bool = false
+## Nastavuje WindColumn každý fyzikální snímek, kdy je Bruno uvnitř; Player ho po snímku vynuluje.
+var wind_lift: float = 0.0
 
 var _spawn_transform: Transform3D
 
@@ -60,6 +62,10 @@ func _physics_process(delta: float) -> void:
 	anchor_detector.refresh(PlayerState.ANCHOR_STATES.keys())
 	state_machine.physics_update(delta)
 	var fall_speed: float = -velocity.y
+	if wind_lift > 0.0 and not is_on_floor() and velocity.y < -2.0:
+		# Bez plachtění vítr jen zbrzdí pád.
+		velocity.y = move_toward(velocity.y, -2.0, 20.0 * delta)
+	wind_lift = 0.0
 
 	if mode == Mode.MODE_2D:
 		velocity -= plane_normal * velocity.dot(plane_normal)

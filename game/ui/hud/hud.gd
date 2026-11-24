@@ -90,8 +90,13 @@ func _on_health(hp: int, max_hp: int) -> void:
 
 
 func _refresh_ink(pop: bool) -> void:
-	var total: int = get_tree().get_nodes_in_group(&"ink_drop").size()
-	var got: int = GameState.count_collected(InkDrop.CHAPTER_ID, InkDrop.CATEGORY)
+	var total: int = 0
+	var got: int = 0
+	for n: Node in get_tree().get_nodes_in_group(&"ink_drop"):
+		var d: InkDrop = n as InkDrop
+		total += d.value()
+		if d.collected:
+			got += d.value()
 	_ink_label.text = "%d / %d" % [got, total]
 	if pop:
 		_idle = 0.0

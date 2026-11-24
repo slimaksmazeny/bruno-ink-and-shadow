@@ -758,3 +758,11 @@ Necommituj — commit udělám já po otestování.
 - **Nepřátelé** (`world/enemies/`): `Guard` – vlastní `move_and_slide` (pravidlo „jen player.gd“ platí pro hráče). Vnímání = kužel + paprsek na vrstvu world, rozmazaná detekce `suspicion` 0..1. Zásah holí přes skupinu `hittable`.
 - **UI:** `Hud` (CanvasLayer v levelu), `PauseMenu` (autoload, `get_tree().paused`), `MainMenu` (hlavní scéna), `SettingsPanel` sdílený. Texty jsou překladové klíče → Godot je překládá automaticky.
 - **Testy v režimu `--script`:** testovací skript nesmí používat typy `Player`/`Guard` (v tu chvíli ještě nejsou známé autoloady) – používat netypované proměnné.
+
+## Dodatek v0.2.3 — Sly parkour (Claude, 2026-11-24)
+
+- **`LineAnchor`** (`world/anchors/line_anchor.gd`) dědí z `Anchor`: úsečka `position → position + axis·length`, `closest_t()` / `point_at()`. Detektor kotev se nezměnil – volá `get_snap_position()`, které vrací nejbližší bod úsečky.
+- Nové stavy jen přidány do `ANCHOR_STATES`: PIPE → `Climb`, LEDGE → `LedgeHang`, ROPE → `RopeWalk`. Jádro hráče se neměnilo (splněno kritérium W2-09).
+- `Anchor` je nově `@tool`, aby kotvy byly vidět v editoru (animace jen ve hře).
+- **Vítr:** `WindColumn` nastavuje `Player.wind_lift` každý fyzikální snímek; `Glide` s ním stoupá, ostatní stavy jen brzdí pád. Player hodnotu po snímku nuluje.
+- **Zlaté kapky:** `InkDrop.golden` (hodnota 5); HUD sčítá `value()` všech kapek.

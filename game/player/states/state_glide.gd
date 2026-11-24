@@ -19,9 +19,13 @@ func physics_update(delta: float) -> void:
 		machine.transition_to(&"Air", {"keep_jumps": true})
 		return
 	var p: MovementProfile = player.profile
-	# Plynule zbrzdit pád na rychlost plachtění.
-	player.velocity.y = move_toward(player.velocity.y, -p.glide_fall_speed, p.gravity * 2.0 * delta)
-	if player.velocity.y > -p.glide_fall_speed:
+	if player.wind_lift > 0.0:
+		# Stoupavý vítr (WindColumn) – uši fungují jako plachta a Bruno stoupá.
+		player.velocity.y = move_toward(player.velocity.y, player.wind_lift, p.gravity * 1.2 * delta)
+	else:
+		# Plynule zbrzdit pád na rychlost plachtění.
+		player.velocity.y = move_toward(player.velocity.y, -p.glide_fall_speed, p.gravity * 2.0 * delta)
+	if player.velocity.y > -p.glide_fall_speed and player.wind_lift <= 0.0:
 		player.velocity.y = maxf(player.velocity.y - p.gravity * 0.25 * delta, -p.glide_fall_speed)
 	air_control(delta, carried_speed)
 	carried_speed = move_toward(carried_speed, p.glide_air_speed, 2.0 * delta)

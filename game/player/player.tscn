@@ -13,6 +13,9 @@
 [ext_resource type="Script" path="res://player/states/state_air.gd" id="11_rptt4"]
 [ext_resource type="Script" path="res://player/states/state_glide.gd" id="12_r7pn3"]
 [ext_resource type="Script" path="res://player/states/state_perch.gd" id="13_b8hi5"]
+[ext_resource type="Script" path="res://player/states/state_climb.gd" id="40_climb"]
+[ext_resource type="Script" path="res://player/states/state_ledge_hang.gd" id="41_ledge"]
+[ext_resource type="Script" path="res://player/states/state_rope_walk.gd" id="42_rope"]
 [ext_resource type="Script" path="res://player/states/state_swing.gd" id="14_2uvqg"]
 [ext_resource type="Script" path="res://player/states/state_aim.gd" id="15_1s1yo"]
 [ext_resource type="Script" path="res://player/states/state_attack.gd" id="16_5ejfk"]
@@ -342,3 +345,12 @@ script = ExtResource("17_jd2rm")
 
 [node name="Locked" type="Node" parent="StateMachine" unique_id=91971566]
 script = ExtResource("18_q28gw")
+
+[node name="Climb" type="Node" parent="StateMachine"]
+script = ExtResource("40_climb")
+
+[node name="LedgeHang" type="Node" parent="StateMachine"]
+script = ExtResource("41_ledge")
+
+[node name="RopeWalk" type="Node" parent="StateMachine"]
+script = ExtResource("42_rope")

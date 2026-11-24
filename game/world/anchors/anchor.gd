@@ -1,5 +1,6 @@
 ## Kotva = místo, na které se Bruno umí „přicvaknout“ tlačítkem akce (modré jiskry ve stylu Sly).
-## v0.2.0 používá jen typ SPIRE (špička / komín). v0.2.1 přidá další typy – jen nové stavy, jádro se nemění.
+## SPIRE = bod (špička). PIPE / LEDGE / ROPE = úsečka – viz LineAnchor (v0.2.3).
+@tool
 class_name Anchor
 extends Area3D
 
@@ -37,7 +38,7 @@ func set_highlighted(on: bool) -> void:
 
 
 func _process(delta: float) -> void:
-	if _sparkles == null:
+	if _sparkles == null or Engine.is_editor_hint():
 		return
 	_time += delta
 	var speed: float = 3.0 if _highlighted else 1.2
