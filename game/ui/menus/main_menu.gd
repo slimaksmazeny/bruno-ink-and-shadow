@@ -104,6 +104,7 @@ const CHAPTERS: Array[Dictionary] = [
 	{"id": "greybox", "title": "CHAPTER_1", "scene": FIRST_LEVEL},
 	{"id": "canyon", "title": "CHAPTER_2", "scene": "res://levels/ch2_canyon/canyon.tscn"},
 	{"id": "ch3", "title": "CHAPTER_3", "scene": ""},
+	{"id": "gym", "title": "CHAPTER_GYM", "scene": "res://levels/test/gym.tscn"},
 ]
 
 var _chapters_box: VBoxContainer

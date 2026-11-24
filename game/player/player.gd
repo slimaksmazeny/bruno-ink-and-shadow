@@ -38,6 +38,10 @@ var _dying: bool = false
 var wind_lift: float = 0.0
 ## Během úhybu (kotoulu) je Bruno nezranitelný.
 var dodging: bool = false
+## Dev menu: létání skrz zdi (WASD, skok nahoru, plížení dolů).
+var fly_mode: bool = false
+## Kde Bruno začal level (dev menu → teleport na start).
+var level_start: Vector3
 
 var _spawn_transform: Transform3D
 
@@ -52,6 +56,7 @@ var _hit_stop_running: bool = false
 func _ready() -> void:
 	profile = profile_3d
 	add_to_group(&"player")
+	level_start = global_position
 	health = max_health
 	_spawn_transform = global_transform
 	anchor_detector.player = self
@@ -60,6 +65,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if fly_mode:
+		_fly(delta)
+		return
 	_update_timers(delta)
 	anchor_detector.refresh(PlayerState.ANCHOR_STATES.keys())
 	state_machine.physics_update(delta)
@@ -87,7 +95,8 @@ func _physics_process(delta: float) -> void:
 
 	if global_position.y < kill_y and not _dying:
 		# Pád do propasti stojí jeden život (2D plošinovky), pak návrat na checkpoint.
-		health -= 1
+		if not DevMenu.god_mode:
+			health -= 1
 		Events.player_health_changed.emit(health, max_health)
 		if health <= 0:
 			die()
@@ -182,7 +191,7 @@ func bounce(up_velocity: float) -> void:
 ## Zásah (strážný, nebezpečná oblast). from = odkud rána přišla (pro odhození).
 ## Vrací true, pokud zásah prošel (Bruno nebyl chráněný).
 func take_damage(amount: int, from: Vector3) -> bool:
-	if _invulnerable > 0.0 or _dying or health <= 0 or dodging:
+	if _invulnerable > 0.0 or _dying or health <= 0 or dodging or DevMenu.god_mode:
 		return false
 	health = maxi(health - amount, 0)
 	_invulnerable = invulnerable_time
@@ -215,6 +224,29 @@ func has_low_ceiling(at: Vector3) -> bool:
 func set_low_collision(on: bool) -> void:
 	($CollisionStand as CollisionShape3D).disabled = on
 	($CollisionLow as CollisionShape3D).disabled = not on
+
+
+func set_fly_mode(on: bool) -> void:
+	fly_mode = on
+	($CollisionStand as CollisionShape3D).disabled = on
+	($CollisionLow as CollisionShape3D).disabled = true
+	velocity = Vector3.ZERO
+	if not on:
+		state_machine.transition_to(&"Air", {"force": true})
+
+
+func _fly(delta: float) -> void:
+	var dir: Vector3 = get_move_dir()
+	var up: float = 0.0
+	if Input.is_action_pressed(&"jump"):
+		up += 1.0
+	if Input.is_action_pressed(&"sneak"):
+		up -= 1.0
+	var speed: float = 16.0 if Input.is_action_pressed(&"sprint") else 8.0
+	global_position += (dir + Vector3.UP * up) * speed * delta
+	if dir.length() > 0.1:
+		visual.face_direction(dir)
+	visual.update_visual(delta, self)
 
 
 ## Těleso, na kterém Bruno stojí (nebo null).

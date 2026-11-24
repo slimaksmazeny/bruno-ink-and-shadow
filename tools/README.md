@@ -32,6 +32,7 @@ C:\Projekty\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script .
 | `test_step_r.gd` | v0.2.9: osa Y, FOV, citlivost, rekordy, kapitoly (9 kontrol) |
 | `test_ch2_canyon.gd` | kapitola 2 Kaňon: kapitola, lano přes řeku, celá loupež (12 kontrol) |
 | `test_step_t.gd` | v0.3.1 souboje: nápřah strážného, úhyb (5 kontrol) |
+| `test_dev_gym.gd` | tréninkové hřiště + dev menu (9 kontrol) |
 | `test_attack.gd` | kombo holí 1→2→3 (výpad, auto-cíl na figurínu), rozbití bedny, útok ve vzduchu jednou za skok, obnovení času po zastavení |
 | `test_step_e2_aim.gd` | míření (kamera, úkroky, výstřel, sprint potlačen), útok holí, přichycení jen ke kotvě, na kterou se díváš |
 

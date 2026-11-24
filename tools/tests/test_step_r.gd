@@ -49,7 +49,7 @@ func _physics_process(_d: float) -> bool:
 	elif stage == 1 and f == 14:
 		var box = current_scene._chapters_box
 		var n: int = box.get_child_count()
-		check("chapters_listed", n == 4, "children=%d" % n)
+		check("chapters_listed", n == 5, "children=%d" % n)
 		check("chapter1_playable", not box.get_child(0).disabled and box.get_child(0).text.contains("1:35"), box.get_child(0).text)
 		check("chapter2_playable", not box.get_child(1).disabled)
 		check("chapter3_locked", box.get_child(2).disabled)

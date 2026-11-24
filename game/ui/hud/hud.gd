@@ -21,6 +21,7 @@ var _alerted_guards: int = 0
 
 func _ready() -> void:
 	layer = 20
+	add_to_group(&"hud")
 	var root := Control.new()
 	root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE

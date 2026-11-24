@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Bruno: Ink & Shadow"
 config/description="3D stealth/parkour + 2D platformer hybrid."
-config/version="0.3.1"
+config/version="0.3.2"
 run/main_scene="res://ui/menus/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
@@ -29,6 +29,7 @@ DebugOverlay="*res://ui/debug/debug_overlay.tscn"
 TouchControls="*res://ui/touch_controls/touch_controls.tscn"
 InkWipe="*res://ui/transitions/ink_wipe.tscn"
 PauseMenu="*res://ui/menus/pause_menu.gd"
+DevMenu="*res://ui/menus/dev_menu.gd"
 
 [debug]
 

@@ -10,7 +10,7 @@ HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
 HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
 HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
 HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
-GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.3.1)","Bruno: Ink & Shadow — test street (v0.3.1)"
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.3.2)","Bruno: Ink & Shadow — test street (v0.3.2)"
 GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
 GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc / Start = pauza","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc / Start = pause"
 GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog
@@ -76,3 +76,4 @@ CHAPTER_SOON,brzy,soon
 RESULTS_RECORD,nový rekord!,new record!
 RESULTS_BEST,Nejlepší čas,Best time
 CH2_SIGN_START,"Kaňon: klíč od důlního trezoru má strážný u řeky. Trezor je v boudě na konci tábora.","Canyon: the guard by the river has the mine vault key. The vault is in the shack at the end of the camp."
+CHAPTER_GYM,T · Tréninkové hřiště (test),T · Training gym (test)
