@@ -48,6 +48,11 @@ func _ready() -> void:
 	_set_coins(GameState.get_coins(), false)
 	Events.coins_changed.connect(func(total: int) -> void: _set_coins(total, true))
 
+	var radar := Radar.new()
+	radar.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	radar.position = Vector2(-215, -330)
+	root.add_child(radar)
+
 	_objective = _make_label(24)
 	_objective.position = Vector2(28, 74)
 	_objective.add_theme_color_override("font_color", Color(0.85, 0.9, 1.0))

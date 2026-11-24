@@ -29,6 +29,25 @@ func objective_key() -> String:
 	return STEP_KEYS[step]
 
 
+## Kde je aktuální cíl (pro radar), nebo null.
+func objective_position() -> Variant:
+	match step:
+		Step.STEAL_KEY:
+			for n: Node in get_tree().get_nodes_in_group(&"guard"):
+				var g: Guard = n as Guard
+				if g != null and g.carries_key == key_id:
+					return g.global_position
+		Step.OPEN_VAULT, Step.TAKE_TREASURE:
+			var v: Node3D = get_tree().get_first_node_in_group(&"vault") as Node3D
+			if v != null:
+				return v.global_position
+		Step.ESCAPE:
+			for n: Node in get_tree().get_nodes_in_group(&"interactable"):
+				if n is Getaway:
+					return (n as Node3D).global_position
+	return null
+
+
 func elapsed_sec() -> float:
 	return float(Time.get_ticks_msec() - _start_ms) / 1000.0
 
