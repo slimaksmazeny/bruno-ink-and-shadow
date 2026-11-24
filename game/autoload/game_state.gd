@@ -29,6 +29,18 @@ func is_collected(chapter_id: String, category: String, collectible_id: String) 
 	return list.has(collectible_id)
 
 
+## Mince (z kapsářství). Ukládají se do progress.coins.
+func get_coins() -> int:
+	return int(data.get("progress", {}).get("coins", 0))
+
+
+func add_coins(amount: int) -> void:
+	if not data.has("progress"):
+		data["progress"] = {}
+	data["progress"]["coins"] = get_coins() + amount
+	Events.coins_changed.emit(get_coins())
+
+
 func mark_collected(chapter_id: String, category: String, collectible_id: String) -> void:
 	var chapter: Dictionary = _chapter(chapter_id)
 	var list: Array = chapter.get(category, [])

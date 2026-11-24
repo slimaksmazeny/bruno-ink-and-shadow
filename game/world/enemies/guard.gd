@@ -46,6 +46,12 @@ enum State { PATROL, SUSPICIOUS, ALERT, SEARCH, STUNNED, KNOCKED_OUT }
 @export var attack_cooldown: float = 1.1
 @export var stun_time: float = 1.6
 
+@export_group("Kapsářství")
+## Kolik mincí má strážný u pasu (0 = nic).
+@export var loot: int = 25
+## Jak blízko za zády musí Bruno být.
+@export var pickpocket_range: float = 1.7
+
 var state: State = State.PATROL
 var suspicion: float = 0.0
 var health: int = 3
@@ -63,6 +69,8 @@ var _cone: MeshInstance3D
 var _cone_mat: StandardMaterial3D
 var _label: Label3D
 var _meter: MeshInstance3D
+var _bag: MeshInstance3D
+var _hint: Label3D
 
 
 func _ready() -> void:
@@ -119,6 +127,36 @@ func _physics_process(delta: float) -> void:
 		velocity.y = -0.5
 	move_and_slide()
 	_update_visuals()
+	_update_pickpocket_hint()
+
+
+## Bruno je zezadu blízko, strážný nic netuší a má co ukrást?
+func can_be_pickpocketed_by(p: Player) -> bool:
+	if loot <= 0 or not (state == State.PATROL or state == State.SUSPICIOUS) or p == null:
+		return false
+	var to: Vector3 = p.global_position - global_position
+	to.y = 0.0
+	if to.length() > pickpocket_range:
+		return false
+	# Za zády = Bruno je v opačném směru, než se strážný dívá.
+	return to.normalized().dot(_forward()) < -0.2
+
+
+func pickpocket(p: Player) -> void:
+	var amount: int = loot
+	loot = 0
+	_bag.visible = false
+	_hint.visible = false
+	GameState.add_coins(amount)
+	AudioManager.play(&"pickup", 0.0, 0.75, 0.0)
+	AudioManager.play(&"pickup", -4.0, 1.25, 0.0)
+	p.visual.play_swing(0.2)
+
+
+func _update_pickpocket_hint() -> void:
+	if _hint == null:
+		return
+	_hint.visible = _player != null and can_be_pickpocketed_by(_player)
 
 
 # --- Vnímání ---------------------------------------------------------------
@@ -409,6 +447,33 @@ func _build() -> void:
 	_label.no_depth_test = true
 	_label.set_meta(&"generated", true)
 	add_child(_label)
+
+	_bag = MeshInstance3D.new()
+	var bag_mesh := SphereMesh.new()
+	bag_mesh.radius = 0.16
+	bag_mesh.height = 0.3
+	_bag.mesh = bag_mesh
+	var bag_mat := StandardMaterial3D.new()
+	bag_mat.albedo_color = Color(0.85, 0.65, 0.2)
+	bag_mat.emission_enabled = true
+	bag_mat.emission = Color(0.6, 0.45, 0.1)
+	bag_mat.emission_energy_multiplier = 0.4
+	_bag.material_override = bag_mat
+	_bag.position = Vector3(0.3, 0.85, 0.35)
+	_bag.set_meta(&"generated", true)
+	add_child(_bag)
+
+	_hint = Label3D.new()
+	_hint.text = "E / ○  ¤"
+	_hint.position = Vector3(0, 1.4, 0.7)
+	_hint.font_size = 56
+	_hint.outline_size = 12
+	_hint.modulate = Color(1, 0.85, 0.3)
+	_hint.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	_hint.no_depth_test = true
+	_hint.visible = false
+	_hint.set_meta(&"generated", true)
+	add_child(_hint)
 
 	_meter = MeshInstance3D.new()
 	var bm := BoxMesh.new()

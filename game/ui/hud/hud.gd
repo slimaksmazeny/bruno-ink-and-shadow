@@ -8,6 +8,7 @@ const FADE_AFTER: float = 3.0
 var _health: HealthPips
 var _ink_label: Label
 var _ink_box: Control
+var _coin_label: Label
 var _toast: Label
 var _alert: Label
 var _idle: float = 0.0
@@ -35,6 +36,14 @@ func _ready() -> void:
 	_ink_box.add_child(icon)
 	_ink_label = _make_label(34)
 	_ink_box.add_child(_ink_label)
+
+	_coin_label = _make_label(28)
+	_coin_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_coin_label.position = Vector2(-200, 74)
+	_coin_label.add_theme_color_override("font_color", Color(1, 0.82, 0.3))
+	root.add_child(_coin_label)
+	_set_coins(GameState.get_coins(), false)
+	Events.coins_changed.connect(func(total: int) -> void: _set_coins(total, true))
 
 	_toast = _make_label(40)
 	_toast.set_anchors_preset(Control.PRESET_CENTER_TOP)
@@ -121,6 +130,13 @@ func _make_label(size: int) -> Label:
 	l.add_theme_constant_override("outline_size", 10)
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return l
+
+
+func _set_coins(total: int, pop: bool) -> void:
+	_coin_label.text = "¤ %d" % total
+	_coin_label.visible = total > 0
+	if pop:
+		show_toast(tr("HUD_PICKPOCKET"))
 
 
 ## Životy jako „kosti“ (zatím kroužky). Ztracený život je prázdný obrys.

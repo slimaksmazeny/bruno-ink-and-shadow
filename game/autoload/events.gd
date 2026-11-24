@@ -38,3 +38,7 @@ signal checkpoint_reached(checkpoint_id: String)
 ## Strážný zpozoroval hráče (alert = true) / ztratil ho (false).
 @warning_ignore("unused_signal")
 signal guard_alert_changed(alerted: bool)
+
+## Počet mincí se změnil (kapsářství).
+@warning_ignore("unused_signal")
+signal coins_changed(total: int)

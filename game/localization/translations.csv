@@ -39,6 +39,7 @@ UI_SETTINGS_TOUCH,Dotykové ovládání,Touch controls
 HUD_CHECKPOINT,Checkpoint!,Checkpoint!
 HUD_OUCH,Au! Zpátky na checkpoint…,Ouch! Back to the checkpoint…
 HUD_ALERT,! Stráž tě vidí – uteč nebo se schovej !,! A guard sees you – run or hide !
-GB_SIGN_GUARD,"Strážný: plíž se (Ctrl / L3) za ním a praští holí zezadu = knockout","Guard: sneak (Ctrl / L3) behind him and hit with the cane from behind = knockout"
+GB_SIGN_GUARD,"Strážný: připlíž se (Ctrl / L3) zezadu – E / ○ = ukrást mince, hůl = knockout","Guard: sneak (Ctrl / L3) up behind him – E / ○ = pickpocket, cane = knockout"
 GB_SIGN_HAZARD,"Pozor, žíravý inkoust!","Careful, corrosive ink!"
 GB_SIGN_PARKOUR,"Parkour: E / ○ u modrých jisker – trubka nahoru, lano na sloup, římsa vpravo (z bedny)","Parkour: E / ○ at blue sparkles – pipe up, rope to the pillar, ledge on the right (from the crate)"
+HUD_PICKPOCKET,Ukradeno! ¤,Pickpocketed! ¤

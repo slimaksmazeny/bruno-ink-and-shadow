@@ -14,6 +14,8 @@ func handle_common(_delta: float) -> bool:
 	if Input.is_action_just_pressed(&"action"):
 		if try_enter_anchor():
 			return true
+		if _try_pickpocket():
+			return false
 		# Na dotyku je hůl jedno tlačítko: kotva v dosahu = přichycení, jinak útok.
 		if InputManager.touch_controls_visible:
 			machine.transition_to(&"Attack", {"combo": 1})
@@ -57,3 +59,13 @@ static func pick_ground_state(p: Player) -> StringName:
 	if Input.is_action_pressed(&"sprint"):
 		return &"Sprint"
 	return &"Move"
+
+
+## Kapsářství: zezadu u nic netušícího strážného akce = ukrást váček mincí.
+func _try_pickpocket() -> bool:
+	for n: Node in player.get_tree().get_nodes_in_group(&"guard"):
+		var g: Guard = n as Guard
+		if g != null and g.can_be_pickpocketed_by(player):
+			g.pickpocket(player)
+			return true
+	return false
