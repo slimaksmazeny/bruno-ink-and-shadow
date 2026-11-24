@@ -27,6 +27,7 @@ var _sprint_base: Vector3
 var _legs: Array[Node3D] = []
 var _leg_base: Array[Vector3] = []
 var _tails: Array[Node3D] = []
+var _last_step_half: int = 0
 
 
 func _ready() -> void:
@@ -185,6 +186,7 @@ func _animate_life(delta: float, player: Player, speed: float) -> void:
 	_phase += delta * (2.0 + speed * 2.6) if grounded else delta * 2.0
 	var moving: float = clampf(speed / 4.0, 0.0, 1.0) if grounded else 0.0
 	# Krok / cval: pohupování těla.
+	_footsteps(player, moving)
 	var bob: float = absf(sin(_phase)) * 0.06 * moving
 	var breathe: float = sin(Time.get_ticks_msec() * 0.003) * 0.008 * (1.0 - moving)
 	_stand.position = _stand_base + Vector3(0, bob + breathe, 0)
@@ -211,3 +213,19 @@ func _animate_life(delta: float, player: Player, speed: float) -> void:
 		var hinge_r: Node3D = _ears.get_node("EarHingeR") as Node3D
 		hinge_l.rotation_degrees.x = lerpf(hinge_l.rotation_degrees.x, flop - air, 1.0 - exp(-12.0 * delta))
 		hinge_r.rotation_degrees.x = lerpf(hinge_r.rotation_degrees.x, -flop - air, 1.0 - exp(-12.0 * delta))
+
+
+## Krok při každém „dopadu“ fáze chůze. Plížení = skoro neslyšně, sprint = hlasitě
+## a hluk, který uslyší strážní v okolí (Events.noise_made).
+func _footsteps(player: Player, moving: float) -> void:
+	var half: int = int(floor(_phase / PI))
+	if half == _last_step_half:
+		return
+	_last_step_half = half
+	if moving < 0.15 or not player.is_on_floor():
+		return
+	var sprinting: bool = posture == Posture.SPRINT and not player.is_sneaking
+	var vol: float = -26.0 if player.is_sneaking else (-8.0 if sprinting else -16.0)
+	AudioManager.play(&"step", vol, 1.0 if sprinting else 1.15, 0.12)
+	if sprinting:
+		Events.noise_made.emit(player.global_position, 5.0)

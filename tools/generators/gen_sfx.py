@@ -49,4 +49,5 @@ x = lowpass(noise(0.6), 0.05) + 0.4*sweep(90, 60, 0.6); save("gate", x*env(len(x
 x = sweep(200, 900, 0.5) * np.exp(-t(0.5)*2) + 0.3*lowpass(noise(0.5),0.1); save("portal", x*env(len(x), a=0.02, r=0.2), 0.5)
 x = np.concatenate([tone(392,0.12),tone(330,0.12),tone(262,0.3)]); save("death", x*env(len(x), r=0.25), 0.5)
 x = lowpass(noise(0.35), 0.15) * np.sin(np.linspace(0,np.pi,int(SR*0.35)))**2; save("glide", x, 0.35)
+x = lowpass(noise(0.05), 0.35) * np.exp(-t(0.05)*60) + 0.3*sweep(220, 120, 0.05)*np.exp(-t(0.05)*50); save("step", x, 0.45)
 print("ok", sorted(os.listdir(out)))
