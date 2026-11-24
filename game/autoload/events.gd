@@ -42,3 +42,11 @@ signal guard_alert_changed(alerted: bool)
 ## Počet mincí se změnil (kapsářství).
 @warning_ignore("unused_signal")
 signal coins_changed(total: int)
+
+## Hluk ve světě (dopad tenisáku…). Strážní v dosahu se jdou podívat.
+@warning_ignore("unused_signal")
+signal noise_made(position: Vector3, radius: float)
+
+## Strážný spustil poplach a volá posily (ostatní strážní v okolí přijdou hledat).
+@warning_ignore("unused_signal")
+signal guard_called_help(caller: Node, position: Vector3)

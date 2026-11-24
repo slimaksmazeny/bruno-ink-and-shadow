@@ -4,6 +4,8 @@ class_name TennisBall
 extends RigidBody3D
 
 @export var lifetime: float = 6.0
+## Jak daleko strážní uslyší dopad míčku.
+const NOISE_RADIUS: float = 10.0
 
 var _age: float = 0.0
 
@@ -38,5 +40,8 @@ func _on_body_entered(body: Node) -> void:
 			target = target.get_parent()
 		if target != null and target.is_in_group(&"hittable") and target.has_method("on_cane_hit"):
 			target.call("on_cane_hit", {"damage": 1, "knockback": 3.0, "combo": 1, "dir": linear_velocity.normalized(), "from": global_position})
+	# První dopad udělá hluk – strážní v okolí se jdou podívat (odlákání).
+	if gravity_scale < 1.0:
+		Events.noise_made.emit(global_position, NOISE_RADIUS)
 	# Po prvním odrazu už „normální“ gravitace – míček se skutálí na zem.
 	gravity_scale = 1.0

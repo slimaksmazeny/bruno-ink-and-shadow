@@ -39,6 +39,8 @@ enum State { PATROL, SUSPICIOUS, ALERT, SEARCH, STUNNED, KNOCKED_OUT }
 ## Sekundy plného podezření potřebné k poplachu (zblízka rychleji).
 @export var detect_time: float = 0.9
 @export var lose_time: float = 3.0
+## Na jakou vzdálenost slyší volání kolegy o pomoc.
+@export var help_radius: float = 18.0
 
 @export_group("Boj")
 @export var max_health: int = 3
@@ -63,6 +65,8 @@ var _timer: float = 0.0
 var _attack_cd: float = 0.0
 var _last_seen: Vector3
 var _player: Player
+## Při hledání jít na místo (false = místo je jinde výš/níž – jen se otočit a dívat).
+var _search_walk: bool = true
 
 var _body: Node3D
 var _cone: MeshInstance3D
@@ -84,6 +88,8 @@ func _ready() -> void:
 	health = max_health
 	_origin = global_position
 	_last_seen = global_position
+	Events.noise_made.connect(_on_noise)
+	Events.guard_called_help.connect(_on_help)
 
 
 func _physics_process(delta: float) -> void:
@@ -106,7 +112,11 @@ func _physics_process(delta: float) -> void:
 			_alert(delta, sees)
 		State.SEARCH:
 			_timer -= delta
-			_move_towards(_last_seen, patrol_speed * 1.3, delta)
+			if _search_walk:
+				_move_towards(_last_seen, patrol_speed * 1.3, delta)
+			else:
+				_stop(delta)
+				_face(_last_seen, delta, 4.0)
 			if sees:
 				_set_state(State.ALERT)
 			elif _timer <= 0.0:
@@ -285,13 +295,40 @@ func _set_state(s: State) -> void:
 			_timer = lose_time
 			AudioManager.play_at(&"alert", global_position)
 			Events.guard_alert_changed.emit(true)
+			Events.guard_called_help.emit(self, _last_seen)
 		State.SEARCH:
 			_timer = 4.0
 			suspicion = 0.5
+			_search_walk = absf(_last_seen.y - global_position.y) < 2.0
 		State.PATROL:
 			suspicion = 0.0
 	if was_alert and s != State.ALERT:
 		Events.guard_alert_changed.emit(false)
+
+
+# --- Hluk a posily ---------------------------------------------------------
+
+## Jít se podívat na místo (hluk, volání kolegy). Jen když strážný ještě nehoní Bruna.
+func investigate(pos: Vector3) -> void:
+	if state == State.ALERT or state == State.STUNNED or state == State.KNOCKED_OUT:
+		return
+	_last_seen = pos
+	_search_walk = absf(pos.y - global_position.y) < 2.0
+	if state != State.SEARCH:
+		AudioManager.play_at(&"suspicious", global_position)
+	state = State.SEARCH
+	_timer = 6.0
+	suspicion = maxf(suspicion, 0.5)
+
+
+func _on_noise(pos: Vector3, radius: float) -> void:
+	if global_position.distance_to(pos) <= radius:
+		investigate(pos)
+
+
+func _on_help(caller: Node, pos: Vector3) -> void:
+	if caller != self and global_position.distance_to((caller as Node3D).global_position) <= help_radius:
+		investigate(pos)
 
 
 # --- Zásah holí ------------------------------------------------------------
