@@ -29,6 +29,11 @@ func _ready() -> void:
 	var lang := UiStyle.make_button("UI_SETTINGS_LANGUAGE_BUTTON")
 	lang.pressed.connect(Settings.cycle_locale)
 	box.add_child(lang)
+	var comic := CheckButton.new()
+	comic.text = "UI_SETTINGS_COMIC"
+	comic.button_pressed = Settings.comic_shading
+	comic.toggled.connect(Settings.set_comic_shading)
+	box.add_child(comic)
 	var touch := CheckButton.new()
 	touch.text = "UI_SETTINGS_TOUCH"
 	touch.button_pressed = InputManager.touch_controls_visible
