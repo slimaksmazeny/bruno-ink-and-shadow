@@ -24,6 +24,8 @@ func _process(_delta: float) -> void:
 
 
 func _draw() -> void:
+	if _player == null or not is_instance_valid(_player):
+		return
 	var c: Vector2 = size * 0.5
 	var r: float = minf(size.x, size.y) * 0.5 - 4.0
 	draw_circle(c, r + 3.0, Color(0.95, 0.71, 0.2, 0.8))
