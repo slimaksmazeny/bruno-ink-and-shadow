@@ -22,6 +22,7 @@ func _initialize() -> void:
 	_geometry()
 	_actors()
 	_content()
+	_painting()
 	var packed := PackedScene.new()
 	var err: Error = packed.pack(lvl)
 	if err == OK:
@@ -249,6 +250,115 @@ func _content() -> void:
 	_drop(c, Vector3(30, 0.8, 12))
 	_drop(c, Vector3(44.5, 5.0, -4.5))
 	_sign(c, "SignStart", "CH3_SIGN_START", Vector3(6, 2.6, -3))
+
+
+## 2D „Cirkusový plakát“: vstup přes plakátovou tabuli u severního plotu (x 30).
+## Dráha x 396–472: řada kruhů nad propastí, kaňky, vítr na vysokou plošinu,
+## žebřík průchozích plošin, rozpadající se most, výstup.
+func _painting() -> void:
+	var g: Node3D = _group("Painting")
+	_box(g, "PosterBoard", Vector3(30, 2.6, -14.6), Vector3(7, 5.2, 0.6), _wood)
+	var canvas := MeshInstance3D.new()
+	canvas.name = "PosterCanvas"
+	var qm := QuadMesh.new()
+	qm.size = Vector2(6.2, 4.4)
+	canvas.mesh = qm
+	var cm := StandardMaterial3D.new()
+	cm.albedo_color = Color(0.95, 0.35, 0.3)
+	cm.emission_enabled = true
+	cm.emission = Color(1, 0.45, 0.3)
+	cm.emission_energy_multiplier = 0.5
+	canvas.material_override = cm
+	canvas.position = Vector3(30, 2.6, -14.28)
+	_add(g, canvas)
+	var lane := Marker3D.new()
+	lane.name = "LaneStart"
+	lane.position = Vector3(399, 0.05, 0)
+	_add(g, lane)
+	var portal: Node3D = (load("res://world/portals/painting_portal.tscn") as PackedScene).instantiate() as Node3D
+	portal.name = "PaintingPortal"
+	portal.position = Vector3(30, 0, -13.4)
+	_add(g, portal)
+	portal.set("lane_start", lane)
+	_sign(g, "SignPoster", "CH3_SIGN_POSTER", Vector3(30, 6.0, -13.8))
+
+	var paper := StandardMaterial3D.new()
+	paper.albedo_color = Color(0.95, 0.85, 0.65)
+	var w: Node3D = _group("PaintingWorld")
+	_box(w, "P_FloorA", Vector3(403, -5, 0), Vector3(14, 10, 4), paper)       # 396–410
+	_box(w, "P_WallStart", Vector3(395.5, 3, 0), Vector3(1, 6, 4), paper)
+	for i: int in 3:
+		var r := Area3D.new()
+		r.name = "P_Ring%d" % i
+		r.set_script(load("res://world/anchors/ring_anchor.gd"))
+		r.position = Vector3(413.5 + i * 5.0, 4.6, 0)
+		_add(w, r)
+		_drop(w, Vector3(413.5 + i * 5.0, 2.4, 0))
+	_box(w, "P_FloorB", Vector3(434, -5, 0), Vector3(12, 10, 4), paper)       # 428–440
+	for x: float in [431.0, 437.0]:
+		var blob := CharacterBody3D.new()
+		blob.name = "P_Blob"
+		blob.set_script(load("res://world/enemies/ink_blob.gd"))
+		blob.set("patrol_half_width", 2.0)
+		blob.position = Vector3(x, 0.05, 0)
+		_add(w, blob)
+	_area(w, "P_Wind", "res://world/platforms_2d/wind_column.gd", Vector3(443, -10, 0), {"size": Vector3(2.5, 20, 4)})
+	_box(w, "P_HighDeck", Vector3(451, 1, 0), Vector3(10, 10, 4), paper)      # 446–456, vrch 6
+	for i: int in 3:
+		var ow := AnimatableBody3D.new()
+		ow.name = "P_Ladder%d" % i
+		ow.set_script(load("res://world/platforms_2d/one_way_platform.gd"))
+		ow.set("size", Vector3(2.4, 0.3, 4))
+		ow.position = Vector3(450 + (i % 2) * 2.5, 8.4 + i * 2.2, 0)
+		_add(w, ow)
+	var jar := StaticBody3D.new()
+	jar.name = "P_Jar"
+	jar.set_script(load("res://world/gameplay/firefly_jar.gd"))
+	jar.set("jar_id", "jar_carnival_poster")
+	jar.position = Vector3(450, 13.0, 0)
+	_add(w, jar)
+	for i: int in 3:
+		var cr := AnimatableBody3D.new()
+		cr.name = "P_Crumble%d" % i
+		cr.set_script(load("res://world/platforms_2d/crumbling_platform.gd"))
+		cr.set("size", Vector3(1.4, 0.35, 4))
+		cr.position = Vector3(457.3 + i * 2.0, 5.9, 0)
+		_add(w, cr)
+	_box(w, "P_EndDeck", Vector3(467, 1, 0), Vector3(10, 10, 4), paper)       # 462–472, vrch 6
+	var exitp: Node3D = (load("res://world/portals/exit_portal.tscn") as PackedScene).instantiate() as Node3D
+	exitp.name = "ExitPortal"
+	exitp.position = Vector3(469.5, 6, 0)
+	_add(w, exitp)
+	exitp.set("entry_portal", portal)
+	for x: float in [400.0, 402.0, 404.0, 432.0, 434.0, 436.0, 448.0, 458.3, 460.3]:
+		_drop(w, Vector3(x, 0.8 if x < 446.0 else 6.8, 0))
+	for y: float in [3.0, 6.0, 9.0]:
+		_drop(w, Vector3(443, y, 0))
+	_drop(w, Vector3(452.5, 15.0, 0), true)
+	var bd: Node3D = _group("Backdrop2D")
+	var sky := MeshInstance3D.new()
+	sky.name = "PaperSky"
+	var sq := QuadMesh.new()
+	sq.size = Vector2(600, 240)
+	sky.mesh = sq
+	var skm := StandardMaterial3D.new()
+	skm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	skm.albedo_color = Color(0.98, 0.9, 0.75)
+	sky.material_override = skm
+	sky.position = Vector3(434, 35, -120)
+	sky.layers = 2
+	_add(bd, sky)
+	for spec: Array in [["FarHills", 0, Vector3(434, 0, -60), 340.0, 18.0, Color(0.95, 0.72, 0.62), 31], ["MidTents", 2, Vector3(434, -2, -30), 220.0, 9.0, Color(0.88, 0.45, 0.4), 9], ["NearCrowd", 1, Vector3(434, -3.5, -14), 140.0, 4.0, Color(0.45, 0.22, 0.28), 13]]:
+		var m := MeshInstance3D.new()
+		m.name = spec[0]
+		m.set_script(load("res://world/platforms_2d/backdrop_layer.gd"))
+		m.set("style", spec[1])
+		m.set("width", spec[3])
+		m.set("height", spec[4])
+		m.set("color", spec[5])
+		m.set("shape_seed", spec[6])
+		m.position = spec[2]
+		_add(bd, m)
 
 
 func _guard(parent: Node, n: String, pos: Vector3, pts: PackedVector3Array, key: String, loot: int) -> void:
