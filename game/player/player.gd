@@ -36,6 +36,8 @@ var _was_on_floor: bool = true
 var _dying: bool = false
 ## Nastavuje WindColumn každý fyzikální snímek, kdy je Bruno uvnitř; Player ho po snímku vynuluje.
 var wind_lift: float = 0.0
+## Během úhybu (kotoulu) je Bruno nezranitelný.
+var dodging: bool = false
 
 var _spawn_transform: Transform3D
 
@@ -180,7 +182,7 @@ func bounce(up_velocity: float) -> void:
 ## Zásah (strážný, nebezpečná oblast). from = odkud rána přišla (pro odhození).
 ## Vrací true, pokud zásah prošel (Bruno nebyl chráněný).
 func take_damage(amount: int, from: Vector3) -> bool:
-	if _invulnerable > 0.0 or _dying or health <= 0:
+	if _invulnerable > 0.0 or _dying or health <= 0 or dodging:
 		return false
 	health = maxi(health - amount, 0)
 	_invulnerable = invulnerable_time

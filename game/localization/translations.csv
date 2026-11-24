@@ -10,11 +10,11 @@ HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
 HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
 HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
 HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
-GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.3.0)","Bruno: Ink & Shadow — test street (v0.3.0)"
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.3.1)","Bruno: Ink & Shadow — test street (v0.3.1)"
 GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
 GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc / Start = pauza","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc / Start = pause"
 GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog
-GB_HINT_CONTROLS,"WASD / levá páčka = pohyb · myš / pravá páčka = kamera · Mezerník / ✕ = skok (znovu = dvojskok, držet při pádu = ušní vrtulník) · Shift / R1 / R2 = sprint · Ctrl / L3 = plížení · levé tl. myši / □ = útok holí · E / prostř. tl. myši / ○ = přichytit se (kam se díváš) · pravé tl. myši / L2 = mířit + levé tl. / R2 = vystřelit tenisák · Q = rychlý odpal","WASD / left stick = move · mouse / right stick = camera · Space / A = jump (again = double jump, hold while falling = ear copter) · Shift / RB / RT = sprint · Ctrl / L3 = sneak · left mouse / X = cane attack · E / middle mouse / B = latch on (where you look) · right mouse / LT = aim + left mouse / RT = fire tennis ball · Q = quick shot"
+GB_HINT_CONTROLS,"WASD / levá páčka = pohyb · myš / pravá páčka = kamera · Mezerník / ✕ = skok (znovu = dvojskok, držet při pádu = ušní vrtulník) · Shift / R1 / R2 = sprint · Ctrl / L3 = plížení · levé tl. myši / □ = útok holí · E / prostř. tl. myši / ○ = přichytit se (kam se díváš) · pravé tl. myši / L2 = mířit + levé tl. / R2 = vystřelit tenisák · Q = rychlý odpal · C / L1 = úhyb","WASD / left stick = move · mouse / right stick = camera · Space / A = jump (again = double jump, hold while falling = ear copter) · Shift / RB / RT = sprint · Ctrl / L3 = sneak · left mouse / X = cane attack · E / middle mouse / B = latch on (where you look) · right mouse / LT = aim + left mouse / RT = fire tennis ball · Q = quick shot · C / L1 = dodge"
 GB_SIGN_JUMPS,"Skoky: 1 m · 1,5 m · 2,4 m (dvojskok)","Jumps: 1 m · 1.5 m · 2.4 m (double jump)"
 GB_SIGN_RAMP,Rampa nahoru,Ramp up
 GB_SIGN_GAP,"Propast 3,5 m: sprint nebo dvojskok","3.5 m gap: sprint or double jump"

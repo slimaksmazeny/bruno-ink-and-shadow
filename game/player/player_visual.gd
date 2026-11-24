@@ -28,6 +28,7 @@ var _legs: Array[Node3D] = []
 var _leg_base: Array[Vector3] = []
 var _tails: Array[Node3D] = []
 var _last_step_half: int = 0
+var _rolling: bool = false
 
 
 func _ready() -> void:
@@ -133,6 +134,17 @@ func play_air_attack(duration: float) -> void:
 
 
 ## Odkud tenisák vyletí (hrot hole ve výšce hrudníku).
+## Kotoul při úhybu: postava se jednou přetočí kolem boční osy.
+func play_roll(duration: float) -> void:
+	var tw: Tween = create_tween()
+	_rolling = true
+	_sprint.rotation.x = 0.0
+	tw.tween_property(_sprint, "rotation:x", -TAU, duration).set_trans(Tween.TRANS_SINE)
+	tw.tween_callback(func() -> void:
+		_sprint.rotation.x = 0.0
+		_rolling = false)
+
+
 func get_ball_spawn() -> Vector3:
 	return global_position + get_forward() * 0.7 + Vector3.UP * 0.9
 
@@ -192,7 +204,8 @@ func _animate_life(delta: float, player: Player, speed: float) -> void:
 	_stand.position = _stand_base + Vector3(0, bob + breathe, 0)
 	_stand.rotation.z = sin(_phase) * 0.05 * moving if not gliding else 0.0
 	_sprint.position = _sprint_base + Vector3(0, absf(sin(_phase)) * 0.08 * moving, 0)
-	_sprint.rotation.x = sin(_phase * 2.0) * 0.06 * moving
+	if not _rolling:
+		_sprint.rotation.x = sin(_phase * 2.0) * 0.06 * moving
 	for i: int in _legs.size():
 		var off: float = 0.0 if i < 2 else PI
 		var side: float = 0.0 if i % 2 == 0 else 0.35

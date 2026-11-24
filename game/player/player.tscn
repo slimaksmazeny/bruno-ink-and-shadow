@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://player/states/state_wall_sneak.gd" id="43_wall"]
 [ext_resource type="Script" path="res://player/states/state_hook_swing.gd" id="44_hook"]
 [ext_resource type="Script" path="res://player/states/state_crawl.gd" id="45_crawl"]
+[ext_resource type="Script" path="res://player/states/state_dodge.gd" id="46_dodge"]
 [ext_resource type="Script" path="res://player/states/state_swing.gd" id="14_2uvqg"]
 [ext_resource type="Script" path="res://player/states/state_aim.gd" id="15_1s1yo"]
 [ext_resource type="Script" path="res://player/states/state_attack.gd" id="16_5ejfk"]
@@ -366,3 +367,6 @@ script = ExtResource("44_hook")
 
 [node name="Crawl" type="Node" parent="StateMachine"]
 script = ExtResource("45_crawl")
+
+[node name="Dodge" type="Node" parent="StateMachine"]
+script = ExtResource("46_dodge")

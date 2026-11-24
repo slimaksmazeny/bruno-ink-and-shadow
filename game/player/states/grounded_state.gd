@@ -11,6 +11,9 @@ func enter(_previous: StringName, _msg: Dictionary = {}) -> void:
 
 ## Vrací true, pokud stav přepnul – volající stav pak už nic dalšího nedělá.
 func handle_common(_delta: float) -> bool:
+	if Input.is_action_just_pressed(&"dodge") and machine.has_state(&"Dodge") and preload("res://player/states/state_dodge.gd").can_dodge():
+		machine.transition_to(&"Dodge")
+		return true
 	if Input.is_action_just_pressed(&"action"):
 		if try_enter_anchor():
 			return true

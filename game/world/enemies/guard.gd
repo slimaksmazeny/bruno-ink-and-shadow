@@ -46,6 +46,8 @@ enum State { PATROL, SUSPICIOUS, ALERT, SEARCH, STUNNED, KNOCKED_OUT }
 @export var max_health: int = 3
 @export var attack_range: float = 1.3
 @export var attack_cooldown: float = 1.1
+## Nápřah před úderem (s): strážný se zakloní a zabliká „!“ – dá se uhnout (C / L1).
+@export var windup_time: float = 0.45
 @export var stun_time: float = 1.6
 
 @export_group("Kapsářství")
@@ -69,6 +71,7 @@ var _last_seen: Vector3
 var _player: Player
 ## Při hledání jít na místo (false = místo je jinde výš/níž – jen se otočit a dívat).
 var _search_walk: bool = true
+var _windup: float = -1.0
 
 var _body: Node3D
 var _cone: MeshInstance3D
@@ -254,10 +257,22 @@ func _alert(delta: float, sees: bool) -> void:
 	else:
 		_stop(delta)
 		_face(_player.global_position, delta, 10.0)
+	if _windup >= 0.0:
+		_windup += delta
+		_body.rotation.x = lerpf(0.0, -0.35, minf(_windup / windup_time, 1.0))
+		if _windup >= windup_time:
+			_windup = -1.0
+			_attack_cd = attack_cooldown
+			_swing()
+			# Úder trefí jen to, co je pořád před strážným a na dosah.
+			var to: Vector3 = _player.global_position - global_position
+			to.y = 0.0
+			if to.length() <= attack_range + 0.3 and _forward().dot(to.normalized()) > 0.35:
+				_player.take_damage(1, global_position)
+		return
 	if dist <= attack_range and _attack_cd <= 0.0 and sees:
-		_attack_cd = attack_cooldown
-		_swing()
-		_player.take_damage(1, global_position)
+		_windup = 0.0
+		AudioManager.play_at(&"suspicious", global_position, -2.0, 1.6)
 
 
 ## Vrací true, když dorazil.
@@ -345,6 +360,8 @@ func _on_help(caller: Node, pos: Vector3) -> void:
 func on_cane_hit(info: Dictionary) -> void:
 	if state == State.KNOCKED_OUT:
 		return
+	_windup = -1.0
+	_body.rotation.x = 0.0
 	var unaware: bool = state == State.PATROL or state == State.SUSPICIOUS
 	health -= max_health if unaware else int(info.get("damage", 1))
 	var dir: Vector3 = info.get("dir", -_forward())
@@ -411,6 +428,8 @@ func _update_visuals() -> void:
 		State.STUNNED: _label.text = "✶"
 		_: _label.text = ""
 	_label.modulate = Color(1, 0.2, 0.15) if state == State.ALERT else Color(1, 0.8, 0.2)
+	if _windup >= 0.0 and int(_windup * 16.0) % 2 == 0:
+		_label.modulate = Color(1, 1, 1) # nápřah – blikající „!“
 	_meter.visible = suspicion > 0.01 and state != State.ALERT
 	_meter.scale.x = maxf(suspicion, 0.01)
 
