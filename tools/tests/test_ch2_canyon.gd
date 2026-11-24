@@ -48,7 +48,7 @@ func _physics_process(_d: float) -> bool:
 			check("player_on_floor", p.is_on_floor() and absf(p.global_position.y) < 0.2, str(p.global_position))
 			check("camera_linked", p.camera != null and p.camera.target == p)
 			check("chapter_canyon", m.chapter_id == "canyon")
-			check("drops_26", get_nodes_in_group(&"ink_drop").size() == 26, str(get_nodes_in_group(&"ink_drop").size()))
+			check("drops_40", get_nodes_in_group(&"ink_drop").size() == 40, str(get_nodes_in_group(&"ink_drop").size()))
 			check("guards_3", get_nodes_in_group(&"guard").size() == 3)
 			# Kapka se uloží pod kapitolu canyon.
 			put(Vector3(5, 0.05, 0), Vector3.RIGHT)
