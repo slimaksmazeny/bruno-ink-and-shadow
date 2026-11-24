@@ -34,6 +34,8 @@ func _ready() -> void:
 		TouchButton.new(&"jump", "jump"),
 		TouchButton.new(&"sprint", "sprint"),
 		TouchButton.new(&"tennis", "tennis"),
+		TouchButton.new(&"sneak_toggle", "sneak"),
+		TouchButton.new(&"dodge", "dodge"),
 	]
 	pause_button = TouchButton.new(&"pause", "pause")
 	InputManager.touch_controls_toggled.connect(_on_toggled)
@@ -58,8 +60,12 @@ func _layout() -> void:
 	buttons[1].center = base + Vector2(gap, 0.0)              # skok
 	buttons[2].center = base + Vector2(0.0, gap)              # sprint
 	buttons[3].center = base + Vector2(gap, gap)              # tenisák
+	buttons[4].center = base + Vector2(-gap * 0.95, gap * 0.5)  # plížení (přepínač – i plazení)
 	for b: TouchButton in buttons:
 		b.radius = r
+	buttons[4].radius = r * 0.8
+	buttons[5].center = base + Vector2(-gap * 0.95, -gap * 0.5) # úhyb
+	buttons[5].radius = r * 0.8
 	pause_button.center = Vector2(size.x - r * 0.9, r * 0.9)
 	pause_button.radius = r * 0.55
 	joystick.radius = clampf(size.y * 0.11, 70.0, 150.0)

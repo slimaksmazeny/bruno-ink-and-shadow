@@ -10,14 +10,71 @@ HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
 HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
 HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
 HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
-GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.0, Krok E)","Bruno: Ink & Shadow — test street (v0.2.0, Step E)"
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.3.3)","Bruno: Ink & Shadow — test street (v0.3.3)"
 GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
-GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc = uvolnit myš","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc = release mouse"
+GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc / Start = pauza","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc / Start = pause"
 GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog
-GB_HINT_CONTROLS,"WASD / levá páčka = pohyb · myš / pravá páčka = kamera · Mezerník / ✕ = skok (znovu = dvojskok, držet při pádu = ušní vrtulník) · Shift / R1 / R2 = sprint · Ctrl / L3 = plížení · levé tl. myši / □ = útok holí · E / prostř. tl. myši / ○ = přichytit se (kam se díváš) · pravé tl. myši / L2 = mířit + levé tl. / R2 = vystřelit tenisák · Q = rychlý odpal","WASD / left stick = move · mouse / right stick = camera · Space / A = jump (again = double jump, hold while falling = ear copter) · Shift / RB / RT = sprint · Ctrl / L3 = sneak · left mouse / X = cane attack · E / middle mouse / B = latch on (where you look) · right mouse / LT = aim + left mouse / RT = fire tennis ball · Q = quick shot"
+GB_HINT_CONTROLS,"WASD / levá páčka = pohyb · myš / pravá páčka = kamera · Mezerník / ✕ = skok (znovu = dvojskok, držet při pádu = ušní vrtulník) · Shift / R1 / R2 = sprint · Ctrl / L3 = plížení · levé tl. myši / □ = útok holí · E / prostř. tl. myši / ○ = přichytit se (kam se díváš) · pravé tl. myši / L2 = mířit + levé tl. / R2 = vystřelit tenisák · Q = rychlý odpal · C / L1 = úhyb","WASD / left stick = move · mouse / right stick = camera · Space / A = jump (again = double jump, hold while falling = ear copter) · Shift / RB / RT = sprint · Ctrl / L3 = sneak · left mouse / X = cane attack · E / middle mouse / B = latch on (where you look) · right mouse / LT = aim + left mouse / RT = fire tennis ball · Q = quick shot · C / L1 = dodge"
 GB_SIGN_JUMPS,"Skoky: 1 m · 1,5 m · 2,4 m (dvojskok)","Jumps: 1 m · 1.5 m · 2.4 m (double jump)"
 GB_SIGN_RAMP,Rampa nahoru,Ramp up
 GB_SIGN_GAP,"Propast 3,5 m: sprint nebo dvojskok","3.5 m gap: sprint or double jump"
 GB_SIGN_SPIRE,"Cvičná špička: skoč a zmáčkni E / ○","Practice spire: jump and press E / B"
 GB_SIGN_ROOFS,"Na střechy: schod → bedna → střecha → 3 špičky","To the roofs: step → crate → roof → 3 spires"
-GB_SIGN_BELL,"Trefi zvon tenisákem → otevře se brána k obrazu","Hit the bell with a tennis ball → the gate to the painting opens"
+GB_SIGN_BELL,"Trefi zvon tenisákem → otevře se brána → vběhni do obrazu","Hit the bell with a tennis ball → the gate opens → run into the painting"
+GB_SIGN_TRAINING,"Trénink: □ / levé tl. myši 3× = kombo · ve vzduchu = útok ve vzduchu","Training: X / left mouse 3× = combo · in the air = air attack"
+GB_SIGN_MUSHROOM,"Skoč na houbu! (pak dvojskok)","Jump on the mushroom! (then double jump)"
+GB_SIGN_EXIT,"Výstup zpět do 3D","Exit back to 3D"
+UI_MENU_NEW_GAME,Nová hra,New game
+UI_MENU_SUBTITLE,"Jezevčík, hůl a stíny","A dachshund, a cane and shadows"
+UI_MENU_HINT,"testovací verze – vše se ještě bude měnit","test build – everything will still change"
+UI_BACK,Zpět,Back
+UI_PAUSE_CHECKPOINT,Zpět na checkpoint,Back to checkpoint
+UI_PAUSE_MAIN_MENU,Hlavní menu,Main menu
+UI_SETTINGS_MASTER,Celková hlasitost,Master volume
+UI_SETTINGS_MUSIC,Hudba,Music
+UI_SETTINGS_SFX,Efekty,Effects
+UI_SETTINGS_MOUSE,Citlivost myši,Mouse sensitivity
+UI_SETTINGS_LANGUAGE_BUTTON,Jazyk: Čeština,Language: English
+UI_SETTINGS_TOUCH,Dotykové ovládání,Touch controls
+HUD_CHECKPOINT,Checkpoint!,Checkpoint!
+HUD_OUCH,Au! Zpátky na checkpoint…,Ouch! Back to the checkpoint…
+HUD_ALERT,! Stráž tě vidí – uteč nebo se schovej !,! A guard sees you – run or hide !
+GB_SIGN_GUARD,"Strážný: připlíž se (Ctrl / L3) zezadu – E / ○ = ukrást mince, hůl = knockout","Guard: sneak (Ctrl / L3) up behind him – E / ○ = pickpocket, cane = knockout"
+GB_SIGN_HAZARD,"Pozor, žíravý inkoust!","Careful, corrosive ink!"
+GB_SIGN_PARKOUR,"Parkour: E / ○ u modrých jisker – trubka nahoru, lano na sloup, římsa vpravo (z bedny)","Parkour: E / ○ at blue sparkles – pipe up, rope to the pillar, ledge on the right (from the crate)"
+HUD_PICKPOCKET,Ukradeno! ¤,Pickpocketed! ¤
+GB_SIGN_CRAWL,"Plazení: drž plížení (Ctrl / L3) u nízké překážky","Crawl: hold sneak (Ctrl / L3) at a low obstacle"
+UI_SETTINGS_COMIC,Komiksový vzhled,Comic look
+MISSION_STEAL_KEY,Ukradni klíč od trezoru strážnému (zezadu E / ○ – hledej zlatý klíč u pasu),Steal the vault key from a guard (from behind E / ○ – look for the gold key on a belt)
+MISSION_OPEN_VAULT,Otevři trezor (hvězda na radaru),Open the vault (star on the radar)
+MISSION_TAKE_TREASURE,Vezmi inkoustový krystal,Take the ink crystal
+MISSION_ESCAPE,Uteč k dodávce u startu!,Escape to the van near the start!
+MISSION_DONE,Loupež dokončena,Heist complete
+HUD_OBJECTIVE,Cíl:,Goal:
+HUD_KEY,Máš klíč!,Got the key!
+PROMPT_VAULT_OPEN,otevřít trezor,open the vault
+PROMPT_VAULT_LOCKED,zamčeno – chybí klíč,locked – no key
+PROMPT_TREASURE,vzít krystal,take the crystal
+PROMPT_GETAWAY,ujet,drive away
+RESULTS_TITLE,Loupež dokončena!,Heist complete!
+RESULTS_TIME,Čas,Time
+RESULTS_INK,Kapky inkoustu,Ink drops
+RESULTS_COINS,Mince,Coins
+RESULTS_KO,Vyřazení strážní,Guards knocked out
+RESULTS_AGAIN,Hrát znovu,Play again
+HUD_LASER,Poplach! Laser tě prozradil,Alarm! The laser gave you away
+GB_SIGN_LASER,"Lasery: pod vysoký se proplaž (Ctrl / L3), blikající přeskoč nebo proběhni","Lasers: crawl under the high one (Ctrl / L3), jump or time the blinking one"
+RESULTS_FIREFLIES,Světlušky,Fireflies
+UI_SETTINGS_PAD,Citlivost ovladače,Gamepad sensitivity
+UI_SETTINGS_FOV,Zorné pole (FOV),Field of view (FOV)
+UI_SETTINGS_INVERT_Y,Obrátit osu Y kamery,Invert camera Y axis
+UI_MENU_CHAPTERS,Kapitoly,Chapters
+CHAPTER_1,1 · Testovací ulice,1 · Test street
+CHAPTER_2,2 · Kaňon,2 · Canyon
+CHAPTER_3,3 · Pouť,3 · Carnival
+CHAPTER_SOON,brzy,soon
+RESULTS_RECORD,nový rekord!,new record!
+RESULTS_BEST,Nejlepší čas,Best time
+CH2_SIGN_START,"Kaňon: klíč od důlního trezoru má strážný u řeky. Trezor je v boudě na konci tábora.","Canyon: the guard by the river has the mine vault key. The vault is in the shack at the end of the camp."
+CHAPTER_GYM,T · Tréninkové hřiště (test),T · Training gym (test)
+CH2_SIGN_PAINTING,"Pouštní obraz – vběhni dovnitř",Desert painting – run inside

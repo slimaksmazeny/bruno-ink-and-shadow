@@ -620,7 +620,7 @@ Player (CharacterBody3D, player.gd)            vrstva: player
 **Klíčová nastavení `project.godot`:**
 ```ini
 [application]
-run/main_scene="res://levels/greybox/greybox_street.tscn"
+run/main_scene="res://ui/menus/main_menu.tscn"   ; od v0.2.2 (dřív greybox_street)
 config/features=PackedStringArray("4.7")
 
 [autoload]
@@ -629,7 +629,11 @@ InputManager="*res://autoload/input_manager.gd"
 Settings="*res://autoload/settings.gd"
 GameState="*res://autoload/game_state.gd"
 SaveManager="*res://autoload/save_manager.gd"
+AudioManager="*res://autoload/audio_manager.gd"     ; od v0.2.2: AudioManager.play(&"jump") / play_at(&"bell", pos)
 DebugOverlay="*res://ui/debug/debug_overlay.tscn"   ; jen debug buildy, v exportu se sám odstraní
+TouchControls="*res://ui/touch_controls/touch_controls.tscn"
+InkWipe="*res://ui/transitions/ink_wipe.tscn"
+PauseMenu="*res://ui/menus/pause_menu.gd"            ; od v0.2.2
 
 [display]
 window/size/viewport_width=1920
@@ -743,3 +747,48 @@ Necommituj — commit udělám já po otestování.
 - `v0.3.0`: cel shader (`diffuse_light` v krocích + rim) a inverted-hull obrysy, rozpočet výkonu pro Android.
 - `v0.3.2`: AI hlídek (kužel vidění = `ShapeCast3D`/raycasty, ne fyzický kužel), zvuková detekce.
 - `v0.4.0`: načítání hubu a interiérů (`SceneRouter` + inkoustový střih, `ResourceLoader.load_threaded_request`).
+
+---
+
+## Dodatek v0.2.2 — Kostra hry (Claude, 2026-11-24)
+
+- **Zvuk:** `AudioManager` (autoload) vlastní sběrnice `Music` a `SFX` a malý pool přehrávačů. Volání jen `AudioManager.play(&"jméno")` nebo `play_at(&"jméno", pozice)`; soubory `res://audio/sfx/<jméno>.wav`. Hlasitosti v `Settings` (`master/music/sfx`).
+- **Zdraví:** jen v `Player` (`health`, `take_damage(amount, from)`, `heal`, `die`). Ostatní poslouchají `Events.player_health_changed` / `player_died`.
+- **Herní objekty** (`world/gameplay/`): `InkDrop` (sbírka, ukládá přes `GameState.mark_collected`), `Checkpoint` (nový respawn + léčení + `SaveManager.save_game()`), `Hazard` (louže / bodliny). Jsou `@tool` a vzhled si staví z kódu – v editoru jsou vidět, bez grafiky.
+- **Nepřátelé** (`world/enemies/`): `Guard` – vlastní `move_and_slide` (pravidlo „jen player.gd“ platí pro hráče). Vnímání = kužel + paprsek na vrstvu world, rozmazaná detekce `suspicion` 0..1. Zásah holí přes skupinu `hittable`.
+- **UI:** `Hud` (CanvasLayer v levelu), `PauseMenu` (autoload, `get_tree().paused`), `MainMenu` (hlavní scéna), `SettingsPanel` sdílený. Texty jsou překladové klíče → Godot je překládá automaticky.
+- **Testy v režimu `--script`:** testovací skript nesmí používat typy `Player`/`Guard` (v tu chvíli ještě nejsou známé autoloady) – používat netypované proměnné.
+
+## Dodatek v0.2.3 — Sly parkour (Claude, 2026-11-24)
+
+- **`LineAnchor`** (`world/anchors/line_anchor.gd`) dědí z `Anchor`: úsečka `position → position + axis·length`, `closest_t()` / `point_at()`. Detektor kotev se nezměnil – volá `get_snap_position()`, které vrací nejbližší bod úsečky.
+- Nové stavy jen přidány do `ANCHOR_STATES`: PIPE → `Climb`, LEDGE → `LedgeHang`, ROPE → `RopeWalk`. Jádro hráče se neměnilo (splněno kritérium W2-09).
+- `Anchor` je nově `@tool`, aby kotvy byly vidět v editoru (animace jen ve hře).
+- **Vítr:** `WindColumn` nastavuje `Player.wind_lift` každý fyzikální snímek; `Glide` s ním stoupá, ostatní stavy jen brzdí pád. Player hodnotu po snímku nuluje.
+- **Zlaté kapky:** `InkDrop.golden` (hodnota 5); HUD sčítá `value()` všech kapek.
+
+## Dodatek v0.2.4 (Claude, 2026-11-24)
+
+- `RingAnchor` (RING → `HookSwing`, i ve 2D – detektor ve 2D nekontroluje úhel kamery), `LineAnchor` typu WALL → `WallSneak`.
+- 2D odraz od zdi je v `state_air.gd` (jen MODE_2D): krátká paměť zdi + jump buffer; klouzání max 3 m/s.
+- `Piston` (rytmus `beat` + `phase`), hudba přes `AudioManager.play_music()` – WAV smyčka se nastaví za běhu.
+- **Autorská práva:** v herních souborech (skripty, scény, texty, popis projektu) nejsou jména cizích her/značek. Inspirace se popisuje obecně („stealth hry“, „2D plošinovky“). Zvuky a hudba jsou generované vlastními skripty v `tools/generators/`. Návrhové dokumenty (tento soubor, index.html) mohou inspiraci zmiňovat interně – do hry se nedostávají.
+
+## Dodatek v0.2.5 (Claude, 2026-11-24)
+
+- `Crawl` se vybírá v `GroundedState.pick_ground_state()` podle `Player.has_low_ceiling()` (paprsek 0,6–1,35 m nad Brunem / 0,55 m před ním); `Player.set_low_collision()` přepíná `CollisionStand` ↔ `CollisionLow`.
+- Hluk: `Events.noise_made(pos, radius)` (tenisák při prvním dopadu) → `Guard.investigate()`. Poplach: `Events.guard_called_help` → strážní do `help_radius` jdou hledat (pokud je místo výš/níž o > 2 m, jen se dívají).
+- Komiksový vzhled: `camera/ink_post.gd` přidá do kamery čtverec přes obrazovku se `shaders/ink_comic.gdshader` (hloubkové obrysy, stupně jasu). Vypíná se `Settings.comic_shading`; v Compatibility rendereru (web) je vypnutý.
+- 2D pozadí: `BackdropLayer` generuje siluetu ze `seed`; parallax dělá perspektiva kamery (vrstvy v různé hloubce z).
+
+## Dodatek v0.2.6 — Loupež (Claude, 2026-11-24)
+
+- **Interakce:** objekty ve skupině `interactable` mají `can_interact(player)`, `interact(player)`, `get_prompt()` (překladový klíč) a volitelně `interact_range`. `Interact.nearest()` vybere nejbližší; `GroundedState` ji zkusí po kotvách a před kapsářstvím. HUD ukazuje nápovědu.
+- **Mise:** uzel `Mission` (skupina `mission`) – kroky STEAL_KEY → OPEN_VAULT → TAKE_TREASURE → ESCAPE → DONE. Objekty hlásí `notify(&"key" | &"vault_opened" | &"treasure_taken" | &"escaped")`. Na konci `ResultsScreen`.
+- Klíče jsou v `GameState.keys` (jen během levelu, neukládají se). `Guard.carries_key` se ukradne kapsářstvím.
+
+## Dodatek v0.3.0 — Kapitoly (Claude, 2026-11-24)
+
+- Každý level má uzel `Mission` s `chapter_id`; `Mission.chapter_of(node)` vrací kapitolu (bez mise „greybox“). Kapky, světlušky a rekordy se ukládají pod ní. Mise se přidává do skupiny už v `_enter_tree`.
+- Kapitola 2: `levels/ch2_canyon/canyon.tscn`, celá scéna se generuje `tools/generators/build_ch2_canyon.gd` (exportované uzly – kamera/target – se při generování nastavují objektem, ne NodePath).
+- Seznam kapitol je v `ui/menus/main_menu.gd` (`CHAPTERS`).

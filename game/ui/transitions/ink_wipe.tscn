@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/transitions/ink_wipe.gd" id="1_2pt5g"]
+[ext_resource type="Shader" path="res://shaders/ink_wipe.gdshader" id="2_2flao"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2pt5g"]
+shader = ExtResource("2_2flao")
+shader_parameter/progress = null
+shader_parameter/ink_color = null
+shader_parameter/rim_color = null
+
+[node name="InkWipe" type="CanvasLayer" unique_id=1290905278]
+layer = 90
+script = ExtResource("1_2pt5g")
+
+[node name="Ink" type="ColorRect" parent="." unique_id=1769678920]
+visible = false
+material = SubResource("ShaderMaterial_2pt5g")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2

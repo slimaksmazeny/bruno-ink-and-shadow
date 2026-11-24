@@ -6,6 +6,8 @@ func _initialize() -> void:
 	_build_profiles()
 	_build_spire()
 	_build_props()
+	_build_hittables()
+	_build_step_f_scenes()
 	_build_player()
 	_build_camera()
 	_build_greybox_street()
@@ -182,8 +184,14 @@ func _build_player() -> void:
 	collar.outer_radius = 0.23
 	_mesh(stand, "Collar", collar, Vector3(0, 0.9, 0), Vector3.ZERO, red)
 	_mesh(stand, "Tag", _cyl(0.06, 0.02), Vector3(0, 0.82, -0.23), Vector3(90, 0, 0), gold)
-	_mesh(stand, "Cane", _cyl(0.025, 1.05), Vector3(0.38, 0.55, -0.05), Vector3(0, 0, -8), gold)
-	_mesh(stand, "CaneTip", _sphere(0.06), Vector3(0.45, 1.07, -0.05), Vector3.ZERO, ink)
+	# Hůl = kloub (Cane) s tyčí a modrým hrotem plnicího pera jako dětmi, takže se hrot hýbe s holí.
+	var cane := Node3D.new()
+	cane.name = "Cane"
+	cane.position = Vector3(0.38, 0.55, -0.05)
+	cane.rotation_degrees = Vector3(0, 0, -8)
+	stand.add_child(cane)
+	_mesh(cane, "CaneMesh", _cyl(0.025, 1.05), Vector3.ZERO, Vector3.ZERO, gold)
+	_mesh(cane, "CaneTip", _sphere(0.06), Vector3(0, 0.53, 0), Vector3.ZERO, ink)
 
 	# --- Sprint po čtyřech (hůl na zádech)
 	var sprint := Node3D.new()
@@ -199,6 +207,19 @@ func _build_player() -> void:
 	_mesh(sprint, "CaneOnBack", _cyl(0.025, 1.0), Vector3(0, 0.66, 0.05), Vector3(90, 0, 0), gold)
 	for leg: Array in [["LegFL", -0.15, -0.35], ["LegFR", 0.15, -0.35], ["LegBL", -0.15, 0.45], ["LegBR", 0.15, 0.45]]:
 		_mesh(sprint, leg[0], _cyl(0.06, 0.3), Vector3(leg[1], 0.15, leg[2]), Vector3.ZERO, black)
+
+	# --- Zásahová zóna hole (před Brunem, otáčí se s Visual)
+	var hitbox := Area3D.new()
+	hitbox.name = "CaneHitbox"
+	hitbox.set_script(load("res://player/cane_hitbox.gd"))
+	var hb_shape := SphereShape3D.new()
+	hb_shape.radius = 0.95
+	var hb_col := CollisionShape3D.new()
+	hb_col.name = "Shape"
+	hb_col.shape = hb_shape
+	hb_col.position = Vector3(0, 0.8, -0.95)
+	hitbox.add_child(hb_col)
+	root.add_child(hitbox)
 
 	# --- Detektor kotev (modré jiskry)
 	var det := Area3D.new()
@@ -219,10 +240,10 @@ func _build_player() -> void:
 	sm.set_script(load("res://core/state_machine/player_state_machine.gd"))
 	root.add_child(sm)
 	var idle: Node = null
-	for state_name: String in ["Idle", "Move", "Sprint", "Air", "Glide", "Perch", "Swing", "Aim"]:
+	for state_name: String in ["Idle", "Move", "Sprint", "Air", "Glide", "Perch", "Swing", "Aim", "Attack", "AirAttack", "Locked"]:
 		var st := Node.new()
 		st.name = state_name
-		st.set_script(load("res://player/states/state_%s.gd" % state_name.to_lower()))
+		st.set_script(load("res://player/states/state_%s.gd" % state_name.to_snake_case()))
 		sm.add_child(st)
 		if state_name == "Idle":
 			idle = st
@@ -394,6 +415,195 @@ func _build_props() -> void:
 	_save_scene(gate, "res://world/props/gate.tscn")
 
 
+# ------------------------------------------------------------------ hittables
+func _build_hittables() -> void:
+	var wood := _mat(Color(0.55, 0.38, 0.2))
+	var sack_mat := _mat(Color(0.85, 0.75, 0.5))
+	var dummy := Node3D.new()
+	dummy.name = "TrainingDummy"
+	dummy.set_script(load("res://world/props/training_dummy.gd"))
+	var body := StaticBody3D.new()
+	body.name = "Body"
+	body.collision_layer = 16
+	body.collision_mask = 0
+	dummy.add_child(body)
+	var post_shape := CylinderShape3D.new()
+	post_shape.radius = 0.35
+	post_shape.height = 1.8
+	var pcol := CollisionShape3D.new()
+	pcol.name = "Shape"
+	pcol.shape = post_shape
+	pcol.position = Vector3(0, 0.9, 0)
+	body.add_child(pcol)
+	_mesh(body, "Post", _cyl(0.07, 0.6), Vector3(0, 0.3, 0), Vector3.ZERO, wood)
+	_mesh(body, "Base", _cyl(0.4, 0.08), Vector3(0, 0.04, 0), Vector3.ZERO, wood)
+	var pivot := Node3D.new()
+	pivot.name = "SackPivot"
+	pivot.position = Vector3(0, 0.55, 0)
+	dummy.add_child(pivot)
+	var sack := _mesh(pivot, "Sack", _capsule(0.33, 1.1), Vector3(0, 0.6, 0), Vector3.ZERO, sack_mat)
+	sack.name = "Sack"
+	_mesh(pivot, "Head", _sphere(0.2), Vector3(0, 1.3, 0), Vector3.ZERO, sack_mat)
+	var label := Label3D.new()
+	label.name = "HitLabel"
+	label.text = "×1"
+	label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	label.font_size = 72
+	label.outline_size = 18
+	label.pixel_size = 0.008
+	label.modulate = Color(1.0, 0.85, 0.3)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 2.3, 0)
+	dummy.add_child(label)
+	_save_scene(dummy, "res://world/props/training_dummy.tscn")
+
+	var crate := StaticBody3D.new()
+	crate.name = "BreakableCrate"
+	crate.set_script(load("res://world/props/breakable_crate.gd"))
+	crate.collision_layer = 16
+	crate.collision_mask = 0
+	var cshape := BoxShape3D.new()
+	cshape.size = Vector3(0.9, 0.9, 0.9)
+	var ccol := CollisionShape3D.new()
+	ccol.name = "Shape"
+	ccol.shape = cshape
+	ccol.position = Vector3(0, 0.45, 0)
+	crate.add_child(ccol)
+	var cm := _mesh(crate, "Mesh", _boxm(Vector3(0.9, 0.9, 0.9)), Vector3(0, 0.45, 0), Vector3.ZERO, _mat(Color(0.62, 0.42, 0.22)))
+	cm.name = "Mesh"
+	_save_scene(crate, "res://world/props/breakable_crate.tscn")
+
+
+# ------------------------------------------------------------------ Krok F scény
+func _unshaded(color: Color) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.albedo_color = color
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	return m
+
+
+func _build_step_f_scenes() -> void:
+	# Inkoustový přechod (autoload InkWipe)
+	var ink := CanvasLayer.new()
+	ink.name = "InkWipe"
+	ink.layer = 90
+	ink.set_script(load("res://ui/transitions/ink_wipe.gd"))
+	var rect := ColorRect.new()
+	rect.name = "Ink"
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rect.visible = false
+	var sm := ShaderMaterial.new()
+	sm.shader = load("res://shaders/ink_wipe.gdshader")
+	rect.material = sm
+	ink.add_child(rect)
+	_save_scene(ink, "res://ui/transitions/ink_wipe.tscn")
+
+	# Skákací houba
+	var mush := Node3D.new()
+	mush.name = "BouncyMushroom"
+	mush.set_script(load("res://world/platforms_2d/bouncy_mushroom.gd"))
+	var stem_mat := _mat(Color(0.95, 0.9, 0.78))
+	var cap_mat := _mat(Color(0.9, 0.25, 0.2), 0.25)
+	var dot_mat := _mat(Color(1, 1, 0.95))
+	var sb := StaticBody3D.new()
+	sb.name = "Body"
+	sb.collision_layer = 1
+	sb.collision_mask = 0
+	mush.add_child(sb)
+	var stem_shape := CylinderShape3D.new()
+	stem_shape.radius = 0.28
+	stem_shape.height = 1.0
+	var stem_col := CollisionShape3D.new()
+	stem_col.name = "Stem"
+	stem_col.shape = stem_shape
+	stem_col.position = Vector3(0, 0.5, 0)
+	sb.add_child(stem_col)
+	var cap_shape := CylinderShape3D.new()
+	cap_shape.radius = 0.9
+	cap_shape.height = 0.3
+	var cap_col := CollisionShape3D.new()
+	cap_col.name = "CapShape"
+	cap_col.shape = cap_shape
+	cap_col.position = Vector3(0, 1.1, 0)
+	sb.add_child(cap_col)
+	_mesh(mush, "StemMesh", _cyl(0.28, 1.0), Vector3(0, 0.5, 0), Vector3.ZERO, stem_mat)
+	var cap := Node3D.new()
+	cap.name = "Cap"
+	cap.position = Vector3(0, 0.95, 0)
+	mush.add_child(cap)
+	var dome := SphereMesh.new()
+	dome.radius = 0.95
+	dome.height = 0.95
+	dome.is_hemisphere = true
+	_mesh(cap, "Dome", dome, Vector3.ZERO, Vector3.ZERO, cap_mat)
+	for i: int in 5:
+		var ang: float = TAU * float(i) / 5.0
+		_mesh(cap, "Dot%d" % i, _sphere(0.11), Vector3(cos(ang) * 0.55, 0.38, sin(ang) * 0.55), Vector3.ZERO, dot_mat)
+	var area := Area3D.new()
+	area.name = "BounceArea"
+	var ashape := BoxShape3D.new()
+	ashape.size = Vector3(1.7, 0.5, 1.7)
+	var acol := CollisionShape3D.new()
+	acol.name = "Shape"
+	acol.shape = ashape
+	acol.position = Vector3(0, 1.45, 0)
+	area.add_child(acol)
+	mush.add_child(area)
+	_save_scene(mush, "res://world/platforms_2d/bouncy_mushroom.tscn")
+
+	# Rám obrazu – vstupní portál (umisťuje se těsně před rám)
+	var portal := Area3D.new()
+	portal.name = "PaintingPortal"
+	portal.set_script(load("res://world/portals/painting_portal.gd"))
+	var pshape := BoxShape3D.new()
+	pshape.size = Vector3(5.0, 3.0, 1.2)
+	var pcol := CollisionShape3D.new()
+	pcol.name = "Shape"
+	pcol.shape = pshape
+	pcol.position = Vector3(0, 1.5, 0)
+	portal.add_child(pcol)
+	var cm := Marker3D.new()
+	cm.name = "CameraMarker"
+	cm.position = Vector3(0, 3.0, 3.4)
+	portal.add_child(cm)
+	var rp := Marker3D.new()
+	rp.name = "ReturnPoint"
+	rp.position = Vector3(0, 0.05, 3.3)
+	rp.rotation_degrees = Vector3(0, 180, 0)
+	portal.add_child(rp)
+	_save_scene(portal, "res://world/portals/painting_portal.tscn")
+
+	# Výstupní portál (konec 2D úrovně)
+	var exitp := Area3D.new()
+	exitp.name = "ExitPortal"
+	exitp.set_script(load("res://world/portals/exit_portal.gd"))
+	var eshape := BoxShape3D.new()
+	eshape.size = Vector3(1.6, 2.6, 3.0)
+	var ecol := CollisionShape3D.new()
+	ecol.name = "Shape"
+	ecol.shape = eshape
+	ecol.position = Vector3(0, 1.3, 0)
+	exitp.add_child(ecol)
+	var ring := Node3D.new()
+	ring.name = "Ring"
+	ring.position = Vector3(0, 1.4, 0)
+	exitp.add_child(ring)
+	var torus := TorusMesh.new()
+	torus.inner_radius = 0.95
+	torus.outer_radius = 1.18
+	_mesh(ring, "Torus", torus, Vector3.ZERO, Vector3(90, 0, 0), _mat(Color(0.95, 0.71, 0.2), 1.2))
+	var disc := CylinderMesh.new()
+	disc.top_radius = 0.95
+	disc.bottom_radius = 0.95
+	disc.height = 0.02
+	var disc_mat := _mat(Color(0.3, 0.6, 1.0), 1.0)
+	disc_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	disc_mat.albedo_color.a = 0.55
+	_mesh(ring, "Disc", disc, Vector3.ZERO, Vector3(90, 0, 0), disc_mat)
+	_save_scene(exitp, "res://world/portals/exit_portal.tscn")
+
+
 # ------------------------------------------------------------------ camera
 func _build_camera() -> void:
 	var root := Node3D.new()
@@ -425,6 +635,11 @@ func _build_camera() -> void:
 	var point := Marker3D.new()
 	point.name = "CameraPoint"
 	arm.add_child(point)
+
+	var side := Node3D.new()
+	side.name = "SideScrollRig"
+	side.set_script(load("res://camera/side_scroll_rig.gd"))
+	root.add_child(side)
 
 	var cam := Camera3D.new()
 	cam.name = "Camera3D"
@@ -553,6 +768,20 @@ func _build_greybox_street() -> void:
 	bell.position = Vector3(32, 8, -9)
 	bell.rotation_degrees = Vector3(0, -90, 0)
 	root.add_child(bell)
+	# Tréninkový koutek útoku holí: figurína + 3 rozbitelné bedny
+	var training := Node3D.new()
+	training.name = "Training"
+	root.add_child(training)
+	var dummy_inst: Node3D = (load("res://world/props/training_dummy.tscn") as PackedScene).instantiate()
+	dummy_inst.position = Vector3(-7, 0, 9)
+	training.add_child(dummy_inst)
+	var crate_scene: PackedScene = load("res://world/props/breakable_crate.tscn")
+	for i: int in 3:
+		var c: Node3D = crate_scene.instantiate()
+		c.name = "Crate%d" % (i + 1)
+		c.position = Vector3(-9.0 - i * 1.3, 0, 7.8)
+		training.add_child(c)
+	_sign(root, "SignTraining", "GB_SIGN_TRAINING", Vector3(-9, 2.4, 7.2), 0.0042, Color(1.0, 0.85, 0.4))
 	var gate: Node3D = (load("res://world/props/gate.tscn") as PackedScene).instantiate()
 	gate.name = "PaintingGate"
 	gate.position = Vector3(24, 0, -5.2)
@@ -565,6 +794,61 @@ func _build_greybox_street() -> void:
 	_sign(root, "SignGap", "GB_SIGN_GAP", Vector3(15.75, 2.2, 3), 0.008, Color(1.0, 0.6, 0.6))
 	_sign(root, "SignSpire", "GB_SIGN_SPIRE", Vector3(4, 3.0, 9), 0.007, Color(0.6, 0.85, 1.0))
 	_sign(root, "SignRoofs", "GB_SIGN_ROOFS", Vector3(11, 5.4, -2.1), 0.007, Color(0.6, 0.85, 1.0))
+	# --- Krok F: obraz v rámu, vstupní portál, 2D svět uvnitř obrazu
+	var canvas_quad := QuadMesh.new()
+	canvas_quad.size = Vector2(5.2, 3.3)
+	var canvas_mat := _unshaded(Color(0.98, 0.78, 0.45))
+	_mesh(root, "PaintingCanvas", canvas_quad, Vector3(24, 3, -5.68), Vector3.ZERO, canvas_mat)
+	var hill_quad := QuadMesh.new()
+	hill_quad.size = Vector2(5.0, 1.3)
+	_mesh(root, "PaintingCanvasHills", hill_quad, Vector3(24, 2.0, -5.67), Vector3.ZERO, _unshaded(Color(0.25, 0.55, 0.5)))
+
+	var world2d := Node3D.new()
+	world2d.name = "PaintingWorld"
+	root.add_child(world2d)
+	var ochre := _mat(Color(0.86, 0.6, 0.3))
+	var ochre_dark := _mat(Color(0.6, 0.38, 0.2))
+	_box(world2d, "Floor1", Vector3(18, 1, 4), Vector3(205, -0.5, 0), ochre)
+	_box(world2d, "HighLedge", Vector3(8, 10, 4), Vector3(218, -0.5, 0), ochre_dark)
+	_box(world2d, "Floor3", Vector3(14, 1, 4), Vector3(234, -0.5, 0), ochre)
+	_box(world2d, "GoalLedge", Vector3(8, 11, 4), Vector3(245, -0.5, 0), ochre_dark)
+	var mush_scene: PackedScene = load("res://world/platforms_2d/bouncy_mushroom.tscn")
+	for spot: Array in [["Mushroom1", Vector3(211, 0, 0)], ["Mushroom2", Vector3(238, 0, 0)]]:
+		var m: Node3D = mush_scene.instantiate()
+		m.name = spot[0]
+		m.position = spot[1]
+		world2d.add_child(m)
+	# Malované pozadí (UbiArt greybox): vrstvy v různé hloubce = parallax zdarma
+	var far := QuadMesh.new()
+	far.size = Vector2(160, 60)
+	_mesh(world2d, "BgFar", far, Vector3(222, 8, -40), Vector3.ZERO, _unshaded(Color(0.98, 0.85, 0.58)))
+	var hills := QuadMesh.new()
+	hills.size = Vector2(26, 9)
+	for i: int in 6:
+		_mesh(world2d, "BgHills%d" % i, hills, Vector3(190 + i * 13, 1.5 + float(i % 2) * 1.5, -18), Vector3(0, 0, 8.0 * float(i % 3 - 1)), _unshaded(Color(0.3, 0.6, 0.55)))
+	var bush := QuadMesh.new()
+	bush.size = Vector2(6, 3)
+	for i: int in 9:
+		_mesh(world2d, "BgBush%d" % i, bush, Vector3(194 + i * 6.5, 0.6, -5), Vector3.ZERO, _unshaded(Color(0.16, 0.38, 0.33)))
+	var lane_start := Marker3D.new()
+	lane_start.name = "LaneStart"
+	lane_start.position = Vector3(199, 0.05, 0)
+	world2d.add_child(lane_start)
+	_sign(world2d, "SignMushroom", "GB_SIGN_MUSHROOM", Vector3(209, 3.2, 0.5), 0.006, Color(0.3, 0.15, 0.05))
+	_sign(world2d, "SignExit", "GB_SIGN_EXIT", Vector3(246, 8.6, 0.5), 0.006, Color(0.3, 0.15, 0.05))
+
+	var portal: Area3D = (load("res://world/portals/painting_portal.tscn") as PackedScene).instantiate()
+	portal.name = "PaintingPortal"
+	portal.position = Vector3(24, 0, -4.4)
+	root.add_child(portal)
+	portal.set("lane_start", lane_start)
+	portal.set("gate", gate)
+	var exitp: Area3D = (load("res://world/portals/exit_portal.tscn") as PackedScene).instantiate()
+	exitp.name = "ExitPortal"
+	exitp.position = Vector3(246, 5.0, 0)
+	world2d.add_child(exitp)
+	exitp.set("entry_portal", portal)
+
 	_sign(root, "SignBell", "GB_SIGN_BELL", Vector3(32, 11.2, -9), 0.009, Color(0.85, 1.0, 0.4), -90.0)
 
 	# Bruno + kamera

@@ -22,7 +22,7 @@ func enter(previous: StringName, msg: Dictionary = {}) -> void:
 		_aim_dir = TennisLauncher.compute_aim_dir(player)
 		player.visual.face_direction(Vector3(_aim_dir.x, 0.0, _aim_dir.z))
 	else:
-		# Útok holí míří tam, kam se díváš (jako ve Slyovi), ne nutně kam běžíš.
+		# Útok holí míří tam, kam se díváš (jako ve stealth hryovi), ne nutně kam běžíš.
 		var yaw: float = player.camera.get_control_yaw() if player.camera != null else 0.0
 		var move: Vector3 = player.get_move_dir()
 		var dir: Vector3 = move if move.length() > 0.3 else Basis(Vector3.UP, yaw) * Vector3.FORWARD

@@ -20,6 +20,8 @@ var pad_name: String = ""
 var touch_controls_visible: bool = false
 var mouse_sensitivity: float = 0.003
 var stick_sensitivity: float = 3.0
+## Obrácená svislá osa kamery (nastavuje Settings).
+var invert_y: bool = false
 
 var _mouse_look: Vector2 = Vector2.ZERO
 ## Akce navázané na tlačítka myši, dočasně odebrané, když je zapnutý dotykový HUD.
@@ -54,7 +56,8 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	# Kliknutí do hry zachytí kurzor (jen na PC a jen když není zapnutý dotykový HUD).
 	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
-		if not touch_controls_visible and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		var in_game: bool = not get_tree().paused and get_tree().get_first_node_in_group(&"player") != null
+		if in_game and not touch_controls_visible and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 			capture_mouse()
 
 
@@ -69,6 +72,8 @@ func consume_look(delta: float) -> Vector2:
 	var out: Vector2 = (_mouse_look + _touch_look) * mouse_sensitivity + stick * stick_sensitivity * delta
 	_mouse_look = Vector2.ZERO
 	_touch_look = Vector2.ZERO
+	if invert_y:
+		out.y = -out.y
 	return out
 
 

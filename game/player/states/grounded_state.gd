@@ -6,27 +6,41 @@ extends PlayerState
 
 func enter(_previous: StringName, _msg: Dictionary = {}) -> void:
 	player.jumps_used = 0
+	player.air_attack_used = false
 
 
 ## Vrací true, pokud stav přepnul – volající stav pak už nic dalšího nedělá.
 func handle_common(_delta: float) -> bool:
+	if Input.is_action_just_pressed(&"dodge") and machine.has_state(&"Dodge") and preload("res://player/states/state_dodge.gd").can_dodge():
+		machine.transition_to(&"Dodge")
+		return true
 	if Input.is_action_just_pressed(&"action"):
 		if try_enter_anchor():
 			return true
+		if _try_interact():
+			return false
+		if _try_pickpocket():
+			return false
 		# Na dotyku je hůl jedno tlačítko: kotva v dosahu = přichycení, jinak útok.
 		if InputManager.touch_controls_visible:
-			machine.transition_to(&"Swing", {"ball": false})
+			machine.transition_to(&"Attack", {"combo": 1})
 			return true
-	if Input.is_action_pressed(&"aim") and machine.has_state(&"Aim"):
+	if Input.is_action_pressed(&"aim") and machine.has_state(&"Aim") and player.mode == Player.Mode.MODE_3D:
 		machine.transition_to(&"Aim")
 		return true
 	if Input.is_action_just_pressed(&"attack"):
-		machine.transition_to(&"Swing", {"ball": false})
+		machine.transition_to(&"Attack", {"combo": 1})
 		return true
 	if Input.is_action_just_pressed(&"tennis"):
 		machine.transition_to(&"Swing", {"ball": true})
 		return true
 	if player.consume_jump_buffer():
+		# Dolů + skok na průchozí plošině = seskok skrz (2D plošinovky), ne skok.
+		var one_way: OneWayPlatform = player.get_floor_body() as OneWayPlatform
+		if one_way != null and Input.is_action_pressed(&"move_back"):
+			one_way.drop_through()
+			machine.transition_to(&"Air", {})
+			return true
 		machine.transition_to(&"Air", {"jump": true})
 		return true
 	if not player.is_on_floor():
@@ -42,11 +56,36 @@ func stick_to_floor() -> void:
 
 ## Vybere správný pozemní stav podle vstupu (používá se i po dopadu).
 static func pick_ground_state(p: Player) -> StringName:
-	if Input.is_action_pressed(&"aim"):
+	if Input.is_action_pressed(&"aim") and p.mode == Player.Mode.MODE_3D:
 		return &"Aim"
 	var strength: float = p.get_move_strength()
+	# Plazení: pod nízkým stropem zůstat (nejde vstát), k nízké překážce před Brunem
+	# se proplazí jen se stisknutým plížením (Ctrl / L3) – samo se nezapíná.
+	if p.has_low_ceiling(p.global_position):
+		return &"Crawl"
+	if p.wants_sneak() and strength > 0.05 and p.has_low_ceiling(p.global_position + p.get_move_dir().normalized() * 0.55):
+		return &"Crawl"
 	if strength < 0.05:
 		return &"Idle"
 	if Input.is_action_pressed(&"sprint"):
 		return &"Sprint"
 	return &"Move"
+
+
+## Kapsářství: zezadu u nic netušícího strážného akce = ukrást váček mincí.
+func _try_pickpocket() -> bool:
+	for n: Node in player.get_tree().get_nodes_in_group(&"guard"):
+		var g: Guard = n as Guard
+		if g != null and g.can_be_pickpocketed_by(player):
+			g.pickpocket(player)
+			return true
+	return false
+
+
+## Věci ve skupině "interactable" (trezor, únikové auto…): akce u nejbližší, která to dovolí.
+func _try_interact() -> bool:
+	var best: Node = Interact.nearest(player)
+	if best == null:
+		return false
+	best.call("interact", player)
+	return true

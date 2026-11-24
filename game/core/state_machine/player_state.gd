@@ -7,6 +7,11 @@ extends Node
 ## Typ kotvy → stav, který ji obslouží. v0.2.1 sem jen přidá řádky (PIPE → Climb, LEDGE → LedgeHang…).
 const ANCHOR_STATES: Dictionary = {
 	Anchor.Type.SPIRE: &"Perch",
+	Anchor.Type.PIPE: &"Climb",
+	Anchor.Type.LEDGE: &"LedgeHang",
+	Anchor.Type.ROPE: &"RopeWalk",
+	Anchor.Type.WALL: &"WallSneak",
+	Anchor.Type.RING: &"HookSwing",
 }
 
 var player: Player
@@ -36,12 +41,12 @@ func accelerate_horizontal(target: Vector3, accel: float, delta: float) -> void:
 
 
 ## Gravitace s rychlejším pádem a „useknutím“ skoku při puštění tlačítka (variabilní výška skoku).
-func apply_gravity(delta: float, multiplier: float = 1.0) -> void:
+func apply_gravity(delta: float, multiplier: float = 1.0, allow_jump_cut: bool = true) -> void:
 	var p: MovementProfile = player.profile
 	var g: float = p.gravity * multiplier
 	if player.velocity.y < 0.0:
 		g *= p.fall_gravity_mult
-	elif not Input.is_action_pressed(&"jump"):
+	elif allow_jump_cut and not Input.is_action_pressed(&"jump"):
 		g *= p.jump_cut_gravity_mult
 	player.velocity.y = maxf(player.velocity.y - g * delta, -p.max_fall_speed)
 

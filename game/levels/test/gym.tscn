@@ -1,0 +1,891 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://shaders/grid_floor.gdshader" id="1_r4foh"]
+[ext_resource type="Script" path="res://levels/test/gym_teleport.gd" id="2_dp2cb"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="3_jsd41"]
+[ext_resource type="Script" path="res://player/player.gd" id="4_kj1ca"]
+[ext_resource type="Resource" path="res://player/profiles/profile_3d.tres" id="5_wobq7"]
+[ext_resource type="Resource" path="res://player/profiles/profile_2d.tres" id="6_8ybr1"]
+[ext_resource type="PackedScene" path="res://camera/hybrid_camera.tscn" id="7_dyumc"]
+[ext_resource type="Script" path="res://camera/hybrid_camera.gd" id="8_cgi7y"]
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="9_03jn6"]
+[ext_resource type="Script" path="res://levels/mission.gd" id="10_6wd50"]
+[ext_resource type="PackedScene" path="res://world/anchors/spire_anchor.tscn" id="11_1eocp"]
+[ext_resource type="Script" path="res://world/anchors/anchor.gd" id="12_wvo3g"]
+[ext_resource type="Script" path="res://world/anchors/line_anchor.gd" id="13_go1ky"]
+[ext_resource type="Script" path="res://world/anchors/ring_anchor.gd" id="14_m2kka"]
+[ext_resource type="Script" path="res://world/gameplay/laser_tripwire.gd" id="15_dedbc"]
+[ext_resource type="PackedScene" path="res://world/props/training_dummy.tscn" id="16_un1dp"]
+[ext_resource type="Script" path="res://world/props/training_dummy.gd" id="17_mp2kn"]
+[ext_resource type="PackedScene" path="res://world/props/breakable_crate.tscn" id="18_hrt4q"]
+[ext_resource type="Script" path="res://world/props/breakable_crate.gd" id="19_f1x6d"]
+[ext_resource type="PackedScene" path="res://world/props/target_bell.tscn" id="20_bjemq"]
+[ext_resource type="Script" path="res://world/props/target_bell.gd" id="21_x52a0"]
+[ext_resource type="Script" path="res://world/enemies/ink_blob.gd" id="22_gm4wt"]
+[ext_resource type="Script" path="res://world/enemies/guard.gd" id="23_g3dyo"]
+[ext_resource type="PackedScene" path="res://world/platforms_2d/bouncy_mushroom.tscn" id="24_eb5d3"]
+[ext_resource type="Script" path="res://world/platforms_2d/bouncy_mushroom.gd" id="25_2610x"]
+[ext_resource type="Script" path="res://world/platforms_2d/wind_column.gd" id="26_1dafs"]
+[ext_resource type="Script" path="res://world/platforms_2d/moving_platform.gd" id="27_l04cu"]
+[ext_resource type="Script" path="res://world/platforms_2d/piston.gd" id="28_6n7oa"]
+[ext_resource type="Script" path="res://world/platforms_2d/crumbling_platform.gd" id="29_fxo1q"]
+[ext_resource type="Script" path="res://world/platforms_2d/one_way_platform.gd" id="30_l1cus"]
+[ext_resource type="Script" path="res://world/gameplay/vault.gd" id="31_b8g3a"]
+[ext_resource type="Script" path="res://world/gameplay/getaway.gd" id="32_sbu5i"]
+[ext_resource type="Script" path="res://world/gameplay/ink_drop.gd" id="33_3q6aw"]
+[ext_resource type="Script" path="res://world/gameplay/firefly_jar.gd" id="34_bl1ua"]
+[ext_resource type="Script" path="res://world/gameplay/treat.gd" id="35_1ll45"]
+[ext_resource type="Script" path="res://world/gameplay/hazard.gd" id="36_i38ih"]
+[ext_resource type="Script" path="res://world/gameplay/checkpoint.gd" id="37_h3svq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_836m8"]
+sky_top_color = Color(0.45, 0.6, 0.85, 1)
+sky_horizon_color = Color(0.85, 0.88, 0.95, 1)
+
+[sub_resource type="Sky" id="Sky_mhkmj"]
+sky_material = SubResource("ProceduralSkyMaterial_836m8")
+
+[sub_resource type="Environment" id="Environment_2fjof"]
+background_mode = 2
+sky = SubResource("Sky_mhkmj")
+ambient_light_source = 3
+ambient_light_energy = 0.8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pbat5"]
+render_priority = 0
+shader = ExtResource("1_r4foh")
+shader_parameter/base_color = null
+shader_parameter/line_color = null
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7qhng"]
+albedo_color = Color(0.95, 0.7, 0.25, 1)
+
+[node name="Gym" type="Node3D" unique_id=150088309]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=532204117]
+environment = SubResource("Environment_2fjof")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1338843743]
+transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Floor" type="CSGBox3D" parent="." unique_id=1747528432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -0.5, 0)
+use_collision = true
+size = Vector3(150, 1, 70)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Stations" type="Node3D" parent="." unique_id=1296528597]
+script = ExtResource("2_dp2cb")
+
+[node name="Skoky" type="Marker3D" parent="Stations" unique_id=183425063]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -4, 0.05, -16)
+
+[node name="Mezery" type="Marker3D" parent="Stations" unique_id=1267806891]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 19, 1.0999999, -20)
+
+[node name="Plachteni" type="Marker3D" parent="Stations" unique_id=1231450705]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 50, 8.1, -20)
+
+[node name="Kotvy" type="Marker3D" parent="Stations" unique_id=1524129846]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -3, 0.05, 10)
+
+[node name="Plazeni_a_lasery" type="Marker3D" parent="Stations" unique_id=201993229]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 27, 0.05, 10)
+
+[node name="Souboj" type="Marker3D" parent="Stations" unique_id=1113090345]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 47, 0.05, 10)
+
+[node name="Strazny" type="Marker3D" parent="Stations" unique_id=1086455136]
+transform = Transform3D(0.7071068, 0, -0.7071068, 0, 1.0000001, 0, 0.7071068, 0, 0.7071068, 71, 0.05, 16)
+
+[node name="Plosiny" type="Marker3D" parent="Stations" unique_id=478895455]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 71, 0.05, -20)
+
+[node name="Mini_loupez" type="Marker3D" parent="Stations" unique_id=1314372029]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 99, 0.05, 0)
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1050422969 node_paths=PackedStringArray("camera") instance=ExtResource("3_jsd41")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -8, 0.05, 0)
+collision_layer = 2
+collision_mask = 17
+floor_max_angle = 0.80285144
+floor_snap_length = 0.35
+script = ExtResource("4_kj1ca")
+profile_3d = ExtResource("5_wobq7")
+profile_2d = ExtResource("6_8ybr1")
+camera = NodePath("../HybridCamera")
+
+[node name="HybridCamera" type="Node3D" parent="." unique_id=2041024275 node_paths=PackedStringArray("target") instance=ExtResource("7_dyumc")]
+physics_interpolation_mode = 2
+script = ExtResource("8_cgi7y")
+target = NodePath("../Player")
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=605045212]
+script = ExtResource("9_03jn6")
+
+[node name="Mission" type="Node" parent="." unique_id=2100499623]
+script = ExtResource("10_6wd50")
+key_id = "gym_key"
+chapter_id = "gym"
+
+[node name="Sign" type="Label3D" parent="." unique_id=991732201]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3.2, -3)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "TRÉNINKOVÉ HŘIŠTĚ · 1–9 / D-pad = teleport na stanoviště · mřížka = 1 m"
+font_size = 72
+outline_size = 14
+
+[node name="Sign2" type="Label3D" parent="." unique_id=444399985]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 5.5, -22)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "1 · VÝŠKA SKOKU (skok / dvojskok)"
+font_size = 64
+outline_size = 14
+
+[node name="Jump0_5" type="CSGBox3D" parent="." unique_id=58400833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -20)
+use_collision = true
+size = Vector3(1.8, 0.5, 1.8)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign3" type="Label3D" parent="." unique_id=1393011918]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -18.8)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "0.5 m"
+font_size = 48
+outline_size = 14
+
+[node name="Jump1_0" type="CSGBox3D" parent="." unique_id=198115959]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0.5, -20)
+use_collision = true
+size = Vector3(1.8, 1, 1.8)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign4" type="Label3D" parent="." unique_id=2047569540]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 1.6, -18.8)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "1.0 m"
+font_size = 48
+outline_size = 14
+
+[node name="Jump1_5" type="CSGBox3D" parent="." unique_id=768259562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 0.75, -20)
+use_collision = true
+size = Vector3(1.8, 1.5, 1.8)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign5" type="Label3D" parent="." unique_id=195405004]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 2.1, -18.8)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "1.5 m"
+font_size = 48
+outline_size = 14
+
+[node name="Jump2_0" type="CSGBox3D" parent="." unique_id=1896610046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 1, -20)
+use_collision = true
+size = Vector3(1.8, 2, 1.8)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign6" type="Label3D" parent="." unique_id=794213457]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 2.6, -18.8)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "2.0 m"
+font_size = 48
+outline_size = 14
+
+[node name="Jump2_5" type="CSGBox3D" parent="." unique_id=1719194191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4, 1.25, -20)
+use_collision = true
+size = Vector3(1.8, 2.5, 1.8)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign7" type="Label3D" parent="." unique_id=219737838]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4, 3.1, -18.8)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "2.5 m"
+font_size = 48
+outline_size = 14
+
+[node name="Jump3_0" type="CSGBox3D" parent="." unique_id=1035960956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 1.5, -20)
+use_collision = true
+size = Vector3(1.8, 3, 1.8)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign8" type="Label3D" parent="." unique_id=267030936]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 3.6, -18.8)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "3.0 m"
+font_size = 48
+outline_size = 14
+
+[node name="Jump3_5" type="CSGBox3D" parent="." unique_id=1901553889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 1.75, -20)
+use_collision = true
+size = Vector3(1.8, 3.5, 1.8)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign9" type="Label3D" parent="." unique_id=1713372698]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 4.1, -18.8)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "3.5 m"
+font_size = 48
+outline_size = 14
+
+[node name="Jump4_0" type="CSGBox3D" parent="." unique_id=1936877671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2, 2, -20)
+use_collision = true
+size = Vector3(1.8, 4, 1.8)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign10" type="Label3D" parent="." unique_id=1210633014]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2, 4.6, -18.8)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "4.0 m"
+font_size = 48
+outline_size = 14
+
+[node name="Sign11" type="Label3D" parent="." unique_id=1166561141]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 4.5, -22)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "2 · DÉLKA SKOKU (rozběh / sprint / dvojskok / plachtění)"
+font_size = 64
+outline_size = 14
+
+[node name="GapStart" type="CSGBox3D" parent="." unique_id=1413236784]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.5, -20)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="GapLand2" type="CSGBox3D" parent="." unique_id=1563826218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0.5, -20)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign12" type="Label3D" parent="." unique_id=1068464905]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 1.6, -18.2)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "2 m"
+font_size = 48
+outline_size = 14
+
+[node name="GapLand3" type="CSGBox3D" parent="." unique_id=110017942]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0.5, -20)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign13" type="Label3D" parent="." unique_id=1422037728]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, -18.2)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "3 m"
+font_size = 48
+outline_size = 14
+
+[node name="GapLand4" type="CSGBox3D" parent="." unique_id=556243719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0.5, -20)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign14" type="Label3D" parent="." unique_id=1718266397]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5, 1.6, -18.2)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "4 m"
+font_size = 48
+outline_size = 14
+
+[node name="GapLand5" type="CSGBox3D" parent="." unique_id=1426951862]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0.5, -20)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign15" type="Label3D" parent="." unique_id=1064051117]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, -18.2)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "5 m"
+font_size = 48
+outline_size = 14
+
+[node name="GapLand6" type="CSGBox3D" parent="." unique_id=1008970869]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0.5, -20)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign16" type="Label3D" parent="." unique_id=642793497]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.5, 1.6, -18.2)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "6 m"
+font_size = 48
+outline_size = 14
+
+[node name="GapLand8" type="CSGBox3D" parent="." unique_id=1534919000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.5, -20)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Sign17" type="Label3D" parent="." unique_id=1791696697]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.5, 1.6, -18.2)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "8 m"
+font_size = 48
+outline_size = 14
+
+[node name="Sign18" type="Label3D" parent="." unique_id=311216125]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 10, -22)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "3 · PLACHTĚNÍ Z VĚŽE 8 m (drž skok)"
+font_size = 64
+outline_size = 14
+
+[node name="GlideTower" type="CSGBox3D" parent="." unique_id=639977876]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 4, -20)
+use_collision = true
+size = Vector3(3, 8, 3)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="GlideMark1" type="CSGBox3D" parent="." unique_id=372404313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign19" type="Label3D" parent="." unique_id=2102410960]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "2 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark2" type="CSGBox3D" parent="." unique_id=551254806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign20" type="Label3D" parent="." unique_id=1329220222]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "4 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark3" type="CSGBox3D" parent="." unique_id=1699527282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign21" type="Label3D" parent="." unique_id=1501518371]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "6 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark4" type="CSGBox3D" parent="." unique_id=39245024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign22" type="Label3D" parent="." unique_id=610089931]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "8 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark5" type="CSGBox3D" parent="." unique_id=648375687]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign23" type="Label3D" parent="." unique_id=886597596]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "10 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark6" type="CSGBox3D" parent="." unique_id=1765870025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign24" type="Label3D" parent="." unique_id=480504559]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "12 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark7" type="CSGBox3D" parent="." unique_id=1107451073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign25" type="Label3D" parent="." unique_id=1555892480]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "14 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark8" type="CSGBox3D" parent="." unique_id=107279703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign26" type="Label3D" parent="." unique_id=1812786225]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "16 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark9" type="CSGBox3D" parent="." unique_id=1427378430]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign27" type="Label3D" parent="." unique_id=1007790446]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "18 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark10" type="CSGBox3D" parent="." unique_id=1440441352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign28" type="Label3D" parent="." unique_id=265050442]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "20 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark11" type="CSGBox3D" parent="." unique_id=2024000437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign29" type="Label3D" parent="." unique_id=1906330943]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "22 m"
+font_size = 40
+outline_size = 14
+
+[node name="GlideMark12" type="CSGBox3D" parent="." unique_id=623198906]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.5, 0.02, -20)
+use_collision = true
+size = Vector3(0.1, 0.04, 2)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Sign30" type="Label3D" parent="." unique_id=2022533710]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.5, 0.5, -18.6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "24 m"
+font_size = 40
+outline_size = 14
+
+[node name="Sign31" type="Label3D" parent="." unique_id=1314379479]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 6)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "4 · KOTVY (E / ○): špička · trubka · římsa · lano · úzká římsa · kruh"
+font_size = 64
+outline_size = 14
+
+[node name="Spire" type="Area3D" parent="." unique_id=777438041 node_paths=PackedStringArray("snap_point") instance=ExtResource("11_1eocp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2.5, 10)
+script = ExtResource("12_wvo3g")
+snap_point = NodePath("SnapPoint")
+
+[node name="SpirePost" type="CSGBox3D" parent="." unique_id=1400408624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.2, 10)
+use_collision = true
+size = Vector3(0.3, 2.4, 0.3)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="AnchorWall" type="CSGBox3D" parent="." unique_id=886234700]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3, 8)
+use_collision = true
+size = Vector3(8, 6, 1)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Pipe" type="Area3D" parent="." unique_id=441158455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 8.6)
+script = ExtResource("13_go1ky")
+axis = Vector3(0, 1, 0)
+type = 1
+
+[node name="Ledge" type="Area3D" parent="." unique_id=1572295080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 6, 8.52)
+script = ExtResource("13_go1ky")
+length = 5.0
+type = 2
+
+[node name="LedgeStep" type="CSGBox3D" parent="." unique_id=1394630015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1.25, 10.2)
+use_collision = true
+size = Vector3(1.5, 2.5, 1.5)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="WallLedge" type="Area3D" parent="." unique_id=558606311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 2, 8.52)
+script = ExtResource("13_go1ky")
+length = 5.0
+type = 4
+
+[node name="RopePostA" type="CSGBox3D" parent="." unique_id=1320662304]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 2, 10)
+use_collision = true
+size = Vector3(1.2, 4, 1.2)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="RopePostB" type="CSGBox3D" parent="." unique_id=1005076270]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 2, 10)
+use_collision = true
+size = Vector3(1.2, 4, 1.2)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="Rope" type="Area3D" parent="." unique_id=1892165333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6, 4.02, 10)
+script = ExtResource("13_go1ky")
+length = 8.8
+type = 3
+
+[node name="Ring" type="Area3D" parent="." unique_id=1954088908]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 5.5, 14)
+script = ExtResource("14_m2kka")
+type = 5
+only_in_3d = false
+
+[node name="Sign32" type="Label3D" parent="." unique_id=1074995394]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 4, 7)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "5 · PLAZENÍ (drž Ctrl / L3) · LASERY"
+font_size = 64
+outline_size = 14
+
+[node name="CrawlTable" type="CSGBox3D" parent="." unique_id=796062050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.05, 10)
+use_collision = true
+size = Vector3(3, 0.5, 2.4)
+material = SubResource("ShaderMaterial_pbat5")
+
+[node name="LaserHigh" type="Area3D" parent="." unique_id=2037945072]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 36, 0, 7.5)
+script = ExtResource("15_dedbc")
+length = 5.0
+
+[node name="LaserBlink" type="Area3D" parent="." unique_id=960050265]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 38, 0, 7.5)
+script = ExtResource("15_dedbc")
+length = 5.0
+beam_height = 0.35
+block_standing = false
+blink_period = 1.6
+
+[node name="Sign33" type="Label3D" parent="." unique_id=316918424]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4, 7)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "6 · SOUBOJ: hůl (F / □), kombo, ve vzduchu, tenisák (Q), úhyb (C / L1)"
+font_size = 64
+outline_size = 14
+
+[node name="Dummy0" type="Node3D" parent="." unique_id=1987928037 instance=ExtResource("16_un1dp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51, 0, 9)
+script = ExtResource("17_mp2kn")
+
+[node name="Dummy1" type="Node3D" parent="." unique_id=1902511144 instance=ExtResource("16_un1dp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.5, 0, 9)
+script = ExtResource("17_mp2kn")
+
+[node name="Crate0" type="StaticBody3D" parent="." unique_id=2122103708 instance=ExtResource("18_hrt4q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51, 0, 12.5)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("19_f1x6d")
+
+[node name="Crate1" type="StaticBody3D" parent="." unique_id=1154134892 instance=ExtResource("18_hrt4q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.6, 0, 12.5)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("19_f1x6d")
+
+[node name="Crate2" type="StaticBody3D" parent="." unique_id=776932701 instance=ExtResource("18_hrt4q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.2, 0, 12.5)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("19_f1x6d")
+
+[node name="Bell" type="Node3D" parent="." unique_id=1998536696 instance=ExtResource("20_bjemq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 3, 8)
+script = ExtResource("21_x52a0")
+
+[node name="InkBlob" type="CharacterBody3D" parent="." unique_id=1241832351]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59, 0.05, 14)
+script = ExtResource("22_gm4wt")
+patrol_half_width = 3.0
+
+[node name="Sign34" type="Label3D" parent="." unique_id=317665318]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 4, 3.5)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "7 · STRÁŽNÝ: plížení, kapsářství (E zezadu), odlákání tenisákem, nápřah"
+font_size = 64
+outline_size = 14
+
+[node name="PenWall" type="CSGBox3D" parent="." unique_id=1441458153]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0.5, 4)
+use_collision = true
+size = Vector3(14, 1, 0.3)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="PenWall2" type="CSGBox3D" parent="." unique_id=1956446428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0.5, 16)
+use_collision = true
+size = Vector3(14, 1, 0.3)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="PenWall3" type="CSGBox3D" parent="." unique_id=1125864037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, 0.5, 10)
+use_collision = true
+size = Vector3(0.3, 1, 12)
+material = SubResource("StandardMaterial3D_7qhng")
+
+[node name="Guard" type="CharacterBody3D" parent="." unique_id=1760395172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0.05, 10)
+script = ExtResource("23_g3dyo")
+patrol_points = PackedVector3Array(-3, 0, -3, 5, 0, -3, 5, 0, 3, -3, 0, 3)
+
+[node name="Sign35" type="Label3D" parent="." unique_id=1328716387]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83, 6, -23)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "8 · PLOŠINY: houba · vítr (plachti) · výtah · píst · rozpadající · průchozí"
+font_size = 64
+outline_size = 14
+
+[node name="Mushroom" type="Node3D" parent="." unique_id=1413315341 instance=ExtResource("24_eb5d3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, -20)
+script = ExtResource("25_2610x")
+
+[node name="Wind" type="Area3D" parent="." unique_id=1480177490]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0, -20)
+script = ExtResource("26_1dafs")
+size = Vector3(2.5, 10, 2.5)
+
+[node name="Lift" type="AnimatableBody3D" parent="." unique_id=1547110092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83, 0.2, -20)
+script = ExtResource("27_l04cu")
+travel = Vector3(0, 5, 0)
+size = Vector3(2.5, 0.4, 2.5)
+
+[node name="Piston" type="AnimatableBody3D" parent="." unique_id=218018892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.5, 0.3, -20)
+script = ExtResource("28_6n7oa")
+travel = Vector3(0, 3, 0)
+size = Vector3(2, 0.6, 2)
+
+[node name="Crumble" type="AnimatableBody3D" parent="." unique_id=710076434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 2.5, -20)
+script = ExtResource("29_fxo1q")
+size = Vector3(2, 0.35, 2)
+
+[node name="OneWay" type="AnimatableBody3D" parent="." unique_id=1571282605]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94, 2.2, -20)
+script = ExtResource("30_l1cus")
+size = Vector3(3, 0.3, 3)
+
+[node name="Sign36" type="Label3D" parent="." unique_id=409207160]
+auto_translate_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105, 4, -5)
+pixel_size = 0.008
+billboard = 2
+outline_modulate = Color(0.1, 0.1, 0.2, 1)
+text = "9 · MINI LOUPEŽ: klíč (strážný) → trezor → krystal → dodávka"
+font_size = 64
+outline_size = 14
+
+[node name="KeyGuard" type="CharacterBody3D" parent="." unique_id=793874379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105, 0.05, 0)
+script = ExtResource("23_g3dyo")
+patrol_points = PackedVector3Array(-2, 0, 0, 4, 0, 0)
+view_range = 6.0
+carries_key = "gym_key"
+
+[node name="Vault" type="Node3D" parent="." unique_id=851340736]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 115, 0, 0)
+script = ExtResource("31_b8g3a")
+key_id = "gym_key"
+
+[node name="Van" type="Node3D" parent="." unique_id=993014466]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101, 0, 7)
+script = ExtResource("32_sbu5i")
+
+[node name="Ink00" type="Area3D" parent="." unique_id=462429501]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107, 0.8, 4)
+script = ExtResource("33_3q6aw")
+collectible_id = "gym_ink_00"
+
+[node name="Ink01" type="Area3D" parent="." unique_id=540574090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108.5, 0.8, 4)
+script = ExtResource("33_3q6aw")
+collectible_id = "gym_ink_01"
+
+[node name="Ink02" type="Area3D" parent="." unique_id=655248315]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 0.8, 4)
+script = ExtResource("33_3q6aw")
+collectible_id = "gym_ink_02"
+
+[node name="Ink03" type="Area3D" parent="." unique_id=2057705777]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.5, 0.8, 4)
+script = ExtResource("33_3q6aw")
+collectible_id = "gym_ink_03"
+
+[node name="Ink04" type="Area3D" parent="." unique_id=1017137357]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113, 0.8, 4)
+script = ExtResource("33_3q6aw")
+collectible_id = "gym_ink_04"
+
+[node name="Jar" type="StaticBody3D" parent="." unique_id=2019568998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 117, 0, 4)
+script = ExtResource("34_bl1ua")
+jar_id = "gym_jar"
+
+[node name="Treat" type="Area3D" parent="." unique_id=2005879180]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111, 0, -4)
+script = ExtResource("35_1ll45")
+
+[node name="Puddle" type="Area3D" parent="." unique_id=1285900701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107, 0, -6)
+script = ExtResource("36_i38ih")
+size = Vector3(2, 0.3, 2)
+
+[node name="Checkpoint" type="Area3D" parent="." unique_id=104727400]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99, 0, -4)
+script = ExtResource("37_h3svq")
+checkpoint_id = "gym_cp"

@@ -1,4 +1,4 @@
-## Laditelné hodnoty pohybu. Hráč má dva profily: profile_3d.tres (Sly) a profile_2d.tres (Rayman).
+## Laditelné hodnoty pohybu. Hráč má dva profily: profile_3d.tres (stealth hry) a profile_2d.tres (2D plošinovky).
 ## Ladí se v Inspectoru bez kódu: dvojklik na .tres v panelu Souborový systém.
 class_name MovementProfile
 extends Resource

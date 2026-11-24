@@ -36,6 +36,9 @@ func _draw_button(b: Variant) -> void:
 	var c: Vector2 = b.center
 	var r: float = b.radius
 	var pressed: bool = b.finger != -1
+	if String(b.icon) == "sneak":
+		var pl: Player = get_tree().get_first_node_in_group(&"player") as Player
+		pressed = pressed or (pl != null and pl.sneak_toggled)
 	draw_circle(c, r, FILL_PRESSED if pressed else FILL)
 	draw_arc(c, r, 0.0, TAU, 48, GOLD, 4.0)
 	var s: float = r * 0.45
@@ -54,6 +57,17 @@ func _draw_button(b: Variant) -> void:
 			draw_circle(c, s * 0.8, Color(0.75, 0.95, 0.25))
 			draw_arc(c + Vector2(-s * 0.8, 0), s * 0.6, -0.9, 0.9, 12, Color(1, 1, 1), 3.0)
 			draw_arc(c + Vector2(s * 0.8, 0), s * 0.6, PI - 0.9, PI + 0.9, 12, Color(1, 1, 1), 3.0)
+		"sneak":
+			# Plížení: dvě šipky dolů nad „zemí“.
+			for k: int in 2:
+				var o := Vector2(0, -s * 0.55 + k * s * 0.5)
+				draw_polyline(PackedVector2Array([c + o + Vector2(-s * 0.6, -s * 0.2), c + o + Vector2(0, s * 0.2), c + o + Vector2(s * 0.6, -s * 0.2)]), GOLD, 5.0)
+			draw_line(c + Vector2(-s * 0.8, s * 0.7), c + Vector2(s * 0.8, s * 0.7), GOLD, 5.0)
+		"dodge":
+			# Úhyb: zahnutá šipka (kotoul).
+			draw_arc(c, s * 0.7, PI * 0.2, PI * 1.6, 20, GOLD, 5.0)
+			var tip: Vector2 = c + Vector2(cos(PI * 0.2), sin(PI * 0.2)) * s * 0.7
+			draw_colored_polygon(PackedVector2Array([tip + Vector2(0, -s * 0.45), tip + Vector2(s * 0.4, s * 0.1), tip + Vector2(-s * 0.35, s * 0.15)]), GOLD)
 		"pause":
 			draw_rect(Rect2(c + Vector2(-s * 0.55, -s * 0.7), Vector2(s * 0.35, s * 1.4)), GOLD)
 			draw_rect(Rect2(c + Vector2(s * 0.2, -s * 0.7), Vector2(s * 0.35, s * 1.4)), GOLD)

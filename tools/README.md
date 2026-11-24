@@ -15,6 +15,26 @@ C:\Projekty\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script .
 | `test_step_c.gd` | ušní vrtulník (pád 2,5 m/s), přicvaknutí na cvičnou špičku, trasa přes 3 špičky na střechách |
 | `test_step_d.gd` | dotyk: joystick, tlačítko sprintu a skoku, rozhlížení, vypnutí myších akcí v dotykovém režimu |
 | `test_step_e.gd` | odpal tenisáku, zásah zvonu, otevření brány, míček neprolétá zdí |
+| `test_step_f.gd` | brána → vstup do obrazu (průlet kamery, inkoust), 2D režim a kamera z boku, rovina drží, odraz z houby + dvojskok na plošinu, pád do propasti → návrat na začátek 2D, výstup zpět do 3D |
+| `test_camera_2d_peek.gd` | 2D kamera: na kraji plošiny nad dírou se sníží a oddálí, uprostřed se vrátí |
+| `test_step_g.gd` | v0.2.2: zdraví, louže, checkpoint, smrt, strážný, pauza, menu (21 kontrol) |
+| `test_step_h.gd` | 2D kit (průchozí, rozpadající se, zvedací plošina) + Pokračovat na 2D checkpointu |
+| `test_step_i.gd` | v0.2.3: trubka, lano, římsa, vítr, zlaté kapky (9 kontrol) |
+| `test_step_j.gd` | v0.2.4: kruh 2D/3D, odraz od zdi, píst, úzká římsa, hudba (11 kontrol) |
+| `test_step_k.gd` | kapsářství u strážného (5 kontrol) |
+| `test_step_l.gd` | v0.2.5: plazení 3D/2D, druhý strážný (6 kontrol) |
+| `test_step_m.gd` | strážní: odlákání tenisákem, volání posil (3 kontroly) |
+| `check_strict_load.gd` | načte všechny hlavní scény (spouštět s override.cfg = přísná varování) |
+| `test_step_n.gd` | v0.2.6 loupež: klíč → trezor → krystal → dodávka → výsledky (8 kontrol) |
+| `test_step_o.gd` | v0.2.7 lasery: vestoje zábrana + poplach, plazením bez poplachu (4 kontroly) |
+| `test_step_p.gd` | kroky: plížení ticho, sprint = hluk pro strážné (2 kontroly) |
+| `test_step_q.gd` | v0.2.8: kaňky (skok, bok, hůl), sklenice se světluškami, piškot (7 kontrol) |
+| `test_step_r.gd` | v0.2.9: osa Y, FOV, citlivost, rekordy, kapitoly (9 kontrol) |
+| `test_ch2_canyon.gd` | kapitola 2 Kaňon: kapitola, lano přes řeku, celá loupež (12 kontrol) |
+| `test_step_t.gd` | v0.3.1 souboje: nápřah strážného, úhyb (5 kontrol) |
+| `test_dev_gym.gd` | tréninkové hřiště + dev menu (9 kontrol) |
+| `test_ch2_painting.gd` | kaňon: pouštní obraz – vstup, vítr, výstup (3 kontroly) |
+| `test_attack.gd` | kombo holí 1→2→3 (výpad, auto-cíl na figurínu), rozbití bedny, útok ve vzduchu jednou za skok, obnovení času po zastavení |
 | `test_step_e2_aim.gd` | míření (kamera, úkroky, výstřel, sprint potlačen), útok holí, přichycení jen ke kotvě, na kterou se díváš |
 
 ## Generátory scén

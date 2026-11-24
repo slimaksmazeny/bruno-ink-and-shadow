@@ -1,0 +1,116 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/platforms_2d/bouncy_mushroom.gd" id="1_a37v4"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xyjno"]
+height = 1.0
+radius = 0.28
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vf21c"]
+height = 0.3
+radius = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ao713"]
+albedo_color = Color(0.95, 0.9, 0.78, 1)
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7k1on"]
+top_radius = 0.28
+bottom_radius = 0.28
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k2aea"]
+albedo_color = Color(0.9, 0.25, 0.2, 1)
+roughness = 0.85
+emission_enabled = true
+emission = Color(0.9, 0.25, 0.2, 1)
+emission_energy_multiplier = 0.25
+
+[sub_resource type="SphereMesh" id="SphereMesh_plkkm"]
+radius = 0.95
+height = 0.95
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jjpt"]
+albedo_color = Color(1, 1, 0.95, 1)
+roughness = 0.85
+
+[sub_resource type="SphereMesh" id="SphereMesh_wl4ka"]
+radius = 0.11
+height = 0.22
+
+[sub_resource type="SphereMesh" id="SphereMesh_nd2ey"]
+radius = 0.11
+height = 0.22
+
+[sub_resource type="SphereMesh" id="SphereMesh_1nib8"]
+radius = 0.11
+height = 0.22
+
+[sub_resource type="SphereMesh" id="SphereMesh_v1p38"]
+radius = 0.11
+height = 0.22
+
+[sub_resource type="SphereMesh" id="SphereMesh_aq3t8"]
+radius = 0.11
+height = 0.22
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b7pxb"]
+size = Vector3(1.7, 0.5, 1.7)
+
+[node name="BouncyMushroom" type="Node3D" unique_id=1413315341]
+script = ExtResource("1_a37v4")
+
+[node name="Body" type="StaticBody3D" parent="." unique_id=806228035]
+collision_mask = 0
+
+[node name="Stem" type="CollisionShape3D" parent="Body" unique_id=1011101456]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_xyjno")
+
+[node name="CapShape" type="CollisionShape3D" parent="Body" unique_id=1718851463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("CylinderShape3D_vf21c")
+
+[node name="StemMesh" type="MeshInstance3D" parent="." unique_id=900907968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_ao713")
+mesh = SubResource("CylinderMesh_7k1on")
+
+[node name="Cap" type="Node3D" parent="." unique_id=1285465564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+
+[node name="Dome" type="MeshInstance3D" parent="Cap" unique_id=681647627]
+material_override = SubResource("StandardMaterial3D_k2aea")
+mesh = SubResource("SphereMesh_plkkm")
+
+[node name="Dot0" type="MeshInstance3D" parent="Cap" unique_id=392521677]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0.38, 0)
+material_override = SubResource("StandardMaterial3D_1jjpt")
+mesh = SubResource("SphereMesh_wl4ka")
+
+[node name="Dot1" type="MeshInstance3D" parent="Cap" unique_id=1235798641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16995935, 0.38, 0.52308106)
+material_override = SubResource("StandardMaterial3D_1jjpt")
+mesh = SubResource("SphereMesh_nd2ey")
+
+[node name="Dot2" type="MeshInstance3D" parent="Cap" unique_id=323341975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44495934, 0.38, 0.32328188)
+material_override = SubResource("StandardMaterial3D_1jjpt")
+mesh = SubResource("SphereMesh_1nib8")
+
+[node name="Dot3" type="MeshInstance3D" parent="Cap" unique_id=1167581295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44495934, 0.38, -0.32328188)
+material_override = SubResource("StandardMaterial3D_1jjpt")
+mesh = SubResource("SphereMesh_v1p38")
+
+[node name="Dot4" type="MeshInstance3D" parent="Cap" unique_id=1576667560]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16995935, 0.38, -0.52308106)
+material_override = SubResource("StandardMaterial3D_1jjpt")
+mesh = SubResource("SphereMesh_aq3t8")
+
+[node name="BounceArea" type="Area3D" parent="." unique_id=138327886]
+
+[node name="Shape" type="CollisionShape3D" parent="BounceArea" unique_id=1770065596]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+shape = SubResource("BoxShape3D_b7pxb")

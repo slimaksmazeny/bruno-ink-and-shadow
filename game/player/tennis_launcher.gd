@@ -12,7 +12,7 @@ const MAX_BALLS: int = 3
 static func compute_aim_dir(player: Player) -> Vector3:
 	var cam: Camera3D = player.camera.cam if player.camera != null else null
 	var spawn: Vector3 = player.visual.get_ball_spawn()
-	if cam == null:
+	if cam == null or player.mode == Player.Mode.MODE_2D:
 		return player.visual.get_forward()
 	var from: Vector3 = cam.global_position
 	var forward: Vector3 = -cam.global_transform.basis.z
@@ -28,6 +28,7 @@ static func compute_aim_dir(player: Player) -> Vector3:
 
 
 static func launch(player: Player, dir: Vector3) -> void:
+	AudioManager.play(&"shoot")
 	var balls: Array[Node] = player.get_tree().get_nodes_in_group(&"tennis_ball")
 	if balls.size() >= MAX_BALLS:
 		balls[0].queue_free()

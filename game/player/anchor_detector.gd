@@ -67,7 +67,8 @@ func _pick(allowed_types: Array) -> Anchor:
 		var angle_deg: float = 0.0
 		if flat.length() > 0.1:
 			angle_deg = rad_to_deg(flat.normalized().angle_to(forward))
-		if angle_deg > max_view_angle_deg and flat.length() > always_ok_distance:
+		# Ve 2D rozhoduje jen vzdálenost (kamera je z boku).
+		if player.mode == Player.Mode.MODE_3D and angle_deg > max_view_angle_deg and flat.length() > always_ok_distance:
 			continue
 		var score: float = to.length() + angle_deg * 0.06
 		if score < best_score:

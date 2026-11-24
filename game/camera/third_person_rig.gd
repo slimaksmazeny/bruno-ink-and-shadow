@@ -1,4 +1,4 @@
-## 3D kamera za zády Bruna (Sly styl). Nedrží skutečnou kameru – jen počítá, kde má být (CameraPoint).
+## 3D kamera za zády Bruna (stealth styl). Nedrží skutečnou kameru – jen počítá, kde má být (CameraPoint).
 ## Skutečnou Camera3D posouvá HybridCamera, která mezi tímto rigem a 2D rigem plynule míchá (Krok F).
 class_name ThirdPersonRig
 extends Node3D
@@ -43,7 +43,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if target == null:
 		return
-	if input_enabled:
+	# Ve 2D rozhlížení patří 2D kameře (ruční nahlédnutí nahoru/dolů).
+	var in_3d: bool = not (target is Player) or (target as Player).mode == Player.Mode.MODE_3D
+	if input_enabled and in_3d:
 		var look: Vector2 = InputManager.consume_look(delta) * lerpf(1.0, aim_look_scale, aim_blend)
 		yaw -= look.x
 		pitch = clampf(pitch - look.y, deg_to_rad(min_pitch_deg), deg_to_rad(max_pitch_deg))

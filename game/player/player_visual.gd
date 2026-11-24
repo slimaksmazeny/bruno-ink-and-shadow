@@ -18,6 +18,53 @@ var _yaw: float = 0.0
 var _squash: float = 1.0
 var _ear_spin: float = 0.0
 
+# Procedurální „živost“ (v0.2.6): krok, dech, ocas, plandání uší, cval nohou.
+var _phase: float = 0.0
+var _wag: float = 0.0
+var _excited: float = 0.0
+var _stand_base: Vector3
+var _sprint_base: Vector3
+var _legs: Array[Node3D] = []
+var _leg_base: Array[Vector3] = []
+var _tails: Array[Node3D] = []
+var _last_step_half: int = 0
+var _rolling: bool = false
+
+
+func _ready() -> void:
+	_stand_base = _stand.position
+	_sprint_base = _sprint.position
+	for n: String in ["LegFL", "LegFR", "LegBL", "LegBR"]:
+		var leg: Node3D = _sprint.get_node_or_null(n) as Node3D
+		if leg != null:
+			_legs.append(leg)
+			_leg_base.append(leg.rotation)
+	# Ocas (tenký, nahoru zahnutý) pro oba postoje.
+	var black: Material = ($Stand/Body as MeshInstance3D).material_override
+	_tails.append(_make_tail(_stand, Vector3(0, 0.55, 0.26), black))
+	_tails.append(_make_tail(_sprint, Vector3(0, 0.45, 0.62), black))
+	if not Engine.is_editor_hint():
+		Events.collectible_collected.connect(func(_id: String) -> void: _excited = 1.2)
+		Events.coins_changed.connect(func(_t: int) -> void: _excited = 1.5)
+
+
+func _make_tail(parent: Node3D, pos: Vector3, mat: Material) -> Node3D:
+	var pivot := Node3D.new()
+	pivot.name = "TailPivot"
+	pivot.position = pos
+	parent.add_child(pivot)
+	var m := MeshInstance3D.new()
+	var cyl := CylinderMesh.new()
+	cyl.top_radius = 0.015
+	cyl.bottom_radius = 0.045
+	cyl.height = 0.38
+	m.mesh = cyl
+	m.material_override = mat
+	m.position = Vector3(0, 0.15, 0.08)
+	m.rotation.x = deg_to_rad(35.0)
+	pivot.add_child(m)
+	return pivot
+
 
 func set_posture(new_posture: Posture) -> void:
 	posture = new_posture
@@ -53,7 +100,51 @@ func play_swing(duration: float) -> void:
 	tw.tween_property(cane, "rotation_degrees", Vector3(0, 0, -8), duration * 0.65).set_trans(Tween.TRANS_SINE)
 
 
+## Útok holí: 1. švih zprava doleva, 2. zleva doprava, 3. otočka o 360° (finále komba).
+func play_attack(combo: int, duration: float) -> void:
+	var cane: Node3D = $Stand/Cane
+	var tw: Tween = create_tween()
+	match combo:
+		1:
+			cane.rotation_degrees = Vector3(-80, 70, -20)
+			tw.tween_property(cane, "rotation_degrees", Vector3(-85, -80, -20), duration * 0.45).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		2:
+			cane.rotation_degrees = Vector3(-85, -80, -20)
+			tw.tween_property(cane, "rotation_degrees", Vector3(-80, 70, -20), duration * 0.45).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		_:
+			cane.rotation_degrees = Vector3(-90, 0, -20)
+			var spin: Node3D = $Stand
+			spin.rotation.y = 0.0
+			tw.parallel().tween_property(spin, "rotation:y", -TAU, duration * 0.6).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			tw.tween_callback(func() -> void: spin.rotation.y = 0.0)
+	tw.tween_property(cane, "rotation_degrees", Vector3(0, 0, -8), duration * 0.4).set_trans(Tween.TRANS_SINE)
+
+
+## Útok ve vzduchu: rychlá otočka celého Bruna s napřaženou holí.
+func play_air_attack(duration: float) -> void:
+	var cane: Node3D = $Stand/Cane
+	var spin: Node3D = $Stand
+	set_posture(Posture.STAND)
+	cane.rotation_degrees = Vector3(-90, 0, -20)
+	spin.rotation.y = 0.0
+	var tw: Tween = create_tween()
+	tw.tween_property(spin, "rotation:y", -TAU, duration * 0.8).set_trans(Tween.TRANS_SINE)
+	tw.tween_callback(func() -> void: spin.rotation.y = 0.0)
+	tw.tween_property(cane, "rotation_degrees", Vector3(0, 0, -8), duration * 0.2)
+
+
 ## Odkud tenisák vyletí (hrot hole ve výšce hrudníku).
+## Kotoul při úhybu: postava se jednou přetočí kolem boční osy.
+func play_roll(duration: float) -> void:
+	var tw: Tween = create_tween()
+	_rolling = true
+	_sprint.rotation.x = 0.0
+	tw.tween_property(_sprint, "rotation:x", -TAU, duration).set_trans(Tween.TRANS_SINE)
+	tw.tween_callback(func() -> void:
+		_sprint.rotation.x = 0.0
+		_rolling = false)
+
+
 func get_ball_spawn() -> Vector3:
 	return global_position + get_forward() * 0.7 + Vector3.UP * 0.9
 
@@ -92,7 +183,62 @@ func update_visual(delta: float, player: Player) -> void:
 	else:
 		rotation.z = 0.0
 
+	_animate_life(delta, player, horizontal.length())
+
 	_squash = lerpf(_squash, 1.0, 1.0 - exp(-10.0 * delta))
-	var crouch: float = 0.78 if player.is_sneaking and posture == Posture.STAND else 1.0
+	var crouch: float = 1.0
+	if player.is_sneaking:
+		crouch = 0.78 if posture == Posture.STAND else 0.72
 	var sy: float = _squash * crouch
 	scale = Vector3(1.0 / sqrt(_squash), sy, 1.0 / sqrt(_squash))
+
+
+func _animate_life(delta: float, player: Player, speed: float) -> void:
+	var grounded: bool = player.is_on_floor()
+	_phase += delta * (2.0 + speed * 2.6) if grounded else delta * 2.0
+	var moving: float = clampf(speed / 4.0, 0.0, 1.0) if grounded else 0.0
+	# Krok / cval: pohupování těla.
+	_footsteps(player, moving)
+	var bob: float = absf(sin(_phase)) * 0.06 * moving
+	var breathe: float = sin(Time.get_ticks_msec() * 0.003) * 0.008 * (1.0 - moving)
+	_stand.position = _stand_base + Vector3(0, bob + breathe, 0)
+	_stand.rotation.z = sin(_phase) * 0.05 * moving if not gliding else 0.0
+	_sprint.position = _sprint_base + Vector3(0, absf(sin(_phase)) * 0.08 * moving, 0)
+	if not _rolling:
+		_sprint.rotation.x = sin(_phase * 2.0) * 0.06 * moving
+	for i: int in _legs.size():
+		var off: float = 0.0 if i < 2 else PI
+		var side: float = 0.0 if i % 2 == 0 else 0.35
+		_legs[i].rotation = _leg_base[i] + Vector3(sin(_phase + off + side) * 0.7 * moving, 0, 0)
+	# Ocas: klidné vrtění, rychlé při radosti (sebraná kapka, mince).
+	_excited = maxf(_excited - delta, 0.0)
+	var wag_speed: float = 6.0 + 14.0 * minf(_excited, 1.0) + 4.0 * moving
+	_wag += delta * wag_speed
+	var amp: float = 0.35 + 0.35 * minf(_excited, 1.0)
+	for t: Node3D in _tails:
+		t.rotation.y = sin(_wag) * amp
+		t.rotation.x = -0.25 * moving
+	# Uši plandají s krokem a ve vzduchu (kromě vrtulníku).
+	if not gliding:
+		var flop: float = sin(_phase * 2.0) * 10.0 * moving
+		var air: float = clampf(-player.velocity.y * 2.5, -30.0, 30.0) if not grounded else 0.0
+		var hinge_l: Node3D = _ears.get_node("EarHingeL") as Node3D
+		var hinge_r: Node3D = _ears.get_node("EarHingeR") as Node3D
+		hinge_l.rotation_degrees.x = lerpf(hinge_l.rotation_degrees.x, flop - air, 1.0 - exp(-12.0 * delta))
+		hinge_r.rotation_degrees.x = lerpf(hinge_r.rotation_degrees.x, -flop - air, 1.0 - exp(-12.0 * delta))
+
+
+## Krok při každém „dopadu“ fáze chůze. Plížení = skoro neslyšně, sprint = hlasitě
+## a hluk, který uslyší strážní v okolí (Events.noise_made).
+func _footsteps(player: Player, moving: float) -> void:
+	var half: int = int(floor(_phase / PI))
+	if half == _last_step_half:
+		return
+	_last_step_half = half
+	if moving < 0.15 or not player.is_on_floor():
+		return
+	var sprinting: bool = posture == Posture.SPRINT and not player.is_sneaking
+	var vol: float = -26.0 if player.is_sneaking else (-8.0 if sprinting else -16.0)
+	AudioManager.play(&"step", vol, 1.0 if sprinting else 1.15, 0.12)
+	if sprinting:
+		Events.noise_made.emit(player.global_position, 5.0)
