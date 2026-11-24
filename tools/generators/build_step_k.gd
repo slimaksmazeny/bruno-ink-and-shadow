@@ -33,6 +33,7 @@ func _initialize() -> void:
 	skm.albedo_color = Color(0.95, 0.9, 0.78)
 	sky.material_override = skm
 	sky.position = Vector3(245, 40, -120)
+	sky.layers = 2
 	_add(g, sky)
 	# x střed dráhy ~245; čím dál (záporné z), tím širší a světlejší (atmosféra).
 	_layer(g, "FarHills", 0, Vector3(245, 2, -60), 360.0, 22.0, Color(0.72, 0.66, 0.78), 7)
@@ -49,6 +50,7 @@ func _initialize() -> void:
 	mm.albedo_color = Color(0.88, 0.38, 0.28)
 	moon.material_override = mm
 	moon.position = Vector3(265, 30, -90)
+	moon.layers = 2
 	_add(g, moon)
 	var packed := PackedScene.new()
 	var err: Error = packed.pack(lvl)
@@ -67,7 +69,7 @@ func _layer(parent: Node, n: String, style: int, pos: Vector3, w: float, h: floa
 	m.set("width", w)
 	m.set("height", h)
 	m.set("color", c)
-	m.set("seed", s)
+	m.set("shape_seed", s)
 	m.position = pos
 	_add(parent, m)
 

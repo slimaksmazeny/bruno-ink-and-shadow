@@ -1078,39 +1078,41 @@ text = "GB_SIGN_CRAWL"
 font_size = 64
 outline_size = 16
 
-[node name="Backdrop2D" type="Node3D" parent="." unique_id=1556291725]
+[node name="Backdrop2D" type="Node3D" parent="." unique_id=1167512159]
 
-[node name="PaperSky" type="MeshInstance3D" parent="Backdrop2D" unique_id=1976314885]
+[node name="PaperSky" type="MeshInstance3D" parent="Backdrop2D" unique_id=329159923]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245, 40, -120)
+layers = 2
 material_override = SubResource("StandardMaterial3D_3ge00")
 mesh = SubResource("QuadMesh_t3sgn")
 
-[node name="FarHills" type="MeshInstance3D" parent="Backdrop2D" unique_id=1903831946]
+[node name="FarHills" type="MeshInstance3D" parent="Backdrop2D" unique_id=673854384]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245, 2, -60)
 script = ExtResource("36_3ge00")
 width = 360.0
 height = 22.0
 color = Color(0.72, 0.66, 0.78, 1)
-seed = 7
+shape_seed = 7
 
-[node name="MidRoofs" type="MeshInstance3D" parent="Backdrop2D" unique_id=1441841886]
+[node name="MidRoofs" type="MeshInstance3D" parent="Backdrop2D" unique_id=1114305981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245, -1, -32)
 script = ExtResource("36_3ge00")
 style = 2
 width = 220.0
 height = 9.0
 color = Color(0.42, 0.35, 0.55, 1)
-seed = 3
+shape_seed = 3
 
-[node name="NearTrees" type="MeshInstance3D" parent="Backdrop2D" unique_id=471314556]
+[node name="NearTrees" type="MeshInstance3D" parent="Backdrop2D" unique_id=479267183]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245, -2, -14)
 script = ExtResource("36_3ge00")
 style = 1
 height = 6.5
 color = Color(0.14, 0.11, 0.26, 1)
-seed = 11
+shape_seed = 11
 
-[node name="InkSun" type="MeshInstance3D" parent="Backdrop2D" unique_id=1157637762]
+[node name="InkSun" type="MeshInstance3D" parent="Backdrop2D" unique_id=582012903]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 265, 30, -90)
+layers = 2
 material_override = SubResource("StandardMaterial3D_y72es")
 mesh = SubResource("SphereMesh_ovqxi")

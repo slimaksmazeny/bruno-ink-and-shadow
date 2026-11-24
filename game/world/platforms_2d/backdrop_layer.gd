@@ -1,11 +1,13 @@
 ## Vrstva pozadí pro 2D (obraz): plochá silueta kopců / stromů / střech v dané hloubce.
 ## Kamera ve 2D má perspektivu, takže vzdálenější vrstvy se samy hýbou pomaleji (parallax).
-## Tvar se generuje z `seed` – vlastní procedurální kresba, žádné převzaté obrázky.
+## Tvar se generuje z `shape_seed` – vlastní procedurální kresba, žádné převzaté obrázky.
 @tool
 class_name BackdropLayer
 extends MeshInstance3D
 
 enum Style { HILLS, TREES, ROOFS }
+
+const BACKDROP_LAYER: int = 2
 
 @export var style: Style = Style.HILLS:
 	set(v):
@@ -25,9 +27,9 @@ enum Style { HILLS, TREES, ROOFS }
 	set(v):
 		color = v
 		_rebuild()
-@export var seed: int = 1:
+@export var shape_seed: int = 1:
 	set(v):
-		seed = v
+		shape_seed = v
 		_rebuild()
 
 
@@ -39,7 +41,7 @@ func _rebuild() -> void:
 	if not is_inside_tree():
 		return
 	var rng := RandomNumberGenerator.new()
-	rng.seed = seed
+	rng.seed = shape_seed
 	var top: PackedVector2Array = _outline(rng)
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -63,6 +65,8 @@ func _rebuild() -> void:
 	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	material_override = mat
 	cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	# Vrstva 2 = jen 2D pozadí; HybridCamera ji ukazuje jen ve 2D.
+	layers = BACKDROP_LAYER
 
 
 func _outline(rng: RandomNumberGenerator) -> PackedVector2Array:

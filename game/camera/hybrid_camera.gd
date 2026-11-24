@@ -36,6 +36,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	# 2D pozadí (vrstva 2) je vidět jen ve 2D – ve 3D ulici by zakrylo noční nebe.
+	cam.set_cull_mask_value(BackdropLayer.BACKDROP_LAYER, blend > 0.5)
 	_apply()
 	if _shake_left > 0.0:
 		# Zatřesení při zásahu – jemně, ať se nikomu neudělá špatně.

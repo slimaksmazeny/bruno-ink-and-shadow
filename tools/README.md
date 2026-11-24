@@ -24,6 +24,7 @@ C:\Projekty\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script .
 | `test_step_k.gd` | kapsářství u strážného (5 kontrol) |
 | `test_step_l.gd` | v0.2.5: plazení 3D/2D, druhý strážný (6 kontrol) |
 | `test_step_m.gd` | strážní: odlákání tenisákem, volání posil (3 kontroly) |
+| `check_strict_load.gd` | načte všechny hlavní scény (spouštět s override.cfg = přísná varování) |
 | `test_attack.gd` | kombo holí 1→2→3 (výpad, auto-cíl na figurínu), rozbití bedny, útok ve vzduchu jednou za skok, obnovení času po zastavení |
 | `test_step_e2_aim.gd` | míření (kamera, úkroky, výstřel, sprint potlačen), útok holí, přichycení jen ke kotvě, na kterou se díváš |
 
