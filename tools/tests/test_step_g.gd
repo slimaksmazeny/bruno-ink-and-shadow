@@ -43,7 +43,7 @@ func _physics_process(_d: float) -> bool:
 	match f:
 		5:
 			check("hud_exists", current_scene.get_node_or_null("Hud") != null)
-			check("ink_drops_55", get_nodes_in_group(&"ink_drop").size() == 55, str(get_nodes_in_group(&"ink_drop").size()))
+			check("ink_drops_58", get_nodes_in_group(&"ink_drop").size() == 58, str(get_nodes_in_group(&"ink_drop").size()))
 			check("guard_exists", g != null)
 			check("audio_buses", AudioServer.get_bus_index(&"SFX") != -1 and AudioServer.get_bus_index(&"Music") != -1)
 			check("full_health", p.health == 3)

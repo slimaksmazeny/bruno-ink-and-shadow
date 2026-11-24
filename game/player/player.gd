@@ -202,6 +202,19 @@ func take_damage(amount: int, from: Vector3) -> bool:
 	return true
 
 
+## Je nad bodem `at` nízký strop (0,6–1,35 m)? → Bruno se musí plazit.
+func has_low_ceiling(at: Vector3) -> bool:
+	var q := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 0.6, at + Vector3.UP * 1.35, 1)
+	q.exclude = [get_rid()]
+	return not get_world_3d().direct_space_state.intersect_ray(q).is_empty()
+
+
+## Plazení: nízká kolize (CollisionLow) místo stojící kapsle.
+func set_low_collision(on: bool) -> void:
+	($CollisionStand as CollisionShape3D).disabled = on
+	($CollisionLow as CollisionShape3D).disabled = not on
+
+
 ## Těleso, na kterém Bruno stojí (nebo null).
 func get_floor_body() -> Object:
 	if not is_on_floor():

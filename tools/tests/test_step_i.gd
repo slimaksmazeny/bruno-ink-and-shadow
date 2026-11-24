@@ -53,7 +53,7 @@ func _physics_process(_d: float) -> bool:
 			var total: int = 0
 			for d in get_nodes_in_group(&"ink_drop"):
 				total += d.value()
-			check("drop_total_with_golden", get_nodes_in_group(&"ink_drop").size() == 55 and total == 67, "count=%d total=%d" % [get_nodes_in_group(&"ink_drop").size(), total])
+			check("drop_total_with_golden", get_nodes_in_group(&"ink_drop").size() == 58 and total == 70, "count=%d total=%d" % [get_nodes_in_group(&"ink_drop").size(), total])
 			put(Vector3(-11, 0.05, -4.7), Vector3.FORWARD)
 		20:
 			tap(&"action")
