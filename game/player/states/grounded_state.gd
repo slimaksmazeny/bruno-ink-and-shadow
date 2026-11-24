@@ -54,8 +54,11 @@ static func pick_ground_state(p: Player) -> StringName:
 	if Input.is_action_pressed(&"aim") and p.mode == Player.Mode.MODE_3D:
 		return &"Aim"
 	var strength: float = p.get_move_strength()
-	# Nízký strop nad Brunem nebo těsně před ním → plazení.
-	if p.has_low_ceiling(p.global_position) or (strength > 0.05 and p.has_low_ceiling(p.global_position + p.get_move_dir().normalized() * 0.55)):
+	# Plazení: pod nízkým stropem zůstat (nejde vstát), k nízké překážce před Brunem
+	# se proplazí jen se stisknutým plížením (Ctrl / L3) – samo se nezapíná.
+	if p.has_low_ceiling(p.global_position):
+		return &"Crawl"
+	if p.wants_sneak() and strength > 0.05 and p.has_low_ceiling(p.global_position + p.get_move_dir().normalized() * 0.55):
 		return &"Crawl"
 	if strength < 0.05:
 		return &"Idle"

@@ -43,5 +43,5 @@ GB_SIGN_GUARD,"Strážný: připlíž se (Ctrl / L3) zezadu – E / ○ = ukrás
 GB_SIGN_HAZARD,"Pozor, žíravý inkoust!","Careful, corrosive ink!"
 GB_SIGN_PARKOUR,"Parkour: E / ○ u modrých jisker – trubka nahoru, lano na sloup, římsa vpravo (z bedny)","Parkour: E / ○ at blue sparkles – pipe up, rope to the pillar, ledge on the right (from the crate)"
 HUD_PICKPOCKET,Ukradeno! ¤,Pickpocketed! ¤
-GB_SIGN_CRAWL,"Pod nízké věci se Bruno proplazí sám",Bruno crawls under low things by himself
+GB_SIGN_CRAWL,"Plazení: drž plížení (Ctrl / L3) u nízké překážky","Crawl: hold sneak (Ctrl / L3) at a low obstacle"
 UI_SETTINGS_COMIC,Komiksový vzhled,Comic look

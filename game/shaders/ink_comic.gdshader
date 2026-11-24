@@ -16,7 +16,7 @@ uniform float bands : hint_range(2.0, 8.0) = 4.0;
 // 0 = původní barvy, 1 = plné stupně.
 uniform float band_strength : hint_range(0.0, 1.0) = 0.65;
 uniform float saturation : hint_range(0.5, 1.6) = 1.15;
-uniform float grain : hint_range(0.0, 0.1) = 0.025;
+uniform float grain : hint_range(0.0, 0.1) = 0.004;
 // Obrysy daleko slábnou, ať horizont není čmáranice.
 uniform float fade_start = 35.0;
 uniform float fade_end = 90.0;

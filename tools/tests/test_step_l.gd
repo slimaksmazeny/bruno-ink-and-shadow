@@ -38,11 +38,15 @@ func _physics_process(_d: float) -> bool:
 			p.global_position = Vector3(1.5, 0.05, 11)
 			p.camera.rig_3d.snap_behind(Vector3.RIGHT)
 			Input.action_press(&"move_forward")
+		30:
+			check("no_auto_crawl_without_sneak", not saw_crawl and p.global_position.x < 3.3, "%s x=%.2f" % [st(), p.global_position.x])
+			p.sneak_toggled = true
 		100:
 			check("crawl_3d_entered", saw_crawl, st())
 			check("crawl_low_collision", st() != "Crawl" or p.get_node("CollisionStand").disabled)
 		200:
 			Input.action_release(&"move_forward")
+			p.sneak_toggled = false
 			check("crawl_3d_through", p.global_position.x > 7.2 and st() != "Crawl", "%s %s" % [st(), p.global_position])
 			check("stand_collision_back", not p.get_node("CollisionStand").disabled)
 			saw_crawl = false
@@ -51,6 +55,7 @@ func _physics_process(_d: float) -> bool:
 			p.camera.side_rig.snap()
 			p.global_position = Vector3(205.0, 0.05, 0)
 			p.velocity = Vector3.ZERO
+			p.sneak_toggled = true
 			Input.action_press(&"move_right")
 		320:
 			Input.action_release(&"move_right")

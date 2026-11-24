@@ -1,5 +1,5 @@
-## Plazení pod nízkými překážkami (stoly, trubky, škvíry). Spustí se samo, když je nad
-## Brunem nebo těsně před ním nízký strop. Nízká kolize, pomalejší pohyb, bez skoku pod stropem.
+## Plazení pod nízkými překážkami (stoly, trubky, škvíry). Spustí se plížením (Ctrl / L3)
+## u nízké překážky; pod stropem Bruno zůstane plazit, dokud nevyleze. Nízká kolize, pomalejší pohyb, bez skoku pod stropem.
 extends GroundedState
 
 const CRAWL_SPEED: float = 2.4
