@@ -11,6 +11,12 @@ const STEP_KEYS: Array[String] = ["MISSION_STEAL_KEY", "MISSION_OPEN_VAULT", "MI
 @export var key_id: String = "vault_key"
 ## Jméno kapitoly – pod ním se ukládají kapky, světlušky a rekordy.
 @export var chapter_id: String = "greybox"
+## Finále: po vzetí pokladu poplach a odpočet útěku (s). 0 = bez odpočtu.
+@export var escape_time: float = 0.0
+
+## Zbývající čas útěku (jen v kroku ESCAPE s odpočtem), jinak < 0.
+var escape_left: float = -1.0
+var _alarm_pulse: float = 0.0
 
 var step: Step = Step.STEAL_KEY
 var knockouts: int = 0
@@ -96,8 +102,33 @@ func notify(event: StringName) -> void:
 		return
 	step = next
 	Events.mission_step_changed.emit(int(step))
+	if step == Step.ESCAPE and escape_time > 0.0:
+		escape_left = escape_time
+		AudioManager.play(&"alert", 4.0, 0.8)
+		AudioManager.play_music(&"sneak_loop", 0.5, 1.25)
+	elif step == Step.DONE:
+		escape_left = -1.0
+		AudioManager.play_music(&"sneak_loop", 1.0, 1.0)
 	if step == Step.DONE:
 		_complete()
+
+
+func _process(delta: float) -> void:
+	if step != Step.ESCAPE or escape_left < 0.0 or get_tree().paused:
+		return
+	escape_left -= delta
+	# Poplach: strážní každé 2 s „vědí“, kde Bruno je, a běží za ním.
+	_alarm_pulse -= delta
+	var p: Player = get_tree().get_first_node_in_group(&"player") as Player
+	if _alarm_pulse <= 0.0 and p != null:
+		_alarm_pulse = 2.0
+		for n: Node in get_tree().get_nodes_in_group(&"guard"):
+			(n as Guard).investigate(p.global_position)
+	if escape_left <= 0.0 and p != null:
+		# Chytili ho: zpět na checkpoint, odpočet znovu.
+		escape_left = escape_time
+		Events.mission_caught.emit()
+		p.die()
 
 
 func _complete() -> void:

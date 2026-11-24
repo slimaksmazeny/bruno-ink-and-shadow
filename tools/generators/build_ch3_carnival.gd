@@ -169,6 +169,7 @@ func _actors() -> void:
 	var m := Node.new()
 	m.name = "Mission"
 	m.set_script(load("res://levels/mission.gd"))
+	m.set("escape_time", 120.0)
 	m.set("chapter_id", "carnival")
 	m.set("key_id", "booth_key")
 	_add(lvl, m)

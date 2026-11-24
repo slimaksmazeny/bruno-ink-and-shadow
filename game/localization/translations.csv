@@ -48,7 +48,7 @@ UI_SETTINGS_COMIC,Komiksový vzhled,Comic look
 MISSION_STEAL_KEY,Ukradni klíč od trezoru strážnému (zezadu E / ○ – hledej zlatý klíč u pasu),Steal the vault key from a guard (from behind E / ○ – look for the gold key on a belt)
 MISSION_OPEN_VAULT,Otevři trezor (hvězda na radaru),Open the vault (star on the radar)
 MISSION_TAKE_TREASURE,Vezmi inkoustový krystal,Take the ink crystal
-MISSION_ESCAPE,Uteč k dodávce u startu!,Escape to the van near the start!
+MISSION_ESCAPE,Uteč k dodávce u startu! (poplach – strážní tě hledají),Escape to the van near the start! (alarm – guards are hunting you)
 MISSION_DONE,Loupež dokončena,Heist complete
 HUD_OBJECTIVE,Cíl:,Goal:
 HUD_KEY,Máš klíč!,Got the key!
@@ -92,3 +92,4 @@ UPG_STUN_BALL,Omračující tenisák,Stun ball
 UPG_STUN_BALL_DESC,míček omráčí strážného,the ball stuns guards
 UPG_FAST_CRAWL,Rychlé plazení,Fast crawl
 UPG_FAST_CRAWL_DESC,plazení o 60 % rychlejší,crawling 60 % faster
+HUD_CAUGHT,Chytili tě! Zkus to znovu z checkpointu,They caught you! Try again from the checkpoint

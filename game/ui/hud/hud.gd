@@ -13,6 +13,7 @@ var _fly_label: Label
 var _objective: Label
 var _prompt: Label
 var _player: Player
+var _escape: Label
 var _toast: Label
 var _alert: Label
 var _idle: float = 0.0
@@ -77,6 +78,15 @@ func _ready() -> void:
 	Events.mission_step_changed.connect(func(_s: int) -> void:
 		_refresh_objective()
 		show_toast(tr(_objective_key())))
+	_escape = _make_label(46)
+	_escape.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_escape.position = Vector2(-200, 60)
+	_escape.custom_minimum_size.x = 400
+	_escape.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_escape.add_theme_color_override("font_color", Color(1, 0.35, 0.25))
+	_escape.visible = false
+	root.add_child(_escape)
+	Events.mission_caught.connect(func() -> void: show_toast(tr("HUD_CAUGHT")))
 	Events.laser_alarm.connect(func(_p: Vector3) -> void: show_toast(tr("HUD_LASER")))
 	Events.key_obtained.connect(func(_k: String) -> void: show_toast(tr("HUD_KEY")))
 	_refresh_objective.call_deferred()
@@ -115,6 +125,11 @@ func _process(delta: float) -> void:
 	_ink_box.modulate.a = move_toward(_ink_box.modulate.a, target_a, delta * 2.0)
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group(&"player") as Player
+	var m: Mission = get_tree().get_first_node_in_group(&"mission") as Mission
+	_escape.visible = m != null and m.escape_left >= 0.0 and m.step == Mission.Step.ESCAPE
+	if _escape.visible:
+		_escape.text = "⏱ %d" % ceili(m.escape_left)
+		_escape.scale = Vector2.ONE * (1.0 + (0.15 if m.escape_left < 10.0 and fmod(m.escape_left, 1.0) > 0.5 else 0.0))
 	var it: Node = Interact.nearest(_player) if _player != null else null
 	_prompt.visible = it != null
 	if it != null:
