@@ -29,6 +29,8 @@ func _ready() -> void:
 	rig_3d.snap_to_target()
 	side_rig.target = target as Player
 	cam.current = true
+	fov_3d = Settings.fov_3d
+	Settings.graphics_changed.connect(func() -> void: fov_3d = Settings.fov_3d)
 	ink_post = InkPost.new()
 	ink_post.name = "InkPost"
 	cam.add_child(ink_post)

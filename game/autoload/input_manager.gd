@@ -20,6 +20,8 @@ var pad_name: String = ""
 var touch_controls_visible: bool = false
 var mouse_sensitivity: float = 0.003
 var stick_sensitivity: float = 3.0
+## Obrácená svislá osa kamery (nastavuje Settings).
+var invert_y: bool = false
 
 var _mouse_look: Vector2 = Vector2.ZERO
 ## Akce navázané na tlačítka myši, dočasně odebrané, když je zapnutý dotykový HUD.
@@ -70,6 +72,8 @@ func consume_look(delta: float) -> Vector2:
 	var out: Vector2 = (_mouse_look + _touch_look) * mouse_sensitivity + stick * stick_sensitivity * delta
 	_mouse_look = Vector2.ZERO
 	_touch_look = Vector2.ZERO
+	if invert_y:
+		out.y = -out.y
 	return out
 
 

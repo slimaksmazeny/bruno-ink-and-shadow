@@ -43,6 +43,25 @@ func has_key(key_id: String) -> bool:
 	return key_id in keys
 
 
+## Nejlepší čas dokončení kapitoly (s), nebo -1. Ukládá se do progress.best.<kapitola>.
+func best_time(chapter_id: String) -> float:
+	var best: Dictionary = data.get("progress", {}).get("best", {})
+	return float((best.get(chapter_id, {}) as Dictionary).get("time", -1.0))
+
+
+## Zapíše výsledek; vrací true, když je to nový rekord.
+func record_result(chapter_id: String, seconds: float) -> bool:
+	if not data.has("progress"):
+		data["progress"] = {}
+	if not data["progress"].has("best"):
+		data["progress"]["best"] = {}
+	var prev: float = best_time(chapter_id)
+	var is_record: bool = prev < 0.0 or seconds < prev
+	if is_record:
+		data["progress"]["best"][chapter_id] = {"time": seconds}
+	return is_record
+
+
 ## Mince (z kapsářství). Ukládají se do progress.coins.
 func get_coins() -> int:
 	return int(data.get("progress", {}).get("coins", 0))

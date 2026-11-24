@@ -51,6 +51,7 @@ func _ready() -> void:
 		_add("UI_MENU_NEW_GAME", _on_new_game)
 	else:
 		_first = _add("UI_MENU_PLAY", _on_new_game)
+	_add("UI_MENU_CHAPTERS", _on_chapters)
 	_add("UI_MENU_SETTINGS", _on_settings)
 	if OS.get_name() not in ["Web", "iOS"]:
 		_add("UI_MENU_QUIT", func() -> void: get_tree().quit())
@@ -96,6 +97,61 @@ func _on_continue() -> void:
 	else:
 		GameState.reset()
 	start_game()
+
+
+## Kapitoly: zatím jedna hratelná (testovací ulice), další jsou zamčené náhledy.
+const CHAPTERS: Array[Dictionary] = [
+	{"id": "greybox", "title": "CHAPTER_1", "scene": FIRST_LEVEL},
+	{"id": "ch2", "title": "CHAPTER_2", "scene": ""},
+	{"id": "ch3", "title": "CHAPTER_3", "scene": ""},
+]
+
+var _chapters_box: VBoxContainer
+
+
+func _on_chapters() -> void:
+	_menu.visible = false
+	if _chapters_box == null:
+		_chapters_box = VBoxContainer.new()
+		_chapters_box.alignment = BoxContainer.ALIGNMENT_CENTER
+		_menu.get_parent().add_child(_chapters_box)
+	for c: Node in _chapters_box.get_children():
+		c.queue_free()
+	var first: Button = null
+	for ch: Dictionary in CHAPTERS:
+		var playable: bool = not String(ch["scene"]).is_empty()
+		var label: String = tr(String(ch["title"]))
+		if playable:
+			var best: float = GameState.best_time(String(ch["id"]))
+			if best > 0.0:
+				label += "   ★ %s" % ResultsScreen._fmt(best)
+		else:
+			label += "   🔒 " + tr("CHAPTER_SOON")
+		var b := UiStyle.make_button(label, 520.0)
+		b.disabled = not playable
+		if playable:
+			var scene: String = String(ch["scene"])
+			b.pressed.connect(func() -> void:
+				if not SaveManager.load_game(1):
+					GameState.reset()
+				_start_scene(scene))
+			if first == null:
+				first = b
+		_chapters_box.add_child(b)
+	var back := UiStyle.make_button("UI_BACK", 520.0)
+	back.pressed.connect(func() -> void:
+		_chapters_box.visible = false
+		_menu.visible = true
+		_first.grab_focus.call_deferred())
+	_chapters_box.add_child(back)
+	_chapters_box.visible = true
+	(first if first != null else back).grab_focus.call_deferred()
+
+
+func _start_scene(scene: String) -> void:
+	await InkWipe.cover(0.35)
+	get_tree().change_scene_to_file(scene)
+	await InkWipe.reveal(0.4)
 
 
 func _on_settings() -> void:

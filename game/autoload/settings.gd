@@ -16,6 +16,11 @@ var sfx_volume: float = 0.9
 ## Komiksový vzhled: inkoustové obrysy + světlo po stupních.
 var comic_shading: bool = true
 var mouse_sensitivity: float = 0.003
+## Citlivost pravé páčky (rad/s) a obrácená svislá osa kamery.
+var stick_sensitivity: float = 3.0
+var invert_y: bool = false
+## Zorné pole 3D kamery (stupně).
+var fov_3d: float = 70.0
 
 var _config: ConfigFile = ConfigFile.new()
 
@@ -35,12 +40,17 @@ func load_settings() -> void:
 		sfx_volume = float(_config.get_value("audio", "sfx_volume", 0.9))
 		comic_shading = bool(_config.get_value("graphics", "comic_shading", true))
 		mouse_sensitivity = float(_config.get_value("input", "mouse_sensitivity", 0.003))
+		stick_sensitivity = float(_config.get_value("input", "stick_sensitivity", 3.0))
+		invert_y = bool(_config.get_value("input", "invert_y", false))
+		fov_3d = float(_config.get_value("graphics", "fov_3d", 70.0))
 	else:
 		# První spuštění: čeština, pokud je systém česky, jinak angličtina.
 		locale = _detect_os_locale()
 	if not SUPPORTED_LOCALES.has(locale):
 		locale = FALLBACK_LOCALE
 	InputManager.mouse_sensitivity = mouse_sensitivity
+	InputManager.stick_sensitivity = stick_sensitivity
+	InputManager.invert_y = invert_y
 
 
 func save_settings() -> void:
@@ -50,6 +60,9 @@ func save_settings() -> void:
 	_config.set_value("audio", "sfx_volume", sfx_volume)
 	_config.set_value("graphics", "comic_shading", comic_shading)
 	_config.set_value("input", "mouse_sensitivity", mouse_sensitivity)
+	_config.set_value("input", "stick_sensitivity", stick_sensitivity)
+	_config.set_value("input", "invert_y", invert_y)
+	_config.set_value("graphics", "fov_3d", fov_3d)
 	var err: Error = _config.save(SETTINGS_PATH)
 	if err != OK:
 		push_error("Settings: nepodařilo se uložit %s (chyba %d)" % [SETTINGS_PATH, err])
@@ -100,5 +113,23 @@ func set_mouse_sensitivity(value: float) -> void:
 
 func set_comic_shading(on: bool) -> void:
 	comic_shading = on
+	graphics_changed.emit()
+	save_settings()
+
+
+func set_stick_sensitivity(value: float) -> void:
+	stick_sensitivity = clampf(value, 1.0, 7.0)
+	InputManager.stick_sensitivity = stick_sensitivity
+	save_settings()
+
+
+func set_invert_y(on: bool) -> void:
+	invert_y = on
+	InputManager.invert_y = on
+	save_settings()
+
+
+func set_fov(value: float) -> void:
+	fov_3d = clampf(value, 55.0, 95.0)
 	graphics_changed.emit()
 	save_settings()

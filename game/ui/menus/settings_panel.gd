@@ -10,8 +10,15 @@ var _first: Control
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	# Na malých obrazovkách (mobil) se nastavení posouvá.
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var vh: float = get_viewport().get_visible_rect().size.y if get_viewport() != null else 720.0
+	scroll.custom_minimum_size = Vector2(600, minf(660.0, vh * 0.82))
+	add_child(scroll)
 	var box := VBoxContainer.new()
-	add_child(box)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(box)
 	var title := Label.new()
 	title.text = "UI_MENU_SETTINGS"
 	title.add_theme_font_size_override("font_size", 40)
@@ -26,6 +33,15 @@ func _ready() -> void:
 	var sens: float = inverse_lerp(0.0005, 0.008, Settings.mouse_sensitivity)
 	_slider(box, "UI_SETTINGS_MOUSE", sens, func(v: float) -> void: Settings.set_mouse_sensitivity(lerpf(0.0005, 0.008, v)))
 
+	var pad: float = inverse_lerp(1.0, 7.0, Settings.stick_sensitivity)
+	_slider(box, "UI_SETTINGS_PAD", pad, func(v: float) -> void: Settings.set_stick_sensitivity(lerpf(1.0, 7.0, v)))
+	var fov: float = inverse_lerp(55.0, 95.0, Settings.fov_3d)
+	_slider(box, "UI_SETTINGS_FOV", fov, func(v: float) -> void: Settings.set_fov(lerpf(55.0, 95.0, v)))
+	var inv := CheckButton.new()
+	inv.text = "UI_SETTINGS_INVERT_Y"
+	inv.button_pressed = Settings.invert_y
+	inv.toggled.connect(Settings.set_invert_y)
+	box.add_child(inv)
 	var lang := UiStyle.make_button("UI_SETTINGS_LANGUAGE_BUTTON")
 	lang.pressed.connect(Settings.cycle_locale)
 	box.add_child(lang)

@@ -10,7 +10,7 @@ HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
 HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
 HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
 HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
-GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.8)","Bruno: Ink & Shadow — test street (v0.2.8)"
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.2.9)","Bruno: Ink & Shadow — test street (v0.2.9)"
 GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
 GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc / Start = pauza","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc / Start = pause"
 GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog
@@ -65,3 +65,13 @@ RESULTS_AGAIN,Hrát znovu,Play again
 HUD_LASER,Poplach! Laser tě prozradil,Alarm! The laser gave you away
 GB_SIGN_LASER,"Lasery: pod vysoký se proplaž (Ctrl / L3), blikající přeskoč nebo proběhni","Lasers: crawl under the high one (Ctrl / L3), jump or time the blinking one"
 RESULTS_FIREFLIES,Světlušky,Fireflies
+UI_SETTINGS_PAD,Citlivost ovladače,Gamepad sensitivity
+UI_SETTINGS_FOV,Zorné pole (FOV),Field of view (FOV)
+UI_SETTINGS_INVERT_Y,Obrátit osu Y kamery,Invert camera Y axis
+UI_MENU_CHAPTERS,Kapitoly,Chapters
+CHAPTER_1,1 · Testovací ulice,1 · Test street
+CHAPTER_2,2 · Kaňon,2 · Canyon
+CHAPTER_3,3 · Pouť,3 · Carnival
+CHAPTER_SOON,brzy,soon
+RESULTS_RECORD,nový rekord!,new record!
+RESULTS_BEST,Nejlepší čas,Best time

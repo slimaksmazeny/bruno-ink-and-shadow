@@ -40,7 +40,11 @@ func _ready() -> void:
 		total += d.value()
 		if d.collected:
 			got += d.value()
-	_row(box, tr("RESULTS_TIME"), "%d:%02d" % [int(secs / 60.0), int(secs) % 60])
+	var record: bool = GameState.record_result(InkDrop.CHAPTER_ID, secs)
+	_row(box, tr("RESULTS_TIME"), _fmt(secs) + ("   ★ " + tr("RESULTS_RECORD") if record else ""))
+	var best: float = GameState.best_time(InkDrop.CHAPTER_ID)
+	if not record and best > 0.0:
+		_row(box, tr("RESULTS_BEST"), _fmt(best))
 	_row(box, tr("RESULTS_INK"), "%d / %d" % [got, total])
 	_row(box, tr("RESULTS_COINS"), "¤ %d" % GameState.get_coins())
 	var jars: int = get_tree().get_nodes_in_group(&"firefly_jar").size()
@@ -84,3 +88,7 @@ func _close() -> void:
 	get_tree().paused = false
 	AudioManager.duck_music(false)
 	queue_free()
+
+
+static func _fmt(secs: float) -> String:
+	return "%d:%02d" % [int(secs / 60.0), int(secs) % 60]
