@@ -11,7 +11,7 @@ enum Mode { MODE_3D, MODE_2D }
 @export var camera: HybridCamera
 ## Pod touto výškou se Bruno vrátí na start (pád do propasti).
 @export var kill_y: float = -25.0
-## Počet životů (Sly-style: málo, ale rychlý návrat na checkpoint).
+## Počet životů (stealth styl: málo, ale rychlý návrat na checkpoint).
 @export var max_health: int = 3
 ## Jak dlouho po zásahu nejde Bruno znovu zranit (bliká).
 @export var invulnerable_time: float = 1.2
@@ -84,7 +84,7 @@ func _physics_process(delta: float) -> void:
 		visual.visible = _invulnerable <= 0.0 or fmod(_invulnerable, 0.16) > 0.07
 
 	if global_position.y < kill_y and not _dying:
-		# Pád do propasti stojí jeden život (Rayman), pak návrat na checkpoint.
+		# Pád do propasti stojí jeden život (2D plošinovky), pak návrat na checkpoint.
 		health -= 1
 		Events.player_health_changed.emit(health, max_health)
 		if health <= 0:
@@ -143,7 +143,7 @@ func consume_jump_buffer() -> bool:
 	return false
 
 
-## Zásah holí: krátké „zastavení času“ a zatřesení kamery – zásah je cítit (Sly feel).
+## Zásah holí: krátké „zastavení času“ a zatřesení kamery – zásah je cítit (stealth hry feel).
 func _on_cane_hit_landed(_target: Node, info: Dictionary) -> void:
 	var strong: bool = int(info.get("combo", 1)) >= 3
 	AudioManager.play(&"hit", 0.0, 0.85 if strong else 1.0)

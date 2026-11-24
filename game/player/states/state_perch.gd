@@ -1,4 +1,4 @@
-## Magnetické přitažení na špičku a balancování na ní (Sly styl).
+## Magnetické přitažení na špičku a balancování na ní (stealth styl).
 ## Skok = odraz ze špičky (dvojskok zůstává), akce = pustit se dolů.
 extends AnchorState
 

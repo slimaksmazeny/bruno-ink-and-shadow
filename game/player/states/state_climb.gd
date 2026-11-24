@@ -1,4 +1,4 @@
-## Šplhání po trubce / okapu (Sly). Nahoru/dolů = pohyb vpřed/vzad, do stran = obcházení trubky.
+## Šplhání po trubce / okapu (stealth hry). Nahoru/dolů = pohyb vpřed/vzad, do stran = obcházení trubky.
 ## Nahoře: tlač dál nahoru = vylézt na střechu. Dole: tlač dolů = seskočit.
 ## Skok = odraz od trubky (dvojskok zůstává), akce = pustit se.
 extends AnchorState

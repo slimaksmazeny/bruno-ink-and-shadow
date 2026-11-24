@@ -1,4 +1,4 @@
-## Stoupavý vítr / pára (Rayman). Když Bruno uvnitř plachtí ušima, vynese ho nahoru.
+## Stoupavý vítr / pára (2D plošinovky). Když Bruno uvnitř plachtí ušima, vynese ho nahoru.
 ## Bez plachtění jen trochu zpomalí pád. Funguje ve 2D i 3D.
 @tool
 class_name WindColumn

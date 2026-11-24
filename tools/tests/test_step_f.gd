@@ -64,7 +64,7 @@ func _physics_process(_d: float) -> bool:
 		600:
 			r["pit_respawn"] = "mode=%d pos=%s" % [p.mode, str(p.global_position.snapped(Vector3(0.1,0.1,0.1)))]
 			# go to exit portal
-			p.global_position = Vector3(243.5, 5.05, 0)
+			p.global_position = Vector3(284.5, 15.05, 0) # výstupní portál je od v0.2.4 na konci nové dráhy
 			p.velocity = Vector3.ZERO
 			Input.action_press("move_right")
 		620:

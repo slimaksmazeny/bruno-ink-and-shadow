@@ -10,6 +10,8 @@ const ANCHOR_STATES: Dictionary = {
 	Anchor.Type.PIPE: &"Climb",
 	Anchor.Type.LEDGE: &"LedgeHang",
 	Anchor.Type.ROPE: &"RopeWalk",
+	Anchor.Type.WALL: &"WallSneak",
+	Anchor.Type.RING: &"HookSwing",
 }
 
 var player: Player

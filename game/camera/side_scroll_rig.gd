@@ -1,4 +1,4 @@
-## 2D kamera z boku (Rayman styl). Vlastní transformace rigu = pozice a natočení kamery.
+## 2D kamera z boku (2D plošinovky styl). Vlastní transformace rigu = pozice a natočení kamery.
 ## Vodorovně: plynulý výhled dopředu ve směru běhu.
 ## Svisle: drží výšku, na které Bruno naposledy stál – při běžném skoku se nehoupe;
 ## posune se jen když Bruno vyletí / spadne mimo „mrtvou zónu“ (houba, pád do hloubky).

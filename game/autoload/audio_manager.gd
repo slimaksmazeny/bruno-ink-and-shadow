@@ -4,6 +4,7 @@
 extends Node
 
 const SFX_DIR: String = "res://audio/sfx/"
+const MUSIC_DIR: String = "res://audio/music/"
 const POOL_SIZE: int = 12
 const POOL_SIZE_3D: int = 8
 
@@ -14,6 +15,9 @@ var _next: int = 0
 var _next_3d: int = 0
 ## Ochrana proti „kulometu“ stejného zvuku ve stejném snímku.
 var _last_played: Dictionary = {}
+var _music: AudioStreamPlayer
+var _music_name: StringName = &""
+var _music_tween: Tween
 
 
 func _ready() -> void:
@@ -32,7 +36,53 @@ func _ready() -> void:
 		p3.max_distance = 45.0
 		add_child(p3)
 		_pool_3d.append(p3)
+	_music = AudioStreamPlayer.new()
+	_music.bus = &"Music"
+	_music.volume_db = -80.0
+	add_child(_music)
 	apply_volumes()
+
+
+## Hudba ze složky res://audio/music/<jméno>.wav – hraje ve smyčce, plynule se prolne.
+func play_music(track: StringName, fade: float = 1.0, pitch: float = 1.0) -> void:
+	if track == _music_name and _music.playing:
+		_music.pitch_scale = pitch
+		return
+	var path: String = MUSIC_DIR + String(track) + ".wav"
+	if not ResourceLoader.exists(path):
+		push_warning("AudioManager: chybí hudba %s" % path)
+		return
+	var stream: AudioStreamWAV = load(path) as AudioStreamWAV
+	if stream != null and stream.loop_mode == AudioStreamWAV.LOOP_DISABLED:
+		stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		stream.loop_begin = 0
+		stream.loop_end = int(stream.get_length() * float(stream.mix_rate))
+	_music_name = track
+	_music.stream = stream
+	_music.pitch_scale = pitch
+	_music.volume_db = -30.0
+	_music.play()
+	_fade_music(0.0, fade)
+
+
+func stop_music(fade: float = 0.8) -> void:
+	_music_name = &""
+	_fade_music(-60.0, fade, true)
+
+
+## Ztlumení hudby (pauza, dialog). on = true → tišší.
+func duck_music(on: bool) -> void:
+	if _music_name != &"":
+		_fade_music(-9.0 if on else 0.0, 0.25)
+
+
+func _fade_music(db: float, time: float, stop_after: bool = false) -> void:
+	if _music_tween != null:
+		_music_tween.kill()
+	_music_tween = create_tween()
+	_music_tween.tween_property(_music, "volume_db", db, maxf(time, 0.01))
+	if stop_after:
+		_music_tween.tween_callback(_music.stop)
 
 
 ## Přehraje zvuk bez polohy (UI, Brunovy vlastní zvuky).

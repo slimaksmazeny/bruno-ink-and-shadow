@@ -1,4 +1,4 @@
-## 3D kamera za zády Bruna (Sly styl). Nedrží skutečnou kameru – jen počítá, kde má být (CameraPoint).
+## 3D kamera za zády Bruna (stealth styl). Nedrží skutečnou kameru – jen počítá, kde má být (CameraPoint).
 ## Skutečnou Camera3D posouvá HybridCamera, která mezi tímto rigem a 2D rigem plynule míchá (Krok F).
 class_name ThirdPersonRig
 extends Node3D

@@ -66,6 +66,7 @@ func open() -> void:
 	_menu.visible = true
 	_settings.visible = false
 	get_tree().paused = true
+	AudioManager.duck_music(true)
 	InputManager.release_mouse()
 	AudioManager.play(&"ui_accept", 0.0, 0.8, 0.0)
 	_first.grab_focus.call_deferred()
@@ -77,6 +78,7 @@ func close() -> void:
 	is_open = false
 	_root.visible = false
 	get_tree().paused = false
+	AudioManager.duck_music(false)
 	if not InputManager.touch_controls_visible and OS.get_name() not in ["Android", "iOS"]:
 		InputManager.capture_mouse()
 

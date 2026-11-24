@@ -1,5 +1,5 @@
 ## Testovací HUD (CanvasLayer v levelu): životy vlevo nahoře, kapky inkoustu vpravo nahoře,
-## krátké hlášky uprostřed (checkpoint, poplach). Po chvíli klidu se kapky ztlumí (Rayman styl).
+## krátké hlášky uprostřed (checkpoint, poplach). Po chvíli klidu se kapky ztlumí (2D plošinovky styl).
 class_name Hud
 extends CanvasLayer
 
@@ -59,6 +59,7 @@ func _ready() -> void:
 	Events.checkpoint_reached.connect(func(_id: String) -> void: show_toast(tr("HUD_CHECKPOINT")))
 	Events.player_died.connect(func() -> void: show_toast(tr("HUD_OUCH")))
 	Events.guard_alert_changed.connect(_on_guard_alert)
+	AudioManager.play_music(&"sneak_loop")
 	_refresh_ink.call_deferred(false)
 	_init_health.call_deferred()
 

@@ -1,4 +1,4 @@
-## Skákací houba (Rayman 2D Platform Kit): dopadneš na klobouk → vymrští tě vysoko.
+## Skákací houba (2D plošinovky 2D Platform Kit): dopadneš na klobouk → vymrští tě vysoko.
 ## Po odrazu máš k dispozici ještě dvojskok i ušní vrtulník.
 class_name BouncyMushroom
 extends Node3D

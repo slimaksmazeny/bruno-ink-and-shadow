@@ -1,4 +1,4 @@
-## Útok holí ve stylu Sly Cooper: až 3 švihy za sebou (kombo), krátký výpad dopředu,
+## Útok holí ve stylu klasické 3D stealth plošinovky: až 3 švihy za sebou (kombo), krátký výpad dopředu,
 ## automatické natočení na nejbližší cíl před Brunem. Třetí švih = otočka s větším odhozením.
 ## msg {"combo": 1..3}
 extends GroundedState
@@ -65,7 +65,7 @@ func physics_update(delta: float) -> void:
 
 	if Input.is_action_just_pressed(&"attack") and _t >= COMBO_WINDOW_START:
 		_queued = true
-	# Po aktivní fázi jde útok zrušit skokem (jako ve Slyovi)
+	# Po aktivní fázi jde útok zrušit skokem (jako ve stealth hryovi)
 	if _t >= s[1] and player.consume_jump_buffer():
 		machine.transition_to(&"Air", {"jump": true})
 		return

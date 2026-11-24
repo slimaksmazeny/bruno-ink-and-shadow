@@ -1,4 +1,4 @@
-## Visení na římse a ručkování do stran (Sly). Doleva/doprava podle kamery.
+## Visení na římse a ručkování do stran (stealth hry). Doleva/doprava podle kamery.
 ## Nahoru nebo skok = vytáhnout se nahoru, dolů nebo akce = pustit se.
 extends AnchorState
 

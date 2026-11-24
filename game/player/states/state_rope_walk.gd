@@ -1,4 +1,4 @@
-## Chůze po laně (Sly). Pohyb podél lana podle kamery; balancování řeší PlayerVisual (set_perched).
+## Chůze po laně (stealth hry). Pohyb podél lana podle kamery; balancování řeší PlayerVisual (set_perched).
 ## Na konci lana sejde dolů na střechu. Skok = odraz (dvojskok zůstává), akce = seskočit.
 extends AnchorState
 

@@ -33,6 +33,8 @@
 [ext_resource type="Script" path="res://world/platforms_2d/moving_platform.gd" id="30_qdgu6"]
 [ext_resource type="Script" path="res://world/anchors/line_anchor.gd" id="32_qdgu6"]
 [ext_resource type="Script" path="res://world/platforms_2d/wind_column.gd" id="33_auagf"]
+[ext_resource type="Script" path="res://world/anchors/ring_anchor.gd" id="34_srukj"]
+[ext_resource type="Script" path="res://world/platforms_2d/piston.gd" id="35_3ge00"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yy3x5"]
 sky_top_color = Color(0.06, 0.07, 0.2, 1)
@@ -579,7 +581,7 @@ font_size = 64
 outline_size = 16
 
 [node name="ExitPortal" type="Area3D" parent="PaintingWorld" unique_id=8379489 node_paths=PackedStringArray("entry_portal") instance=ExtResource("13_srukj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 246, 5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 287, 15, 0)
 script = ExtResource("14_3ge00")
 entry_portal = NodePath("../../PaintingPortal")
 
@@ -1021,3 +1023,135 @@ modulate = Color(0.55, 0.8, 1, 1)
 text = "GB_SIGN_PARKOUR"
 font_size = 64
 outline_size = 16
+
+[node name="Track2D" type="Node3D" parent="." unique_id=523032283]
+
+[node name="Ring2D_1" type="Area3D" parent="Track2D" unique_id=375377114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 252.8, 9.2, 0)
+script = ExtResource("34_srukj")
+type = 5
+only_in_3d = false
+
+[node name="Floor4" type="CSGBox3D" parent="Track2D" unique_id=394753548]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 262.75, 0, 0)
+use_collision = true
+size = Vector3(13.5, 10, 4)
+material = SubResource("StandardMaterial3D_mtwri")
+
+[node name="ShaftWallL" type="CSGBox3D" parent="Track2D" unique_id=1386325883]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 264.5, 11.75, 0)
+use_collision = true
+size = Vector3(1, 8.5, 4)
+material = SubResource("StandardMaterial3D_mtwri")
+
+[node name="ShaftWallR" type="CSGBox3D" parent="Track2D" unique_id=404331671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 269, 10, 0)
+use_collision = true
+size = Vector3(1, 10, 4)
+material = SubResource("StandardMaterial3D_mtwri")
+
+[node name="TopDeck" type="CSGBox3D" parent="Track2D" unique_id=1448755717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 271.75, 12.5, 0)
+use_collision = true
+size = Vector3(4.5, 5, 4)
+material = SubResource("StandardMaterial3D_mtwri")
+
+[node name="Piston1" type="AnimatableBody3D" parent="Track2D" unique_id=1346947579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 276, 9, 0)
+script = ExtResource("35_3ge00")
+travel = Vector3(0, 5.6, 0)
+size = Vector3(2, 0.6, 4)
+
+[node name="Piston2" type="AnimatableBody3D" parent="Track2D" unique_id=536197791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278.5, 9, 0)
+script = ExtResource("35_3ge00")
+travel = Vector3(0, 5.6, 0)
+phase = 0.45
+size = Vector3(2, 0.6, 4)
+
+[node name="EndDeck" type="CSGBox3D" parent="Track2D" unique_id=709920871]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 285, 12.5, 0)
+use_collision = true
+size = Vector3(9, 5, 4)
+material = SubResource("StandardMaterial3D_mtwri")
+
+[node name="CpFloor4" type="Area3D" parent="Track2D" unique_id=79392188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 258, 5, 0)
+script = ExtResource("25_42daj")
+checkpoint_id = "cp_painting_floor4"
+plane_2d = true
+
+[node name="Ink00" type="Area3D" parent="Track2D" unique_id=44542149]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250.5, 7.2, 0)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t00"
+
+[node name="Ink01" type="Area3D" parent="Track2D" unique_id=1973788350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 252.8, 6.6, 0)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t01"
+
+[node name="Ink02" type="Area3D" parent="Track2D" unique_id=187341077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 255, 7.2, 0)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t02"
+
+[node name="Ink03" type="Area3D" parent="Track2D" unique_id=614967143]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 266.7, 8, 0)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t03"
+
+[node name="Ink04" type="Area3D" parent="Track2D" unique_id=1427183708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 266.7, 10.5, 0)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t04"
+
+[node name="Ink05" type="Area3D" parent="Track2D" unique_id=191845313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 266.7, 13, 0)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t05"
+
+[node name="Gold06" type="Area3D" parent="Track2D" unique_id=795571356]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 266.7, 16.2, 0)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t06"
+golden = true
+
+[node name="Ink07" type="Area3D" parent="Track2D" unique_id=1955200053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 277.25, 16.5, 0)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t07"
+
+[node name="Parkour2" type="Node3D" parent="." unique_id=1493444654]
+
+[node name="Ring3D_Gap" type="Area3D" parent="Parkour2" unique_id=1558068281]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.75, 5.2, 6)
+script = ExtResource("34_srukj")
+type = 5
+only_in_3d = false
+
+[node name="Ink08" type="Area3D" parent="Parkour2" unique_id=1902133770]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.75, 3, 6)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t08"
+
+[node name="WallLedgeHouseMid" type="Area3D" parent="Parkour2" unique_id=836212826]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 3, -7.98)
+script = ExtResource("32_qdgu6")
+length = 7.0
+type = 4
+
+[node name="Ink09" type="Area3D" parent="Parkour2" unique_id=1759178791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3.8, -7.5)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t09"
+
+[node name="Ink10" type="Area3D" parent="Parkour2" unique_id=1614460142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, -7.5)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t10"
+
+[node name="Ink11" type="Area3D" parent="Parkour2" unique_id=1603706761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3.8, -7.5)
+script = ExtResource("26_wwuq4")
+collectible_id = "gb_ink_t11"

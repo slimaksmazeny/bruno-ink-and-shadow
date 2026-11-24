@@ -1,4 +1,4 @@
-## Kotva = místo, na které se Bruno umí „přicvaknout“ tlačítkem akce (modré jiskry ve stylu Sly).
+## Kotva = místo, na které se Bruno umí „přicvaknout“ tlačítkem akce (modré jiskry ve stylu stealth hry).
 ## SPIRE = bod (špička). PIPE / LEDGE / ROPE = úsečka – viz LineAnchor (v0.2.3).
 @tool
 class_name Anchor

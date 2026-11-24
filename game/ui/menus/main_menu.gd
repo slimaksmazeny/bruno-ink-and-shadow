@@ -14,6 +14,7 @@ func _ready() -> void:
 	theme = UiStyle.make_theme()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	InputManager.release_mouse()
+	AudioManager.play_music(&"sneak_loop", 1.5, 0.9)
 	var bg := ColorRect.new()
 	bg.color = Color(0.06, 0.05, 0.13)
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)

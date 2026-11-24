@@ -1,4 +1,4 @@
-## Kotva ve tvaru úsečky (Sly parkour): trubka (PIPE), římsa (LEDGE), lano (ROPE).
+## Kotva ve tvaru úsečky (stealth hry parkour): trubka (PIPE), římsa (LEDGE), lano (ROPE).
 ## Úsečka vede od pozice uzlu ve směru lokální osy `axis` o délce `length`.
 ## Bruno se chytí nejbližšího bodu úsečky. Vzhled a modré jiskry se staví z kódu (@tool),
 ## takže v editoru stačí přidat Area3D s tímto skriptem, nastavit typ, délku a otočení.
@@ -98,6 +98,10 @@ func _build() -> void:
 			cyl.top_radius = 0.035
 			cyl.bottom_radius = 0.035
 			mat.albedo_color = Color(0.75, 0.62, 0.4)
+		Type.WALL:
+			cyl.top_radius = 0.2
+			cyl.bottom_radius = 0.2
+			mat.albedo_color = Color(0.5, 0.45, 0.42)
 		_:
 			cyl.top_radius = 0.06
 			cyl.bottom_radius = 0.06
@@ -107,9 +111,13 @@ func _build() -> void:
 	m.mesh = cyl
 	m.material_override = mat
 	m.transform = Transform3D(basis_to_axis, mid)
+	if type == Type.WALL:
+		# Úzká římsa: zploštělý válec, vystrčený ze zdi.
+		m.position += outward.normalized() * 0.18 + Vector3.DOWN * 0.08
+		m.scale = Vector3(1.0, 1.0, 0.35) if absf(axis.y) < 0.5 else Vector3.ONE
 	m.set_meta(&"generated", true)
 	add_child(m)
-	# Modré jiskry podél úsečky (Sly).
+	# Modré jiskry podél úsečky (stealth hry).
 	var holder := Node3D.new()
 	holder.name = "SparklesHolder"
 	holder.set_meta(&"generated", true)

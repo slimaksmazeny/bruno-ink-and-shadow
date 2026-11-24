@@ -1,4 +1,4 @@
-## Kapka inkoustu – sběratelský předmět (jako lumy v Raymanovi / mince ve Slyovi).
+## Kapka inkoustu – sběratelský předmět (jako lumy v 2D plošinovkyovi / mince ve stealth hryovi).
 ## Každá kapka má unikátní collectible_id; sebrané se ukládají (GameState → SaveManager).
 ## Rychle po sobě sebrané kapky zvoní čím dál výš (série).
 @tool
@@ -13,7 +13,7 @@ static var _streak: int = 0
 static var _streak_time_ms: int = 0
 
 @export var collectible_id: String = ""
-## Zlatá kapka (Rayman „zlaté lumy“): větší, zlatá, má hodnotu 5. Bývá schovaná v obloucích skoků.
+## Zlatá kapka (2D plošinovky „zlaté lumy“): větší, zlatá, má hodnotu 5. Bývá schovaná v obloucích skoků.
 @export var golden: bool = false:
 	set(v):
 		golden = v

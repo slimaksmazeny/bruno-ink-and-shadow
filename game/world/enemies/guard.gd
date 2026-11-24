@@ -1,8 +1,8 @@
-## Strážný s baterkou (inspirace Sly Cooper). Kostra stealth nepřítele.
+## Strážný s baterkou (inspirace klasické 3D stealth plošinovky). Kostra stealth nepřítele.
 ##
 ## Vnímání: kužel baterky (úhel + dosah) a přímá viditelnost (paprsek na zdi).
 ## Detekce je „rozmazaná“: ukazatel podezření se plní tím rychleji, čím blíž Bruno je.
-## Plížení zmenší dosah. Zblízka (close_radius) strážný Bruna ucítí i zezadu – jako ve Slyovi.
+## Plížení zmenší dosah. Zblízka (close_radius) strážný Bruna ucítí i zezadu – jako ve stealth hryovi.
 ##
 ## Stavy: PATROL → SUSPICIOUS („?“, otočí se za Brunem) → ALERT („!“, honí a útočí)
 ##        → SEARCH (ztratil ho, chvíli hledá) → zpět PATROL.  Zásah holí → STUNNED.

@@ -1,4 +1,4 @@
-## Průchozí plošina (Rayman): zespodu se dá proskočit, shora se na ní stojí.
+## Průchozí plošina (2D plošinovky): zespodu se dá proskočit, shora se na ní stojí.
 ## Seskočení dolů: držet dolů (S / páčka dolů) + skok (řeší GroundedState → drop_through()).
 @tool
 class_name OneWayPlatform

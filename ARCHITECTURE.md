@@ -766,3 +766,10 @@ Necommituj — commit udělám já po otestování.
 - `Anchor` je nově `@tool`, aby kotvy byly vidět v editoru (animace jen ve hře).
 - **Vítr:** `WindColumn` nastavuje `Player.wind_lift` každý fyzikální snímek; `Glide` s ním stoupá, ostatní stavy jen brzdí pád. Player hodnotu po snímku nuluje.
 - **Zlaté kapky:** `InkDrop.golden` (hodnota 5); HUD sčítá `value()` všech kapek.
+
+## Dodatek v0.2.4 (Claude, 2026-11-24)
+
+- `RingAnchor` (RING → `HookSwing`, i ve 2D – detektor ve 2D nekontroluje úhel kamery), `LineAnchor` typu WALL → `WallSneak`.
+- 2D odraz od zdi je v `state_air.gd` (jen MODE_2D): krátká paměť zdi + jump buffer; klouzání max 3 m/s.
+- `Piston` (rytmus `beat` + `phase`), hudba přes `AudioManager.play_music()` – WAV smyčka se nastaví za běhu.
+- **Autorská práva:** v herních souborech (skripty, scény, texty, popis projektu) nejsou jména cizích her/značek. Inspirace se popisuje obecně („stealth hry“, „2D plošinovky“). Zvuky a hudba jsou generované vlastními skripty v `tools/generators/`. Návrhové dokumenty (tento soubor, index.html) mohou inspiraci zmiňovat interně – do hry se nedostávají.

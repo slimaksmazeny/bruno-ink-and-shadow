@@ -28,7 +28,7 @@ func handle_common(_delta: float) -> bool:
 		machine.transition_to(&"Swing", {"ball": true})
 		return true
 	if player.consume_jump_buffer():
-		# Dolů + skok na průchozí plošině = seskok skrz (Rayman), ne skok.
+		# Dolů + skok na průchozí plošině = seskok skrz (2D plošinovky), ne skok.
 		var one_way: OneWayPlatform = player.get_floor_body() as OneWayPlatform
 		if one_way != null and Input.is_action_pressed(&"move_back"):
 			one_way.drop_through()
