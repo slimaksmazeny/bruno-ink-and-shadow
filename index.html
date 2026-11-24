@@ -1560,7 +1560,7 @@
         {
           id: "W2-09", wave: 2, phase: "Fáze 1 (Kap. 1–3)", version: "v0.2.1",
           title: "Sly Parkour Update (nové typy kotev + stavy)",
-          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "4 dny",
+          owner: "Claude", status: "done", priority: "Vysoká", estimate: "4 dny",
           dependsOn: ["W2-05"],
           files: ["game/player/states/state_climb.gd", "game/player/states/state_crawl.gd", "game/player/states/state_ledge_hang.gd", "game/player/states/state_wall_sneak.gd", "game/player/states/state_path_follow.gd", "game/player/states/state_hook_swing.gd", "game/world/anchors/"],
           steps: [
@@ -1611,7 +1611,7 @@
         {
           id: "W3-01", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.0",
           title: "3D Cel-shading shader (Sly 2) & 2D UbiArt vrstvený parallax",
-          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "4 dny",
           dependsOn: ["W2-08"],
           files: ["game/shaders/cel_toon.gdshader", "game/shaders/outline_hull.gdshader", "game/world/env/night_lighting.tscn"],
           steps: [
@@ -1640,7 +1640,7 @@
         {
           id: "W3-03", wave: 3, phase: "Fáze 1 (Kap. 1–3)", version: "v0.3.2",
           title: "AI nepřátel (Stealth hlídky, kužely zorného pole, odlákání tenisákem)",
-          owner: "Claude", status: "todo", priority: "Vysoká", estimate: "4 dny",
+          owner: "Claude", status: "doing", priority: "Vysoká", estimate: "4 dny",
           dependsOn: ["W2-07", "W3-02"],
           files: ["game/enemies/guard_ai.gd", "game/enemies/frog_guard/frog_guard.tscn"],
           steps: [
@@ -1933,6 +1933,7 @@
       ];
 
       const DEFAULT_LOGS = [
+        { id: "log_036", date: "2026-11-24", author: "Claude", status: "done", version: "v0.2.5", text: "Plazení (Crawl, nízká kolize, samo pod nízkými překážkami – stůl ve 3D, škvíra ve 2D) – tím je parkour W2-09 kompletní. Strážní: odlákání dopadem tenisáku, volání posil při poplachu, druhý strážný na střeše (40 mincí). Komiksový vzhled (W3-01): post-process inkoustové obrysy + světlo po stupních + papírové zrno, přepínač v Nastavení. 2D pozadí: papírová obloha, 3 vrstvy siluet (kopce, střechy, stromy) generované z kódu + inkoustové slunce; perspektivní parallax." },
         { id: "log_035", date: "2026-11-24", author: "Claude", status: "done", version: "v0.2.4", text: "Kapsářství: zezadu u nic netušícího strážného E / ○ = ukrást váček mincí (nápověda nad strážným), mince v HUD a v uložené hře. Test test_step_k 5/5." },
         { id: "log_034", date: "2026-11-24", author: "Claude", status: "done", version: "v0.2.4", text: "Houpání na kruhu (RingAnchor → HookSwing, 3D i 2D, vyhoupnutí s rychlostí), úzká římsa podél zdi (WALL → WallSneak), 2D klouzání a odraz od zdi, rytmický píst, vlastní hudební smyčka (AudioManager.play_music, ztlumení v pauze). Nová 2D dráha za cílem: kruh přes propast, šachta na odrazy, dva písty, portál přesunut na konec; ve 3D kruh nad propastí a římsa na prostředním domě. Ze všech herních souborů odstraněna cizí jména (copyright). Test test_step_j 11/11." },
         { id: "log_033", date: "2026-11-24", author: "Claude", status: "done", version: "v0.2.3", text: "Sly parkour (W2-09, 1. část): kotvy ve tvaru úsečky (LineAnchor) – trubka → stav Climb (nahoru/dolů, obcházení, vylezení na střechu), římsa → LedgeHang (ručkování podle kamery, vytažení nahoru), lano → RopeWalk (chůze s balancováním, sestup na konci). V ulici: trubka na levém domě, lano na nový sloup, římsa na pravém domě. 2D: stoupavý vítr pro ušní vrtulník (WindColumn) a zlaté kapky (hodnota 5). Test test_step_i 9/9." },

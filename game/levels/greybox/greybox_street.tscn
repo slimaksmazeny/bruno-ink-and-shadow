@@ -35,6 +35,7 @@
 [ext_resource type="Script" path="res://world/platforms_2d/wind_column.gd" id="33_auagf"]
 [ext_resource type="Script" path="res://world/anchors/ring_anchor.gd" id="34_srukj"]
 [ext_resource type="Script" path="res://world/platforms_2d/piston.gd" id="35_3ge00"]
+[ext_resource type="Script" path="res://world/platforms_2d/backdrop_layer.gd" id="36_3ge00"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yy3x5"]
 sky_top_color = Color(0.06, 0.07, 0.2, 1)
@@ -97,84 +98,26 @@ roughness = 0.85
 albedo_color = Color(0.6, 0.38, 0.2, 1)
 roughness = 0.85
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_socp8"]
-shading_mode = 0
-albedo_color = Color(0.98, 0.85, 0.58, 1)
-
-[sub_resource type="QuadMesh" id="QuadMesh_7bq5e"]
-size = Vector2(160, 60)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l2jig"]
-shading_mode = 0
-albedo_color = Color(0.3, 0.6, 0.55, 1)
-
-[sub_resource type="QuadMesh" id="QuadMesh_lsfwj"]
-size = Vector2(26, 9)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_588s6"]
-shading_mode = 0
-albedo_color = Color(0.3, 0.6, 0.55, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7tnfg"]
-shading_mode = 0
-albedo_color = Color(0.3, 0.6, 0.55, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_txxuf"]
-shading_mode = 0
-albedo_color = Color(0.3, 0.6, 0.55, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ik77s"]
-shading_mode = 0
-albedo_color = Color(0.3, 0.6, 0.55, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8l6cl"]
-shading_mode = 0
-albedo_color = Color(0.3, 0.6, 0.55, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xs06i"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
-[sub_resource type="QuadMesh" id="QuadMesh_hsneh"]
-size = Vector2(6, 3)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ftui"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d05b2"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wdhft"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ar5b"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3olim"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06wev"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4d7ly"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7fs6q"]
-shading_mode = 0
-albedo_color = Color(0.16, 0.38, 0.33, 1)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_srukj"]
 size = Vector3(1.6, 8, 1.6)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3ge00"]
 size = Vector3(1.6, 8, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ge00"]
+shading_mode = 0
+albedo_color = Color(0.95, 0.9, 0.78, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_t3sgn"]
+size = Vector2(700, 260)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y72es"]
+shading_mode = 0
+albedo_color = Color(0.88, 0.38, 0.28, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ovqxi"]
+radius = 5.0
+height = 10.0
 
 [node name="GreyboxStreet" type="Node3D" unique_id=643555228]
 
@@ -480,86 +423,6 @@ script = ExtResource("12_auagf")
 [node name="Mushroom2" type="Node3D" parent="PaintingWorld" unique_id=1005053026 instance=ExtResource("11_qdgu6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 238, 0, 0)
 script = ExtResource("12_auagf")
-
-[node name="BgFar" type="MeshInstance3D" parent="PaintingWorld" unique_id=639844830]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 222, 8, -40)
-material_override = SubResource("StandardMaterial3D_socp8")
-mesh = SubResource("QuadMesh_7bq5e")
-
-[node name="BgHills0" type="MeshInstance3D" parent="PaintingWorld" unique_id=1952479183]
-transform = Transform3D(0.99026805, 0.1391731, 0, -0.1391731, 0.99026805, 0, 0, 0, 1, 190, 1.5, -18)
-material_override = SubResource("StandardMaterial3D_l2jig")
-mesh = SubResource("QuadMesh_lsfwj")
-
-[node name="BgHills1" type="MeshInstance3D" parent="PaintingWorld" unique_id=480749513]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203, 3, -18)
-material_override = SubResource("StandardMaterial3D_588s6")
-mesh = SubResource("QuadMesh_lsfwj")
-
-[node name="BgHills2" type="MeshInstance3D" parent="PaintingWorld" unique_id=468041677]
-transform = Transform3D(0.99026805, -0.1391731, 0, 0.1391731, 0.99026805, 0, 0, 0, 1, 216, 1.5, -18)
-material_override = SubResource("StandardMaterial3D_7tnfg")
-mesh = SubResource("QuadMesh_lsfwj")
-
-[node name="BgHills3" type="MeshInstance3D" parent="PaintingWorld" unique_id=650064253]
-transform = Transform3D(0.99026805, 0.1391731, 0, -0.1391731, 0.99026805, 0, 0, 0, 1, 229, 3, -18)
-material_override = SubResource("StandardMaterial3D_txxuf")
-mesh = SubResource("QuadMesh_lsfwj")
-
-[node name="BgHills4" type="MeshInstance3D" parent="PaintingWorld" unique_id=627507413]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 242, 1.5, -18)
-material_override = SubResource("StandardMaterial3D_ik77s")
-mesh = SubResource("QuadMesh_lsfwj")
-
-[node name="BgHills5" type="MeshInstance3D" parent="PaintingWorld" unique_id=1621473600]
-transform = Transform3D(0.99026805, -0.1391731, 0, 0.1391731, 0.99026805, 0, 0, 0, 1, 255, 3, -18)
-material_override = SubResource("StandardMaterial3D_8l6cl")
-mesh = SubResource("QuadMesh_lsfwj")
-
-[node name="BgBush0" type="MeshInstance3D" parent="PaintingWorld" unique_id=1984640280]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 194, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_xs06i")
-mesh = SubResource("QuadMesh_hsneh")
-
-[node name="BgBush1" type="MeshInstance3D" parent="PaintingWorld" unique_id=505284025]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200.5, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_2ftui")
-mesh = SubResource("QuadMesh_hsneh")
-
-[node name="BgBush2" type="MeshInstance3D" parent="PaintingWorld" unique_id=862931128]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 207, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_d05b2")
-mesh = SubResource("QuadMesh_hsneh")
-
-[node name="BgBush3" type="MeshInstance3D" parent="PaintingWorld" unique_id=393038330]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 213.5, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_wdhft")
-mesh = SubResource("QuadMesh_hsneh")
-
-[node name="BgBush4" type="MeshInstance3D" parent="PaintingWorld" unique_id=1229071973]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 220, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_7ar5b")
-mesh = SubResource("QuadMesh_hsneh")
-
-[node name="BgBush5" type="MeshInstance3D" parent="PaintingWorld" unique_id=335836830]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 226.5, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_3olim")
-mesh = SubResource("QuadMesh_hsneh")
-
-[node name="BgBush6" type="MeshInstance3D" parent="PaintingWorld" unique_id=1870466092]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 233, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_06wev")
-mesh = SubResource("QuadMesh_hsneh")
-
-[node name="BgBush7" type="MeshInstance3D" parent="PaintingWorld" unique_id=542422147]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 239.5, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_4d7ly")
-mesh = SubResource("QuadMesh_hsneh")
-
-[node name="BgBush8" type="MeshInstance3D" parent="PaintingWorld" unique_id=491457441]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 246, 0.6, -5)
-material_override = SubResource("StandardMaterial3D_7fs6q")
-mesh = SubResource("QuadMesh_hsneh")
 
 [node name="LaneStart" type="Marker3D" parent="PaintingWorld" unique_id=474863754]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 0.05, 0)
@@ -1214,3 +1077,40 @@ modulate = Color(0.7, 1, 0.7, 1)
 text = "GB_SIGN_CRAWL"
 font_size = 64
 outline_size = 16
+
+[node name="Backdrop2D" type="Node3D" parent="." unique_id=1556291725]
+
+[node name="PaperSky" type="MeshInstance3D" parent="Backdrop2D" unique_id=1976314885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245, 40, -120)
+material_override = SubResource("StandardMaterial3D_3ge00")
+mesh = SubResource("QuadMesh_t3sgn")
+
+[node name="FarHills" type="MeshInstance3D" parent="Backdrop2D" unique_id=1903831946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245, 2, -60)
+script = ExtResource("36_3ge00")
+width = 360.0
+height = 22.0
+color = Color(0.72, 0.66, 0.78, 1)
+seed = 7
+
+[node name="MidRoofs" type="MeshInstance3D" parent="Backdrop2D" unique_id=1441841886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245, -1, -32)
+script = ExtResource("36_3ge00")
+style = 2
+width = 220.0
+height = 9.0
+color = Color(0.42, 0.35, 0.55, 1)
+seed = 3
+
+[node name="NearTrees" type="MeshInstance3D" parent="Backdrop2D" unique_id=471314556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245, -2, -14)
+script = ExtResource("36_3ge00")
+style = 1
+height = 6.5
+color = Color(0.14, 0.11, 0.26, 1)
+seed = 11
+
+[node name="InkSun" type="MeshInstance3D" parent="Backdrop2D" unique_id=1157637762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 265, 30, -90)
+material_override = SubResource("StandardMaterial3D_y72es")
+mesh = SubResource("SphereMesh_ovqxi")

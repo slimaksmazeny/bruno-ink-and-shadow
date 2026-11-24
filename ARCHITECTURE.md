@@ -773,3 +773,10 @@ Necommituj — commit udělám já po otestování.
 - 2D odraz od zdi je v `state_air.gd` (jen MODE_2D): krátká paměť zdi + jump buffer; klouzání max 3 m/s.
 - `Piston` (rytmus `beat` + `phase`), hudba přes `AudioManager.play_music()` – WAV smyčka se nastaví za běhu.
 - **Autorská práva:** v herních souborech (skripty, scény, texty, popis projektu) nejsou jména cizích her/značek. Inspirace se popisuje obecně („stealth hry“, „2D plošinovky“). Zvuky a hudba jsou generované vlastními skripty v `tools/generators/`. Návrhové dokumenty (tento soubor, index.html) mohou inspiraci zmiňovat interně – do hry se nedostávají.
+
+## Dodatek v0.2.5 (Claude, 2026-11-24)
+
+- `Crawl` se vybírá v `GroundedState.pick_ground_state()` podle `Player.has_low_ceiling()` (paprsek 0,6–1,35 m nad Brunem / 0,55 m před ním); `Player.set_low_collision()` přepíná `CollisionStand` ↔ `CollisionLow`.
+- Hluk: `Events.noise_made(pos, radius)` (tenisák při prvním dopadu) → `Guard.investigate()`. Poplach: `Events.guard_called_help` → strážní do `help_radius` jdou hledat (pokud je místo výš/níž o > 2 m, jen se dívají).
+- Komiksový vzhled: `camera/ink_post.gd` přidá do kamery čtverec přes obrazovku se `shaders/ink_comic.gdshader` (hloubkové obrysy, stupně jasu). Vypíná se `Settings.comic_shading`; v Compatibility rendereru (web) je vypnutý.
+- 2D pozadí: `BackdropLayer` generuje siluetu ze `seed`; parallax dělá perspektiva kamery (vrstvy v různé hloubce z).
