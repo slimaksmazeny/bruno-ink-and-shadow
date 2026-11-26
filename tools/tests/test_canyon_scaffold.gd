@@ -30,6 +30,16 @@ func _physics_process(_d: float) -> bool:
 		get_root().get_node("DevMenu").god_mode = true
 		started = true
 	f += 1
+	if f == 5:
+		var g = current_scene.get_node("Content/GuardMesaC")
+		g.set_physics_process(false)
+		g.global_position = Vector3(55, 5.05, -8)
+		g.look_at(Vector3(55, 5.05, -11.6), Vector3.UP)
+		p.global_position = Vector3(55, 5.2, -11.6)
+		p.reset_physics_interpolation()
+	if f == 8:
+		check("boards_hide_from_mesa_guard", not current_scene.get_node("Content/GuardMesaC")._can_see_player())
+		current_scene.get_node("Content/GuardMesaC").set_physics_process(true)
 	if f == 10:
 		p.global_position = Vector3(44.8, 5.4, -11.6)
 		p.velocity = Vector3.ZERO

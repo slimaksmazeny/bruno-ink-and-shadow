@@ -672,6 +672,8 @@ func _scaffold() -> void:
 		while x < x1:
 			_box(scaff, "Post", Vector3(x, 2.5, -12.2), Vector3(0.18, 5.0, 0.18), plank)
 			x += 3.0
+	# Prkenná zástěna proti strážnému na skále C (kryje Bruna na lešení).
+	_box(scaff, "CoverBoards", Vector3(55.75, 5.75, -10.75), Vector3(9.5, 1.1, 0.1), plank)
 	# Spojka na střechu boudy (střecha y 3.6–3.75, z -4.2..4.2).
 	_box(scaff, "RoofBridge", Vector3(75.0, 4.4, -8.0), Vector3(1.4, 0.12, 6.2), plank)
 	_sign(scaff, "SignScaffold", "CH2_SIGN_SCAFFOLD", Vector3(43.0, 7.2, -11.0))
