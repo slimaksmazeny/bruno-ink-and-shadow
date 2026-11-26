@@ -676,7 +676,7 @@ func _scaffold() -> void:
 	_box(scaff, "CoverBoards", Vector3(55.75, 5.75, -10.75), Vector3(9.5, 1.1, 0.1), plank)
 	# Spojka na střechu boudy (střecha y 3.6–3.75, z -4.2..4.2).
 	_box(scaff, "RoofBridge", Vector3(75.0, 4.4, -8.0), Vector3(1.4, 0.12, 6.2), plank)
-	_sign(scaff, "SignScaffold", "CH2_SIGN_SCAFFOLD", Vector3(43.0, 7.2, -11.0))
+	_sign(scaff, "SignScaffold", "CH2_SIGN_SCAFFOLD", Vector3(42.0, 2.0, -6.5))
 	_drop(scaff, Vector3(47.0, 5.6, -11.6))
 	_drop(scaff, Vector3(56.0, 5.6, -11.6))
 	_drop(scaff, Vector3(66.0, 5.6, -11.6))
