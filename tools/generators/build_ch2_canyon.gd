@@ -663,8 +663,8 @@ func _scaffold() -> void:
 	var scaff := Node3D.new()
 	scaff.name = "Scaffold"
 	_add(c, scaff)
-	_line(scaff, "ScaffPole", 1, Vector3(44.0, 0.0, -10.6), Vector3.UP, 5.2, Vector3.BACK)
-	for seg: Array in [[44.0, 50.0], [51.0, 60.5], [61.5, 70.5], [71.4, 75.6]]:
+	_line(scaff, "ScaffPole", 1, Vector3(49.0, 0.0, -10.6), Vector3.UP, 5.2, Vector3.BACK)
+	for seg: Array in [[48.6, 50.0], [51.0, 60.5], [61.5, 70.5], [71.4, 75.6]]:
 		var x0: float = seg[0]
 		var x1: float = seg[1]
 		_box(scaff, "Plank", Vector3((x0 + x1) * 0.5, 5.05, -11.6), Vector3(x1 - x0, 0.15, 1.6), plank)
@@ -676,8 +676,8 @@ func _scaffold() -> void:
 	_box(scaff, "CoverBoards", Vector3(55.75, 5.75, -10.75), Vector3(9.5, 1.1, 0.1), plank)
 	# Spojka na střechu boudy (střecha y 3.6–3.75, z -4.2..4.2).
 	_box(scaff, "RoofBridge", Vector3(75.0, 4.4, -8.0), Vector3(1.4, 0.12, 6.2), plank)
-	_sign(scaff, "SignScaffold", "CH2_SIGN_SCAFFOLD", Vector3(42.0, 2.0, -6.5))
-	_drop(scaff, Vector3(47.0, 5.6, -11.6))
+	_sign(scaff, "SignScaffold", "CH2_SIGN_SCAFFOLD", Vector3(49.0, 2.2, -8.0))
+	_drop(scaff, Vector3(49.4, 5.6, -11.6))
 	_drop(scaff, Vector3(56.0, 5.6, -11.6))
 	_drop(scaff, Vector3(66.0, 5.6, -11.6))
 	_drop(scaff, Vector3(73.5, 5.6, -11.6), true)

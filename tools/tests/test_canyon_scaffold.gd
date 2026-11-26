@@ -9,6 +9,7 @@ var started: bool = false
 var lasers: int = 0
 var min_y: float = 99.0
 var jumped: Dictionary = {}
+var on_roof: bool = false
 
 
 func _initialize() -> void:
@@ -41,7 +42,7 @@ func _physics_process(_d: float) -> bool:
 		check("boards_hide_from_mesa_guard", not current_scene.get_node("Content/GuardMesaC")._can_see_player())
 		current_scene.get_node("Content/GuardMesaC").set_physics_process(true)
 	if f == 10:
-		p.global_position = Vector3(44.8, 5.4, -11.6)
+		p.global_position = Vector3(48.9, 5.4, -11.6)
 		p.velocity = Vector3.ZERO
 		p.reset_physics_interpolation()
 		p.camera.rig_3d.snap_behind(Vector3.RIGHT)
@@ -53,6 +54,8 @@ func _physics_process(_d: float) -> bool:
 			if x > edge and not jumped.has(edge):
 				jumped[edge] = true
 				p.jump_buffer_timer = 0.2
+		if x > 72.0 and p.global_position.y > 3.5 and absf(p.global_position.z) < 4.0 and p.is_on_floor():
+			on_roof = true
 		if x < 74.0:
 			min_y = minf(min_y, p.global_position.y)
 		if x > 74.6 and not jumped.has(&"turn"):
@@ -61,7 +64,7 @@ func _physics_process(_d: float) -> bool:
 	if f == 600:
 		Input.action_release(&"move_forward")
 		check("stayed_on_scaffold", min_y > 4.5, "min_y=%.2f" % min_y)
-		check("reached_roof", p.global_position.x > 72.0 and p.global_position.y > 3.3 and absf(p.global_position.z) < 4.5, str(p.global_position))
+		check("reached_roof", on_roof, str(p.global_position))
 		check("no_laser_alarm", lasers == 0, str(lasers))
 		print("RESULT: %d fails" % fails)
 		quit(1 if fails > 0 else 0)
