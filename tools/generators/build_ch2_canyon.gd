@@ -571,10 +571,56 @@ func _dressing() -> void:
 			var t: float = float(j) / float(n)
 			var p: Vector3 = a.lerp(b, t) - Vector3(0, sin(t * PI) * 0.9, 0)
 			_mesh(d, sph, p, Vector3.ZERO, Vector3(0.12, 0.12, 0.12), bulb)
+	# Úkryty: sudy v táboře a keře u řeky (strážní tě uvnitř nevidí).
+	for hs: Array in [[Vector3(17, 0, 4.2), 1], [Vector3(26, 0, -3.5), 1], [Vector3(45, 0, -3.2), 0],
+			[Vector3(56, 0, 9.0), 0], [Vector3(64, 0, -2.8), 0], [Vector3(71.5, 0, -6.5), 1]]:
+		var h := Node3D.new()
+		h.name = "HideSpot"
+		h.set_script(load("res://world/gameplay/hide_spot.gd"))
+		h.set("kind", hs[1])
+		h.position = hs[0]
+		_add(lvl.get_node("Content"), h)
 	# Sudy a bedny v táboře.
 	var barrel := _mat(Color(0.5, 0.28, 0.15))
 	for bp: Vector3 in [Vector3(61, 0, -9.5), Vector3(61.8, 0, -10.3), Vector3(70, 0, 9.8), Vector3(84, 0, 6.5), Vector3(45.5, 0, 9.6)]:
 		_mesh(d, cyl, bp + Vector3(0, 0.55, 0), Vector3.ZERO, Vector3(0.7, 1.1, 0.7), barrel)
+	# Vyšlapaná cesta (tmavší písek), kamínky a trsy suché trávy.
+	var path_mat := _mat(Color(0.72, 0.46, 0.3))
+	var px: float = -2.0
+	var pz: float = 0.0
+	while px < 92.0:
+		var seg: float = _rng.randf_range(2.5, 4.5)
+		if px < 30.5 or px > 41.5:
+			_mesh(d, box, Vector3(px + seg * 0.5, 0.012, pz), Vector3(0, _rng.randf_range(-8, 8), 0),
+				Vector3(seg + 0.6, 0.02, _rng.randf_range(2.2, 3.2)), path_mat)
+		px += seg
+		pz = clampf(pz + _rng.randf_range(-1.2, 1.2), -3.5, 3.5)
+	var pebble_mats: Array[StandardMaterial3D] = [_mat(Color(0.55, 0.36, 0.27)), _mat(Color(0.75, 0.6, 0.48)), _mat(Color(0.45, 0.3, 0.24))]
+	for i: int in 160:
+		var x: float = _rng.randf_range(-4.0, 94.0)
+		if x > 31.0 and x < 41.0:
+			continue
+		var r: float = _rng.randf_range(0.05, 0.16)
+		_mesh(d, sph, Vector3(x, r * 0.4, _rng.randf_range(-11.5, 11.5)), Vector3(0, _rng.randf_range(0, 360), 0),
+			Vector3(r * 1.4, r, r * 1.2) * 2.0, pebble_mats[i % 3])
+	var grass := _mat(Color(0.78, 0.66, 0.36), 0.95)
+	var cone := CylinderMesh.new()
+	cone.top_radius = 0.0
+	cone.bottom_radius = 0.05
+	cone.height = 0.5
+	cone.radial_segments = 4
+	for i: int in 55:
+		var x: float = _rng.randf_range(-3.0, 93.0)
+		if x > 30.0 and x < 42.0:
+			continue
+		var gz: float = _rng.randf_range(4.0, 11.0) * (-1.0 if i % 2 == 0 else 1.0)
+		for blade: int in 6:
+			_mesh(d, cone, Vector3(x + _rng.randf_range(-0.2, 0.2), 0.2, gz + _rng.randf_range(-0.2, 0.2)),
+				Vector3(_rng.randf_range(-25, 25), 0, _rng.randf_range(-25, 25)), Vector3.ONE * _rng.randf_range(0.7, 1.3), grass)
+	# Řeka na dně rokle.
+	var water := _mat(Color(0.25, 0.55, 0.65), 0.15, 0.35)
+	water.metallic = 0.3
+	_mesh(d, box, Vector3(36, -13.2, 0), Vector3.ZERO, Vector3(8, 0.2, 26), water)
 	# Poletující prach ve světle západu.
 	var dust := GPUParticles3D.new()
 	dust.name = "Dust"

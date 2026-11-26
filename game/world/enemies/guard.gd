@@ -188,7 +188,7 @@ func _update_pickpocket_hint() -> void:
 # --- Vnímání ---------------------------------------------------------------
 
 func _can_see_player() -> bool:
-	if _player == null or _player.health <= 0:
+	if _player == null or _player.health <= 0 or _player.hidden_in != null:
 		return false
 	var eye: Vector3 = global_position + Vector3.UP * 1.5
 	var target: Vector3 = _player.global_position + Vector3.UP * 0.5

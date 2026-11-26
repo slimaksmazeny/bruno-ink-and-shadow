@@ -95,3 +95,5 @@ UPG_FAST_CRAWL_DESC,plazení o 60 % rychlejší,crawling 60 % faster
 HUD_CAUGHT,Chytili tě! Zkus to znovu z checkpointu,They caught you! Try again from the checkpoint
 BOSS_WARDEN,VELKÝ HLÍDAČ,THE BIG WARDEN
 HUD_BOSS_DOWN,Velký hlídač poražen!,The Big Warden is down!
+HUD_HIDE,Schovat se,Hide
+HUD_HIDDEN,Schovaný! Strážní tě nevidí. Ven: E / skok / pohyb,Hidden! Guards can't see you. Out: E / jump / move

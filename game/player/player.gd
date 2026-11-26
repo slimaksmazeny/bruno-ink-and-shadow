@@ -25,6 +25,8 @@ var jumps_used: int = 0
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 var is_sneaking: bool = false
+## Úkryt (sud/keř), ve kterém Bruno právě sedí – strážní ho nevidí.
+var hidden_in: Node = null
 ## Plížení přepnuté tlačítkem L3 (na ovladači). Zruší ho sprint nebo další stisk L3.
 var sneak_toggled: bool = false
 ## Útok ve vzduchu jde jednou za skok (obnoví se po dopadu).
@@ -301,6 +303,8 @@ func die() -> void:
 
 
 func respawn(full_heal: bool = true) -> void:
+	if hidden_in != null:
+		hidden_in.call("force_exit", false)
 	if full_heal:
 		health = max_health
 		Events.player_health_changed.emit(health, max_health)
