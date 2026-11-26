@@ -10,7 +10,7 @@ HUD_BOTTLES,Lahvičky: {n},Bottles: {n}
 HUD_BOTTLES_ONE,{n} lahvička,{n} bottle
 HUD_BOTTLES_FEW,{n} lahvičky,{n} bottles
 HUD_BOTTLES_MANY,{n} lahviček,{n} bottles
-GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.4.3)","Bruno: Ink & Shadow — test street (v0.4.3)"
+GB_TITLE,"Bruno: Ink & Shadow — testovací ulice (v0.4.4)","Bruno: Ink & Shadow — test street (v0.4.4)"
 GB_SIGN_PAINTING,Skoč do obrazu!,Jump into the painting!
 GB_HINT_KEYS,"F3 = ladicí panel · L = jazyk · M = dotykové ovládání · klik = zachytit myš · Esc / Start = pauza","F3 = debug panel · L = language · M = touch controls · click = capture mouse · Esc / Start = pause"
 GB_DIACRITICS_TEST,Příliš žluťoučký kůň úpěl ďábelské ódy,The quick brown fox jumps over the lazy dog
