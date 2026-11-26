@@ -40,25 +40,46 @@ static func _git(git: String, args: PackedStringArray) -> Dictionary:
 	return {"code": code, "text": "\n".join(out).strip_edges()}
 
 
-## Blokující část (běží ve vlákně): pull s automatickým odložením lokálních změn.
+## Blokující část (běží ve vlákně). Bezpečné kroky, nikdy nic nemaže:
+## 1) zrušit případný rozdělaný rebase/merge (vrátí stav před ním),
+## 2) fetch,
+## 3) když má PC jen „prázdné“ lokální commity (stejný obsah jako GitHub), posunout větev na GitHub (reset --keep),
+## 4) pull jen dopředu (--ff-only) s automatickým odložením lokálních změn.
 static func pull_blocking() -> Dictionary:
 	var git: String = find_git()
 	if git.is_empty():
 		return {"ok": false, "message": "Git nenalezen (nainstaluj GitHub Desktop nebo Git)."}
+	var steps: PackedStringArray = []
+	var gitdir: String = String(_git(git, ["rev-parse", "--absolute-git-dir"]).text)
+	if DirAccess.dir_exists_absolute(gitdir.path_join("rebase-merge")) or DirAccess.dir_exists_absolute(gitdir.path_join("rebase-apply")):
+		steps.append("rebase --abort: " + String(_git(git, ["rebase", "--abort"]).text))
+	if FileAccess.file_exists(gitdir.path_join("MERGE_HEAD")):
+		steps.append("merge --abort: " + String(_git(git, ["merge", "--abort"]).text))
 	var before: String = String(_git(git, ["rev-parse", "HEAD"]).text)
-	var r: Dictionary = _git(git, ["pull", "--rebase", "--autostash"])
+	var f: Dictionary = _git(git, ["fetch", "--quiet"])
+	if int(f.code) != 0:
+		return {"ok": false, "message": "Fetch selhal (internet?)", "git_output": String(f.text)}
+	var ahead: int = int(String(_git(git, ["rev-list", "--count", "@{u}..HEAD"]).text))
+	if ahead > 0:
+		# Lokální commity jen s obsahem, který už GitHub má → bezpečně srovnat na GitHub.
+		if int(_git(git, ["diff", "--quiet", "HEAD", "@{u}"]).code) == 0:
+			steps.append("reset --keep @{u}: " + String(_git(git, ["reset", "--keep", "@{u}"]).text))
+		else:
+			return {"ok": false, "message": "PC má vlastní commity, které na GitHubu nejsou – nic jsem neměnil, vyřeš v GitHub Desktop.",
+				"git_output": "\n".join(steps)}
+	var r: Dictionary = _git(git, ["pull", "--ff-only", "--autostash"])
+	steps.append(String(r.text))
 	var after: String = String(_git(git, ["rev-parse", "HEAD"]).text)
 	var changed: PackedStringArray = []
-	if before != after and int(r.code) == 0:
-		var d: Dictionary = _git(git, ["diff", "--name-only", before, after])
-		changed = String(d.text).split("\n", false)
+	if before != after:
+		changed = String(_git(git, ["diff", "--name-only", before, after]).text).split("\n", false)
 	return {
 		"ok": int(r.code) == 0,
 		"updated": before != after,
 		"before": before.left(7),
 		"after": after.left(7),
 		"changed_files": changed,
-		"git_output": String(r.text).right(1500),
+		"git_output": "\n".join(steps).right(1500),
 	}
 
 
