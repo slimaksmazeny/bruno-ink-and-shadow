@@ -22,6 +22,7 @@ func _initialize() -> void:
 	_actors()
 	_content()
 	_painting()
+	_dressing()
 	var packed := PackedScene.new()
 	var err: Error = packed.pack(lvl)
 	if err == OK:
@@ -62,6 +63,15 @@ func _environment() -> void:
 	env.fog_enabled = true
 	env.fog_light_color = Color(0.95, 0.65, 0.45)
 	env.fog_density = 0.006
+	env.fog_sky_affect = 0.35
+	env.glow_enabled = true
+	env.glow_intensity = 0.6
+	env.glow_bloom = 0.08
+	env.ssao_enabled = true
+	env.ssao_intensity = 1.4
+	env.adjustment_enabled = true
+	env.adjustment_saturation = 1.12
+	env.adjustment_contrast = 1.06
 	we.environment = env
 	_add(lvl, we)
 	var sun := DirectionalLight3D.new()
@@ -421,3 +431,177 @@ func _add(parent: Node, n: Node) -> void:
 	for c: Node in n.get_children():
 		if c.owner == null and not c.has_meta(&"generated") and n.scene_file_path.is_empty():
 			c.owner = lvl
+
+
+
+# --- Výzdoba (jen vizuál, bez kolizí) --------------------------------------
+
+var _rng := RandomNumberGenerator.new()
+
+
+func _mat(c: Color, rough: float = 0.92, emit: float = 0.0) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.albedo_color = c
+	m.roughness = rough
+	if emit > 0.0:
+		m.emission_enabled = true
+		m.emission = c
+		m.emission_energy_multiplier = emit
+	return m
+
+
+func _mesh(parent: Node, mesh: Mesh, pos: Vector3, rot_deg: Vector3, scl: Vector3, mat: Material) -> MeshInstance3D:
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = mat
+	mi.position = pos
+	mi.rotation_degrees = rot_deg
+	mi.scale = scl
+	_add(parent, mi)
+	return mi
+
+
+func _dressing() -> void:
+	_rng.seed = 2207
+	var d := _group("Dressing")
+	var bands: Array[StandardMaterial3D] = [
+		_mat(Color(0.7, 0.38, 0.25)), _mat(Color(0.8, 0.5, 0.32)), _mat(Color(0.55, 0.28, 0.2)),
+		_mat(Color(0.88, 0.68, 0.48)), _mat(Color(0.65, 0.33, 0.26))]
+	var box := BoxMesh.new()
+	# Vrstvy usazenin na stěnách kaňonu (pruhy, které stěnu „rozbijí“).
+	for side: float in [-1.0, 1.0]:
+		var z_wall: float = 13.0 * side
+		var y: float = 0.4
+		var layer: int = 0
+		while y < 15.0:
+			var h: float = _rng.randf_range(0.6, 1.8)
+			var x: float = -5.0
+			while x < 95.0:
+				var w: float = _rng.randf_range(3.0, 9.0)
+				var depth: float = _rng.randf_range(0.25, 0.9) * (1.0 - y / 22.0)
+				_mesh(d, box, Vector3(x + w * 0.5, y + h * 0.5, z_wall - side * depth * 0.5),
+					Vector3(0, 0, _rng.randf_range(-1.5, 1.5)), Vector3(w, h, depth + 0.1),
+					bands[(layer + int(x / 13.0)) % bands.size()])
+				x += w + _rng.randf_range(-0.6, 0.4)
+			y += h
+			layer += 1
+	# Balvany podél stěn.
+	var sph := SphereMesh.new()
+	sph.radial_segments = 10
+	sph.rings = 6
+	var boulder_mats: Array[StandardMaterial3D] = [_mat(Color(0.58, 0.32, 0.22)), _mat(Color(0.5, 0.29, 0.21)), _mat(Color(0.68, 0.42, 0.3))]
+	for i: int in 46:
+		var side: float = -1.0 if i % 2 == 0 else 1.0
+		var x: float = _rng.randf_range(-3.0, 93.0)
+		if x > 31.0 and x < 41.0:
+			continue # řeka
+		var r: float = _rng.randf_range(0.35, 1.4)
+		_mesh(d, sph, Vector3(x, r * 0.45, side * _rng.randf_range(11.4, 12.6)),
+			Vector3(_rng.randf_range(0, 360), _rng.randf_range(0, 360), 0),
+			Vector3(r * _rng.randf_range(1.0, 1.6), r * _rng.randf_range(0.6, 1.0), r * _rng.randf_range(0.9, 1.4)),
+			boulder_mats[i % 3])
+	# Kaktusy (saguaro + malé).
+	var cyl := CylinderMesh.new()
+	cyl.radial_segments = 10
+	var green := _mat(Color(0.32, 0.5, 0.28), 0.8)
+	var green2 := _mat(Color(0.4, 0.58, 0.3), 0.8)
+	for spot: Vector3 in [Vector3(4, 0, -10.5), Vector3(11, 0, 10.8), Vector3(28, 0, -10.8), Vector3(45, 0, 10.5),
+			Vector3(63, 0, -10.9), Vector3(86, 0, 10.6), Vector3(90, 0, -10.4), Vector3(19, 0, 11.2)]:
+		var hgt: float = _rng.randf_range(2.2, 3.6)
+		var c := Node3D.new()
+		c.name = "Cactus"
+		c.position = spot
+		c.rotation_degrees.y = _rng.randf_range(0, 360)
+		_add(d, c)
+		_mesh(c, cyl, Vector3(0, hgt * 0.5, 0), Vector3.ZERO, Vector3(0.42, hgt, 0.42), green)
+		_mesh(c, sph, Vector3(0, hgt, 0), Vector3.ZERO, Vector3(0.42, 0.42, 0.42), green)
+		for arm: int in 2:
+			var s2: float = -1.0 if arm == 0 else 1.0
+			var ay: float = hgt * _rng.randf_range(0.45, 0.65)
+			var al: float = _rng.randf_range(0.7, 1.2)
+			_mesh(c, cyl, Vector3(s2 * 0.42, ay, 0), Vector3(0, 0, 90), Vector3(0.3, 0.6, 0.3), green2)
+			_mesh(c, cyl, Vector3(s2 * 0.7, ay + al * 0.5, 0), Vector3.ZERO, Vector3(0.3, al, 0.3), green2)
+			_mesh(c, sph, Vector3(s2 * 0.7, ay + al, 0), Vector3.ZERO, Vector3(0.3, 0.3, 0.3), green2)
+	for i: int in 14:
+		var side: float = -1.0 if i % 2 == 0 else 1.0
+		var x: float = _rng.randf_range(0.0, 92.0)
+		if x > 30.0 and x < 42.0:
+			continue
+		_mesh(d, sph, Vector3(x, 0.3, side * _rng.randf_range(9.8, 11.5)), Vector3.ZERO,
+			Vector3(0.6, 0.75, 0.6), green2)
+	# Skalní věže (hoodoo) v rozích a stolové hory nad okrajem kaňonu.
+	for hp: Vector3 in [Vector3(-1.5, 0, 9.5), Vector3(93, 0, -9.5), Vector3(66, 0, 10.5)]:
+		var ht: float = 0.0
+		for seg: int in 4:
+			var sh: float = _rng.randf_range(1.6, 2.6)
+			var sw: float = 1.6 - seg * 0.25 + _rng.randf_range(-0.15, 0.15)
+			_mesh(d, cyl, hp + Vector3(0, ht + sh * 0.5, 0), Vector3.ZERO, Vector3(sw, sh, sw), bands[seg % bands.size()])
+			ht += sh
+		_mesh(d, cyl, hp + Vector3(0, ht + 0.25, 0), Vector3.ZERO, Vector3(2.6, 0.5, 2.6), bands[3])
+	var far := _mat(Color(0.78, 0.47, 0.38))
+	var far2 := _mat(Color(0.7, 0.42, 0.4))
+	for i: int in 12:
+		var side: float = -1.0 if i % 2 == 0 else 1.0
+		var x: float = -20.0 + i * 11.0 + _rng.randf_range(-4, 4)
+		var mh: float = _rng.randf_range(18.0, 34.0)
+		var mw: float = _rng.randf_range(10.0, 22.0)
+		_mesh(d, box, Vector3(x, mh * 0.5, side * _rng.randf_range(30.0, 55.0)), Vector3(0, _rng.randf_range(-10, 10), 0),
+			Vector3(mw, mh, _rng.randf_range(8.0, 14.0)), far if i % 3 else far2)
+		_mesh(d, box, Vector3(x, mh + 0.6, side * _rng.randf_range(30.0, 55.0)), Vector3.ZERO,
+			Vector3(mw * 0.6, 1.2, 6.0), far2)
+	# Tábor: sloupy s lucernami + řetěz světýlek k boudě.
+	var pole_mat := _mat(Color(0.35, 0.22, 0.13))
+	var lamp_mat := _mat(Color(1.0, 0.72, 0.35), 0.4, 3.0)
+	var posts: Array[Vector3] = [Vector3(58, 0, 8.5), Vector3(66, 0, -8.5), Vector3(72, 0, 7.0), Vector3(83, 0, -6.0), Vector3(47, 0, -9.0)]
+	for pp: Vector3 in posts:
+		_mesh(d, cyl, pp + Vector3(0, 1.6, 0), Vector3.ZERO, Vector3(0.18, 3.2, 0.18), pole_mat)
+		_mesh(d, sph, pp + Vector3(0, 3.3, 0), Vector3.ZERO, Vector3(0.35, 0.45, 0.35), lamp_mat)
+		var l := OmniLight3D.new()
+		l.position = pp + Vector3(0, 3.1, 0)
+		l.light_color = Color(1.0, 0.7, 0.4)
+		l.light_energy = 1.6
+		l.omni_range = 7.0
+		_add(d, l)
+	var bulb := _mat(Color(1.0, 0.85, 0.5), 0.4, 4.0)
+	for k: int in posts.size() - 1:
+		var a: Vector3 = posts[k] + Vector3(0, 3.1, 0)
+		var b: Vector3 = posts[k + 1] + Vector3(0, 3.1, 0)
+		var n: int = int(a.distance_to(b) / 0.9)
+		for j: int in n + 1:
+			var t: float = float(j) / float(n)
+			var p: Vector3 = a.lerp(b, t) - Vector3(0, sin(t * PI) * 0.9, 0)
+			_mesh(d, sph, p, Vector3.ZERO, Vector3(0.12, 0.12, 0.12), bulb)
+	# Sudy a bedny v táboře.
+	var barrel := _mat(Color(0.5, 0.28, 0.15))
+	for bp: Vector3 in [Vector3(61, 0, -9.5), Vector3(61.8, 0, -10.3), Vector3(70, 0, 9.8), Vector3(84, 0, 6.5), Vector3(45.5, 0, 9.6)]:
+		_mesh(d, cyl, bp + Vector3(0, 0.55, 0), Vector3.ZERO, Vector3(0.7, 1.1, 0.7), barrel)
+	# Poletující prach ve světle západu.
+	var dust := GPUParticles3D.new()
+	dust.name = "Dust"
+	dust.position = Vector3(45, 4, 0)
+	dust.amount = 260
+	dust.lifetime = 9.0
+	dust.preprocess = 9.0
+	dust.visibility_aabb = AABB(Vector3(-55, -6, -16), Vector3(110, 16, 32))
+	var pm := ParticleProcessMaterial.new()
+	pm.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
+	pm.emission_box_extents = Vector3(50, 4, 12)
+	pm.direction = Vector3(1, 0.2, 0)
+	pm.spread = 40.0
+	pm.initial_velocity_min = 0.2
+	pm.initial_velocity_max = 0.7
+	pm.gravity = Vector3(0, 0.02, 0)
+	pm.scale_min = 0.6
+	pm.scale_max = 1.4
+	dust.process_material = pm
+	var quad := QuadMesh.new()
+	quad.size = Vector2(0.05, 0.05)
+	var dm := StandardMaterial3D.new()
+	dm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	dm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	dm.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	dm.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	dm.albedo_color = Color(1.0, 0.85, 0.6, 0.55)
+	quad.material = dm
+	dust.draw_pass_1 = quad
+	_add(d, dust)
