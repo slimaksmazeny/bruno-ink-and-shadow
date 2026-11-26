@@ -56,6 +56,11 @@ var _hit_stop_running: bool = false
 func _ready() -> void:
 	profile = profile_3d
 	add_to_group(&"player")
+	# Tělo hráče se nikdy neotáčí – směr drží jen vizuál (náklon, chůze i kamera
+	# počítají se světovými osami). Otočení z levelu převedeme na natočení vizuálu.
+	var start_forward: Vector3 = -global_transform.basis.z
+	global_transform = Transform3D(Basis(), global_position)
+	visual.face_direction(Vector3(start_forward.x, 0.0, start_forward.z))
 	level_start = global_position
 	if Upgrades.has(Upgrades.EXTRA_HEART):
 		max_health += 1

@@ -32,7 +32,7 @@ func _ready() -> void:
 		max_health = 6
 	loot = 80
 	super._ready()
-	_body.scale = Vector3.ONE * 1.6
+	_body.scale = Vector3.ONE * _body_scale()
 	# Vrstva 5 (16) = překážka kamery: kamera se o bosse zastaví a nevleze dovnitř.
 	collision_layer = 4 | 16
 	for c: Node in get_children():
@@ -225,3 +225,21 @@ func can_be_pickpocketed_by(_p: Player) -> bool:
 
 func investigate(_pos: Vector3) -> void:
 	pass
+
+
+## Po Brunově smrti začne souboj znovu od začátku (boss v plném zdraví, nečeká).
+func reset_to_start() -> void:
+	if phase == Phase.DEFEATED:
+		return
+	super.reset_to_start()
+	collision_layer = 4 | 16
+	remove_from_group(&"guard")
+	_cone.visible = false
+	phase = Phase.IDLE
+	stage = 1
+	_wave.visible = false
+	Events.boss_health_changed.emit(self, health, max_health)
+
+
+func _body_scale() -> float:
+	return 1.6

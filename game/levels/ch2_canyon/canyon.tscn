@@ -82,129 +82,129 @@ albedo_color = Color(0.98, 0.86, 0.68, 1)
 [sub_resource type="QuadMesh" id="QuadMesh_6knpt"]
 size = Vector2(600, 240)
 
-[node name="CanyonLevel" type="Node3D" unique_id=1672271084]
+[node name="CanyonLevel" type="Node3D" unique_id=140786592]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1641585165]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1838807054]
 environment = SubResource("Environment_q2d0o")
 
-[node name="DuskSun" type="DirectionalLight3D" parent="." unique_id=1453210156]
+[node name="DuskSun" type="DirectionalLight3D" parent="." unique_id=1231924956]
 transform = Transform3D(0.81915206, 0.23329456, -0.5239881, 0, 0.9135454, 0.40673664, 0.57357645, -0.33317915, 0.7483326, 0, 0, 0)
 light_color = Color(1, 0.78, 0.55, 1)
 light_energy = 1.25
 shadow_enabled = true
 
-[node name="Geometry" type="Node3D" parent="." unique_id=950957851]
+[node name="Geometry" type="Node3D" parent="." unique_id=1188716727]
 
-[node name="FloorWest" type="CSGBox3D" parent="Geometry" unique_id=1232927396]
+[node name="FloorWest" type="CSGBox3D" parent="Geometry" unique_id=1592838777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, -0.5, 0)
 use_collision = true
 size = Vector3(37, 1, 26)
 material = SubResource("StandardMaterial3D_wkmvi")
 
-[node name="FloorEast" type="CSGBox3D" parent="Geometry" unique_id=214336741]
+[node name="FloorEast" type="CSGBox3D" parent="Geometry" unique_id=1514063107]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.5, -0.5, 0)
 use_collision = true
 size = Vector3(55, 1, 26)
 material = SubResource("StandardMaterial3D_wkmvi")
 
-[node name="RiverBed" type="CSGBox3D" parent="Geometry" unique_id=1112983043]
+[node name="RiverBed" type="CSGBox3D" parent="Geometry" unique_id=760237024]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, -14, 0)
 use_collision = true
 size = Vector3(8, 1, 26)
 material = SubResource("StandardMaterial3D_c2guq")
 
-[node name="WallNorth" type="CSGBox3D" parent="Geometry" unique_id=427929091]
+[node name="WallNorth" type="CSGBox3D" parent="Geometry" unique_id=682249370]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 7, -13.5)
 use_collision = true
 size = Vector3(100, 16, 1)
 material = SubResource("StandardMaterial3D_c2guq")
 
-[node name="WallSouth" type="CSGBox3D" parent="Geometry" unique_id=72655913]
+[node name="WallSouth" type="CSGBox3D" parent="Geometry" unique_id=1372064173]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 7, 13.5)
 use_collision = true
 size = Vector3(100, 16, 1)
 material = SubResource("StandardMaterial3D_c2guq")
 
-[node name="WallWest" type="CSGBox3D" parent="Geometry" unique_id=1513098714]
+[node name="WallWest" type="CSGBox3D" parent="Geometry" unique_id=1493771360]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 7, 0)
 use_collision = true
 size = Vector3(1, 16, 28)
 material = SubResource("StandardMaterial3D_c2guq")
 
-[node name="WallEast" type="CSGBox3D" parent="Geometry" unique_id=1580233985]
+[node name="WallEast" type="CSGBox3D" parent="Geometry" unique_id=1089815734]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.5, 7, 0)
 use_collision = true
 size = Vector3(1, 16, 28)
 material = SubResource("StandardMaterial3D_c2guq")
 
-[node name="MesaA" type="CSGBox3D" parent="Geometry" unique_id=1634082763]
+[node name="MesaA" type="CSGBox3D" parent="Geometry" unique_id=2070757480]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2, -6)
 use_collision = true
 size = Vector3(6, 4, 6)
 material = SubResource("StandardMaterial3D_c2guq")
 
-[node name="MesaB" type="CSGBox3D" parent="Geometry" unique_id=117611203]
+[node name="MesaB" type="CSGBox3D" parent="Geometry" unique_id=1714075286]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 3, 5)
 use_collision = true
 size = Vector3(5, 6, 5)
 material = SubResource("StandardMaterial3D_c2guq")
 
-[node name="MesaC" type="CSGBox3D" parent="Geometry" unique_id=1826723925]
+[node name="MesaC" type="CSGBox3D" parent="Geometry" unique_id=1254096243]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 2.5, -7.5)
 use_collision = true
 size = Vector3(8, 5, 6)
 material = SubResource("StandardMaterial3D_c2guq")
 
-[node name="StepCrate" type="CSGBox3D" parent="Geometry" unique_id=492400807]
+[node name="StepCrate" type="CSGBox3D" parent="Geometry" unique_id=1370879709]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0.75, -3.3)
 use_collision = true
 size = Vector3(1.5, 1.5, 1.5)
 material = SubResource("StandardMaterial3D_5hd4o")
 
-[node name="ShackBack" type="CSGBox3D" parent="Geometry" unique_id=4695080]
+[node name="ShackBack" type="CSGBox3D" parent="Geometry" unique_id=1694053224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.75, 0)
 use_collision = true
 size = Vector3(0.4, 3.5, 8)
 material = SubResource("StandardMaterial3D_5hd4o")
 
-[node name="ShackSideN" type="CSGBox3D" parent="Geometry" unique_id=1351640699]
+[node name="ShackSideN" type="CSGBox3D" parent="Geometry" unique_id=903856339]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 1.75, -4)
 use_collision = true
 size = Vector3(8, 3.5, 0.4)
 material = SubResource("StandardMaterial3D_5hd4o")
 
-[node name="ShackSideS" type="CSGBox3D" parent="Geometry" unique_id=371383523]
+[node name="ShackSideS" type="CSGBox3D" parent="Geometry" unique_id=1700716429]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 1.75, 4)
 use_collision = true
 size = Vector3(8, 3.5, 0.4)
 material = SubResource("StandardMaterial3D_5hd4o")
 
-[node name="ShackRoof" type="CSGBox3D" parent="Geometry" unique_id=1947753393]
+[node name="ShackRoof" type="CSGBox3D" parent="Geometry" unique_id=363036976]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 3.6, 0)
 use_collision = true
 size = Vector3(8.4, 0.3, 8.4)
 material = SubResource("StandardMaterial3D_5hd4o")
 
-[node name="CartTop" type="CSGBox3D" parent="Geometry" unique_id=203926753]
+[node name="CartTop" type="CSGBox3D" parent="Geometry" unique_id=638831693]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 1.05, 6)
 use_collision = true
 size = Vector3(4, 0.5, 2.4)
 material = SubResource("StandardMaterial3D_5hd4o")
 
-[node name="CartLegA" type="CSGBox3D" parent="Geometry" unique_id=187268128]
+[node name="CartLegA" type="CSGBox3D" parent="Geometry" unique_id=827886945]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.1, 0.4, 5)
 use_collision = true
 size = Vector3(0.2, 0.8, 0.2)
 material = SubResource("StandardMaterial3D_5hd4o")
 
-[node name="CartLegB" type="CSGBox3D" parent="Geometry" unique_id=922937502]
+[node name="CartLegB" type="CSGBox3D" parent="Geometry" unique_id=697161332]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9, 0.4, 7)
 use_collision = true
 size = Vector3(0.2, 0.8, 0.2)
 material = SubResource("StandardMaterial3D_5hd4o")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1050422969 node_paths=PackedStringArray("camera") instance=ExtResource("1_4q48k")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0.05, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.05, 0)
 collision_layer = 2
 collision_mask = 17
 floor_max_angle = 0.80285144
@@ -219,18 +219,18 @@ physics_interpolation_mode = 2
 script = ExtResource("6_dyp5b")
 target = NodePath("../Player")
 
-[node name="Hud" type="CanvasLayer" parent="." unique_id=1409767581]
+[node name="Hud" type="CanvasLayer" parent="." unique_id=1320751565]
 script = ExtResource("7_lgl17")
 
-[node name="Mission" type="Node" parent="." unique_id=1356492809]
+[node name="Mission" type="Node" parent="." unique_id=575990222]
 script = ExtResource("8_m3u26")
 key_id = "mine_key"
 chapter_id = "canyon"
 escape_time = 120.0
 
-[node name="Content" type="Node3D" parent="." unique_id=945188050]
+[node name="Content" type="Node3D" parent="." unique_id=932987104]
 
-[node name="PoleMesaA" type="Area3D" parent="Content" unique_id=1046575178]
+[node name="PoleMesaA" type="Area3D" parent="Content" unique_id=353848743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.85, 0, -6)
 script = ExtResource("9_mry68")
 length = 4.0
@@ -238,7 +238,7 @@ axis = Vector3(0, 1, 0)
 outward = Vector3(-1, 0, 0)
 type = 1
 
-[node name="RopeAB" type="Area3D" parent="Content" unique_id=1450105072]
+[node name="RopeAB" type="Area3D" parent="Content" unique_id=2054547674]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -3.4)
 script = ExtResource("9_mry68")
 length = 7.5179787
@@ -250,49 +250,49 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 6.4, 5)
 script = ExtResource("11_do1v8")
 snap_point = NodePath("SnapPoint")
 
-[node name="RopeRiver" type="Area3D" parent="Content" unique_id=1380585151]
+[node name="RopeRiver" type="Area3D" parent="Content" unique_id=281989695]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6, 0.02, 7)
 script = ExtResource("9_mry68")
 length = 8.8
 type = 3
 
-[node name="RingRiver" type="Area3D" parent="Content" unique_id=382628952]
+[node name="RingRiver" type="Area3D" parent="Content" unique_id=250159087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 5.3, -3)
 script = ExtResource("12_b1qkt")
 type = 5
 only_in_3d = false
 
-[node name="LedgeMesaC" type="Area3D" parent="Content" unique_id=1637192813]
+[node name="LedgeMesaC" type="Area3D" parent="Content" unique_id=1380097140]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.3, 5, -4.48)
 script = ExtResource("9_mry68")
 length = 7.4
 type = 2
 
-[node name="GuardRiver" type="CharacterBody3D" parent="Content" unique_id=1940345840]
+[node name="GuardRiver" type="CharacterBody3D" parent="Content" unique_id=910134976]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.05, 0)
 script = ExtResource("13_wtxh4")
 patrol_points = PackedVector3Array(-6, 0, 0, 8, 0, 0)
 loot = 20
 carries_key = "mine_key"
 
-[node name="GuardCamp" type="CharacterBody3D" parent="Content" unique_id=924227414]
+[node name="GuardCamp" type="CharacterBody3D" parent="Content" unique_id=2040357221]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 0.05, 3)
 script = ExtResource("13_wtxh4")
 patrol_points = PackedVector3Array(-8, 0, 0, 5, 0, 0)
 loot = 30
 
-[node name="GuardMesaC" type="CharacterBody3D" parent="Content" unique_id=1255402882]
+[node name="GuardMesaC" type="CharacterBody3D" parent="Content" unique_id=435904085]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5.05, -8)
 script = ExtResource("13_wtxh4")
 patrol_points = PackedVector3Array(-3, 0, 0, 3, 0, 0)
 loot = 45
 
-[node name="LaserHigh" type="Area3D" parent="Content" unique_id=1909526467]
+[node name="LaserHigh" type="Area3D" parent="Content" unique_id=1282498211]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 68.5, 0, -13)
 script = ExtResource("14_rbx4k")
 length = 26.0
 
-[node name="LaserBlink" type="Area3D" parent="Content" unique_id=1602501770]
+[node name="LaserBlink" type="Area3D" parent="Content" unique_id=584521214]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 69.3, 0, -13)
 script = ExtResource("14_rbx4k")
 length = 26.0
@@ -300,175 +300,175 @@ beam_height = 0.35
 block_standing = false
 blink_period = 1.5
 
-[node name="Vault" type="Node3D" parent="Content" unique_id=958158153]
+[node name="Vault" type="Node3D" parent="Content" unique_id=1790356590]
 transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 78.6, 0, 0)
 script = ExtResource("15_yyuif")
 key_id = "mine_key"
 
-[node name="GetawayVan" type="Node3D" parent="Content" unique_id=78477973]
+[node name="GetawayVan" type="Node3D" parent="Content" unique_id=416331335]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8)
 script = ExtResource("16_dgdcr")
 
-[node name="CpRiverEast" type="Area3D" parent="Content" unique_id=901663017]
+[node name="CpRiverEast" type="Area3D" parent="Content" unique_id=116322967]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 8)
 script = ExtResource("17_ew0as")
 checkpoint_id = "cp_canyon_river"
 
-[node name="CpCamp" type="Area3D" parent="Content" unique_id=1638803615]
+[node name="CpCamp" type="Area3D" parent="Content" unique_id=1966724637]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 9)
 script = ExtResource("17_ew0as")
 checkpoint_id = "cp_canyon_camp"
 
-[node name="Quicksand" type="Area3D" parent="Content" unique_id=1537592780]
+[node name="Quicksand" type="Area3D" parent="Content" unique_id=49989021]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 5.5)
 script = ExtResource("18_knq72")
 
-[node name="TreatRiver" type="Area3D" parent="Content" unique_id=904648214]
+[node name="TreatRiver" type="Area3D" parent="Content" unique_id=1501650269]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, -8)
 script = ExtResource("19_a4k7s")
 
-[node name="TreatMesaB" type="Area3D" parent="Content" unique_id=591029739]
+[node name="TreatMesaB" type="Area3D" parent="Content" unique_id=1561755349]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 6, 6.2)
 script = ExtResource("19_a4k7s")
 
-[node name="JarMesaC" type="StaticBody3D" parent="Content" unique_id=2145541448]
+[node name="JarMesaC" type="StaticBody3D" parent="Content" unique_id=1785412294]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 5, -9.5)
 script = ExtResource("20_st1p6")
 jar_id = "jar_canyon_mesac"
 
-[node name="Ink00" type="Area3D" parent="Content" unique_id=387254503]
+[node name="Ink00" type="Area3D" parent="Content" unique_id=679103786]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_00"
 
-[node name="Ink01" type="Area3D" parent="Content" unique_id=1085101354]
+[node name="Ink01" type="Area3D" parent="Content" unique_id=1678738808]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_01"
 
-[node name="Ink02" type="Area3D" parent="Content" unique_id=1333863201]
+[node name="Ink02" type="Area3D" parent="Content" unique_id=1615731437]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_02"
 
-[node name="Ink03" type="Area3D" parent="Content" unique_id=858327050]
+[node name="Ink03" type="Area3D" parent="Content" unique_id=2061238580]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_03"
 
-[node name="Ink04" type="Area3D" parent="Content" unique_id=1054619645]
+[node name="Ink04" type="Area3D" parent="Content" unique_id=1248489087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.45, 5.22, -1.8000001)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_04"
 
-[node name="Ink05" type="Area3D" parent="Content" unique_id=289730349]
+[node name="Ink05" type="Area3D" parent="Content" unique_id=893037055]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3, 5.72, -0.20000005)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_05"
 
-[node name="Ink06" type="Area3D" parent="Content" unique_id=1639620787]
+[node name="Ink06" type="Area3D" parent="Content" unique_id=1546616491]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.15, 6.22, 1.4000001)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_06"
 
-[node name="Ink07" type="Area3D" parent="Content" unique_id=776638323]
+[node name="Ink07" type="Area3D" parent="Content" unique_id=277335468]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 4.8, -6)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_07"
 
-[node name="Gold08" type="Area3D" parent="Content" unique_id=1070978494]
+[node name="Gold08" type="Area3D" parent="Content" unique_id=755020439]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 7.6, 5)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_08"
 golden = true
 
-[node name="Ink09" type="Area3D" parent="Content" unique_id=333789317]
+[node name="Ink09" type="Area3D" parent="Content" unique_id=225423719]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0.8, 7)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_09"
 
-[node name="Ink10" type="Area3D" parent="Content" unique_id=1625647235]
+[node name="Ink10" type="Area3D" parent="Content" unique_id=823707220]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.8, 7)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_10"
 
-[node name="Ink11" type="Area3D" parent="Content" unique_id=838998858]
+[node name="Ink11" type="Area3D" parent="Content" unique_id=260925994]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5, 0.8, 7)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_11"
 
-[node name="Ink12" type="Area3D" parent="Content" unique_id=703959045]
+[node name="Ink12" type="Area3D" parent="Content" unique_id=717318800]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 3.2, -3)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_12"
 
-[node name="Ink13" type="Area3D" parent="Content" unique_id=334896369]
+[node name="Ink13" type="Area3D" parent="Content" unique_id=652657882]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_13"
 
-[node name="Ink14" type="Area3D" parent="Content" unique_id=2117060430]
+[node name="Ink14" type="Area3D" parent="Content" unique_id=706736331]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_14"
 
-[node name="Ink15" type="Area3D" parent="Content" unique_id=1073471417]
+[node name="Ink15" type="Area3D" parent="Content" unique_id=1630470757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.3, 0.4, 6)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_15"
 
-[node name="Ink16" type="Area3D" parent="Content" unique_id=883605594]
+[node name="Ink16" type="Area3D" parent="Content" unique_id=1587551530]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.7, 0.4, 6)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_16"
 
-[node name="Ink17" type="Area3D" parent="Content" unique_id=133016537]
+[node name="Ink17" type="Area3D" parent="Content" unique_id=1788166731]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4, -4)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_17"
 
-[node name="Ink18" type="Area3D" parent="Content" unique_id=2019969329]
+[node name="Ink18" type="Area3D" parent="Content" unique_id=160892789]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 4, -4)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_18"
 
-[node name="Ink19" type="Area3D" parent="Content" unique_id=614161629]
+[node name="Ink19" type="Area3D" parent="Content" unique_id=1132995445]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 4, -4)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_19"
 
-[node name="Gold20" type="Area3D" parent="Content" unique_id=1620026135]
+[node name="Gold20" type="Area3D" parent="Content" unique_id=1004009120]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5.8, -6)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_20"
 golden = true
 
-[node name="Ink21" type="Area3D" parent="Content" unique_id=1148868534]
+[node name="Ink21" type="Area3D" parent="Content" unique_id=1565517518]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62, 0.8, -6)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_21"
 
-[node name="Ink22" type="Area3D" parent="Content" unique_id=300270952]
+[node name="Ink22" type="Area3D" parent="Content" unique_id=1835194164]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0.8, -6)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_22"
 
-[node name="Ink23" type="Area3D" parent="Content" unique_id=2086965676]
+[node name="Ink23" type="Area3D" parent="Content" unique_id=2010602769]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_23"
 
-[node name="Ink24" type="Area3D" parent="Content" unique_id=1997841944]
+[node name="Ink24" type="Area3D" parent="Content" unique_id=95624407]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.8, -10)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_24"
 
-[node name="Ink25" type="Area3D" parent="Content" unique_id=1067718464]
+[node name="Ink25" type="Area3D" parent="Content" unique_id=959303923]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, 0.8, 9)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_25"
 
-[node name="SignStart" type="Label3D" parent="Content" unique_id=1838295830]
+[node name="SignStart" type="Label3D" parent="Content" unique_id=1392885088]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.6, -3)
 pixel_size = 0.008
 billboard = 2
@@ -477,20 +477,20 @@ text = "CH2_SIGN_START"
 font_size = 60
 outline_size = 14
 
-[node name="Painting" type="Node3D" parent="." unique_id=493691774]
+[node name="Painting" type="Node3D" parent="." unique_id=554867747]
 
-[node name="PaintingFrame" type="CSGBox3D" parent="Painting" unique_id=2135545560]
+[node name="PaintingFrame" type="CSGBox3D" parent="Painting" unique_id=184635125]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 3, -12.8)
 use_collision = true
 size = Vector3(6, 4, 0.6)
 material = SubResource("StandardMaterial3D_5hd4o")
 
-[node name="PaintingCanvas" type="MeshInstance3D" parent="Painting" unique_id=1347384348]
+[node name="PaintingCanvas" type="MeshInstance3D" parent="Painting" unique_id=772034442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 3, -12.48)
 material_override = SubResource("StandardMaterial3D_jxx24")
 mesh = SubResource("QuadMesh_pbi8w")
 
-[node name="LaneStart" type="Marker3D" parent="Painting" unique_id=419422320]
+[node name="LaneStart" type="Marker3D" parent="Painting" unique_id=1817667136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 299, 0.05, 0)
 
 [node name="PaintingPortal" type="Area3D" parent="Painting" unique_id=1923856039 node_paths=PackedStringArray("lane_start") instance=ExtResource("22_gqm3x")]
@@ -498,7 +498,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, -11.6)
 script = ExtResource("23_v134n")
 lane_start = NodePath("../LaneStart")
 
-[node name="SignPainting" type="Label3D" parent="Painting" unique_id=1713484771]
+[node name="SignPainting" type="Label3D" parent="Painting" unique_id=14764437]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 5.6, -11.8)
 pixel_size = 0.008
 billboard = 2
@@ -507,94 +507,94 @@ text = "CH2_SIGN_PAINTING"
 font_size = 60
 outline_size = 14
 
-[node name="PaintingWorld" type="Node3D" parent="." unique_id=1944873054]
+[node name="PaintingWorld" type="Node3D" parent="." unique_id=588109934]
 
-[node name="P_FloorA" type="CSGBox3D" parent="PaintingWorld" unique_id=711390688]
+[node name="P_FloorA" type="CSGBox3D" parent="PaintingWorld" unique_id=1099012145]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 304, -5, 0)
 use_collision = true
 size = Vector3(16, 10, 4)
 material = SubResource("StandardMaterial3D_qmxju")
 
-[node name="P_FloorB" type="CSGBox3D" parent="PaintingWorld" unique_id=1882099570]
+[node name="P_FloorB" type="CSGBox3D" parent="PaintingWorld" unique_id=1341266091]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 324, -5, 0)
 use_collision = true
 size = Vector3(12, 10, 4)
 material = SubResource("StandardMaterial3D_qmxju")
 
-[node name="P_FloorC" type="CSGBox3D" parent="PaintingWorld" unique_id=1206313903]
+[node name="P_FloorC" type="CSGBox3D" parent="PaintingWorld" unique_id=1209362232]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 343.5, -5, 0)
 use_collision = true
 size = Vector3(13, 10, 4)
 material = SubResource("StandardMaterial3D_qmxju")
 
-[node name="P_EndDeck" type="CSGBox3D" parent="PaintingWorld" unique_id=1842991006]
+[node name="P_EndDeck" type="CSGBox3D" parent="PaintingWorld" unique_id=132823879]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 361, -5, 0)
 use_collision = true
 size = Vector3(10, 10, 4)
 material = SubResource("StandardMaterial3D_qmxju")
 
-[node name="P_WallStart" type="CSGBox3D" parent="PaintingWorld" unique_id=1747635078]
+[node name="P_WallStart" type="CSGBox3D" parent="PaintingWorld" unique_id=979689383]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 295.5, 3, 0)
 use_collision = true
 size = Vector3(1, 6, 4)
 material = SubResource("StandardMaterial3D_qmxju")
 
-[node name="P_Spikes" type="Area3D" parent="PaintingWorld" unique_id=164347118]
+[node name="P_Spikes" type="Area3D" parent="PaintingWorld" unique_id=125109019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, 0, 0)
 script = ExtResource("18_knq72")
 size = Vector3(1.5, 0.6, 1.5)
 look = 1
 
-[node name="P_Wind" type="Area3D" parent="PaintingWorld" unique_id=848374155]
+[node name="P_Wind" type="Area3D" parent="PaintingWorld" unique_id=685583169]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 315, -10, 0)
 script = ExtResource("24_i8jqj")
 size = Vector3(2.5, 22, 4)
 
-[node name="P_Blob" type="CharacterBody3D" parent="PaintingWorld" unique_id=320225397]
+[node name="P_Blob" type="CharacterBody3D" parent="PaintingWorld" unique_id=193468803]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 324, 0.05, 0)
 script = ExtResource("25_qj066")
 patrol_half_width = 3.5
 
-[node name="P_OneWay" type="AnimatableBody3D" parent="PaintingWorld" unique_id=1289734191]
+[node name="P_OneWay" type="AnimatableBody3D" parent="PaintingWorld" unique_id=1614715576]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 327, 2.6, 0)
 script = ExtResource("26_1kh0v")
 size = Vector3(3, 0.3, 4)
 
-[node name="P_Jar" type="StaticBody3D" parent="PaintingWorld" unique_id=1618442963]
+[node name="P_Jar" type="StaticBody3D" parent="PaintingWorld" unique_id=1451434281]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 328, 2.75, 0)
 script = ExtResource("20_st1p6")
 jar_id = "jar_canyon_painting"
 
-[node name="P_Ring" type="Area3D" parent="PaintingWorld" unique_id=591792764]
+[node name="P_Ring" type="Area3D" parent="PaintingWorld" unique_id=982989360]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 333.5, 4.4, 0)
 script = ExtResource("12_b1qkt")
 type = 5
 only_in_3d = false
 
-[node name="P_Piston0" type="AnimatableBody3D" parent="PaintingWorld" unique_id=666854796]
+[node name="P_Piston0" type="AnimatableBody3D" parent="PaintingWorld" unique_id=944984222]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 341.5, -0.3, 0)
 script = ExtResource("27_b6f4e")
 travel = Vector3(0, 3.5, 0)
 size = Vector3(2, 0.6, 4)
 
-[node name="P_Piston1" type="AnimatableBody3D" parent="PaintingWorld" unique_id=1579012210]
+[node name="P_Piston1" type="AnimatableBody3D" parent="PaintingWorld" unique_id=254531005]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 345.5, -0.3, 0)
 script = ExtResource("27_b6f4e")
 travel = Vector3(0, 3.5, 0)
 phase = 0.5
 size = Vector3(2, 0.6, 4)
 
-[node name="P_Crumble0" type="AnimatableBody3D" parent="PaintingWorld" unique_id=1988609658]
+[node name="P_Crumble0" type="AnimatableBody3D" parent="PaintingWorld" unique_id=890780655]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 351.3, -0.1, 0)
 script = ExtResource("28_axyvd")
 size = Vector3(1.4, 0.35, 4)
 
-[node name="P_Crumble1" type="AnimatableBody3D" parent="PaintingWorld" unique_id=884917757]
+[node name="P_Crumble1" type="AnimatableBody3D" parent="PaintingWorld" unique_id=1589373445]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 353.3, -0.1, 0)
 script = ExtResource("28_axyvd")
 size = Vector3(1.4, 0.35, 4)
 
-[node name="P_Crumble2" type="AnimatableBody3D" parent="PaintingWorld" unique_id=1725403885]
+[node name="P_Crumble2" type="AnimatableBody3D" parent="PaintingWorld" unique_id=1609371883]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 355.3, -0.1, 0)
 script = ExtResource("28_axyvd")
 size = Vector3(1.4, 0.35, 4)
@@ -604,86 +604,86 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 363.5, 0, 0)
 script = ExtResource("30_7ubq1")
 entry_portal = NodePath("../../Painting/PaintingPortal")
 
-[node name="Ink26" type="Area3D" parent="PaintingWorld" unique_id=192681441]
+[node name="Ink26" type="Area3D" parent="PaintingWorld" unique_id=423941417]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_26"
 
-[node name="Ink27" type="Area3D" parent="PaintingWorld" unique_id=431770908]
+[node name="Ink27" type="Area3D" parent="PaintingWorld" unique_id=267114236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 303, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_27"
 
-[node name="Ink28" type="Area3D" parent="PaintingWorld" unique_id=2007910599]
+[node name="Ink28" type="Area3D" parent="PaintingWorld" unique_id=1663296799]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, 2.2, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_28"
 
-[node name="Ink29" type="Area3D" parent="PaintingWorld" unique_id=493672915]
+[node name="Ink29" type="Area3D" parent="PaintingWorld" unique_id=472434170]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 320, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_29"
 
-[node name="Ink30" type="Area3D" parent="PaintingWorld" unique_id=626374554]
+[node name="Ink30" type="Area3D" parent="PaintingWorld" unique_id=230453505]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 322, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_30"
 
-[node name="Ink31" type="Area3D" parent="PaintingWorld" unique_id=537883332]
+[node name="Ink31" type="Area3D" parent="PaintingWorld" unique_id=952561917]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 339, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_31"
 
-[node name="Ink32" type="Area3D" parent="PaintingWorld" unique_id=2076122180]
+[node name="Ink32" type="Area3D" parent="PaintingWorld" unique_id=1270566655]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 348, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_32"
 
-[node name="Ink33" type="Area3D" parent="PaintingWorld" unique_id=634404397]
+[node name="Ink33" type="Area3D" parent="PaintingWorld" unique_id=2001066256]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 352.3, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_33"
 
-[node name="Ink34" type="Area3D" parent="PaintingWorld" unique_id=1257959063]
+[node name="Ink34" type="Area3D" parent="PaintingWorld" unique_id=254125482]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.3, 0.8, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_34"
 
-[node name="Ink35" type="Area3D" parent="PaintingWorld" unique_id=1821567178]
+[node name="Ink35" type="Area3D" parent="PaintingWorld" unique_id=599430754]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 315, 4, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_35"
 
-[node name="Ink36" type="Area3D" parent="PaintingWorld" unique_id=537504544]
+[node name="Ink36" type="Area3D" parent="PaintingWorld" unique_id=1789727314]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 315, 7, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_36"
 
-[node name="Ink37" type="Area3D" parent="PaintingWorld" unique_id=1244336407]
+[node name="Ink37" type="Area3D" parent="PaintingWorld" unique_id=488931640]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 315, 10, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_37"
 
-[node name="Gold38" type="Area3D" parent="PaintingWorld" unique_id=565260299]
+[node name="Gold38" type="Area3D" parent="PaintingWorld" unique_id=1355476717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 315, 12.5, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_38"
 golden = true
 
-[node name="Ink39" type="Area3D" parent="PaintingWorld" unique_id=1541045208]
+[node name="Ink39" type="Area3D" parent="PaintingWorld" unique_id=1387124209]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 333.5, 2, 0)
 script = ExtResource("21_lloqk")
 collectible_id = "cn_ink_39"
 
-[node name="Backdrop2D" type="Node3D" parent="." unique_id=1302208873]
+[node name="Backdrop2D" type="Node3D" parent="." unique_id=996849273]
 
-[node name="PaperSky" type="MeshInstance3D" parent="Backdrop2D" unique_id=398026489]
+[node name="PaperSky" type="MeshInstance3D" parent="Backdrop2D" unique_id=887381637]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 330, 35, -120)
 layers = 2
 material_override = SubResource("StandardMaterial3D_xey11")
 mesh = SubResource("QuadMesh_6knpt")
 
-[node name="FarMesas" type="MeshInstance3D" parent="Backdrop2D" unique_id=1644873644]
+[node name="FarMesas" type="MeshInstance3D" parent="Backdrop2D" unique_id=1643401081]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 330, 0, -60)
 script = ExtResource("31_8idgc")
 style = 2
@@ -692,7 +692,7 @@ height = 20.0
 color = Color(0.86, 0.6, 0.5, 1)
 shape_seed = 21
 
-[node name="MidRidge" type="MeshInstance3D" parent="Backdrop2D" unique_id=2002745789]
+[node name="MidRidge" type="MeshInstance3D" parent="Backdrop2D" unique_id=540397403]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 330, -1, -30)
 script = ExtResource("31_8idgc")
 width = 220.0
@@ -700,7 +700,7 @@ height = 10.0
 color = Color(0.7, 0.4, 0.32, 1)
 shape_seed = 5
 
-[node name="NearCacti" type="MeshInstance3D" parent="Backdrop2D" unique_id=2080663361]
+[node name="NearCacti" type="MeshInstance3D" parent="Backdrop2D" unique_id=1415469890]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 330, -2, -14)
 script = ExtResource("31_8idgc")
 style = 1

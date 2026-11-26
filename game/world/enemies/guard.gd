@@ -72,6 +72,8 @@ var _player: Player
 ## Při hledání jít na místo (false = místo je jinde výš/níž – jen se otočit a dívat).
 var _search_walk: bool = true
 var _windup: float = -1.0
+var _start_transform: Transform3D
+var _ko_tween: Tween
 
 var _body: Node3D
 var _cone: MeshInstance3D
@@ -96,6 +98,8 @@ func _ready() -> void:
 	_last_seen = global_position
 	Events.noise_made.connect(_on_noise)
 	Events.guard_called_help.connect(_on_help)
+	Events.player_died.connect(_on_player_died)
+	_start_transform = global_transform
 
 
 func _physics_process(delta: float) -> void:
@@ -355,6 +359,54 @@ func _on_help(caller: Node, pos: Vector3) -> void:
 		investigate(pos)
 
 
+# --- Návrat po Brunově smrti ---------------------------------------------
+
+## Když Bruno padne, všichni strážní se (pod inkoustovou clonou) vrátí na svá
+## místa v plné síle – vyřazení tedy nikdy nezablokuje level. Klíč a mince, které
+## už Bruno vzal nebo které vypadly, se znovu neobjeví.
+func _on_player_died() -> void:
+	get_tree().create_timer(0.36).timeout.connect(reset_to_start)
+
+
+func reset_to_start() -> void:
+	if not is_inside_tree():
+		return
+	if _ko_tween != null and _ko_tween.is_valid():
+		_ko_tween.kill()
+	var was_alert: bool = state == State.ALERT
+	state = State.PATROL
+	if was_alert:
+		Events.guard_alert_changed.emit(false)
+	health = max_health
+	suspicion = 0.0
+	_windup = -1.0
+	_attack_cd = 0.0
+	_patrol_idx = 0
+	_wait = 0.0
+	velocity = Vector3.ZERO
+	global_transform = _start_transform
+	reset_physics_interpolation()
+	_body.rotation = Vector3.ZERO
+	_body.position.y = 0.0
+	_body.scale = Vector3.ONE * _body_scale()
+	visible = true
+	collision_layer = 4
+	if not is_in_group(&"hittable"):
+		add_to_group(&"hittable")
+	if not is_in_group(&"guard"):
+		add_to_group(&"guard")
+	_cone.visible = true
+	_label.text = ""
+	_bag.visible = loot > 0
+	if _key_mesh != null:
+		_key_mesh.visible = not carries_key.is_empty()
+
+
+## Výchozí měřítko vizuálu (boss je větší).
+func _body_scale() -> float:
+	return 1.0
+
+
 # --- Zásah holí ------------------------------------------------------------
 
 func on_cane_hit(info: Dictionary) -> void:
@@ -395,8 +447,12 @@ func _knock_out() -> void:
 	var tw: Tween = create_tween()
 	tw.tween_property(_body, "rotation:x", -PI * 0.5, 0.35).set_trans(Tween.TRANS_BOUNCE)
 	tw.tween_interval(2.0)
-	tw.tween_property(self, "scale", Vector3(1, 0.01, 1), 0.3)
-	tw.tween_callback(queue_free)
+	# Škálovat jen vizuál – fyzikální tělo (Jolt) neumí nerovnoměrné měřítko.
+	tw.tween_property(_body, "scale", Vector3(_body.scale.x, 0.01, _body.scale.z), 0.3)
+	tw.tween_callback(func() -> void:
+		visible = false
+		remove_from_group(&"guard"))
+	_ko_tween = tw
 
 
 ## Vyřazený strážný upustí klíč (jinak by loupež nešla dohrát) a polovinu mincí.

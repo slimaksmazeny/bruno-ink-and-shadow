@@ -61,56 +61,56 @@ shader_parameter/line_color = null
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rsyoj"]
 albedo_color = Color(0.95, 0.7, 0.25, 1)
 
-[node name="Gym" type="Node3D" unique_id=488106087]
+[node name="Gym" type="Node3D" unique_id=1419651326]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2055977429]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=439734507]
 environment = SubResource("Environment_7qhng")
 
-[node name="Sun" type="DirectionalLight3D" parent="." unique_id=2014797408]
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=139762564]
 transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Floor" type="CSGBox3D" parent="." unique_id=448226850]
+[node name="Floor" type="CSGBox3D" parent="." unique_id=1106446813]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -0.5, 0)
 use_collision = true
 size = Vector3(150, 1, 70)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Stations" type="Node3D" parent="." unique_id=1465728829]
+[node name="Stations" type="Node3D" parent="." unique_id=1715595981]
 script = ExtResource("2_jsd41")
 
-[node name="Skoky" type="Marker3D" parent="Stations" unique_id=889962688]
+[node name="Skoky" type="Marker3D" parent="Stations" unique_id=1081992183]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -4, 0.05, -16)
 
-[node name="Mezery" type="Marker3D" parent="Stations" unique_id=1894395021]
+[node name="Mezery" type="Marker3D" parent="Stations" unique_id=127593830]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 19, 1.0999999, -20)
 
-[node name="Plachteni" type="Marker3D" parent="Stations" unique_id=1722869269]
+[node name="Plachteni" type="Marker3D" parent="Stations" unique_id=488612961]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 50, 8.1, -20)
 
-[node name="Kotvy" type="Marker3D" parent="Stations" unique_id=1647557499]
+[node name="Kotvy" type="Marker3D" parent="Stations" unique_id=178946830]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -3, 0.05, 10)
 
-[node name="Plazeni_a_lasery" type="Marker3D" parent="Stations" unique_id=1221695478]
+[node name="Plazeni_a_lasery" type="Marker3D" parent="Stations" unique_id=596517694]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 27, 0.05, 10)
 
-[node name="Souboj" type="Marker3D" parent="Stations" unique_id=1042263245]
+[node name="Souboj" type="Marker3D" parent="Stations" unique_id=1303169386]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 47, 0.05, 10)
 
-[node name="Strazny" type="Marker3D" parent="Stations" unique_id=2077547772]
+[node name="Strazny" type="Marker3D" parent="Stations" unique_id=1698209544]
 transform = Transform3D(0.7071068, 0, -0.7071068, 0, 1.0000001, 0, 0.7071068, 0, 0.7071068, 71, 0.05, 16)
 
-[node name="Plosiny" type="Marker3D" parent="Stations" unique_id=1169685380]
+[node name="Plosiny" type="Marker3D" parent="Stations" unique_id=252906045]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 71, 0.05, -20)
 
-[node name="Mini_loupez" type="Marker3D" parent="Stations" unique_id=98446462]
+[node name="Mini_loupez" type="Marker3D" parent="Stations" unique_id=1436345297]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 99, 0.05, 0)
 
-[node name="Boss" type="Marker3D" parent="Stations" unique_id=1122522920]
+[node name="Boss" type="Marker3D" parent="Stations" unique_id=993158513]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 54, 0.05, 45)
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1050422969 node_paths=PackedStringArray("camera") instance=ExtResource("3_kj1ca")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -8, 0.05, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.05, 0)
 collision_layer = 2
 collision_mask = 17
 floor_max_angle = 0.80285144
@@ -125,15 +125,15 @@ physics_interpolation_mode = 2
 script = ExtResource("8_03jn6")
 target = NodePath("../Player")
 
-[node name="Hud" type="CanvasLayer" parent="." unique_id=860351042]
+[node name="Hud" type="CanvasLayer" parent="." unique_id=1861355396]
 script = ExtResource("9_6wd50")
 
-[node name="Mission" type="Node" parent="." unique_id=2048829900]
+[node name="Mission" type="Node" parent="." unique_id=1948357624]
 script = ExtResource("10_1eocp")
 key_id = "gym_key"
 chapter_id = "gym"
 
-[node name="Sign" type="Label3D" parent="." unique_id=1388699140]
+[node name="Sign" type="Label3D" parent="." unique_id=1221392363]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3.2, -3)
 pixel_size = 0.008
@@ -143,7 +143,7 @@ text = "TRÉNINKOVÉ HŘIŠTĚ · 1–9 / D-pad = teleport na stanoviště · m�
 font_size = 72
 outline_size = 14
 
-[node name="Sign2" type="Label3D" parent="." unique_id=333179860]
+[node name="Sign2" type="Label3D" parent="." unique_id=9910329]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 5.5, -22)
 pixel_size = 0.008
@@ -153,13 +153,13 @@ text = "1 · VÝŠKA SKOKU (skok / dvojskok)"
 font_size = 64
 outline_size = 14
 
-[node name="Jump0_5" type="CSGBox3D" parent="." unique_id=2081077719]
+[node name="Jump0_5" type="CSGBox3D" parent="." unique_id=670957415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -20)
 use_collision = true
 size = Vector3(1.8, 0.5, 1.8)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign3" type="Label3D" parent="." unique_id=820432082]
+[node name="Sign3" type="Label3D" parent="." unique_id=2101755730]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -18.8)
 pixel_size = 0.008
@@ -169,13 +169,13 @@ text = "0.5 m"
 font_size = 48
 outline_size = 14
 
-[node name="Jump1_0" type="CSGBox3D" parent="." unique_id=776883892]
+[node name="Jump1_0" type="CSGBox3D" parent="." unique_id=1661996160]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0.5, -20)
 use_collision = true
 size = Vector3(1.8, 1, 1.8)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign4" type="Label3D" parent="." unique_id=725026063]
+[node name="Sign4" type="Label3D" parent="." unique_id=2134709889]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 1.6, -18.8)
 pixel_size = 0.008
@@ -185,13 +185,13 @@ text = "1.0 m"
 font_size = 48
 outline_size = 14
 
-[node name="Jump1_5" type="CSGBox3D" parent="." unique_id=1927259223]
+[node name="Jump1_5" type="CSGBox3D" parent="." unique_id=497850595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 0.75, -20)
 use_collision = true
 size = Vector3(1.8, 1.5, 1.8)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign5" type="Label3D" parent="." unique_id=423317830]
+[node name="Sign5" type="Label3D" parent="." unique_id=1369864202]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 2.1, -18.8)
 pixel_size = 0.008
@@ -201,13 +201,13 @@ text = "1.5 m"
 font_size = 48
 outline_size = 14
 
-[node name="Jump2_0" type="CSGBox3D" parent="." unique_id=2039616697]
+[node name="Jump2_0" type="CSGBox3D" parent="." unique_id=1423952017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 1, -20)
 use_collision = true
 size = Vector3(1.8, 2, 1.8)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign6" type="Label3D" parent="." unique_id=176947423]
+[node name="Sign6" type="Label3D" parent="." unique_id=1309744038]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 2.6, -18.8)
 pixel_size = 0.008
@@ -217,13 +217,13 @@ text = "2.0 m"
 font_size = 48
 outline_size = 14
 
-[node name="Jump2_5" type="CSGBox3D" parent="." unique_id=2016876144]
+[node name="Jump2_5" type="CSGBox3D" parent="." unique_id=268004131]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4, 1.25, -20)
 use_collision = true
 size = Vector3(1.8, 2.5, 1.8)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign7" type="Label3D" parent="." unique_id=979112543]
+[node name="Sign7" type="Label3D" parent="." unique_id=1759646295]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4, 3.1, -18.8)
 pixel_size = 0.008
@@ -233,13 +233,13 @@ text = "2.5 m"
 font_size = 48
 outline_size = 14
 
-[node name="Jump3_0" type="CSGBox3D" parent="." unique_id=1917100963]
+[node name="Jump3_0" type="CSGBox3D" parent="." unique_id=678035631]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 1.5, -20)
 use_collision = true
 size = Vector3(1.8, 3, 1.8)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign8" type="Label3D" parent="." unique_id=600250449]
+[node name="Sign8" type="Label3D" parent="." unique_id=128566213]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 3.6, -18.8)
 pixel_size = 0.008
@@ -249,13 +249,13 @@ text = "3.0 m"
 font_size = 48
 outline_size = 14
 
-[node name="Jump3_5" type="CSGBox3D" parent="." unique_id=1381234185]
+[node name="Jump3_5" type="CSGBox3D" parent="." unique_id=700311292]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 1.75, -20)
 use_collision = true
 size = Vector3(1.8, 3.5, 1.8)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign9" type="Label3D" parent="." unique_id=279323851]
+[node name="Sign9" type="Label3D" parent="." unique_id=187931822]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 4.1, -18.8)
 pixel_size = 0.008
@@ -265,13 +265,13 @@ text = "3.5 m"
 font_size = 48
 outline_size = 14
 
-[node name="Jump4_0" type="CSGBox3D" parent="." unique_id=1460510789]
+[node name="Jump4_0" type="CSGBox3D" parent="." unique_id=445331160]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2, 2, -20)
 use_collision = true
 size = Vector3(1.8, 4, 1.8)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign10" type="Label3D" parent="." unique_id=1238441574]
+[node name="Sign10" type="Label3D" parent="." unique_id=1543622623]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2, 4.6, -18.8)
 pixel_size = 0.008
@@ -281,7 +281,7 @@ text = "4.0 m"
 font_size = 48
 outline_size = 14
 
-[node name="Sign11" type="Label3D" parent="." unique_id=828011176]
+[node name="Sign11" type="Label3D" parent="." unique_id=330338538]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 4.5, -22)
 pixel_size = 0.008
@@ -291,19 +291,19 @@ text = "2 · DÉLKA SKOKU (rozběh / sprint / dvojskok / plachtění)"
 font_size = 64
 outline_size = 14
 
-[node name="GapStart" type="CSGBox3D" parent="." unique_id=7266540]
+[node name="GapStart" type="CSGBox3D" parent="." unique_id=1436773366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.5, -20)
 use_collision = true
 size = Vector3(3, 1, 3)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="GapLand2" type="CSGBox3D" parent="." unique_id=1903776053]
+[node name="GapLand2" type="CSGBox3D" parent="." unique_id=411920953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0.5, -20)
 use_collision = true
 size = Vector3(3, 1, 3)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign12" type="Label3D" parent="." unique_id=651036637]
+[node name="Sign12" type="Label3D" parent="." unique_id=1636007365]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 1.6, -18.2)
 pixel_size = 0.008
@@ -313,13 +313,13 @@ text = "2 m"
 font_size = 48
 outline_size = 14
 
-[node name="GapLand3" type="CSGBox3D" parent="." unique_id=988785993]
+[node name="GapLand3" type="CSGBox3D" parent="." unique_id=274889810]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0.5, -20)
 use_collision = true
 size = Vector3(3, 1, 3)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign13" type="Label3D" parent="." unique_id=1734640381]
+[node name="Sign13" type="Label3D" parent="." unique_id=60106750]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, -18.2)
 pixel_size = 0.008
@@ -329,13 +329,13 @@ text = "3 m"
 font_size = 48
 outline_size = 14
 
-[node name="GapLand4" type="CSGBox3D" parent="." unique_id=1015142338]
+[node name="GapLand4" type="CSGBox3D" parent="." unique_id=2133106799]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0.5, -20)
 use_collision = true
 size = Vector3(3, 1, 3)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign14" type="Label3D" parent="." unique_id=537796814]
+[node name="Sign14" type="Label3D" parent="." unique_id=1612195872]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5, 1.6, -18.2)
 pixel_size = 0.008
@@ -345,13 +345,13 @@ text = "4 m"
 font_size = 48
 outline_size = 14
 
-[node name="GapLand5" type="CSGBox3D" parent="." unique_id=1579173118]
+[node name="GapLand5" type="CSGBox3D" parent="." unique_id=860575979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0.5, -20)
 use_collision = true
 size = Vector3(3, 1, 3)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign15" type="Label3D" parent="." unique_id=1918357659]
+[node name="Sign15" type="Label3D" parent="." unique_id=1286999069]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, -18.2)
 pixel_size = 0.008
@@ -361,13 +361,13 @@ text = "5 m"
 font_size = 48
 outline_size = 14
 
-[node name="GapLand6" type="CSGBox3D" parent="." unique_id=1868973921]
+[node name="GapLand6" type="CSGBox3D" parent="." unique_id=1164223862]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0.5, -20)
 use_collision = true
 size = Vector3(3, 1, 3)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign16" type="Label3D" parent="." unique_id=652373162]
+[node name="Sign16" type="Label3D" parent="." unique_id=1452849022]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.5, 1.6, -18.2)
 pixel_size = 0.008
@@ -377,13 +377,13 @@ text = "6 m"
 font_size = 48
 outline_size = 14
 
-[node name="GapLand8" type="CSGBox3D" parent="." unique_id=388177754]
+[node name="GapLand8" type="CSGBox3D" parent="." unique_id=503138797]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.5, -20)
 use_collision = true
 size = Vector3(3, 1, 3)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign17" type="Label3D" parent="." unique_id=752915947]
+[node name="Sign17" type="Label3D" parent="." unique_id=1431251543]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.5, 1.6, -18.2)
 pixel_size = 0.008
@@ -393,7 +393,7 @@ text = "8 m"
 font_size = 48
 outline_size = 14
 
-[node name="Sign18" type="Label3D" parent="." unique_id=1081397288]
+[node name="Sign18" type="Label3D" parent="." unique_id=729280284]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 10, -22)
 pixel_size = 0.008
@@ -403,19 +403,19 @@ text = "3 · PLACHTĚNÍ Z VĚŽE 8 m (drž skok)"
 font_size = 64
 outline_size = 14
 
-[node name="GlideTower" type="CSGBox3D" parent="." unique_id=348284914]
+[node name="GlideTower" type="CSGBox3D" parent="." unique_id=796971363]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 4, -20)
 use_collision = true
 size = Vector3(3, 8, 3)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="GlideMark1" type="CSGBox3D" parent="." unique_id=252250306]
+[node name="GlideMark1" type="CSGBox3D" parent="." unique_id=902028985]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign19" type="Label3D" parent="." unique_id=241333934]
+[node name="Sign19" type="Label3D" parent="." unique_id=616523405]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -425,13 +425,13 @@ text = "2 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark2" type="CSGBox3D" parent="." unique_id=30701745]
+[node name="GlideMark2" type="CSGBox3D" parent="." unique_id=1087513497]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign20" type="Label3D" parent="." unique_id=1469856346]
+[node name="Sign20" type="Label3D" parent="." unique_id=1245046788]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -441,13 +441,13 @@ text = "4 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark3" type="CSGBox3D" parent="." unique_id=2064658535]
+[node name="GlideMark3" type="CSGBox3D" parent="." unique_id=1757110894]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign21" type="Label3D" parent="." unique_id=1712374041]
+[node name="Sign21" type="Label3D" parent="." unique_id=791513413]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -457,13 +457,13 @@ text = "6 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark4" type="CSGBox3D" parent="." unique_id=1023894125]
+[node name="GlideMark4" type="CSGBox3D" parent="." unique_id=1491634674]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign22" type="Label3D" parent="." unique_id=379218835]
+[node name="Sign22" type="Label3D" parent="." unique_id=1289026984]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -473,13 +473,13 @@ text = "8 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark5" type="CSGBox3D" parent="." unique_id=1841902188]
+[node name="GlideMark5" type="CSGBox3D" parent="." unique_id=625247220]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign23" type="Label3D" parent="." unique_id=1817087787]
+[node name="Sign23" type="Label3D" parent="." unique_id=1089254777]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -489,13 +489,13 @@ text = "10 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark6" type="CSGBox3D" parent="." unique_id=1958438645]
+[node name="GlideMark6" type="CSGBox3D" parent="." unique_id=1391285331]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign24" type="Label3D" parent="." unique_id=1699337481]
+[node name="Sign24" type="Label3D" parent="." unique_id=1283575811]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -505,13 +505,13 @@ text = "12 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark7" type="CSGBox3D" parent="." unique_id=1181715624]
+[node name="GlideMark7" type="CSGBox3D" parent="." unique_id=1118949309]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign25" type="Label3D" parent="." unique_id=1189490694]
+[node name="Sign25" type="Label3D" parent="." unique_id=815104337]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -521,13 +521,13 @@ text = "14 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark8" type="CSGBox3D" parent="." unique_id=2130830007]
+[node name="GlideMark8" type="CSGBox3D" parent="." unique_id=1596425844]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign26" type="Label3D" parent="." unique_id=124347261]
+[node name="Sign26" type="Label3D" parent="." unique_id=1410163583]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -537,13 +537,13 @@ text = "16 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark9" type="CSGBox3D" parent="." unique_id=447514945]
+[node name="GlideMark9" type="CSGBox3D" parent="." unique_id=384927241]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign27" type="Label3D" parent="." unique_id=1518058050]
+[node name="Sign27" type="Label3D" parent="." unique_id=337866180]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -553,13 +553,13 @@ text = "18 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark10" type="CSGBox3D" parent="." unique_id=1893723228]
+[node name="GlideMark10" type="CSGBox3D" parent="." unique_id=133061380]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign28" type="Label3D" parent="." unique_id=1618709362]
+[node name="Sign28" type="Label3D" parent="." unique_id=140211585]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -569,13 +569,13 @@ text = "20 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark11" type="CSGBox3D" parent="." unique_id=1748959360]
+[node name="GlideMark11" type="CSGBox3D" parent="." unique_id=1606395423]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign29" type="Label3D" parent="." unique_id=476132982]
+[node name="Sign29" type="Label3D" parent="." unique_id=901839783]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -585,13 +585,13 @@ text = "22 m"
 font_size = 40
 outline_size = 14
 
-[node name="GlideMark12" type="CSGBox3D" parent="." unique_id=736698190]
+[node name="GlideMark12" type="CSGBox3D" parent="." unique_id=748636816]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.5, 0.02, -20)
 use_collision = true
 size = Vector3(0.1, 0.04, 2)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Sign30" type="Label3D" parent="." unique_id=489562529]
+[node name="Sign30" type="Label3D" parent="." unique_id=1121623451]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.5, 0.5, -18.6)
 pixel_size = 0.008
@@ -601,7 +601,7 @@ text = "24 m"
 font_size = 40
 outline_size = 14
 
-[node name="Sign31" type="Label3D" parent="." unique_id=253170179]
+[node name="Sign31" type="Label3D" parent="." unique_id=481660757]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 6)
 pixel_size = 0.008
@@ -616,67 +616,67 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2.5, 10)
 script = ExtResource("12_go1ky")
 snap_point = NodePath("SnapPoint")
 
-[node name="SpirePost" type="CSGBox3D" parent="." unique_id=1074519386]
+[node name="SpirePost" type="CSGBox3D" parent="." unique_id=1488567053]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.2, 10)
 use_collision = true
 size = Vector3(0.3, 2.4, 0.3)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="AnchorWall" type="CSGBox3D" parent="." unique_id=159239839]
+[node name="AnchorWall" type="CSGBox3D" parent="." unique_id=1125724765]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3, 8)
 use_collision = true
 size = Vector3(8, 6, 1)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Pipe" type="Area3D" parent="." unique_id=1371711721]
+[node name="Pipe" type="Area3D" parent="." unique_id=1303570318]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 8.6)
 script = ExtResource("13_m2kka")
 axis = Vector3(0, 1, 0)
 type = 1
 
-[node name="Ledge" type="Area3D" parent="." unique_id=1227016825]
+[node name="Ledge" type="Area3D" parent="." unique_id=382048009]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 6, 8.52)
 script = ExtResource("13_m2kka")
 length = 5.0
 type = 2
 
-[node name="LedgeStep" type="CSGBox3D" parent="." unique_id=1620666723]
+[node name="LedgeStep" type="CSGBox3D" parent="." unique_id=2107829928]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1.25, 10.2)
 use_collision = true
 size = Vector3(1.5, 2.5, 1.5)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="WallLedge" type="Area3D" parent="." unique_id=832575704]
+[node name="WallLedge" type="Area3D" parent="." unique_id=1947576799]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 2, 8.52)
 script = ExtResource("13_m2kka")
 length = 5.0
 type = 4
 
-[node name="RopePostA" type="CSGBox3D" parent="." unique_id=1197450682]
+[node name="RopePostA" type="CSGBox3D" parent="." unique_id=1859844276]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 2, 10)
 use_collision = true
 size = Vector3(1.2, 4, 1.2)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="RopePostB" type="CSGBox3D" parent="." unique_id=1963144576]
+[node name="RopePostB" type="CSGBox3D" parent="." unique_id=1066517445]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 2, 10)
 use_collision = true
 size = Vector3(1.2, 4, 1.2)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Rope" type="Area3D" parent="." unique_id=1012808760]
+[node name="Rope" type="Area3D" parent="." unique_id=1950661291]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6, 4.02, 10)
 script = ExtResource("13_m2kka")
 length = 8.8
 type = 3
 
-[node name="Ring" type="Area3D" parent="." unique_id=962765799]
+[node name="Ring" type="Area3D" parent="." unique_id=1899375026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 5.5, 14)
 script = ExtResource("14_dedbc")
 type = 5
 only_in_3d = false
 
-[node name="Sign32" type="Label3D" parent="." unique_id=1663671080]
+[node name="Sign32" type="Label3D" parent="." unique_id=2125628102]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 4, 7)
 pixel_size = 0.008
@@ -686,18 +686,18 @@ text = "5 · PLAZENÍ (drž Ctrl / L3) · LASERY"
 font_size = 64
 outline_size = 14
 
-[node name="CrawlTable" type="CSGBox3D" parent="." unique_id=727846715]
+[node name="CrawlTable" type="CSGBox3D" parent="." unique_id=1120642683]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.05, 10)
 use_collision = true
 size = Vector3(3, 0.5, 2.4)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="LaserHigh" type="Area3D" parent="." unique_id=801703339]
+[node name="LaserHigh" type="Area3D" parent="." unique_id=1510798067]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 36, 0, 7.5)
 script = ExtResource("15_un1dp")
 length = 5.0
 
-[node name="LaserBlink" type="Area3D" parent="." unique_id=1152775235]
+[node name="LaserBlink" type="Area3D" parent="." unique_id=964835677]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 38, 0, 7.5)
 script = ExtResource("15_un1dp")
 length = 5.0
@@ -705,7 +705,7 @@ beam_height = 0.35
 block_standing = false
 blink_period = 1.6
 
-[node name="Sign33" type="Label3D" parent="." unique_id=894503825]
+[node name="Sign33" type="Label3D" parent="." unique_id=377776832]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4, 7)
 pixel_size = 0.008
@@ -719,7 +719,7 @@ outline_size = 14
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51, 0, 9)
 script = ExtResource("17_hrt4q")
 
-[node name="Dummy1" type="Node3D" parent="." unique_id=1005851588 instance=ExtResource("16_mp2kn")]
+[node name="Dummy1" type="Node3D" parent="." unique_id=1177921115 instance=ExtResource("16_mp2kn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.5, 0, 9)
 script = ExtResource("17_hrt4q")
 
@@ -729,13 +729,13 @@ collision_layer = 16
 collision_mask = 0
 script = ExtResource("19_bjemq")
 
-[node name="Crate1" type="StaticBody3D" parent="." unique_id=1994912953 instance=ExtResource("18_f1x6d")]
+[node name="Crate1" type="StaticBody3D" parent="." unique_id=1821202409 instance=ExtResource("18_f1x6d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.6, 0, 12.5)
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("19_bjemq")
 
-[node name="Crate2" type="StaticBody3D" parent="." unique_id=84168602 instance=ExtResource("18_f1x6d")]
+[node name="Crate2" type="StaticBody3D" parent="." unique_id=846932270 instance=ExtResource("18_f1x6d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.2, 0, 12.5)
 collision_layer = 16
 collision_mask = 0
@@ -745,12 +745,12 @@ script = ExtResource("19_bjemq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 3, 8)
 script = ExtResource("21_gm4wt")
 
-[node name="InkBlob" type="CharacterBody3D" parent="." unique_id=1204774943]
+[node name="InkBlob" type="CharacterBody3D" parent="." unique_id=612723677]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59, 0.05, 14)
 script = ExtResource("22_g3dyo")
 patrol_half_width = 3.0
 
-[node name="Sign34" type="Label3D" parent="." unique_id=487368129]
+[node name="Sign34" type="Label3D" parent="." unique_id=863366776]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 4, 3.5)
 pixel_size = 0.008
@@ -760,30 +760,30 @@ text = "7 · STRÁŽNÝ: plížení, kapsářství (E zezadu), odlákání tenis
 font_size = 64
 outline_size = 14
 
-[node name="PenWall" type="CSGBox3D" parent="." unique_id=1706124387]
+[node name="PenWall" type="CSGBox3D" parent="." unique_id=1675547204]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0.5, 4)
 use_collision = true
 size = Vector3(14, 1, 0.3)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="PenWall2" type="CSGBox3D" parent="." unique_id=1753060261]
+[node name="PenWall2" type="CSGBox3D" parent="." unique_id=1459952718]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0.5, 16)
 use_collision = true
 size = Vector3(14, 1, 0.3)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="PenWall3" type="CSGBox3D" parent="." unique_id=11514915]
+[node name="PenWall3" type="CSGBox3D" parent="." unique_id=741559759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, 0.5, 10)
 use_collision = true
 size = Vector3(0.3, 1, 12)
 material = SubResource("StandardMaterial3D_rsyoj")
 
-[node name="Guard" type="CharacterBody3D" parent="." unique_id=920869357]
+[node name="Guard" type="CharacterBody3D" parent="." unique_id=1068170505]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0.05, 10)
 script = ExtResource("23_eb5d3")
 patrol_points = PackedVector3Array(-3, 0, -3, 5, 0, -3, 5, 0, 3, -3, 0, 3)
 
-[node name="Sign35" type="Label3D" parent="." unique_id=1881425865]
+[node name="Sign35" type="Label3D" parent="." unique_id=1643264534]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83, 6, -23)
 pixel_size = 0.008
@@ -797,34 +797,34 @@ outline_size = 14
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, -20)
 script = ExtResource("25_1dafs")
 
-[node name="Wind" type="Area3D" parent="." unique_id=67960441]
+[node name="Wind" type="Area3D" parent="." unique_id=1822257945]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0, -20)
 script = ExtResource("26_l04cu")
 size = Vector3(2.5, 10, 2.5)
 
-[node name="Lift" type="AnimatableBody3D" parent="." unique_id=1063655026]
+[node name="Lift" type="AnimatableBody3D" parent="." unique_id=1494194601]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83, 0.2, -20)
 script = ExtResource("27_6n7oa")
 travel = Vector3(0, 5, 0)
 size = Vector3(2.5, 0.4, 2.5)
 
-[node name="Piston" type="AnimatableBody3D" parent="." unique_id=1468295651]
+[node name="Piston" type="AnimatableBody3D" parent="." unique_id=965685875]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.5, 0.3, -20)
 script = ExtResource("28_fxo1q")
 travel = Vector3(0, 3, 0)
 size = Vector3(2, 0.6, 2)
 
-[node name="Crumble" type="AnimatableBody3D" parent="." unique_id=1946183129]
+[node name="Crumble" type="AnimatableBody3D" parent="." unique_id=906602116]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 2.5, -20)
 script = ExtResource("29_l1cus")
 size = Vector3(2, 0.35, 2)
 
-[node name="OneWay" type="AnimatableBody3D" parent="." unique_id=113930597]
+[node name="OneWay" type="AnimatableBody3D" parent="." unique_id=411451102]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94, 2.2, -20)
 script = ExtResource("30_b8g3a")
 size = Vector3(3, 0.3, 3)
 
-[node name="Sign36" type="Label3D" parent="." unique_id=2092792981]
+[node name="Sign36" type="Label3D" parent="." unique_id=583512198]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105, 4, -5)
 pixel_size = 0.008
@@ -834,73 +834,73 @@ text = "9 · MINI LOUPEŽ: klíč (strážný) → trezor → krystal → dodáv
 font_size = 64
 outline_size = 14
 
-[node name="KeyGuard" type="CharacterBody3D" parent="." unique_id=1612327423]
+[node name="KeyGuard" type="CharacterBody3D" parent="." unique_id=1659913153]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105, 0.05, 0)
 script = ExtResource("23_eb5d3")
 patrol_points = PackedVector3Array(-2, 0, 0, 4, 0, 0)
 view_range = 6.0
 carries_key = "gym_key"
 
-[node name="Vault" type="Node3D" parent="." unique_id=931547032]
+[node name="Vault" type="Node3D" parent="." unique_id=1651422181]
 transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 115, 0, 0)
 script = ExtResource("31_sbu5i")
 key_id = "gym_key"
 
-[node name="Van" type="Node3D" parent="." unique_id=1967412566]
+[node name="Van" type="Node3D" parent="." unique_id=2119862480]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101, 0, 7)
 script = ExtResource("32_3q6aw")
 
-[node name="Ink00" type="Area3D" parent="." unique_id=136126530]
+[node name="Ink00" type="Area3D" parent="." unique_id=523690571]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107, 0.8, 4)
 script = ExtResource("33_bl1ua")
 collectible_id = "gym_ink_00"
 
-[node name="Ink01" type="Area3D" parent="." unique_id=1037924432]
+[node name="Ink01" type="Area3D" parent="." unique_id=730426764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108.5, 0.8, 4)
 script = ExtResource("33_bl1ua")
 collectible_id = "gym_ink_01"
 
-[node name="Ink02" type="Area3D" parent="." unique_id=1862708531]
+[node name="Ink02" type="Area3D" parent="." unique_id=345052634]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 0.8, 4)
 script = ExtResource("33_bl1ua")
 collectible_id = "gym_ink_02"
 
-[node name="Ink03" type="Area3D" parent="." unique_id=1397465211]
+[node name="Ink03" type="Area3D" parent="." unique_id=791794607]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.5, 0.8, 4)
 script = ExtResource("33_bl1ua")
 collectible_id = "gym_ink_03"
 
-[node name="Ink04" type="Area3D" parent="." unique_id=1058985900]
+[node name="Ink04" type="Area3D" parent="." unique_id=1532154422]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113, 0.8, 4)
 script = ExtResource("33_bl1ua")
 collectible_id = "gym_ink_04"
 
-[node name="Jar" type="StaticBody3D" parent="." unique_id=1257798502]
+[node name="Jar" type="StaticBody3D" parent="." unique_id=955416133]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 117, 0, 4)
 script = ExtResource("34_1ll45")
 jar_id = "gym_jar"
 
-[node name="Treat" type="Area3D" parent="." unique_id=1616501373]
+[node name="Treat" type="Area3D" parent="." unique_id=1602974063]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111, 0, -4)
 script = ExtResource("35_i38ih")
 
-[node name="Puddle" type="Area3D" parent="." unique_id=595024535]
+[node name="Puddle" type="Area3D" parent="." unique_id=1979018524]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107, 0, -6)
 script = ExtResource("36_h3svq")
 size = Vector3(2, 0.3, 2)
 
-[node name="Checkpoint" type="Area3D" parent="." unique_id=1328481400]
+[node name="Checkpoint" type="Area3D" parent="." unique_id=60978259]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99, 0, -4)
 script = ExtResource("37_836m8")
 checkpoint_id = "gym_cp"
 
-[node name="BossFloor" type="CSGBox3D" parent="." unique_id=1959565073]
+[node name="BossFloor" type="CSGBox3D" parent="." unique_id=706094393]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -0.5, 45)
 use_collision = true
 size = Vector3(30, 1, 22)
 material = SubResource("ShaderMaterial_vnkhe")
 
-[node name="Sign37" type="Label3D" parent="." unique_id=566892591]
+[node name="Sign37" type="Label3D" parent="." unique_id=121141546]
 auto_translate_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 6, 36)
 pixel_size = 0.008
@@ -910,7 +910,7 @@ text = "0 · BOSS: přeskoč rázovou vlnu, bij ho jen když funí (z z); tenis�
 font_size = 64
 outline_size = 14
 
-[node name="BossWarden" type="CharacterBody3D" parent="." unique_id=155059149]
+[node name="BossWarden" type="CharacterBody3D" parent="." unique_id=463190842]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0.05, 45)
 script = ExtResource("38_mhkmj")
 arena_radius = 11.0

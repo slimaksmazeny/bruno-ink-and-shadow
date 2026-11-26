@@ -70,7 +70,6 @@ func _actors() -> void:
 	var player: Node3D = (load("res://player/player.tscn") as PackedScene).instantiate() as Node3D
 	player.name = "Player"
 	player.position = Vector3(-8, 0.05, 0)
-	player.rotation.y = -PI * 0.5
 	_add(lvl, player)
 	var cam: Node3D = (load("res://camera/hybrid_camera.tscn") as PackedScene).instantiate() as Node3D
 	cam.name = "HybridCamera"
