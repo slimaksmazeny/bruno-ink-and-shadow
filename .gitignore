@@ -26,3 +26,4 @@ mono_crash.*.json
 build/
 game/localization/*.translation
 game/addons/godot_ai/
+graphify-out/

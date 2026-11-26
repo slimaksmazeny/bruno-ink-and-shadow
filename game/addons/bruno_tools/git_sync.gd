@@ -1,5 +1,5 @@
 ## Stažení nejnovější verze projektu z GitHubu (git pull) a obnovení souborů v editoru.
-## Používá git z PATH, jinak ten, který přibaluje GitHub Desktop.
+## Používá git z GitHub Desktop / Git for Windows, jinak git z PATH.
 @tool
 extends RefCounted
 
@@ -10,9 +10,6 @@ static func repo_dir() -> String:
 
 
 static func find_git() -> String:
-	var out: Array = []
-	if OS.execute("git", ["--version"], out, true) == 0:
-		return "git"
 	var local: String = OS.get_environment("LOCALAPPDATA").replace("\\", "/")
 	var gh_root: String = local.path_join("GitHubDesktop")
 	var dir := DirAccess.open(gh_root)
@@ -29,6 +26,10 @@ static func find_git() -> String:
 	for p: String in ["C:/Program Files/Git/cmd/git.exe", "C:/Program Files (x86)/Git/cmd/git.exe"]:
 		if FileAccess.file_exists(p):
 			return p
+	# Až nakonec git z PATH (Linux/macOS) – na Windows bez Gitu by OS.execute hlásil chybu.
+	var out: Array = []
+	if OS.execute("git", ["--version"], out, true) == 0:
+		return "git"
 	return ""
 
 

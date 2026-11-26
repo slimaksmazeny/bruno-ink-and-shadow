@@ -39,3 +39,8 @@ godot-shader, godot-interactive, godot-live-edit, godot-testing – MIT, viz LIC
 - Neukládat tajnosti (`export_credentials.cfg` je v .gitignore).
 - `index.html` (studio centrum): zachovat localStorage klíče `bruno_ink_shadow_v1` a `bruno_roadmap_v015`; deník `log_NNN` nejnovější nahoře.
 - Verze: `config/version` v project.godot, `(vX)` v translations.csv, export_presets.cfg (verze + code).
+
+## graphify
+Skill `/graphify` (`.claude/skills/graphify/`) je nainstalovaný. **Pozor: graphify zatím neumí GDScript (.gd)** – AST graf
+pokrývá jen Python nástroje a dokumenty, ~78 % souborů hry vynechá. Proto se pro kód hry pořád spoléhat na grep/čtení;
+graf (`graphify update .`, výstup `graphify-out/`, není v gitu) je jen doplněk pro dokumentaci a architekturu.
