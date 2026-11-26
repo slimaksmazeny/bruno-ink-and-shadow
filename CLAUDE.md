@@ -29,6 +29,12 @@ godot-shader, godot-interactive, godot-live-edit, godot-testing – MIT, viz LIC
 - Nesmí existovat softlock: vyřazení/ smrt / checkpoint nesmí znemožnit dohrání levelu.
 - Herní doba: 6 kapitol × ~1,5 h příběh / ~2,5 h na 100 %.
 
+## Synchronizace s Tomášovým PC (Godot AI)
+- Godot AI (MCP) je na PC: `project_run`, `editor_screenshot(source="game")`, `game_manage` (vstupy), `logs_read`.
+- Po pushi stáhnout na PC nástrojem **`bruno_sync`** (custom tool z `addons/bruno_tools`, `custom_manage` invoke
+  nebo `custom_bruno_sync`) = `git pull --rebase --autostash` + rescan editoru. Tomáš má v liště tlačítko „⬇ GitHub“.
+- `addons/godot_ai/` je lokální (gitignore); v sandboxu kopie z `hi-godot/godot-ai` kvůli stejnému project.godot.
+
 ## Repo
 - Neukládat tajnosti (`export_credentials.cfg` je v .gitignore).
 - `index.html` (studio centrum): zachovat localStorage klíče `bruno_ink_shadow_v1` a `bruno_roadmap_v015`; deník `log_NNN` nejnovější nahoře.
