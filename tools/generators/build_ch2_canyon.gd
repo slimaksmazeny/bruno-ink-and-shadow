@@ -22,6 +22,7 @@ func _initialize() -> void:
 	_actors()
 	_content()
 	_painting()
+	_scaffold()
 	_dressing()
 	var packed := PackedScene.new()
 	var err: Error = packed.pack(lvl)
@@ -572,8 +573,8 @@ func _dressing() -> void:
 			var p: Vector3 = a.lerp(b, t) - Vector3(0, sin(t * PI) * 0.9, 0)
 			_mesh(d, sph, p, Vector3.ZERO, Vector3(0.12, 0.12, 0.12), bulb)
 	# Úkryty: sudy v táboře a keře u řeky (strážní tě uvnitř nevidí).
-	for hs: Array in [[Vector3(17, 0, 4.2), 1], [Vector3(26, 0, -3.5), 1], [Vector3(45, 0, -3.2), 0],
-			[Vector3(56, 0, 9.0), 0], [Vector3(64, 0, -2.8), 0], [Vector3(71.5, 0, -6.5), 1]]:
+	for hs: Array in [[Vector3(17, 0, 4.2), 1], [Vector3(26, 0, -3.5), 1], [Vector3(45, 0, -3.2), 1],
+			[Vector3(56, 0, 9.0), 0], [Vector3(64, 0, -2.8), 0], [Vector3(71.5, 0, -6.5), 0]]:
 		var h := Node3D.new()
 		h.name = "HideSpot"
 		h.set_script(load("res://world/gameplay/hide_spot.gd"))
@@ -651,3 +652,30 @@ func _dressing() -> void:
 	quad.material = dm
 	dust.draw_pass_1 = quad
 	_add(d, dust)
+
+
+## Výšková trasa (přidaná po původních kapkách, aby se nezměnila jejich ID v uložené hře).
+func _scaffold() -> void:
+	var c: Node3D = lvl.get_node("Content")
+	# Výšková trasa: lešení podél severní stěny (nad lasery) až na střechu boudy.
+	var plank := StandardMaterial3D.new()
+	plank.albedo_color = Color(0.55, 0.37, 0.22)
+	var scaff := Node3D.new()
+	scaff.name = "Scaffold"
+	_add(c, scaff)
+	_line(scaff, "ScaffPole", 1, Vector3(44.0, 0.0, -10.6), Vector3.UP, 5.2, Vector3.BACK)
+	for seg: Array in [[44.0, 50.0], [51.6, 60.5], [62.0, 70.5], [71.8, 75.6]]:
+		var x0: float = seg[0]
+		var x1: float = seg[1]
+		_box(scaff, "Plank", Vector3((x0 + x1) * 0.5, 5.05, -11.6), Vector3(x1 - x0, 0.15, 1.6), plank)
+		var x: float = x0 + 0.3
+		while x < x1:
+			_box(scaff, "Post", Vector3(x, 2.5, -12.2), Vector3(0.18, 5.0, 0.18), plank)
+			x += 3.0
+	# Spojka na střechu boudy (střecha y 3.6–3.75, z -4.2..4.2).
+	_box(scaff, "RoofBridge", Vector3(75.0, 4.4, -8.0), Vector3(1.4, 0.12, 6.2), plank)
+	_sign(scaff, "SignScaffold", "CH2_SIGN_SCAFFOLD", Vector3(44.5, 3.0, -9.8))
+	_drop(scaff, Vector3(47.0, 5.6, -11.6))
+	_drop(scaff, Vector3(56.0, 5.6, -11.6))
+	_drop(scaff, Vector3(66.0, 5.6, -11.6))
+	_drop(scaff, Vector3(73.5, 5.6, -11.6), true)
