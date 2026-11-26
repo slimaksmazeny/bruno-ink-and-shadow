@@ -30,6 +30,7 @@ TouchControls="*res://ui/touch_controls/touch_controls.tscn"
 InkWipe="*res://ui/transitions/ink_wipe.tscn"
 PauseMenu="*res://ui/menus/pause_menu.gd"
 DevMenu="*res://ui/menus/dev_menu.gd"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [debug]
 
@@ -44,6 +45,10 @@ window/size/window_height_override=900
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=4
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
 
 [input]
 
