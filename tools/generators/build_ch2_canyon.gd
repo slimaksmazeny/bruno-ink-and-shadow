@@ -103,6 +103,8 @@ func _geometry() -> void:
 func _actors() -> void:
 	var player: Node3D = (load("res://player/player.tscn") as PackedScene).instantiate() as Node3D
 	player.name = "Player"
+	# Směr startu (Player ho převede na natočení vizuálu + kamery, tělo se neotáčí).
+	player.rotation.y = -PI * 0.5
 	player.position = Vector3(2, 0.05, 0)
 	_add(lvl, player)
 	var cam: Node3D = (load("res://camera/hybrid_camera.tscn") as PackedScene).instantiate() as Node3D
@@ -387,6 +389,8 @@ func _sign(parent: Node, n: String, key: String, pos: Vector3) -> void:
 	l.text = key
 	l.position = pos
 	l.pixel_size = 0.008
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.width = 700.0
 	l.font_size = 60
 	l.outline_size = 14
 	l.modulate = Color(1, 0.9, 0.7)

@@ -61,6 +61,7 @@ func _ready() -> void:
 	var start_forward: Vector3 = -global_transform.basis.z
 	global_transform = Transform3D(Basis(), global_position)
 	visual.face_direction(Vector3(start_forward.x, 0.0, start_forward.z))
+	_snap_camera_behind.call_deferred(start_forward)
 	level_start = global_position
 	if Upgrades.has(Upgrades.EXTRA_HEART):
 		max_health += 1
@@ -69,6 +70,12 @@ func _ready() -> void:
 	anchor_detector.player = self
 	cane_hitbox.hit_landed.connect(_on_cane_hit_landed)
 	state_machine.setup(self)
+
+
+## Na startu levelu kamera za Brunova záda (směr cesty), ne do zdi.
+func _snap_camera_behind(forward: Vector3) -> void:
+	if camera != null and mode == Mode.MODE_3D:
+		camera.rig_3d.snap_behind(Vector3(forward.x, 0.0, forward.z))
 
 
 func _physics_process(delta: float) -> void:
